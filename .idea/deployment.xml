@@ -12,7 +12,7 @@
       <paths name="Development">
         <serverdata>
           <mappings>
-            <mapping deploy="/lib/netPhramework/0.91" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/lib/netPhramework/1.0" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

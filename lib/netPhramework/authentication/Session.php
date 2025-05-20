@@ -10,8 +10,7 @@ class Session
 	public function login(User $user):Session
 	{
 		$this->start();
-		$this->user = SessionUser::fromUser($user);
-		$this->user->updateVariables($this->sessionVars);
+		// @TODO Create SessionUser and add username and password to sessionVars
 		return $this;
 	}
 
@@ -51,7 +50,7 @@ class Session
 			session_start();
 			session_regenerate_id(true);
 			$this->sessionVars =& $_SESSION;
-			$this->user = SessionUser::fromArray($this->sessionVars);
+            // @TODO variables from sessionVars to instantiate a SessionUser
 		}
 	}
 }
