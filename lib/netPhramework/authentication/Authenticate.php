@@ -14,8 +14,7 @@ class Authenticate extends Leaf
 	public function __construct(
 		private readonly Authenticator $authenticator,
 		string $name = 'authenticate',
-		private readonly ?Dispatcher $onSuccessDispatcher = null,
-		private readonly ?LogInManager $logInManager = null)
+		private readonly ?Dispatcher $onSuccessDispatcher = null)
 	{
 		parent::__construct($name);
 	}
