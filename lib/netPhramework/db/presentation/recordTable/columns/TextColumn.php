@@ -1,0 +1,44 @@
+<?php
+
+namespace netPhramework\db\presentation\recordTable\columns;
+
+use netPhramework\common\Utils;
+use netPhramework\db\core\Record;
+use netPhramework\db\presentation\recordTable\Column;
+use netPhramework\db\presentation\recordTable\ColumnHeader;
+use netPhramework\rendering\Viewable;
+
+class TextColumn implements Column
+{
+	public function __construct(
+		protected string $name,
+		protected int $width = 150,
+		protected ?string $headerText = null) {}
+
+	public function getName(): string
+	{
+		return $this->name;
+	}
+
+	public function getHeader(): ColumnHeader
+	{
+		$text = $this->headerText ?? Utils::kebabToSpace($this->name);
+		return new ColumnHeader($this->name, $text, $this->width);
+	}
+
+	public function setWidth(int $width): TextColumn
+	{
+		$this->width = $width;
+		return $this;
+	}
+
+	public function getSortableValue(Record $record): string
+	{
+		return $record->getValue($this->name) ?? '';
+	}
+
+	public function getViewableValue(Record $record): Viewable|string
+	{
+		return $this->getSortableValue($record);
+	}
+}

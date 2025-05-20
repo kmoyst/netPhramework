@@ -1,0 +1,157 @@
+body
+{
+    background-color: #000;
+}
+body, a
+{
+    color: #ccc;
+}
+form.recordEdit ul, ul.linkList
+{
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+form.recordEdit li
+{
+
+}
+table.recordList
+{
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    table-layout: fixed;
+    width:0;
+}
+table.recordList tr.even
+{
+    background-color: #333;
+}
+table.recordList tbody tr:hover
+{
+    background-color: #025;
+}
+
+table.recordList td, table.recordList th
+{
+    margin: 0;
+    padding: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-align: left;
+    text-overflow: ellipsis;
+}
+table.recordList td.rowButtons
+{
+    text-align: center;
+}
+form.inlineButton
+{
+    float: none;
+    display: inline-block;
+    margin:0 0 0 10px
+}
+a:hover
+{
+    text-decoration: none;
+}
+div.topMenu
+{
+    margin-bottom: 30px;
+}
+div.paginator
+{
+    width:300px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 100px;
+}
+div.paginator form.inlineButton
+{
+    float: none;
+    display: inline-block;
+}
+div.paginator div.navigateButtons
+{
+    text-align: center;
+    width: 100%;
+}
+div.paginator div.pageTracker
+{
+    width:100%;
+    text-align: center;
+    margin-bottom:10px;
+}
+ul.filterForm
+{
+    list-style: none;
+    margin:0;
+    padding: 0;
+}
+ul.filterForm li
+{
+    margin-bottom:3px;
+}
+table.recordList tbody tr td.primary-phone
+{
+    text-align: center;
+}
+table.recordList thead tr th.primary-phone
+{
+    text-align: center;
+}
+table.recordList thead tr th.date-of-birth
+{
+    text-align: center;
+}
+table.recordList tbody tr td.date-of-birth
+{
+    text-align: center;
+}
+ul.loginForm
+{
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
+}
+ul.loginForm li
+{
+    margin-bottom: 10px;
+}
+div.loginForm
+{
+    text-align: center;
+}
+div.loginForm form
+{
+    display: inline-block;
+}
+div.loginForm form label
+{
+    float: left;
+}
+ol
+{
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+ol li
+{
+    margin-bottom: 10px;
+}
+h1
+{
+    text-align: center;
+    font-family: sans-serif;
+    font-size: x-large;
+}
+p.getting-started
+{
+    text-align: center;
+}
+div.getting-started ol li
+{
+    text-align: justify;
+}

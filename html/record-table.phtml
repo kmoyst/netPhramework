@@ -1,0 +1,32 @@
+<table class="recordList">
+	<thead>
+	<tr class="odd">
+		<? foreach ($headers as $header) echo $header; ?>
+		<th style="width:120px; text-align: center">
+
+		</th>
+	</tr>
+	</thead>
+	<tbody>
+	<? $odd = false; $i=1; foreach ($rows as $id => $row) { ?>
+		<tr class="<?= $odd ? 'odd' : 'even' ?>">
+			<? foreach ($row as $name => $cell) { ?>
+				<td class="<?=$name?>"><?=$cell?></td>
+			<?}?>
+			<td class="rowButtons">
+				<form name="edit<?=$id?>" action="<?="$id/edit"?>"
+					  method="get" class="inlineButton">
+					<input type="submit" name="action" value="Edit"/>
+                    <?=$callbackInput?>
+				</form>
+				<form name="delete<?=$id?>" action="<?="$id/delete"?>"
+					  method="post" class="inlineButton"
+                      enctype="application/x-www-form-urlencoded">
+					<input type="submit" name="action" value="Delete"/>
+                    <?=$callbackInput?>
+				</form>
+			</td>
+		</tr>
+		<? $odd = !$odd; } ?>
+    </tbody>
+</table>

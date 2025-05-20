@@ -1,0 +1,7 @@
+<select name="<?=$name?>" id="<?=$id?>">
+	<? foreach($options as $v => $d) { ?>
+		<option
+			value="<?=$v?>"<?=$v==$selectedValue ? " selected='selected'":''?>>
+			<?=$d?></option>
+	<?}?>
+</select>
