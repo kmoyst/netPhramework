@@ -2,7 +2,7 @@
 
 namespace netPhramework\authentication;
 
-class SessionUser
+class UserInSession
 {
 
 }

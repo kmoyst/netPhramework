@@ -8,10 +8,10 @@ namespace netPhramework\authentication;
 interface Authenticator
 {
 	/**
-	 * @param LogInUser $user - A user with a plain text password
+	 * @param UserLoggingIn $user - A user with a plain text password
 	 * @return Authenticator
 	 */
-	public function setUser(User $user):Authenticator;
+	public function setUserLoggingIn(User $user):Authenticator;
 
 	/**
 	 * @return bool
@@ -24,7 +24,7 @@ interface Authenticator
 	public function checkPassword():bool;
 
 	/**
-	 * @return LogInUser - A user with a hashed password
+	 * @return User - A logged-in User (usually with hashed password)
 	 */
-	public function getUser():User;
+	public function getHashedUser():User;
 }

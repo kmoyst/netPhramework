@@ -2,14 +2,11 @@
 
 namespace netPhramework\dispatching;
 
-readonly class DispatchToSibling implements Dispatcher
+readonly class DispatchToSibling extends RelocateToSibling implements Dispatcher
 {
-    public function __construct(private string $leafName) {}
-
-	public function dispatch(Dispatchable $location): void
+	public function dispatch(Dispatchable $exchange): void
 	{
-		$location->getPath()->pop()->append($this->leafName);
-		$location->getParameters()->clear();
-		$location->seeOther();
+        $this->relocate($exchange);
+        $exchange->seeOther();
 	}
 }

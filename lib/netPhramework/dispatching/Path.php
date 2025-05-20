@@ -2,7 +2,7 @@
 
 namespace netPhramework\dispatching;
 
-class Path implements DispatchablePath, ReadablePath
+class Path implements RelocatablePath, ReadablePath
 {
 	private ?string $name = null;
 	private ?Path $next = null;

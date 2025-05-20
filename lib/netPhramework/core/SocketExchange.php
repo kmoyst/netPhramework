@@ -7,6 +7,7 @@ use netPhramework\common\Variables;
 use netPhramework\dispatching\CallbackManager;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\Location;
+use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\Path;
 use netPhramework\dispatching\ReadableLocation;
 use netPhramework\exceptions\Exception;
@@ -149,4 +150,9 @@ class SocketExchange implements Exchange, Response
 		$this->display($exception, $code);
 		return $this;
 	}
+
+    public function generateMutableLocation(): MutableLocation
+    {
+        return new MutableLocation(clone $this->path, clone $this->parameters);
+    }
 }

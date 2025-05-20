@@ -26,7 +26,7 @@ class UserSave extends Save
 	public function execute(Exchange $exchange, Record $record): void
 	{
 		try {
-			$userRecord = new UserRecord($record);
+			$userRecord = new EnrolledUser($record);
 			$userRecord->parseAndSet($exchange->getParameters());
 			$userRecord->save();
 			$exchange->callback($this->dispatcher ?? new DispatchToParent(''));

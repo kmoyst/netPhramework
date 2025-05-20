@@ -12,22 +12,19 @@ use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 
-class UserRecord implements User
+class EnrolledUser implements User
 {
-//	public const string USERNAME_FIELD = 'username';
-//	public const string PASSWORD_FIELD = 'password';
-
 	public function __construct(protected readonly Record $record) {}
 
 	/**
 	 * @param Variables $vars
-	 * @return UserRecord|bool|$this
+	 * @return EnrolledUser|bool|$this
 	 * @throws Exception
 	 * @throws FieldAbsent
 	 * @throws InvalidPassword
 	 * @throws InvalidValue
 	 */
-	public function parseAndSet(Variables $vars):UserRecord|bool
+	public function parseAndSet(Variables $vars):EnrolledUser|bool
 	{
 		if(!$this->confirmVarsExist($vars)) return false;
 		$this->setUsername($vars->get(self::USERNAME_KEY));
@@ -77,7 +74,7 @@ class UserRecord implements User
 	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
-	public function setUsername(string $username):UserRecord
+	public function setUsername(string $username):EnrolledUser
 	{
 		$this->record->getCell(self::USERNAME_KEY)->setValue($username);
 		return $this;
@@ -91,7 +88,7 @@ class UserRecord implements User
 	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
-	public function setPassword(string $password):UserRecord
+	public function setPassword(string $password):EnrolledUser
 	{
 		if(strlen($password) < 8)
 			throw new InvalidPassword("Password must be at least 8 characters");
@@ -117,7 +114,7 @@ class UserRecord implements User
 	 * @throws DuplicateEntryException
 	 * @throws MappingException
 	 */
-	public function save():UserRecord
+	public function save():EnrolledUser
 	{
 		$this->record->save();
 		return $this;

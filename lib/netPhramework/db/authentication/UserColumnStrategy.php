@@ -11,6 +11,6 @@ class UserColumnStrategy implements ColumnStrategy
 	public function configureColumnSet(ColumnSet $columnSet): void
 	{
 		$columnSet->clear()
-			->add(new TextColumn(UserRecord::USERNAME_KEY));
+			->add(new TextColumn(EnrolledUser::USERNAME_KEY));
 	}
 }

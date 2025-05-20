@@ -5,12 +5,12 @@ namespace netPhramework\authentication;
 class Session
 {
 	private array $sessionVars;
-	private ?SessionUser $user;
+	private ?UserInSession $user;
 
 	public function login(User $user):Session
 	{
 		$this->start();
-		// @TODO Create SessionUser and add username and password to sessionVars
+        // @TODO Create SessionUser and add username and password to sessionVars
 		return $this;
 	}
 
@@ -37,7 +37,7 @@ class Session
 		return $this->user !== null;
 	}
 
-	public function getUser(): ?SessionUser
+	public function getUser(): ?UserInSession
 	{
 		$this->start();
 		return $this->user;

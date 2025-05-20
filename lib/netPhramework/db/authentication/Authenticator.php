@@ -9,7 +9,7 @@ use netPhramework\exceptions\Exception;
 class Authenticator implements \netPhramework\authentication\Authenticator
 {
 	private User $user;
-	private UserRecord $userRecord;
+	private EnrolledUser $userRecord;
 
 	/**
 	 * A database backed authentication strategy
@@ -36,7 +36,7 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	{
 		foreach($this->userRecords as $record)
 		{
-			$userRecord = new UserRecord($record);
+			$userRecord = new EnrolledUser($record);
 			if($userRecord->getUsername() === $this->user->getUsername())
 			{
 				$this->userRecord = $userRecord;

@@ -2,7 +2,7 @@
 
 namespace netPhramework\authentication;
 
-class LogInUser implements User
+class UserLoggingIn implements User
 {
 	private string $username;
 	private string $password;
@@ -12,7 +12,7 @@ class LogInUser implements User
 		return $this->username;
 	}
 
-	public function setUsername(string $username): LogInUser
+	public function setUsername(string $username): UserLoggingIn
 	{
 		$this->username = $username;
 		return $this;
@@ -23,7 +23,7 @@ class LogInUser implements User
 		return $this->password;
 	}
 
-	public function setPassword(string $password): LogInUser
+	public function setPassword(string $password): UserLoggingIn
 	{
 		$this->password = $password;
 		return $this;

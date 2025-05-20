@@ -2,12 +2,11 @@
 
 namespace netPhramework\dispatching;
 
-readonly class DispatchToRoot implements Dispatcher
+readonly class DispatchToRoot extends RelocateToRoot implements Dispatcher
 {
-	public function dispatch(Dispatchable $location): void
+	public function dispatch(Dispatchable $exchange): void
 	{
-		$location->getPath()->clear()->append('');
-		$location->getParameters()->clear();
-		$location->seeOther();
+        $this->relocate($exchange);
+        $exchange->seeOther();
 	}
 }

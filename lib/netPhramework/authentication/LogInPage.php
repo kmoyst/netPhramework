@@ -4,26 +4,31 @@ namespace netPhramework\authentication;
 
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
+use netPhramework\dispatching\Dispatcher;
+use netPhramework\dispatching\DispatchToSibling;
+use netPhramework\dispatching\RelocateToSibling;
+use netPhramework\dispatching\Relocator;
 use netPhramework\rendering\View;
 
 class LogInPage extends Leaf
 {
-	public function __construct(
-		?string $name = 'log-in',
-		private readonly ?string $title = 'Log In',
-		private readonly ?LogInManager $manager = null)
-	{ parent::__construct($name); }
+    public function __construct(string $name = 'log-in',
+                                private readonly ?LogInManager $manager = null,
+                                private readonly ?Relocator $forForm   = null
+    ) { parent::__construct($name); }
 
-	public function handleExchange(Exchange $exchange): void
-	{
-		$manager = $this->manager ?? new LogInManager()
-		;
-		$view = new View('log-in-page');
-		$view->setTitle($this->title)->getVariables()
-			->add('formAction','authenticate')
-			->add('usernameInput', $manager->generateUsernameInput())
-			->add('passwordInput', $manager->generatePasswordInput())
-		;
-		$exchange->ok($view);
-	}
+    public function handleExchange(Exchange $exchange): void
+    {
+        $manager    = $this->manager ?? new LogInManager();
+        $relocator  = $this->forForm ?? new RelocateToSibling('authenticate');
+        $formAction = $exchange->generateMutableLocation();
+        $relocator->relocate($formAction);
+        $view = new View('log-in-page');
+        $view->getVariables()
+            ->add('usernameInput', $manager->getUsernameInput())
+            ->add('passwordInput', $manager->getPasswordInput())
+            ->add('formAction', $formAction)
+            ;
+        $exchange->ok($view);
+    }
 }

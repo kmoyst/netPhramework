@@ -6,6 +6,7 @@ use netPhramework\authentication\Session;
 use netPhramework\dispatching\Dispatchable;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\Location;
+use netPhramework\dispatching\MutableLocation;
 use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Viewable;
 use netPhramework\rendering\Wrappable;
@@ -21,4 +22,5 @@ interface Exchange extends Dispatchable
 	public function callback(Dispatcher $fallback):Exchange;
 	public function getCallbackKey():string;
 	public function stickyCallback():string|Location;
+    public function generateMutableLocation():MutableLocation;
 }

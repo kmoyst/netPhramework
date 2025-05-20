@@ -6,7 +6,7 @@ use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\rendering\View;
 
-class CheckStatus extends Leaf
+class LogInStatus extends Leaf
 {
 	public function handleExchange(Exchange $exchange): void
 	{
