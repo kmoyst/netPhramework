@@ -98,6 +98,8 @@ class EnrolledUser implements User
 		$role = $this->record->getValue($this->roleField->value);
 		if($role === null)
 			throw new AuthenticationException("Stored Role Is Empty");
+		if(UserRole::tryFrom($role) === null)
+			throw new AuthenticationException("Stored role is invalid");
 		return UserRole::tryFrom($role);
 	}
 

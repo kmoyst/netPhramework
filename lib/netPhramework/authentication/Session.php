@@ -2,6 +2,8 @@
 
 namespace netPhramework\authentication;
 
+use netPhramework\exceptions\AuthenticationException;
+
 class Session
 {
 	private SessionUserProvider $userProvider;
@@ -13,6 +15,11 @@ class Session
 		$this->userProvider = $userProvider ?? new SessionUserAggregate();
 	}
 
+	/**
+	 * @param User $user
+	 * @return $this
+	 * @throws AuthenticationException
+	 */
 	public function login(User $user):Session
 	{
 		$this->start();
@@ -21,6 +28,10 @@ class Session
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 * @throws AuthenticationException
+	 */
 	public function logout():Session
 	{
 		$this->start();
@@ -38,18 +49,30 @@ class Session
 		return $this;
 	}
 
+	/**
+	 * @return bool
+	 * @throws AuthenticationException
+	 */
 	public function confirmLoggedIn():bool
 	{
 		$this->start();
 		return $this->user !== null;
 	}
 
+	/**
+	 * @return User|null
+	 * @throws AuthenticationException
+	 */
 	public function getUser(): ?User
 	{
 		$this->start();
 		return $this->user;
 	}
 
+	/**
+	 * @return void
+	 * @throws AuthenticationException
+	 */
 	private function start(): void
 	{
 		if (session_status() == PHP_SESSION_NONE)

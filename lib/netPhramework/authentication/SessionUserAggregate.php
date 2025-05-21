@@ -2,6 +2,9 @@
 
 namespace netPhramework\authentication;
 
+use netPhramework\exceptions\AuthenticationException;
+use netPhramework\exceptions\Exception;
+
 /**
  * Among other things, this class tracks what keys are used to store the
  * user info into the session.
@@ -26,6 +29,11 @@ class SessionUserAggregate implements SessionUser, SessionUserProvider
 		return $this;
 	}
 
+	/**
+	 * @param array $vars
+	 * @return SessionUser|null
+	 * @throws AuthenticationException
+	 */
 	public function fromArray(array $vars): ?SessionUser
 	{
 		if(!array_key_exists($this->usernameKey, $vars) ||
@@ -34,7 +42,10 @@ class SessionUserAggregate implements SessionUser, SessionUserProvider
 			return null;
 		$this->setUsername($vars[$this->usernameKey]);
 		$this->setPassword($vars[$this->passwordKey]);
-		$this->setRole(UserRole::tryFrom($vars[$this->roleKey]));
+		$role = UserRole::tryFrom($vars[$this->roleKey]);
+		if($role === null)
+			throw new AuthenticationException('Invalid role in session');
+		$this->setRole($role);
 		return $this;
 	}
 
