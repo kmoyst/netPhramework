@@ -1,12 +1,17 @@
 <?php
 
 namespace netPhramework\db\mysql;
+use netPhramework\db\exceptions\MysqlException;
 use Stringable;
 
 readonly class FromCriteria implements Stringable
 {
 	public function __construct(private Criteria $criteria) {}
 
+	/**
+	 * @return string
+	 * @throws MysqlException
+	 */
 	public function get():string
 	{
 		if($this->criteria->isEmpty()) return '';
