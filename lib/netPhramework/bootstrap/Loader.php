@@ -14,7 +14,6 @@ class Loader
 		$this->extension = 'php';
 	}
 
-
 	public function autoload(string $className):void
 	{
 		$filePath = str_replace('\\','/',$className);

@@ -6,7 +6,7 @@ class Session
 {
 	private SessionUserProvider $userProvider;
 	private array $sessionVars;
-	private ?SessionUser $user;
+	private ?SessionUser $user = null;
 
 	public function __construct(?SessionUserProvider $userProvider = null)
 	{
@@ -57,7 +57,7 @@ class Session
 			session_start();
 			session_regenerate_id(true);
 			$this->sessionVars =& $_SESSION;
-			$this->userProvider->fromArray($this->sessionVars);
+			$this->user = $this->userProvider->fromArray($this->sessionVars);
 		}
 	}
 }

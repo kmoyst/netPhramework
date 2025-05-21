@@ -30,14 +30,14 @@ class Authenticate extends Leaf
 		$this->authenticator->setUserLoggingIn($user);
 		if(!$this->authenticator->checkUsername())
 		{
-			$relocator = $this->onFailure ?? new ToLogInStatus();
+			$relocator = $this->onFailure ?? new ToLoginStatus();
 			$relocator->setMessage($this->failedUsernameMessage);
 			$relocator->relocate($exchange);
 			$exchange->redirect(ResponseCode::UNAUTHORIZED);
 		}
 		elseif(!$this->authenticator->checkPassword())
 		{
-			$relocator = $this->onFailure ?? new ToLogInStatus();
+			$relocator = $this->onFailure ?? new ToLoginStatus();
 			$relocator->setMessage($this->failedPasswordMessage);
 			$relocator->relocate($exchange);
 			$exchange->redirect(ResponseCode::UNAUTHORIZED);
@@ -46,7 +46,7 @@ class Authenticate extends Leaf
 		{
 			$user = $this->authenticator->getHashedUser();
 			$exchange->getSession()->login($user);
-			$relocator = $this->onSuccess ?? new ToLogInStatus();
+			$relocator = $this->onSuccess ?? new ToLoginStatus();
 			$relocator->relocate($exchange);
 			$exchange->seeOther();
 		}
