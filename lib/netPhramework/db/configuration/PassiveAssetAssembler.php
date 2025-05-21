@@ -9,7 +9,7 @@ use netPhramework\db\processes\Add;
 use netPhramework\db\processes\Browse;
 use netPhramework\db\processes\Edit;
 
-class ReadablesAssembler extends AssetAssembler
+class PassiveAssetAssembler extends AssetAssembler
 {
 	public function defaults(): self
 	{

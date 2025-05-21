@@ -6,10 +6,9 @@ use netPhramework\db\core\RecordProcess;
 use netPhramework\db\processes\Delete;
 use netPhramework\db\processes\Insert;
 use netPhramework\db\processes\Update;
-use netPhramework\db\strategies\RecordSaveStrategy;
 use netPhramework\dispatching\Dispatcher;
 
-class WriteablesAssembler extends AssetAssembler
+class ActiveAssetAssembler extends AssetAssembler
 {
 	public function defaults(): self
 	{
