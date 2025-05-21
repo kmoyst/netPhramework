@@ -11,9 +11,10 @@ use netPhramework\rendering\View;
 class LogInPage extends Leaf
 {
     public function __construct(
+		string $name = 'log-in',
 		private readonly ?View $view = null,
 		private readonly ?Relocator $forForm = null
-    ) { parent::__construct('log-in'); }
+    ) { parent::__construct($this->name); }
 
     public function handleExchange(Exchange $exchange): void
     {
