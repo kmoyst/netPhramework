@@ -8,23 +8,23 @@ use netPhramework\exceptions\Exception;
 
 class Authenticator implements \netPhramework\authentication\Authenticator
 {
-	private User $user;
-	private EnrolledUser $userRecord;
+	private User $userLoggingIn;
+	private EnrolledUser $enrolledUser;
 
 	/**
 	 * A database backed authentication strategy
 	 */
-	public function __construct(private readonly RecordSet $userRecords) {}
+	public function __construct(private readonly RecordSet $recordSet) {}
 
-	public function setUser(User $user): Authenticator
+	public function setUserLoggingIn(User $user): Authenticator
 	{
-		$this->user = $user;
+		$this->userLoggingIn = $user;
 		return $this;
 	}
 
-	public function getUser():User
+	public function getHashedUser():User
 	{
-		return $this->userRecord;
+		return $this->enrolledUser;
 	}
 
 	/**
@@ -34,12 +34,13 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	 */
 	public function checkUsername(): bool
 	{
-		foreach($this->userRecords as $record)
+		foreach($this->recordSet as $record)
 		{
-			$userRecord = new EnrolledUser($record);
-			if($userRecord->getUsername() === $this->user->getUsername())
+			$enrolledUser = new EnrolledUser($record);
+			if($enrolledUser->getUsername()
+				=== $this->userLoggingIn->getUsername())
 			{
-				$this->userRecord = $userRecord;
+				$this->enrolledUser = $enrolledUser;
 				return true;
 			}
 		}
@@ -54,8 +55,9 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	public function checkPassword(): bool
 	{
 		return
-			isset($this->user) &&
-			isset($this->userRecord) &&
-			$this->userRecord->checkPassword($this->user->getPassword());
+			isset($this->userLoggingIn) &&
+			isset($this->enrolledUser) &&
+			$this->enrolledUser->checkPassword(
+				$this->userLoggingIn->getPassword());
 	}
 }

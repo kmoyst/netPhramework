@@ -2,6 +2,11 @@
 
 namespace netPhramework\authentication;
 
+/**
+ * Among other things, this class tracks what keys are used to store the
+ * user info into the session.
+ *
+ */
 class SessionUserAggregate implements SessionUser, SessionUserProvider
 {
 	private string $username;
@@ -18,7 +23,7 @@ class SessionUserAggregate implements SessionUser, SessionUserProvider
 		return $this;
 	}
 
-	public function fromVariables(array $vars): ?SessionUser
+	public function fromArray(array $vars): ?SessionUser
 	{
 		if(!array_key_exists($this->usernameKey, $vars) ||
 			!array_key_exists($this->passwordKey, $vars))

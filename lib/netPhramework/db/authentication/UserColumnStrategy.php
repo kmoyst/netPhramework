@@ -6,11 +6,16 @@ use netPhramework\db\presentation\recordTable\columns\TextColumn;
 use netPhramework\db\presentation\recordTable\ColumnSet;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 
-class UserColumnStrategy implements ColumnStrategy
+readonly class UserColumnStrategy implements ColumnStrategy
 {
+	public function __construct(
+		private string $usernameField =
+		EnrolledUserFields::USERNAME->value) {}
+
+
 	public function configureColumnSet(ColumnSet $columnSet): void
 	{
 		$columnSet->clear()
-			->add(new TextColumn(EnrolledUser::USERNAME_KEY));
+			->add(new TextColumn($this->usernameField));
 	}
 }

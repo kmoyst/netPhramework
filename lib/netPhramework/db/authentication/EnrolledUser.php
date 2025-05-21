@@ -14,7 +14,11 @@ use netPhramework\exceptions\InvalidPassword;
 
 class EnrolledUser implements User
 {
-	public function __construct(protected readonly Record $record) {}
+	public function __construct(
+		protected readonly Record $record,
+		protected string $usernameField = EnrolledUserFields::USERNAME->value,
+		protected string $passwordField = EnrolledUserFields::PASSWORD->value
+	) {}
 
 	/**
 	 * @param Variables $vars
@@ -27,16 +31,16 @@ class EnrolledUser implements User
 	public function parseAndSet(Variables $vars):EnrolledUser|bool
 	{
 		if(!$this->confirmVarsExist($vars)) return false;
-		$this->setUsername($vars->get(self::USERNAME_KEY));
-		$this->setPassword($vars->get(self::PASSWORD_KEY));
+		$this->setUsername($vars->get($this->usernameField));
+		$this->setPassword($vars->get($this->passwordField));
 		return $this;
 	}
 
-	public function confirmVarsExist(Variables $vars):bool
+	private function confirmVarsExist(Variables $vars):bool
 	{
 		return
-			$vars->has(self::USERNAME_KEY) &&
-			$vars->has(self::PASSWORD_KEY);
+			$vars->has($this->usernameField) &&
+			$vars->has($this->passwordField);
 	}
 
 	/**
@@ -47,7 +51,7 @@ class EnrolledUser implements User
 	 */
 	public function getUsername():string
 	{
-		$username = $this->record->getValue(self::USERNAME_KEY);
+		$username = $this->record->getValue($this->usernameField);
 		if($username === null)
 			throw new AuthenticationException("Stored username is empty");
 		return $username;
@@ -61,7 +65,7 @@ class EnrolledUser implements User
 	 */
 	public function getPassword():string
 	{
-		$password = $this->record->getValue(self::PASSWORD_KEY);
+		$password = $this->record->getValue($this->passwordField);
 		if($password === null)
 			throw new AuthenticationException("Stored Password Is Empty");
 		return $password;
@@ -76,7 +80,7 @@ class EnrolledUser implements User
 	 */
 	public function setUsername(string $username):EnrolledUser
 	{
-		$this->record->getCell(self::USERNAME_KEY)->setValue($username);
+		$this->record->getCell($this->usernameField)->setValue($username);
 		return $this;
 	}
 
@@ -93,7 +97,7 @@ class EnrolledUser implements User
 		if(strlen($password) < 8)
 			throw new InvalidPassword("Password must be at least 8 characters");
 		$hash = password_hash($password, PASSWORD_DEFAULT);
-		$this->record->getCell(self::PASSWORD_KEY)->setValue($hash);
+		$this->record->getCell($this->passwordField)->setValue($hash);
 		return $this;
 	}
 

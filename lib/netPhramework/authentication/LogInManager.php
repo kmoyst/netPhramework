@@ -7,6 +7,10 @@ use netPhramework\presentation\FormInput\Input;
 use netPhramework\presentation\FormInput\PasswordInput;
 use netPhramework\presentation\FormInput\TextInput;
 
+/**
+ * Among other things, this class tracks the login page input field names.
+ *
+ */
 readonly class LogInManager
 {
 	public function __construct(
