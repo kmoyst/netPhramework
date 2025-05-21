@@ -3,6 +3,7 @@
 namespace netPhramework\db\mysql\mysqli;
 
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\DataItem;
 use netPhramework\db\mapping\DataSet;
 use netPhramework\db\mapping\FieldType;
@@ -19,7 +20,7 @@ class DataMapper
 	/**
 	 * @param DataItem $item
 	 * @return void
-	 * @throws MappingException
+	 * @throws MysqlException
 	 */
 	public function mapItem(DataItem $item):void
 	{
@@ -42,7 +43,7 @@ class DataMapper
 				$this->bindings->addType('d');
 				break;
 			default:
-				throw new MappingException("Field type note mapped");
+				throw new MysqlException("Field type note mapped");
 		}
 
 	}
