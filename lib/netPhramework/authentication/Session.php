@@ -4,13 +4,20 @@ namespace netPhramework\authentication;
 
 class Session
 {
+	private SessionUserProvider $userProvider;
 	private array $sessionVars;
-	private ?UserInSession $user;
+	private ?SessionUser $user;
+
+	public function __construct(?SessionUserProvider $userProvider = null)
+	{
+		$this->userProvider = $userProvider ?? new SessionUserAggregate();
+	}
 
 	public function login(User $user):Session
 	{
 		$this->start();
-        // @TODO Create SessionUser and add username and password to sessionVars
+		$this->user = $this->userProvider->fromUser($user);
+		$this->user->populateVariables($this->sessionVars);
 		return $this;
 	}
 
@@ -37,7 +44,7 @@ class Session
 		return $this->user !== null;
 	}
 
-	public function getUser(): ?UserInSession
+	public function getUser(): ?User
 	{
 		$this->start();
 		return $this->user;
@@ -50,7 +57,7 @@ class Session
 			session_start();
 			session_regenerate_id(true);
 			$this->sessionVars =& $_SESSION;
-            // @TODO variables from sessionVars to instantiate a SessionUser
+			$this->userProvider->fromVariables($this->sessionVars);
 		}
 	}
 }

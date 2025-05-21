@@ -11,11 +11,12 @@ class LogInStatus extends Leaf
 	public function handleExchange(Exchange $exchange): void
 	{
 		if($exchange->getSession()->confirmLoggedIn())
-			$message = "You are logged in";
+			$message = "You are logged in. ";
 		else
-			$message = "You are not logged in";
+			$message = "You are not logged in. ";
+		$message .= $exchange->getParameters()->getOrNull('message' ?? '');
 		$view = new View('message');
-		$view->getVariables()->add('message', $message);
+		$view->getVariables()->add('message', rtrim($message));
 		$exchange->ok($view->setTitle('Check Status'));
 	}
 }
