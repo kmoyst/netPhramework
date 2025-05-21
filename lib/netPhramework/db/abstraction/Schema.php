@@ -1,8 +1,10 @@
 <?php
 
-namespace netPhramework\db\mapping;
+namespace netPhramework\db\abstraction;
 
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\mapping\Field;
+use netPhramework\db\mapping\FieldSet;
 
 interface Schema
 {

@@ -2,6 +2,8 @@
 
 namespace netPhramework\db\core;
 
+use netPhramework\db\abstraction\Schema;
+use netPhramework\db\abstraction\Table;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -9,8 +11,6 @@ use netPhramework\db\mapping\Cell;
 use netPhramework\db\mapping\CellSet;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\FieldSet;
-use netPhramework\db\mapping\Schema;
-use netPhramework\db\mapping\Table;
 
 final class Record
 {

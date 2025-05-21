@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\mapping;
+namespace netPhramework\db\abstraction;
 
 interface Database
 {

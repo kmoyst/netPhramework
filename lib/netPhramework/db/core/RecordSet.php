@@ -3,11 +3,11 @@
 namespace netPhramework\db\core;
 use Countable;
 use Iterator;
+use netPhramework\db\abstraction\Schema;
+use netPhramework\db\abstraction\Table;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\mapping\FieldSet;
-use netPhramework\db\mapping\Schema;
-use netPhramework\db\mapping\Table;
 
 final class RecordSet implements Iterator, Countable
 {

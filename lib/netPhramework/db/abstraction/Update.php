@@ -1,9 +1,11 @@
 <?php
 
-namespace netPhramework\db\mapping;
+namespace netPhramework\db\abstraction;
 
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\DataSet;
 
 interface Update
 {

@@ -1,6 +1,9 @@
 <?php
 
-namespace netPhramework\db\mapping;
+namespace netPhramework\db\mysql;
+
+use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\DataSet;
 
 class Criteria implements DataSet
 {

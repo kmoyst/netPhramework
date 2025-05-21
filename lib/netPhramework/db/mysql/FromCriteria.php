@@ -1,8 +1,8 @@
 <?php
 
 namespace netPhramework\db\mysql;
-use netPhramework\db\mapping\Criteria;
 use Stringable;
+
 readonly class FromCriteria implements Stringable
 {
 	public function __construct(private Criteria $criteria) {}

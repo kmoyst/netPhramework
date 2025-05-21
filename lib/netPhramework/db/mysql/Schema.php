@@ -6,7 +6,7 @@ use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Field;
 use netPhramework\db\mapping\FieldSet;
 
-class Schema implements \netPhramework\db\mapping\Schema
+class Schema implements \netPhramework\db\abstraction\Schema
 {
 	private Field $primary;
 	private FieldSet $fieldSet;

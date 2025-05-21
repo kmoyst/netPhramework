@@ -1,8 +1,9 @@
 <?php
 
-namespace netPhramework\db\mapping;
+namespace netPhramework\db\abstraction;
 
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\mapping\Condition;
 
 interface Select
 {

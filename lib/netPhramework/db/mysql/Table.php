@@ -3,7 +3,7 @@
 namespace netPhramework\db\mysql;
 
 
-readonly class Table implements \netPhramework\db\mapping\Table
+readonly class Table implements \netPhramework\db\abstraction\Table
 {
     public function __construct(
 		private string  $name,

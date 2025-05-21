@@ -4,10 +4,9 @@ namespace netPhramework\db\mysql;
 
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Condition;
-use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\DataSet;
 
-class Delete implements \netPhramework\db\mapping\Delete, Query
+class Delete implements \netPhramework\db\abstraction\Delete, Query
 {
 	private Criteria $criteria;
 

@@ -5,7 +5,7 @@ namespace netPhramework\db\mysql;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\DataSet;
 
-class Insert implements \netPhramework\db\mapping\Insert, Query
+class Insert implements \netPhramework\db\abstraction\Insert, Query
 {
 	private DataSet $dataSet;
 

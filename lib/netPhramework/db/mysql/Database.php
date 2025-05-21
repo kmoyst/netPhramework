@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\mysql;
 
-class Database implements \netPhramework\db\mapping\Database
+class Database implements \netPhramework\db\abstraction\Database
 {
     private array $schemas = [];
 	private array $tables = [];
