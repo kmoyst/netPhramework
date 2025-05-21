@@ -14,7 +14,7 @@ class LogInPage extends Leaf
 		string $name = 'log-in',
 		private readonly ?View $view = null,
 		private readonly ?Relocator $forForm = null
-    ) { parent::__construct($this->name); }
+    ) { parent::__construct($name); }
 
     public function handleExchange(Exchange $exchange): void
     {
