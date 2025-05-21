@@ -2,9 +2,10 @@
 
 namespace netPhramework\db\mysql;
 
-readonly class Query
+use netPhramework\db\mapping\DataSet;
+
+interface Query
 {
-	public function __construct(
-		public string $mySql,
-		public ?array $data = null) {}
+	public function getMySql():string;
+	public function getDataSet():?DataSet;
 }

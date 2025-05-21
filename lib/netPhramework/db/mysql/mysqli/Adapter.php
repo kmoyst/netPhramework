@@ -4,7 +4,11 @@ namespace netPhramework\db\mysql\mysqli;
 
 use mysqli;
 use mysqli_sql_exception;
+use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\MysqlException;
+use netPhramework\db\mapping\DataItem;
+use netPhramework\db\mapping\DataSet;
+use netPhramework\db\mapping\FieldType;
 use netPhramework\db\mysql\Query;
 
 class Adapter implements \netPhramework\db\mysql\Adapter
@@ -25,16 +29,19 @@ class Adapter implements \netPhramework\db\mysql\Adapter
     public function runQuery(Query $query):Result
 	{
 		try {
-			$statement = $this->getLink()->prepare($query->mySql);
-			if (!empty($query->data)) {
-				$types = $this->mapTypes($query->data);
-				$statement->bind_param($types, ...$query->data);
+			$mySql = $query->getMySql();
+			$statement = $this->getLink()->prepare($mySql);
+			if ($query->getDataSet() !== null &&
+				count($query->getDataSet()) !== 0)
+			{
+				$args = $this->getBindArgs($query->getDataSet());
+				$statement->bind_param($args->getTypes(), ...$args->getData());
 			}
 			if (!$statement->execute()) {
 				$message = [];
-				$message[] = "Query failed: $query->mySql with error: ";
+				$message[] = "Query failed: $mySql with error: ";
 				$message[] = $statement->error;
-				$message[] = "Values: " . implode(', ', $query->data ?? []);
+//				$message[] = "Values: " . implode(', ', $query->data ?? []);
 				throw new MysqlException(implode(' ', $message));
 			}
 			return new Result($statement);
@@ -43,20 +50,36 @@ class Adapter implements \netPhramework\db\mysql\Adapter
 		}
 	}
 
-	private function mapTypes(array $values):string
-    {
-        $types = [];
-        foreach($values as $v)
-            $types[] = $this->mapType($v);
-        return implode('',$types);
-    }
+	private function getBindArgs(DataSet $dataSet):BindArgs
+	{
+		$args = new BindArgs();
+		foreach($dataSet as $item) $this->map($args, $item);
+		return $args;
+	}
 
-    private function mapType(mixed $value):string
-    {
-        if(!is_numeric($value)) return 's';
-        elseif(is_float($value)) return 'd';
-        else return 'i';
-    }
+	private function map(BindArgs $args, DataItem $item):void
+	{
+		$value = $item->getValue();
+		$args->addQueryValue($value === '' || $value === null ? null : $value);
+		switch($item->getField()->getType())
+		{
+			case FieldType::STRING:
+			case FieldType::PARAGRAPH:
+			case FieldType::DATE:
+			case FieldType::TIME:
+				$args->addType('s');
+				break;
+			case FieldType::BOOLEAN:
+			case FieldType::INTEGER:
+				$args->addType('i');
+				break;
+			case FieldType::FLOAT:
+				$args->addType('d');
+				break;
+			default:
+				throw new MappingException("Unable to map Field type");
+		}
+	}
 
     private function getLink():mysqli
     {

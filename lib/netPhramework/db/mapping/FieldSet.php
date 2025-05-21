@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\core;
+namespace netPhramework\db\mapping;
 use Iterator;
 use netPhramework\db\exceptions\FieldAbsent;
 

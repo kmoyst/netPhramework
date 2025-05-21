@@ -2,13 +2,11 @@
 
 namespace netPhramework\db\mapping;
 
-use netPhramework\common\Operator;
 use netPhramework\db\exceptions\MappingException;
 
 interface Delete
 {
-    public function where(string $key, string $value,
-                          Operator $operator = Operator::EQUAL): Delete;
+    public function where(Condition $condition): Delete;
 
     /**
      * @return bool

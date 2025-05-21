@@ -1,13 +1,18 @@
 <?php
 
-namespace netPhramework\db\core;
+namespace netPhramework\db\mapping;
 use netPhramework\db\exceptions\InvalidValue;
 
-final class Cell
+final class Cell implements DataItem
 {
     public function __construct(
 		private readonly Field $field,
-		private ?string        $value) {}
+		private ?string $value) {}
+
+	public function getField(): Field
+	{
+		return $this->field;
+	}
 
     public function getName():string
     {

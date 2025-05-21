@@ -2,16 +2,18 @@
 
 namespace netPhramework\db\mysql;
 
-use netPhramework\common\Condition;
-use netPhramework\common\Criteria;
-use netPhramework\common\Operator;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\MysqlException;
+use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\Criteria;
+use netPhramework\db\mapping\DataItem;
+use netPhramework\db\mapping\DataSet;
 
-class Update implements \netPhramework\db\mapping\Update
+class Update implements \netPhramework\db\mapping\Update, Query, DataSet
 {
-	private array $rowData;
+	private DataSet $dataSet;
 	private Criteria $criteria;
+	private bool $iteratedData = false;
 
 	public function __construct(
 		private readonly string $tableName,
@@ -20,51 +22,98 @@ class Update implements \netPhramework\db\mapping\Update
 		$this->criteria = new Criteria();
 	}
 
-	public function withData(array $rowData):Update
+	public function withData(DataSet $dataSet):Update
 	{
-		$this->rowData = $rowData;
+		$this->dataSet = $dataSet;
 		return $this;
 	}
 
-	public function where(string $key, string $value,
-						  Operator $operator = Operator::EQUAL):Update
+	public function where(Condition $condition):Update
 	{
-		$c = new Condition();
-		$c->setKey($key);
-		$c->setValue($value);
-		$c->setOperator($operator);
-		$this->criteria->add($c);
+		$this->criteria->add($condition);
 		return $this;
 	}
 
 	public function confirm():bool
 	{
-		if($this->criteria->isEmpty())
+		if(count($this->criteria) === 0)
 			throw new MappingException("Update queries must have conditions");
+		elseif(!isset($this->dataSet))
+			throw new MappingException("Data not set for update");
 		try {
-			$stmt = new Query(
-				$this->assembleSql(), $this->assembleData());
 			return $this->adapter
-					->runQuery($stmt)
-					->getAffectedRows() >= 0;
+					->runQuery($this)
+					->getAffectedRows() >= 0
+				;
 		} catch (MysqlException $e) {
-			(new ExceptionFilter($e))->filterAndThrow();
+			new ExceptionFilter($e)->filterAndThrow();
 		}
 	}
 
-	private function assembleSql(): string
+	public function getMySql(): string
 	{
 		$bits = [];
-		foreach(array_keys($this->rowData) as $k)
+		foreach($this->dataSet->getFieldNames() as $k)
 			$bits[] = "`$k` = ?";
 		$props = implode(', ', $bits);
-		return "UPDATE `$this->tableName` SET $props WHERE $this->criteria";
+		$fromCriteria = new FromCriteria($this->criteria);
+		return "UPDATE `$this->tableName` SET $props $fromCriteria";
 	}
 
-	private function assembleData(): ?array
+	public function getDataSet(): DataSet
 	{
-		$a1 = array_values($this->rowData);
-		$a2 = $this->criteria->getValues();
-		return array_merge($a1, $a2);
+		return $this;
+	}
+
+	public function rewind(): void
+	{
+		$this->iteratedData = false;
+		$this->dataSet->rewind();
+		$this->criteria->rewind();
+	}
+
+	public function valid(): bool
+	{
+		if($this->iteratedData)
+			return $this->criteria->valid();
+		elseif($this->dataSet->valid())
+			return true;
+		else
+		{
+			$this->iteratedData = true;
+			return $this->criteria->valid();
+		}
+	}
+
+	public function current(): DataItem
+	{
+		if($this->iteratedData) return $this->criteria->current();
+		else return $this->dataSet->current();
+	}
+	public function key(): int
+	{
+		if($this->iteratedData)
+			return $this->criteria->key();
+		else
+			return $this->dataSet->key();
+	}
+
+	public function next(): void
+	{
+		if($this->iteratedData)
+			$this->criteria->next();
+		else
+			$this->dataSet->next();
+	}
+
+	public function count(): int
+	{
+		return count($this->dataSet) + count($this->criteria);
+	}
+
+	public function getFieldNames(): array
+	{
+		return array_merge(
+			$this->dataSet->getFieldNames(), $this->criteria->getFieldNames());
 	}
 }

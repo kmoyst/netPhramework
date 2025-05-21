@@ -2,8 +2,8 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\core\Field;
-use netPhramework\db\core\FieldType;
+use netPhramework\db\mapping\Field;
+use netPhramework\db\mapping\FieldType;
 use netPhramework\db\presentation\recordTable\columns\DateColumn;
 use netPhramework\db\presentation\recordTable\columns\TextColumn;
 

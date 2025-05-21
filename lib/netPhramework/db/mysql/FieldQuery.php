@@ -5,7 +5,7 @@ namespace netPhramework\db\mysql;
 
 use netPhramework\db\exceptions\MysqlException;
 
-readonly class FieldQuery
+readonly class FieldQuery implements Query
 {
 	public function __construct(
 		private string $tableName, private Adapter $adapter) {}
@@ -16,7 +16,16 @@ readonly class FieldQuery
 	 */
 	public function provideSqlColumns(): array
 	{
-		$query = new Query("SHOW COLUMNS FROM `$this->tableName`");
-		return $this->adapter->runQuery($query)->fetchAll();
+		return $this->adapter->runQuery($this)->fetchAll();
+	}
+
+	public function getMySql(): string
+	{
+		return "SHOW COLUMNS FROM `$this->tableName`";
+	}
+
+	public function getDataSet(): null
+	{
+		return null;
 	}
 }

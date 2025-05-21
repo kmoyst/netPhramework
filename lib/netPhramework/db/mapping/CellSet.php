@@ -1,10 +1,9 @@
 <?php
 
-namespace netPhramework\db\core;
-use Iterator;
+namespace netPhramework\db\mapping;
 use netPhramework\db\exceptions\FieldAbsent;
 
-final class CellSet implements Iterator
+final class CellSet implements DataSet
 {
 	private array $cells = [];
 
@@ -70,4 +69,14 @@ final class CellSet implements Iterator
     {
         $this->fieldSet->rewind();
     }
+
+	public function count(): int
+	{
+		return count($this->cells);
+	}
+
+	public function getFieldNames(): array
+	{
+		return $this->fieldSet->getNames();
+	}
 }

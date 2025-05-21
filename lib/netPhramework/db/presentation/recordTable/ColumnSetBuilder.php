@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\core\FieldSet;
+use netPhramework\db\mapping\FieldSet;
 
 class ColumnSetBuilder
 {

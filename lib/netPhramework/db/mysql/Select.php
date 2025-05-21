@@ -2,60 +2,38 @@
 
 namespace netPhramework\db\mysql;
 
-use netPhramework\common\Condition;
-use netPhramework\common\Criteria;
-use netPhramework\common\Operator;
+use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\Criteria;
+use netPhramework\db\mapping\DataSet;
 
-class Select implements \netPhramework\db\mapping\Select
+class Select implements \netPhramework\db\mapping\Select, Query
 {
-	private string $name;
-	private array $fieldNames;
 	private Criteria $criteria;
 
-	public function __construct(string $name,
+	public function __construct(private readonly string $tableName,
 								private readonly Adapter $adapter)
 	{
-		$this->name = $name;
 		$this->criteria = new Criteria();
 	}
-
-	public function setFieldNames(array $names):Select
+	public function where(Condition $condition):Select
 	{
-		$this->fieldNames = $names;
-		return $this;
-	}
-
-	public function where(string $key,
-						  string $value,
-						  Operator $operator = Operator::EQUAL):Select
-	{
-		$c = new Condition();
-		$c->setKey($key);
-		$c->setValue($value);
-		$c->setOperator($operator);
-		$this->criteria->add($c);
+		$this->criteria->add($condition);
 		return $this;
 	}
 
 	public function getData():array
 	{
-		$query = new Query(
-			$this->assembleSql(), $this->assembleData());
-		return $this->adapter->runQuery($query)->fetchAll();
+		return $this->adapter->runQuery($this)->fetchAll();
 	}
 
-	private function assembleSql(): string
+	public function getMySql(): string
 	{
-		if(isset($this->fieldNames))
-			$fieldPart = '`'.implode(`, `, $this->fieldNames).'`';
-		else
-			$fieldPart = '*';
-		$tail = (!$this->criteria->isEmpty()) ? " WHERE $this->criteria" : '';
-		return "SELECT $fieldPart FROM `$this->name`$tail";
+		$fromCriteria = new FromCriteria($this->criteria);
+		return rtrim("SELECT * FROM `$this->tableName` $fromCriteria");
 	}
 
-	private function assembleData(): ?array
+	public function getDataSet(): DataSet
 	{
-		return $this->criteria->getValues() ?? null;
+		return $this->criteria;
 	}
 }

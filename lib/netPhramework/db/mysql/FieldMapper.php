@@ -2,17 +2,17 @@
 
 namespace netPhramework\db\mysql;
 
-use netPhramework\db\core\FieldSet;
-use netPhramework\db\core\Field;
-use netPhramework\db\core\FieldType;
 use netPhramework\db\exceptions\MysqlException;
+use netPhramework\db\mapping\Field;
+use netPhramework\db\mapping\FieldSet;
+use netPhramework\db\mapping\FieldType;
 use netPhramework\db\validators\DateValidator;
 use netPhramework\db\validators\NotNullValidator;
 
 class FieldMapper
 {
 	private FieldSet $fieldSet;
-	private string $primaryKey;
+	private Field $primary;
 
 	/**
 	 * @param FieldQuery $query
@@ -24,10 +24,6 @@ class FieldMapper
 		$fieldSet = new FieldSet();
 		foreach($query->provideSqlColumns() as $sqlColumn)
 		{
-			if($sqlColumn['Key'] === 'PRI') {
-				$this->primaryKey = $sqlColumn['Field'];
-				continue;
-			}
 			$field = new Field();
 			if($sqlColumn['Key'] === 'UNI') {
 				$field->setMustBeUnique(true);
@@ -42,7 +38,10 @@ class FieldMapper
 				$field->addValidator(new NotNullValidator());
 			}
 			$this->mapType($sqlColumn['Type'], $field);
-			$fieldSet->add($field);
+			if($sqlColumn['Key'] === 'PRI')
+				$this->primary = $field;
+			else
+				$fieldSet->add($field);
 		}
 		$this->fieldSet = $fieldSet;
 	}
@@ -75,8 +74,8 @@ class FieldMapper
 		return $this->fieldSet;
 	}
 
-	public function getPrimaryKey():string
+	public function getPrimary():Field
 	{
-		return $this->primaryKey;
+		return $this->primary;
 	}
 }

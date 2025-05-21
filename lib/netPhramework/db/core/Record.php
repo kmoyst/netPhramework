@@ -5,8 +5,12 @@ namespace netPhramework\db\core;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\mapping\Table;
+use netPhramework\db\mapping\Cell;
+use netPhramework\db\mapping\CellSet;
+use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\FieldSet;
 use netPhramework\db\mapping\Schema;
+use netPhramework\db\mapping\Table;
 
 final class Record
 {
@@ -37,7 +41,7 @@ final class Record
 	 */
 	public function getIdKey():string
 	{
-		return $this->schema->getIdKey();
+		return $this->schema->getPrimary()->getName();
 	}
 
 	public function getId(): ?string
@@ -97,7 +101,10 @@ final class Record
 	{
 		return $this->table
 			->delete()
-			->where($this->getIdKey(), $this->id)
+			->where(
+				new Condition()
+					->setField($this->schema->getPrimary())
+					->setValue($this->id))
 			->confirm();
 	}
 
@@ -120,7 +127,7 @@ final class Record
     {
         $this->id = $this->table
 			->insert()
-            ->withData($this->getCellSetData())
+            ->withData($this->getCellSet())
             ->confirm();
         return $this;
     }
@@ -134,29 +141,19 @@ final class Record
     {
         $this->table
             ->update()
-            ->withData($this->getCellSetData())
-            ->where($this->getIdKey(), $this->id)
+            ->withData($this->getCellSet())
+            ->where(
+				new Condition()
+					->setField($this->schema->getPrimary())
+					->setValue($this->id)
+			)
             ->confirm();
         return $this;
     }
 
 	/**
-	 * Private method used by insert and update methods
-	 *
-	 * @return array
-	 * @throws MappingException
-	 */
-	private function getCellSetData():array
-	{
-		$data = [];
-		foreach($this->getCellSet() as $cell)
-			$data[$cell->getName()] = $cell->getValue();
-		return $data;
-	}
-
-	/**
-	 * Makez sure there's an array of data to build a CellSet
-	 * If data wasn't handed in when instantiated, this is a assumed new.
+	 * Make sure there's an array of data to build a CellSet
+	 * If data wasn't handed in when instantiated, this is assumed new.
 	 * Id would be null as well.
 	 *
 	 * @return void

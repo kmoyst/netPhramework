@@ -7,7 +7,7 @@ use netPhramework\db\exceptions\MappingException;
 
 interface Insert
 {
-	public function withData(array $data):Insert;
+	public function withData(DataSet $dataSet):Insert;
     /**
      * @return string|null
      * @throws DuplicateEntryException

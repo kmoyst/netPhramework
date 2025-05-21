@@ -5,8 +5,9 @@ use Countable;
 use Iterator;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
-use netPhramework\db\mapping\Table;
+use netPhramework\db\mapping\FieldSet;
 use netPhramework\db\mapping\Schema;
+use netPhramework\db\mapping\Table;
 
 final class RecordSet implements Iterator, Countable
 {
@@ -30,7 +31,7 @@ final class RecordSet implements Iterator, Countable
 	 */
 	public function getIdKey():string
 	{
-		return $this->schema->getIdKey();
+		return $this->schema->getPrimary()->getName();
 	}
 
 	/**

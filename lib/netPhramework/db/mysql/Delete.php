@@ -2,12 +2,12 @@
 
 namespace netPhramework\db\mysql;
 
-use netPhramework\common\Condition;
-use netPhramework\common\Criteria;
-use netPhramework\common\Operator;
 use netPhramework\db\exceptions\MysqlException;
+use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\Criteria;
+use netPhramework\db\mapping\DataSet;
 
-class Delete implements \netPhramework\db\mapping\Delete
+class Delete implements \netPhramework\db\mapping\Delete, Query
 {
 	private Criteria $criteria;
 
@@ -18,14 +18,9 @@ class Delete implements \netPhramework\db\mapping\Delete
 		$this->criteria = new Criteria();
 	}
 
-	public function where(string $key, string $value,
-						  Operator $operator = Operator::EQUAL):Delete
+	public function where(Condition $condition):Delete
 	{
-		$c = new Condition();
-		$c->setKey($key);
-		$c->setValue($value);
-		$c->setOperator($operator);
-		$this->criteria->add($c);
+		$this->criteria->add($condition);
 		return $this;
 	}
 
@@ -33,9 +28,17 @@ class Delete implements \netPhramework\db\mapping\Delete
 	{
 		if($this->criteria->isEmpty())
 			throw new MysqlException("Delete queries must have conditions");
-		$sql = "DELETE FROM `$this->tableName` WHERE $this->criteria";
-		$data = $this->criteria->getValues();
- 		$query = new Query($sql, $data);
-		return $this->adapter->runQuery($query)->getAffectedRows() >= 0;
+		return $this->adapter->runQuery($this)->getAffectedRows() >= 0;
+	}
+
+	public function getMySql(): string
+	{
+		$fromCriteria = new FromCriteria($this->criteria);
+		return "DELETE FROM `$this->tableName` $fromCriteria";
+	}
+
+	public function getDataSet(): DataSet
+	{
+		return $this->criteria;
 	}
 }

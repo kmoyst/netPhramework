@@ -2,7 +2,6 @@
 
 namespace netPhramework\db\mapping;
 
-use netPhramework\db\core\FieldSet;
 use netPhramework\db\exceptions\MappingException;
 
 interface Schema
@@ -14,8 +13,8 @@ interface Schema
 	public function getFieldSet():FieldSet;
 
 	/**
-	 * @return string
+	 * @return Field
 	 * @throws MappingException
 	 */
-	public function getIdKey():string;
+	public function getPrimary():Field;
 }
