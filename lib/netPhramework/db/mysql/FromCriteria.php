@@ -14,8 +14,8 @@ readonly class FromCriteria implements Stringable
 		foreach($this->criteria as $condition)
 		{
 			$f = $condition->getField()->getName();
-			$o = $condition->getOperator()->value;
-			$bits[] = "`$f` $o ?";
+			$o = Operator::fromMappingOperator($condition->getOperator());
+			$bits[] = "`$f` $o->value ?";
 		}
 		$glue = $this->criteria->isOr() ? ' OR ' : ' AND ';
 		return "WHERE ".implode($glue, $bits);
