@@ -57,7 +57,7 @@ class Session
 			session_start();
 			session_regenerate_id(true);
 			$this->sessionVars =& $_SESSION;
-			$this->userProvider->fromVariables($this->sessionVars);
+			$this->userProvider->fromArray($this->sessionVars);
 		}
 	}
 }
