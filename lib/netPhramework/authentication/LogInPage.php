@@ -10,9 +10,11 @@ use netPhramework\rendering\View;
 
 class LogInPage extends Leaf
 {
-    public function __construct(string $name = 'log-in',
-                                private readonly ?LogInManager $manager = null,
-                                private readonly ?Relocator $forForm   = null
+    public function __construct(
+		string $name = 'log-in',
+		private readonly ?View $view = null,
+		private readonly ?LogInManager $manager = null,
+		private readonly ?Relocator $forForm   = null
     ) { parent::__construct($name); }
 
     public function handleExchange(Exchange $exchange): void
@@ -21,7 +23,7 @@ class LogInPage extends Leaf
         $relocator  = $this->forForm ?? new RelocateToSibling('authenticate');
         $formAction = $exchange->generateMutableLocation();
         $relocator->relocate($formAction);
-        $view = new View('log-in-page');
+        $view = $this->view ?? new View('log-in-page');
         $view->getVariables()
             ->add('usernameInput', $manager->getUsernameInput())
             ->add('passwordInput', $manager->getPasswordInput())

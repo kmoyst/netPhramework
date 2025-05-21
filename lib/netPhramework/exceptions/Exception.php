@@ -46,7 +46,7 @@ class Exception extends \Exception implements Response, Wrappable, Viewable
 		}
 		else
 		{
-			$content = (new Message($this->friendlyMessage))->setTitle('Error');
+			$content = new Message($this->friendlyMessage)->setTitle('Error');
 		}
 		$responder->display(
 			$this->wrapper->wrap($content),

@@ -29,7 +29,8 @@ class Update extends RecordProcess
 	 */
 	public function execute(Exchange $exchange, Record $record): void
 	{
-		($this->saveProcess ?? (new Save(new DispatchToParent(''))))
+		$this->saveProcess ??
+			new Save($this->dispatcher ?? new DispatchToParent(''))
 			->execute($exchange, $record);
     }
 }

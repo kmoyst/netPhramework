@@ -30,7 +30,8 @@ class Insert extends RecordSetProcess
 	 */
 	public function execute(Exchange $exchange, RecordSet $recordSet): void
 	{
-		($this->saveProcess ?? (new Save(new DispatchToParent(''))))
+		($this->saveProcess ??
+			new Save($this->dispatcher ?? new DispatchToParent('')))
 			->execute($exchange, $recordSet->newRecord());
 	}
 }

@@ -11,14 +11,24 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
+use netPhramework\presentation\FormInput\Input;
+use netPhramework\presentation\FormInput\PasswordInput;
+use netPhramework\presentation\FormInput\TextInput;
 
 class EnrolledUser implements User
 {
+	protected Record $record;
+
 	public function __construct(
-		protected readonly Record $record,
 		protected string $usernameField = EnrolledUserFields::USERNAME->value,
 		protected string $passwordField = EnrolledUserFields::PASSWORD->value
 	) {}
+
+	public function setRecord(Record $record): self
+	{
+		$this->record = $record;
+		return $this;
+	}
 
 	/**
 	 * @param Variables $vars
@@ -122,5 +132,15 @@ class EnrolledUser implements User
 	{
 		$this->record->save();
 		return $this;
+	}
+
+	public function getUsernameInput():Input
+	{
+		return new TextInput($this->usernameField);
+	}
+
+	public function getPasswordInput():Input
+	{
+		return new PasswordInput($this->passwordField);
 	}
 }

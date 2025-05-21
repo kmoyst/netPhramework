@@ -2,6 +2,8 @@
 
 namespace netPhramework\authentication;
 
+use netPhramework\presentation\FormInput\Input;
+
 interface Enroller
 {
     /**
@@ -10,4 +12,6 @@ interface Enroller
      *
      */
     public function enroll(User $user):?User;
+	public function getUsernameInput():Input;
+	public function getPasswordInput():Input;
 }

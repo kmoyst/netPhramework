@@ -4,6 +4,7 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
+use netPhramework\dispatching\Location;
 
 class View implements Viewable, Wrappable
 {
@@ -20,6 +21,15 @@ class View implements Viewable, Wrappable
     {
         return $this->templateName;
     }
+
+	public function addVariable(string $key,
+						string|Viewable|Encodable|
+						Location|iterable|null $value):self
+	{
+		$this->getVariables()->add($key, $value);
+		return $this;
+	}
+
 
     public function getVariables(): Variables
     {

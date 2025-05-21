@@ -14,7 +14,9 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	/**
 	 * A database backed authentication strategy
 	 */
-	public function __construct(private readonly RecordSet $recordSet) {}
+	public function __construct(
+		private readonly RecordSet $recordSet,
+		?EnrolledUser $enrolledUser = null) {}
 
 	public function setUserLoggingIn(User $user): Authenticator
 	{
@@ -36,7 +38,8 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	{
 		foreach($this->recordSet as $record)
 		{
-			$enrolledUser = new EnrolledUser($record);
+			$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
+			$enrolledUser->setRecord($record);
 			if($enrolledUser->getUsername()
 				=== $this->userLoggingIn->getUsername())
 			{
