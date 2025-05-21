@@ -3,6 +3,7 @@
 namespace netPhramework\db\mysql;
 
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\DataSet;
 
 class Insert implements \netPhramework\db\abstraction\Insert, Query
@@ -24,7 +25,11 @@ class Insert implements \netPhramework\db\abstraction\Insert, Query
     {
 		if(!isset($this->dataSet))
 			throw new MappingException("Data not set for update");
-		return $this->adapter->runQuery($this)->lastInsertId();
+		try {
+			return $this->adapter->runQuery($this)->lastInsertId();
+		} catch (MysqlException $e) {
+			new ExceptionRefiner($e)->refineAndThrow();
+		}
 	}
 
 	public function getMySql():string

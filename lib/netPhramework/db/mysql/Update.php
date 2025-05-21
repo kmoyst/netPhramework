@@ -45,7 +45,7 @@ class Update implements \netPhramework\db\abstraction\Update, Query, DataSet
 					->getAffectedRows() >= 0
 				;
 		} catch (MysqlException $e) {
-			new ExceptionFilter($e)->filterAndThrow();
+			new ExceptionRefiner($e)->refineAndThrow();
 		}
 	}
 
