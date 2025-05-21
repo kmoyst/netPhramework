@@ -18,7 +18,7 @@ class UserRoleColumn implements Column
 
 	public function getHeader(): ColumnHeader
 	{
-		return new ColumnHeader('role', 'Role', 50);
+		return new ColumnHeader('role', 'Role', 200);
 	}
 
 	public function getSortableValue(Record $record): string
