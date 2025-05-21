@@ -6,4 +6,5 @@ interface User
 {
 	public function getUsername():string;
 	public function getPassword():string;
+	public function getRole():UserRole;
 }

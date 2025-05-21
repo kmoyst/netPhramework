@@ -45,6 +45,11 @@ final class Record
 		return $this->id;
 	}
 
+	public function isNew(): bool
+	{
+		return $this->id === null;
+	}
+
 	/**
 	 * @return array
 	 * @throws MappingException

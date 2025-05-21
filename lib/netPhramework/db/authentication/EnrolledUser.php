@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\authentication;
 use netPhramework\authentication\User;
+use netPhramework\authentication\UserRole;
 use netPhramework\common\Variables;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\DuplicateEntryException;
@@ -20,8 +21,12 @@ class EnrolledUser implements User
 	protected Record $record;
 
 	public function __construct(
-		protected string $usernameField = EnrolledUserFields::USERNAME->value,
-		protected string $passwordField = EnrolledUserFields::PASSWORD->value
+		protected EnrolledUserField $usernameField =
+		EnrolledUserField::USERNAME,
+		protected EnrolledUserField $passwordField =
+		EnrolledUserField::PASSWORD,
+		protected EnrolledUserField $roleField =
+		EnrolledUserField::ROLE
 	) {}
 
 	public function setRecord(Record $record): self
@@ -40,17 +45,18 @@ class EnrolledUser implements User
 	 */
 	public function parseAndSet(Variables $vars):EnrolledUser|bool
 	{
-		if(!$this->confirmVarsExist($vars)) return false;
-		$this->setUsername($vars->get($this->usernameField));
-		$this->setPassword($vars->get($this->passwordField));
+		if(!$this->confirmInputVarsExist($vars)) return false;
+		$this->setUsername($vars->get($this->usernameField->value));
+		$this->setPassword($vars->get($this->passwordField->value));
+		if($this->isNew()) $this->setRole(UserRole::STANDARD_USER);
 		return $this;
 	}
 
-	private function confirmVarsExist(Variables $vars):bool
+	private function confirmInputVarsExist(Variables $vars):bool
 	{
 		return
-			$vars->has($this->usernameField) &&
-			$vars->has($this->passwordField);
+			$vars->has($this->usernameField->value) &&
+			$vars->has($this->passwordField->value);
 	}
 
 	/**
@@ -61,7 +67,7 @@ class EnrolledUser implements User
 	 */
 	public function getUsername():string
 	{
-		$username = $this->record->getValue($this->usernameField);
+		$username = $this->record->getValue($this->usernameField->value);
 		if($username === null)
 			throw new AuthenticationException("Stored username is empty");
 		return $username;
@@ -75,10 +81,24 @@ class EnrolledUser implements User
 	 */
 	public function getPassword():string
 	{
-		$password = $this->record->getValue($this->passwordField);
+		$password = $this->record->getValue($this->passwordField->value);
 		if($password === null)
 			throw new AuthenticationException("Stored Password Is Empty");
 		return $password;
+	}
+
+	/**
+	 * @return UserRole
+	 * @throws AuthenticationException
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getRole(): UserRole
+	{
+		$role = $this->record->getValue($this->roleField->value);
+		if($role === null)
+			throw new AuthenticationException("Stored Role Is Empty");
+		return UserRole::tryFrom($role);
 	}
 
 	/**
@@ -90,7 +110,8 @@ class EnrolledUser implements User
 	 */
 	public function setUsername(string $username):EnrolledUser
 	{
-		$this->record->getCell($this->usernameField)->setValue($username);
+		$this->record->getCell(
+			$this->usernameField->value)->setValue($username);
 		return $this;
 	}
 
@@ -107,7 +128,7 @@ class EnrolledUser implements User
 		if(strlen($password) < 8)
 			throw new InvalidPassword("Password must be at least 8 characters");
 		$hash = password_hash($password, PASSWORD_DEFAULT);
-		$this->record->getCell($this->passwordField)->setValue($hash);
+		$this->record->getCell($this->passwordField->value)->setValue($hash);
 		return $this;
 	}
 
@@ -123,6 +144,12 @@ class EnrolledUser implements User
 		return password_verify($password, $this->getPassword());
 	}
 
+	public function setRole(UserRole $role):self
+	{
+		$this->record->getCell($this->roleField->value)->setValue($role->value);
+		return $this;
+	}
+
 	/**
 	 * @return $this
 	 * @throws DuplicateEntryException
@@ -134,13 +161,18 @@ class EnrolledUser implements User
 		return $this;
 	}
 
+	public function isNew():bool
+	{
+		return $this->record->isNew();
+	}
+
 	public function getUsernameInput():Input
 	{
-		return new TextInput($this->usernameField);
+		return new TextInput($this->usernameField->value);
 	}
 
 	public function getPasswordInput():Input
 	{
-		return new PasswordInput($this->passwordField);
+		return new PasswordInput($this->passwordField->value);
 	}
 }

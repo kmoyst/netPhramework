@@ -28,4 +28,9 @@ class UserLoggingIn implements User
 		$this->password = $password;
 		return $this;
 	}
+
+	public function getRole(): UserRole
+	{
+		return UserRole::VISITOR;
+	}
 }

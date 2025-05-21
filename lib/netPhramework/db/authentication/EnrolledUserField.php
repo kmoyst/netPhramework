@@ -2,8 +2,9 @@
 
 namespace netPhramework\db\authentication;
 
-enum EnrolledUserFields:string
+enum EnrolledUserField:string
 {
 	case USERNAME = 'username';
 	case PASSWORD = 'password';
+	case ROLE	  = 'role';
 }
