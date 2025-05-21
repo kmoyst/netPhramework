@@ -6,6 +6,7 @@ use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\dispatching\RelocateWithMessage;
 use netPhramework\dispatching\Relocator;
+use netPhramework\dispatching\RelocateToSiblingWithMessage as ToSibling;
 use netPhramework\responding\ResponseCode;
 
 class Authenticate extends Leaf
@@ -15,39 +16,36 @@ class Authenticate extends Leaf
 
 	public function __construct(
 		private readonly Authenticator $authenticator,
-        string $name = 'authenticate',
-        private readonly ?LogInManager $manager = null,
 		private readonly ?Relocator $onSuccess = null,
         private readonly ?RelocateWithMessage $onFailure = null)
 	{
-		parent::__construct($name);
+		parent::__construct('authenticate');
 	}
 
 	public function handleExchange(Exchange $exchange): void
     {
-        $manager = $this->manager ?? new LogInManager();
-		$user	 = $manager->userFromVariables($exchange->getParameters());
+        $manager   = new LogInManager();
+		$onFailure = $this->onFailure ?? new ToSibling('log-in-status');
+		$onSuccess = $this->onSuccess ?? new ToSibling('log-in-status');
+		$user	   = $manager->userFromVariables($exchange->getParameters());
 		$this->authenticator->setUserLoggingIn($user);
 		if(!$this->authenticator->checkUsername())
 		{
-			$relocator = $this->onFailure ?? new ToLoginStatus();
-			$relocator->setMessage($this->failedUsernameMessage);
-			$relocator->relocate($exchange);
+			$onFailure->setMessage($this->failedUsernameMessage);
+			$onFailure->relocate($exchange);
 			$exchange->redirect(ResponseCode::UNAUTHORIZED);
 		}
 		elseif(!$this->authenticator->checkPassword())
 		{
-			$relocator = $this->onFailure ?? new ToLoginStatus();
-			$relocator->setMessage($this->failedPasswordMessage);
-			$relocator->relocate($exchange);
+			$onFailure->setMessage($this->failedPasswordMessage);
+			$onFailure->relocate($exchange);
 			$exchange->redirect(ResponseCode::UNAUTHORIZED);
 		}
 		else
 		{
 			$user = $this->authenticator->getHashedUser();
 			$exchange->getSession()->login($user);
-			$relocator = $this->onSuccess ?? new ToLoginStatus();
-			$relocator->relocate($exchange);
+			$onSuccess->relocate($exchange);
 			$exchange->seeOther();
 		}
 	}
