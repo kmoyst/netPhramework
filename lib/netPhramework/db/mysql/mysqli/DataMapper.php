@@ -16,6 +16,11 @@ class DataMapper
 		$this->bindings = new Bindings();
 	}
 
+	/**
+	 * @param DataItem $item
+	 * @return void
+	 * @throws MappingException
+	 */
 	public function mapItem(DataItem $item):void
 	{
 		$value = $item->getValue();
@@ -36,7 +41,10 @@ class DataMapper
 			case FieldType::FLOAT:
 				$this->bindings->addType('d');
 				break;
+			default:
+				throw new MappingException("Field type note mapped");
 		}
+
 	}
 
 	public function getBindings():Bindings
