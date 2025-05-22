@@ -6,10 +6,9 @@ use netPhramework\authentication\Authenticator;
 use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
-use netPhramework\dispatching\RelocateToSiblingWithMessage as ToSibling;
-use netPhramework\dispatching\RelocateWithMessage;
-use netPhramework\dispatching\Relocator;
-use netPhramework\responding\ResponseCode;
+use netPhramework\dispatching\Dispatcher;
+use netPhramework\dispatching\DispatchToSiblingWithMessage as ToSibling;
+use netPhramework\dispatching\DispatchWithMessage;
 
 class Authenticate extends Leaf
 {
@@ -18,8 +17,8 @@ class Authenticate extends Leaf
 
 	public function __construct(
 		private readonly Authenticator $authenticator,
-		private readonly ?Relocator $onSuccess = null,
-        private readonly ?RelocateWithMessage $onFailure = null)
+		private readonly ?Dispatcher $onSuccess = null,
+        private readonly ?DispatchWithMessage $onFailure = null)
 	{
 		parent::__construct('authenticate');
 	}
@@ -27,28 +26,25 @@ class Authenticate extends Leaf
 	public function handleExchange(Exchange $exchange): void
     {
         $manager   = new LogInManager();
-		$onFailure = $this->onFailure ?? new ToSibling('log-in-status');
+		$onFailure = $this->onFailure ?? new ToSibling('log-in-failure');
 		$onSuccess = $this->onSuccess ?? new ToSibling('log-in-status');
 		$user	   = $manager->userFromVariables($exchange->getParameters());
 		$this->authenticator->setUserLoggingIn($user);
 		if(!$this->authenticator->checkUsername())
 		{
 			$onFailure->setMessage($this->failedUsernameMessage);
-			$onFailure->relocate($exchange);
-			$exchange->redirect(ResponseCode::UNAUTHORIZED);
+			$exchange->dispatch($onFailure);
 		}
 		elseif(!$this->authenticator->checkPassword())
 		{
 			$onFailure->setMessage($this->failedPasswordMessage);
-			$onFailure->relocate($exchange);
-			$exchange->redirect(ResponseCode::UNAUTHORIZED);
+			$exchange->dispatch($onFailure);
 		}
 		else
 		{
 			$user = $this->authenticator->getHashedUser();
 			$exchange->getSession()->login($user);
-			$onSuccess->relocate($exchange);
-			$exchange->seeOther();
+			$exchange->dispatch($onSuccess);
 		}
 	}
 }

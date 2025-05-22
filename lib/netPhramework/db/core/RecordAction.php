@@ -13,7 +13,7 @@ final class RecordAction extends Leaf
 
 	public function handleExchange(Exchange $exchange): void
 	{
-		$this->process->execute($exchange, $this->record);
+		$this->process->handleExchange($exchange, $this->record);
 	}
 
 	public function getName(): string

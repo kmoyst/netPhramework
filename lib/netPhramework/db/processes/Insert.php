@@ -28,10 +28,11 @@ class Insert extends RecordSetProcess
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 */
-	public function execute(Exchange $exchange, RecordSet $recordSet): void
+	public function handleExchange(
+        Exchange $exchange, RecordSet $recordSet): void
 	{
-		($this->saveProcess ??
-			new Save($this->dispatcher ?? new DispatchToParent('')))
-			->execute($exchange, $recordSet->newRecord());
+		$this->saveProcess ??
+            new Save($this->dispatcher ?? new DispatchToParent(''))
+			    ->handleExchange($exchange, $recordSet->newRecord());
 	}
 }

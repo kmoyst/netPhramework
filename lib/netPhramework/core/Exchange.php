@@ -76,9 +76,15 @@ interface Exchange
 	public function callbackLink(bool $chain = false):string|Location;
 
 	/**
-	 * A convenience method to create a form Input from callbackLink
+	 * A convenience method to generate a Hidden Form Input with callback link
 	 *
-	 * @param bool $chain
+	 * @param bool $chain - False (default) only uses current Location when
+	 * existing callback is not present. If no callback is present, it WILL
+	 * return the current Location. True interjects with current location
+	 * even when callback is present. It propagates the existing callback to
+	 * allows that information to be preserved upon return to the current
+	 * location.
+	 *
 	 * @return HiddenInput
 	 */
 	public function callbackFormInput(bool $chain = false):HiddenInput;

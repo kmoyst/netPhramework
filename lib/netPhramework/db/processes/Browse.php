@@ -39,23 +39,21 @@ class Browse extends RecordSetProcess
 	 * @throws ValueInaccessible
 	 * @throws Exception
 	 */
-	public function execute(Exchange $exchange, RecordSet $recordSet): void
+	public function handleExchange(
+		Exchange $exchange, RecordSet $recordSet): void
 	{
-		$callbackInput = new HiddenInput(
-			$exchange->getCallbackKey(), $exchange->stickyCallback())
-		;
-		$filterContext = (new FilterContext())
+		$filterContext = new FilterContext()
 			->setRecordSet($recordSet)
 			->setVariables($exchange->getParameters())
 			->parse()
 		;
-		$columnSet = (new ColumnSetBuilder())
+		$columnSet = new ColumnSetBuilder()
 			->setMapper($this->columnMapper ?? new ColumnMapper())
 			->setStrategy($this->columnStrategy)
 			->setFieldSet($recordSet->getFieldSet())
 			->build()
 		;
-		$rowSetBuilder = (new RowSetBuilder())
+		$rowSetBuilder = new RowSetBuilder()
 			->setRecordSet($recordSet)
 			->setColumnSet($columnSet)
 			->setContext($filterContext)
@@ -63,7 +61,7 @@ class Browse extends RecordSetProcess
 		;
 		$filterFormDirector = new FilterFormDirector()
 		;
-		$filterSelectFormStrategy = (new FilterSelectFormStrategy())
+		$filterSelectFormStrategy = new FilterSelectFormStrategy()
 			->setColumnHeaders($columnSet->getHeaders())
 		;
 		$filterSelectForm = $filterFormDirector
@@ -72,11 +70,13 @@ class Browse extends RecordSetProcess
 			->createForm()
 		;
 		$paginator = $filterContext->getLimit() === null ? '' :
-			(new PaginatorBuilder($filterContext, $filterFormDirector))
+			new PaginatorBuilder($filterContext, $filterFormDirector)
 				->initCalculator()
 				->buildNextForm()
 				->buildPreviousForm()
 				->getPaginator()
+		;
+		$callbackInput = $exchange->callbackFormInput()
 		;
 		$recordTable = new View('record-table');
 		$recordTable->getVariables()
@@ -85,8 +85,7 @@ class Browse extends RecordSetProcess
 			->add('callbackInput', 	$callbackInput)
 		;
 		$addButtonForm = new View('add-button-form');
-		$addButtonForm->getVariables()
-			->add('callbackInput', $callbackInput)
+		$addButtonForm->getVariables()->add('callbackInput', $callbackInput)
 		;
 		$view = new View('browse');
 		$view->getVariables()

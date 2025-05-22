@@ -6,7 +6,7 @@ namespace netPhramework\dispatching;
  * The purpose of this class is simply to provide the setMessage() method
  * and property on top a relocator. Further abstraction is not useful.
  */
-abstract class RelocateWithMessage implements Relocator
+abstract class DispatchWithMessage implements Dispatcher
 {
 	protected string $message = '';
 

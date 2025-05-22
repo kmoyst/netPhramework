@@ -10,6 +10,7 @@ use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToParent;
+use netPhramework\exceptions\Exception;
 
 class Save extends RecordProcess
 {
@@ -17,21 +18,22 @@ class Save extends RecordProcess
 		protected readonly ?Dispatcher $dispatcher = null,
 	 	?string $name = null) { parent::__construct($name); }
 
-		/**
-	 * @param Record $record
-	 * @param Exchange $exchange
-	 * @return void
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function execute(Exchange $exchange, Record $record):void
+    /**
+     * @param Exchange $exchange
+     * @param Record $record
+     * @return void
+     * @throws FieldAbsent
+     * @throws MappingException
+     * @throws Exception
+     */
+	public function handleExchange(Exchange $exchange, Record $record):void
 	{
 		try {
 			foreach($exchange->getParameters() as $k => $v)
 				if($record->getCellSet()->has($k))
 					$record->getCell($k)->setValue($v);
 			$record->save();
-			$exchange->callback($this->dispatcher ?? new DispatchToParent(''));
+			$exchange->dispatch($this->dispatcher ?? new DispatchToParent(''));
 		} catch (InvalidValue $e) {
 			$exchange->error($e);
 		}

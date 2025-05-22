@@ -13,7 +13,7 @@ final class RecordSetAction extends Leaf
 
 	public function handleExchange(Exchange $exchange): void
     {
-        $this->process->execute($exchange, $this->recordSet);
+        $this->process->handleExchange($exchange, $this->recordSet);
 	}
 
     public function getName(): string

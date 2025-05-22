@@ -22,12 +22,10 @@ class Add extends RecordSetProcess
 	public function handleExchange(Exchange $exchange, RecordSet $recordSet): void
     {
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
-		$inputSet = (new RecordFormBuilder($strategy))
+		$inputSet = new RecordFormBuilder($strategy)
 			->setRecord($recordSet->newRecord())
 			->addRecordInputs()
-			->setCallbackKey($exchange->getCallbackKey())
-			->addCallback($exchange->stickyCallback())
-			->getInputSet()
+			->getInputSet()->addCustom($exchange->callbackFormInput())
 		;
 		$view = new View('edit');
 		$view->getVariables()->add('inputs', $inputSet);

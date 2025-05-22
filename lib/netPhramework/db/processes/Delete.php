@@ -8,6 +8,7 @@ use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToParent;
+use netPhramework\exceptions\Exception;
 
 class Delete extends RecordProcess
 {
@@ -18,15 +19,16 @@ class Delete extends RecordProcess
 		parent::__construct($name);
 	}
 
-	/**
-	 * @param Exchange $exchange
-	 * @param Record $record
-	 * @return void
-	 * @throws MappingException
-	 */
-	public function execute(Exchange $exchange, Record $record): void
+    /**
+     * @param Exchange $exchange
+     * @param Record $record
+     * @return void
+     * @throws MappingException
+     * @throws Exception
+     */
+	public function handleExchange(Exchange $exchange, Record $record): void
 	{
 		$record->drop();
-		$exchange->callback($this->dispatcher ?? new DispatchToParent(''));
+		$exchange->dispatch($this->dispatcher ?? new DispatchToParent(''));
 	}
 }

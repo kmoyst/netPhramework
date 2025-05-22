@@ -16,7 +16,8 @@ class SignUp extends RecordSetProcess
 		string $name = 'sign-up')
 	{ parent::__construct($name); }
 
-	public function execute(Exchange $exchange, RecordSet $recordSet): void
+	public function handleExchange(
+		Exchange $exchange, RecordSet $recordSet): void
 	{
 		$user = $this->enrolledUser ?? new EnrolledUser();
 		$user->setRecord($recordSet->newRecord());

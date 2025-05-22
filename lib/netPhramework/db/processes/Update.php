@@ -9,6 +9,7 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToParent;
+use netPhramework\exceptions\Exception;
 
 class Update extends RecordProcess
 {
@@ -20,17 +21,18 @@ class Update extends RecordProcess
 		parent::__construct($name);
 	}
 
-	/**
-	 * @param Exchange $exchange
-	 * @param Record $record
-	 * @return void
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function execute(Exchange $exchange, Record $record): void
+    /**
+     * @param Exchange $exchange
+     * @param Record $record
+     * @return void
+     * @throws FieldAbsent
+     * @throws MappingException
+     * @throws Exception
+     */
+	public function handleExchange(Exchange $exchange, Record $record): void
 	{
-		($this->saveProcess ??
-			new Save($this->dispatcher ?? new DispatchToParent('')))
-			->execute($exchange, $record);
+		$this->saveProcess ??
+			new Save($this->dispatcher ?? new DispatchToParent(''))
+			    ->handleExchange($exchange, $record);
     }
 }

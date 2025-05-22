@@ -32,7 +32,7 @@ class UserSave extends Save
 	 * @throws Exception
 	 * @throws MappingException
 	 */
-	public function execute(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange, Record $record): void
 	{
 		$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
 		$enrolledUser->setRecord($record);
@@ -51,6 +51,6 @@ class UserSave extends Save
 			return;
 		}
 		$exchange->getSession()->login($enrolledUser);
-		$exchange->callback($this->dispatcher ?? new DispatchToParent(''));
+		$exchange->dispatch($this->dispatcher ?? new DispatchToParent(''));
 	}
 }

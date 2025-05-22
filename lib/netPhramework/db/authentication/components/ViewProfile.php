@@ -38,9 +38,7 @@ class ViewProfile extends Leaf
 				EnrolledUserField::USERNAME->value,
 				$user->getUsername());
 		$profile = new UserProfile()->setRecord($record);
-		$callbackInput = new HiddenInput(
-			$exchange->getCallbackKey(), $exchange->stickyCallback())
-		;
+		$callbackInput = $exchange->callbackFormInput();
 		$exchange->ok(new View('view-profile')
 			->addVariable('firstName', $profile->getFirstName())
 			->addVariable('lastName', $profile->getLastName())

@@ -47,6 +47,12 @@ class InputSet implements Iterator, InputSetBuilder
 		return $input;
 	}
 
+	public function addCustom(Input $input):InputSet
+	{
+		$this->inputs[$input->getName()] = $input;
+		return $this;
+	}
+
 	public function current(): Input
 	{
 		return current($this->inputs);
