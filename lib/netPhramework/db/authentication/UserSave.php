@@ -6,12 +6,10 @@ use netPhramework\core\Exchange;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
-use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\processes\Save;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToParent;
-use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 

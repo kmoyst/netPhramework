@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\mysql;
 use netPhramework\db\exceptions\MysqlException;
+use netPhramework\db\mapping\Criteria;
 use Stringable;
 
 readonly class FromCriteria implements Stringable

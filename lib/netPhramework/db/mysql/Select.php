@@ -3,6 +3,7 @@
 namespace netPhramework\db\mysql;
 
 use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\DataSet;
 
 class Select implements \netPhramework\db\abstraction\Select, Query
