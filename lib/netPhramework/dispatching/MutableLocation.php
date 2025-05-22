@@ -4,10 +4,10 @@ namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
 
-readonly class MutableLocation implements Relocatable, Location
+class MutableLocation implements Relocatable, Location
 {
-	public function __construct(private Path $path,
-								private Variables $parameters) {}
+	public function __construct(private readonly Path $path,
+								private readonly Variables $parameters) {}
 
 	public function getPath(): Path
 	{

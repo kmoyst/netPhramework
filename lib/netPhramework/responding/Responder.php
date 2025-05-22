@@ -11,7 +11,7 @@ readonly class Responder
 	public function __construct(private Encoder $encoder) {}
 
 	/**
-	 * Displays viewable content. Usually from an Exception or a Displayable
+	 * Displays viewable content. Usually from an Exception or a DisplayableContent
 	 * Response.
 	 *
 	 * @param Viewable $content

@@ -3,7 +3,6 @@
 namespace netPhramework\exceptions;
 
 use netPhramework\bootstrap\Environment;
-use netPhramework\dispatching\Location;
 use netPhramework\rendering\Wrapper;
 use netPhramework\rendering\Message;
 use netPhramework\rendering\Viewable;

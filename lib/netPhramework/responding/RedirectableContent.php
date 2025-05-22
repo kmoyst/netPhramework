@@ -4,7 +4,7 @@ namespace netPhramework\responding;
 
 use netPhramework\dispatching\Location;
 
-readonly class Redirectable implements ResponseContent
+readonly class RedirectableContent implements ResponseContent
 {
     public function __construct(private Location $location) {}
 

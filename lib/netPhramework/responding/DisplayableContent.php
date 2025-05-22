@@ -5,7 +5,7 @@ namespace netPhramework\responding;
 use netPhramework\dispatching\Location;
 use netPhramework\rendering\Viewable;
 
-readonly class Displayable implements ResponseContent
+readonly class DisplayableContent implements ResponseContent
 {
 	public function __construct(private Viewable $content) {}
 

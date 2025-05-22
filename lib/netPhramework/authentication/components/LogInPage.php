@@ -21,7 +21,7 @@ class LogInPage extends Leaf
     {
         $manager    = new LogInManager();
         $relocator  = $this->forForm ?? new RelocateToSibling('authenticate');
-        $formAction = $exchange->getRequestLocation();
+        $formAction = $exchange->getLocation();
         $relocator->relocate($formAction);
         $view = $this->view ?? new View('log-in-page');
         $view->getVariables()

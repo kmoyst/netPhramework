@@ -49,7 +49,7 @@ readonly class Socket
 				->setGuide($path)
 				->navigate()
 				->handleExchange($exchange);
-			return $exchange;
+			return $exchange->getResponse();
 		}
 		catch (Exception $exception)
 		{

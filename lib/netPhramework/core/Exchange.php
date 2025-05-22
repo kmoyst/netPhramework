@@ -23,7 +23,7 @@ interface Exchange
 	public function ok(Wrappable $content):self;
 
 	/**
-	 * Configures the Exchange for a Redirectable Response
+	 * Configures the Exchange for a RedirectableContent Response
 	 *
 	 * @param Dispatcher $fallback
 	 * @return $this
@@ -32,7 +32,7 @@ interface Exchange
 	public function dispatch(Dispatcher $fallback):self;
 
 	/**
-	 * Uses custom Exception class to create a Displayable response.
+	 * Uses custom Exception class to create a DisplayableContent response.
 	 *
 	 * @param Exception $exception
 	 * @return $this
@@ -44,7 +44,7 @@ interface Exchange
 	 *
 	 * @return Path
 	 */
-	public function getRequestPath(): Path;
+	public function getPath(): Path;
 
 	/**
 	 * Returns a mutable copy of the parameters of the originally requested
@@ -52,14 +52,14 @@ interface Exchange
 	 *
 	 * @return Variables
 	 */
-	public function getRequestParameters(): Variables;
+	public function getParameters(): Variables;
 
 	/**
 	 * Returns a mutable copy of the originally requested Location
 	 *
 	 * @return MutableLocation
 	 */
-	public function getRequestLocation(): MutableLocation;
+	public function getLocation(): MutableLocation;
 
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
