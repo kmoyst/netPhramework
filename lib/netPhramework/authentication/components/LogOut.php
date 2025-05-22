@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\authentication;
+namespace netPhramework\authentication\components;
 
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\dispatching\Dispatcher;
-use netPhramework\dispatching\DispatchToRoot;
+use netPhramework\dispatching\DispatchToRootLeaf;
 
 class LogOut extends Leaf
 {
@@ -16,6 +16,6 @@ class LogOut extends Leaf
 	public function handleExchange(Exchange $exchange): void
 	{
 		$exchange->getSession()->logout();
-		($this->dispatcher ?? new DispatchToRoot())->dispatch($exchange);
+		($this->dispatcher ?? new DispatchToRootLeaf())->dispatch($exchange);
 	}
 }

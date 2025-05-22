@@ -1,9 +1,11 @@
 <?php
 
-namespace netPhramework\db\authentication;
+namespace netPhramework\db\authentication\components;
 
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
+use netPhramework\db\authentication\EnrolledUserField;
+use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;

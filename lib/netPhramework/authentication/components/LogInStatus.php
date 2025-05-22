@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\authentication;
+namespace netPhramework\authentication\components;
 
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;

@@ -1,12 +1,14 @@
 <?php
 
-namespace netPhramework\authentication;
+namespace netPhramework\authentication\components;
 
+use netPhramework\authentication\Authenticator;
+use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
+use netPhramework\dispatching\RelocateToSiblingWithMessage as ToSibling;
 use netPhramework\dispatching\RelocateWithMessage;
 use netPhramework\dispatching\Relocator;
-use netPhramework\dispatching\RelocateToSiblingWithMessage as ToSibling;
 use netPhramework\responding\ResponseCode;
 
 class Authenticate extends Leaf

@@ -1,7 +1,8 @@
 <?php
 
-namespace netPhramework\authentication;
+namespace netPhramework\authentication\components;
 
+use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\dispatching\RelocateToSibling;
@@ -20,7 +21,7 @@ class LogInPage extends Leaf
     {
         $manager    = new LogInManager();
         $relocator  = $this->forForm ?? new RelocateToSibling('authenticate');
-        $formAction = $exchange->generateMutableLocation();
+        $formAction = $exchange->getRequestLocation();
         $relocator->relocate($formAction);
         $view = $this->view ?? new View('log-in-page');
         $view->getVariables()

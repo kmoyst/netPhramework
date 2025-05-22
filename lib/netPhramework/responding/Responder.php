@@ -10,6 +10,14 @@ readonly class Responder
 {
 	public function __construct(private Encoder $encoder) {}
 
+	/**
+	 * Displays viewable content. Usually from an Exception or a Displayable
+	 * Response.
+	 *
+	 * @param Viewable $content
+	 * @param ResponseCode $code
+	 * @return void
+	 */
 	public function display(Viewable $content, ResponseCode $code):void
     {
         http_response_code($code->value);

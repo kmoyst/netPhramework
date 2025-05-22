@@ -5,42 +5,98 @@ namespace netPhramework\dispatching;
 use netPhramework\common\Variables;
 use netPhramework\exceptions\Exception;
 
+/**
+ * A central manager for callbacks usually used by SocketExchange.
+ */
 readonly class CallbackManager
 {
+	/**
+	 * Takes necessary context to function, usually from SocketExchange
+	 *
+	 * @param string $callbackKey
+	 * @param Path $requestPath
+	 * @param Variables $parameters
+	 */
 	public function __construct(
 		private string $callbackKey,
 		private Path   $requestPath,
 		private Variables $parameters) {}
 
+	/**
+	 * Key used for callback inputs and location parameters.
+	 * Set by SiteContext.
+	 *
+	 * @return string
+	 */
 	public function getCallbackKey(): string
 	{
 		return $this->callbackKey;
 	}
 
-	public function sticky():string|Location
+	/**
+	 * Generates a callback link (usually to be added to a form in passive node)
+	 *
+	 * @param bool $chain - False only uses current location when
+	 * existing callback is not present. If no callback is present, it WILL
+	 * return the current Location. True interjects with current location
+	 * even when callback is present. It propagates the existing callback to
+	 * allows that information to be preserved upon return to the current
+	 * location.
+	 *
+	 * @return string|Location
+	 */
+	public function callbackLink(bool $chain):string|Location
 	{
-		return $this->retrieve() ?: $this->generate();
+		if($chain)
+		{
+			$location = $this->fromCurrentLocation();
+			if($caller = $this->fromParameters())
+				$location->getParameters()->add($this->callbackKey, $caller);
+			return $location;
+		}
+		else
+		{
+			return
+				$this->fromParameters() ??
+				$this->fromCurrentLocation();
+		}
 	}
 
 	/**
-	 * @return Callback|null
+	 * Returns a dispatcher to a callback Location if it exists in the current
+	 * Location's parameters (referenced by callbackKey). Null otherwise.
+	 *
+	 * @return DispatchToAbsolute|null - dispatcher to callback, null if absent
 	 * @throws Exception
 	 */
-	public function resolve():?Callback
+	public function callbackDispatcher():?DispatchToAbsolute
 	{
-		if(!($callbackUri = $this->retrieve())) return null;
+		if(!($callbackUri = $this->fromParameters())) return null;
 		$adapter = new UriAdapter($callbackUri);
-		return new Callback($adapter->getPath(), $adapter->getParameters());
+		return new DispatchToAbsolute(
+			$adapter->getPath(), $adapter->getParameters());
 	}
 
-	private function retrieve():?string
+	/**
+	 * Private method. Retrieves callback from parameters. Returns null if
+	 * none exists.
+	 *
+	 * @return string|null
+	 */
+	private function fromParameters():?string
 	{
 		return $this->parameters->getOrNull($this->callbackKey);
 	}
 
-	private function generate():Location
+	/**
+	 * Generates a readable location based on the contained Path / Parameters.
+	 * Cloned and immutable.
+	 *
+	 * @return MutableLocation
+	 */
+	private function fromCurrentLocation():MutableLocation
 	{
-		return new ReadableLocation(
+		return new MutableLocation(
 			clone $this->requestPath, clone $this->parameters);
 	}
 }

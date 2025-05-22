@@ -6,6 +6,6 @@ use netPhramework\core\Exchange;
 
 abstract class RecordSetProcess extends Process
 {
-	abstract public function execute(
+	abstract public function handleExchange(
         Exchange $exchange, RecordSet $recordSet):void;
 }

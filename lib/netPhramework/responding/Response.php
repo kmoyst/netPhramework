@@ -7,6 +7,8 @@ use netPhramework\exceptions\NoContent;
 interface Response
 {
 	/**
+	 * Delivers response through responder.
+	 *
 	 * @param Responder $responder
 	 * @return void
 	 * @throws NoContent

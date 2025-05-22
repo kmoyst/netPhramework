@@ -1,10 +1,8 @@
 <?php
 
-namespace netPhramework\presentation;
+namespace netPhramework\core;
 
 use netPhramework\common\Utils;
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
 use netPhramework\rendering\Viewable;
 use netPhramework\rendering\Wrappable;
 

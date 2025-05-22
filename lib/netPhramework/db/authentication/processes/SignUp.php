@@ -1,8 +1,9 @@
 <?php
 
-namespace netPhramework\db\authentication;
+namespace netPhramework\db\authentication\processes;
 
 use netPhramework\core\Exchange;
+use netPhramework\db\authentication\EnrolledUser;
 use netPhramework\db\core\RecordSet;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\rendering\View;

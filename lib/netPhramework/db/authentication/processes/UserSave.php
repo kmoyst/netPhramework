@@ -1,8 +1,9 @@
 <?php
 
-namespace netPhramework\db\authentication;
+namespace netPhramework\db\authentication\processes;
 
 use netPhramework\core\Exchange;
+use netPhramework\db\authentication\EnrolledUser;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -33,18 +34,23 @@ class UserSave extends Save
 	 */
 	public function execute(Exchange $exchange, Record $record): void
 	{
+		$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
+		$enrolledUser->setRecord($record);
 		try {
-			$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
-			$enrolledUser->setRecord($record);
 			$enrolledUser->parseAndSet($exchange->getParameters());
-			$enrolledUser->save();
-			$exchange->getSession()->login($enrolledUser);
-			$exchange->callback($this->dispatcher ?? new DispatchToParent(''));
-		} catch (DuplicateEntryException) {
-			$exchange->error(
-				new DuplicateEntryException("Username already exists"));
 		} catch (InvalidPassword $e) {
 			$exchange->error($e);
+			return;
 		}
+		try {
+			$enrolledUser->save();
+		} catch (DuplicateEntryException) {
+			$exchange->error(
+				new Exception(
+					"User already exists: ". $enrolledUser->getUsername()));
+			return;
+		}
+		$exchange->getSession()->login($enrolledUser);
+		$exchange->callback($this->dispatcher ?? new DispatchToParent(''));
 	}
 }

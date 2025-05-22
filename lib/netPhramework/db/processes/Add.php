@@ -19,7 +19,7 @@ class Add extends RecordSetProcess
 		parent::__construct($name);
 	}
 
-	public function execute(Exchange $exchange, RecordSet $recordSet): void
+	public function handleExchange(Exchange $exchange, RecordSet $recordSet): void
     {
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet = (new RecordFormBuilder($strategy))

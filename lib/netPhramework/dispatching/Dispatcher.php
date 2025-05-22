@@ -7,5 +7,9 @@ namespace netPhramework\dispatching;
  */
 interface Dispatcher
 {
-	public function dispatch(Dispatchable $exchange):void;
+	/**
+	 * @param Dispatchable $dispatchable
+	 * @return void
+	 */
+	public function dispatch(Dispatchable $dispatchable):void;
 }

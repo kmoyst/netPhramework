@@ -8,6 +8,8 @@ namespace netPhramework\authentication;
 interface Authenticator
 {
 	/**
+	 * Sets the user that is trying to log in for authentication process
+	 *
 	 * @param UserLoggingIn $user - A user with a plain text password
 	 * @return Authenticator
 	 */

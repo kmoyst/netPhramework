@@ -3,6 +3,7 @@
 namespace netPhramework\exceptions;
 
 use netPhramework\bootstrap\Environment;
+use netPhramework\dispatching\Location;
 use netPhramework\rendering\Wrapper;
 use netPhramework\rendering\Message;
 use netPhramework\rendering\Viewable;
@@ -19,11 +20,10 @@ class Exception extends \Exception implements Response, Wrappable, Viewable
 	private Environment $environment;
 
     public function __construct(
-		string $message = "",
-		ResponseCode $responseCode = ResponseCode::SERVER_ERROR)
+		string $message = "", ?ResponseCode $responseCode = null)
     {
         parent::__construct($message, $responseCode->value);
-		$this->responseCode = $responseCode;
+		$this->responseCode = $responseCode ?? ResponseCode::SERVER_ERROR;
     }
 
     public function setWrapper(Wrapper $wrapper): Exception
@@ -49,8 +49,7 @@ class Exception extends \Exception implements Response, Wrappable, Viewable
 			$content = new Message($this->friendlyMessage)->setTitle('Error');
 		}
 		$responder->display(
-			$this->wrapper->wrap($content),
-			$this->responseCode);
+			$this->wrapper->wrap($content), $this->responseCode);
     }
 
     public function getTemplateName(): string

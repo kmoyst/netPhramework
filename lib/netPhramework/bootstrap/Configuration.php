@@ -3,7 +3,7 @@
 namespace netPhramework\bootstrap;
 
 use netPhramework\core\Directory;
-use netPhramework\presentation\Page;
+use netPhramework\core\Page;
 use netPhramework\rendering\WrapperSetup;
 
 class Configuration
