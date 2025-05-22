@@ -75,14 +75,40 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function ok(Wrappable $content):self
 	{
-		$this->display($content, ResponseCode::OK);
+		$this->wrappedDisplay($content, ResponseCode::OK);
 		return $this;
+	}
+
+	/**
+	 * Centralized method for wrapping wrappable content a passing to
+	 * final display method.
+	 *
+	 * @param Wrappable $content
+	 * @param ResponseCode $code
+	 * @return void
+	 */
+	private function wrappedDisplay(Wrappable $content, ResponseCode $code):void
+	{
+		$this->directDisplay($this->wrapper->wrap($content), $code);
+	}
+
+	/**
+	 * Centralized method for creating Display responses.
+	 *
+	 * @param Viewable $content
+	 * @param ResponseCode $code
+	 * @return void
+	 */
+	private function directDisplay(Viewable $content, ResponseCode $code):void
+	{
+		$responseContent = new DisplayableContent($content);
+		$this->response  = new Display($responseContent, $code);
 	}
 
 	/** @inheritDoc */
 	public function error(Exception $exception): self
 	{
-		$this->response = $exception;
+		$this->response = $exception->setWrapper($this->wrapper);
 		return $this;
 	}
 
@@ -122,17 +148,6 @@ class SocketExchange implements Exchange
 	public function getSession(): Session
 	{
 		return $this->session;
-	}
-
-	private function display(Wrappable $content, ResponseCode $code):void
-	{
-		$this->displayRaw($this->wrapper->wrap($content), $code);
-	}
-
-	private function displayRaw(Viewable $content, ResponseCode $code):void
-	{
-		$responseContent = new DisplayableContent($content);
-		$this->response  = new Display($responseContent, $code);
 	}
 
 	/**
