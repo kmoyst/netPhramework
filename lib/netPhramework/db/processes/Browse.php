@@ -16,7 +16,6 @@ use netPhramework\db\presentation\recordTable\FilterFormDirector;
 use netPhramework\db\presentation\recordTable\FilterSelectFormStrategy;
 use netPhramework\db\presentation\recordTable\PaginatorBuilder;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
-use netPhramework\db\strategies\ColumnSetMapper;
 use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;

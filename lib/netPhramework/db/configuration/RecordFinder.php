@@ -6,7 +6,6 @@ use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\exceptions\QueryException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 

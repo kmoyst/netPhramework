@@ -9,12 +9,6 @@ class FileFinder
 	private array $directories = [];
 	private array $extensions = [];
 
-	public function configure(FileFinderConfigurator $configurator):FileFinder
-	{
-		$configurator->configureFileFinder($this);
-		return $this;
-	}
-
 	public function directory(string $directory):FileFinder
 	{
 		$this->directories[] = $directory;
