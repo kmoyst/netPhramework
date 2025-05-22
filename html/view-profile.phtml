@@ -1,0 +1,14 @@
+<div class="userProfileView">
+<ul>
+	<li>Username: <?=$username?></li>
+	<li>Role: <?=$role?></li>
+	<li>Email Address: <?=$emailAddress?></li>
+</ul>
+	<div>
+		<form name="edit-profile" action="edit-profile"
+			  method="get" class="inlineButton">
+			<input type="submit" name="action" value="Edit Profile"/>
+			<?=$callbackInput?>
+		</form>
+	</div>
+</div>

@@ -14,7 +14,7 @@ class LogInStatus extends Leaf
 		{
 			$user = $exchange->getSession()->getUser();
 			$message = "You are logged in. ";
-			$message .= "Your role is ".$user->getRole()->name.". ";
+			$message .= "You are a ".$user->getRole()->friendlyName().". ";
 		}
 		else
 			$message = "You are not logged in. ";

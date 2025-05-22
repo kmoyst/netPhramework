@@ -1,0 +1,49 @@
+<?php
+
+namespace netPhramework\db\authentication;
+
+use netPhramework\core\Exchange;
+use netPhramework\core\Leaf;
+use netPhramework\db\configuration\RecordFinder;
+use netPhramework\db\exceptions\FieldAbsent;
+use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\exceptions\RecordNotFound;
+use netPhramework\db\exceptions\RecordRetrievalException;
+use netPhramework\exceptions\AuthenticationException;
+use netPhramework\presentation\FormInput\HiddenInput;
+use netPhramework\rendering\View;
+
+class ViewProfile extends Leaf
+{
+	public function __construct(
+		private readonly RecordFinder $userRecords,
+		string $name = 'view-profile') { parent::__construct($name); }
+
+	/**
+	 * @param Exchange $exchange
+	 * @return void
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 * @throws RecordNotFound
+	 * @throws RecordRetrievalException
+	 * @throws AuthenticationException
+	 */
+	public function handleExchange(Exchange $exchange): void
+	{
+		$user 	= $exchange->getSession()->getUser();
+		$record = $this->userRecords
+			->findUniqueRecord(
+				EnrolledUserField::USERNAME->value,
+				$user->getUsername());
+		$profile = new UserProfile()->setRecord($record);
+		$callbackInput = new HiddenInput(
+			$exchange->getCallbackKey(), $exchange->stickyCallback())
+		;
+		$exchange->ok(new View('view-profile')
+			->addVariable('username', $profile->getUsername())
+			->addVariable('role', $profile->getRole()->friendlyName())
+			->addVariable('emailAddress', $profile->getEmailAddress())
+			->addVariable('callbackInput', $callbackInput)
+		);
+	}
+}

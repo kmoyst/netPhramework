@@ -72,7 +72,7 @@ final class CellSet implements DataSet
 
 	public function count(): int
 	{
-		return count($this->cells);
+		return count($this->data);
 	}
 
 	public function getFieldNames(): array

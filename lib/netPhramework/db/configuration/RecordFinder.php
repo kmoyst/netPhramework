@@ -23,9 +23,9 @@ readonly class RecordFinder
 	 * @throws RecordRetrievalException
 	 * @throws MappingException
 	 */
-	public function getUniqueRecord(string $fieldName, string $value):Record
+	public function findUniqueRecord(string $fieldName, string $value):Record
 	{
-		$field = $this->recordSet->getFieldSet()->getColumn($fieldName);
+		$field = $this->recordSet->getFieldSet()->getField($fieldName);
 		if(!$field->mustBeUnique())
 			throw new MappingException("Not unique field: $fieldName");
 		foreach($this->recordSet as $record)

@@ -25,6 +25,11 @@ class Utils
 		return strtolower(preg_replace('|[A-Z]|','-$0',lcfirst($camel)));
 	}
 
+	public static function screamingSnakeToSpace(string $SCREAMING_SNAKE):string
+	{
+		return ucwords(str_replace('_', ' ', strtolower($SCREAMING_SNAKE)));
+	}
+
 	public static function baseClassName(string|object $fullClass):string
 	{
 		$name = is_object($fullClass) ? get_class($fullClass) : $fullClass;
