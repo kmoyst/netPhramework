@@ -3,9 +3,7 @@
 namespace netPhramework\db\mysql\mysqli;
 
 use mysqli_sql_exception;
-use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\MysqlException;
-use netPhramework\db\mapping\Operator;
 use netPhramework\db\mysql\Query;
 
 readonly class Adapter implements \netPhramework\db\mysql\Adapter

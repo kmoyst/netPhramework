@@ -17,7 +17,6 @@ use netPhramework\db\presentation\recordTable\FilterSelectFormStrategy;
 use netPhramework\db\presentation\recordTable\PaginatorBuilder;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
 use netPhramework\exceptions\Exception;
-use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;
 
 class Browse extends RecordSetProcess

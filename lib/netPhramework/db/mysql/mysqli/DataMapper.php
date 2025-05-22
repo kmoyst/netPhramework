@@ -2,10 +2,8 @@
 
 namespace netPhramework\db\mysql\mysqli;
 
-use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\DataItem;
-use netPhramework\db\mapping\DataSet;
 use netPhramework\db\mapping\FieldType;
 
 class DataMapper

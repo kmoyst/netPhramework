@@ -33,8 +33,8 @@ class RequestInterpreter
 			$parameters = $this->requestInput->getPostParameters();
 		}
 		return new Request(
-			(new UriAdapter($this->requestInput->getUri()))->getPath(),
-			(new Variables())->merge($parameters),
+			new UriAdapter($this->requestInput->getUri())->getPath(),
+			new Variables()->merge($parameters),
 			$socket);
 	}
 }

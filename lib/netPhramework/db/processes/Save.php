@@ -33,7 +33,7 @@ class Save extends RecordProcess
 				if($record->getCellSet()->has($k))
 					$record->getCell($k)->setValue($v);
 			$record->save();
-			$exchange->dispatch($this->dispatcher ?? new DispatchToParent(''));
+			$exchange->redirect($this->dispatcher ?? new DispatchToParent(''));
 		} catch (InvalidValue $e) {
 			$exchange->error($e);
 		}

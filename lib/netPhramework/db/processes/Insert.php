@@ -10,6 +10,7 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToParent;
+use netPhramework\exceptions\Exception;
 
 class Insert extends RecordSetProcess
 {
@@ -21,13 +22,14 @@ class Insert extends RecordSetProcess
 		parent::__construct($name);
 	}
 
-	/**
-	 * @param Exchange $exchange
-	 * @param RecordSet $recordSet
-	 * @return void
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
+    /**
+     * @param Exchange $exchange
+     * @param RecordSet $recordSet
+     * @return void
+     * @throws Exception
+     * @throws FieldAbsent
+     * @throws MappingException
+     */
 	public function handleExchange(
         Exchange $exchange, RecordSet $recordSet): void
 	{

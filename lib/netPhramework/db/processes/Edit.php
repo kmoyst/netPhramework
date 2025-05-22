@@ -25,7 +25,7 @@ class Edit extends RecordProcess
 		$inputSet = new RecordFormBuilder($strategy)
 			->setRecord($record)
 			->addRecordInputs()
-			->getInputSet()->addCustom($exchange->callbackFormInput());
+			->getInputSet()->addCustom($exchange->callbackFormInput())
 		;
 		$view = new View('edit');
 		$view->getVariables()->add('inputs', $inputSet);

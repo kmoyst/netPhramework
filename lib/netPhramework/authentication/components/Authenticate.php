@@ -33,18 +33,18 @@ class Authenticate extends Leaf
 		if(!$this->authenticator->checkUsername())
 		{
 			$onFailure->setMessage($this->failedUsernameMessage);
-			$exchange->dispatch($onFailure);
+			$exchange->redirect($onFailure);
 		}
 		elseif(!$this->authenticator->checkPassword())
 		{
 			$onFailure->setMessage($this->failedPasswordMessage);
-			$exchange->dispatch($onFailure);
+			$exchange->redirect($onFailure);
 		}
 		else
 		{
 			$user = $this->authenticator->getHashedUser();
 			$exchange->getSession()->login($user);
-			$exchange->dispatch($onSuccess);
+			$exchange->redirect($onSuccess);
 		}
 	}
 }

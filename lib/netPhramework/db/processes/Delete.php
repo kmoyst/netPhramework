@@ -29,6 +29,6 @@ class Delete extends RecordProcess
 	public function handleExchange(Exchange $exchange, Record $record): void
 	{
 		$record->drop();
-		$exchange->dispatch($this->dispatcher ?? new DispatchToParent(''));
+		$exchange->redirect($this->dispatcher ?? new DispatchToParent(''));
 	}
 }

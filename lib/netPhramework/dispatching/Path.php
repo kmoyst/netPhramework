@@ -61,7 +61,7 @@ class Path implements RelocatablePath, ReadablePath
     private function parsePath(Path|string $path):Path
     {
         if(is_string($path))
-			$path = (new Path())->setName($path);
+			$path = new Path()->setName($path);
         return $path;
     }
 

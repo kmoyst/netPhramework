@@ -6,6 +6,7 @@ use Iterator;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
+use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Viewable;
 
 readonly class Row implements Iterator
@@ -14,11 +15,12 @@ readonly class Row implements Iterator
 		private ColumnSet $columnSet,
 		private Record $record) {}
 
-	/**
-	 * @return string|Viewable
-	 * @throws FieldAbsent
-	 * @throws ValueInaccessible
-	 */
+    /**
+     * @return string|Viewable
+     * @throws FieldAbsent
+     * @throws ValueInaccessible
+     * @throws Exception
+     */
 	public function current(): string|Viewable
 	{
 		return $this->columnSet->current()->getViewableValue($this->record);

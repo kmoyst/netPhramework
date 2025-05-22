@@ -14,6 +14,6 @@ abstract class Composite implements Component
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$exchange->dispatch(new DispatchToChild(''));
+		$exchange->redirect(new DispatchToChild(''));
 	}
 }

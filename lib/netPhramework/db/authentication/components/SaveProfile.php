@@ -26,6 +26,6 @@ class SaveProfile extends Leaf
 			->parseForValues($exchange->getParameters())
 			->save()
 		;
-		$exchange->dispatch(new DispatchToSibling('view-profile'));
+		$exchange->redirect(new DispatchToSibling('view-profile'));
 	}
 }

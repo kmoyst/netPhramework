@@ -14,7 +14,7 @@ use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Viewable;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\Display;
+use netPhramework\responding\BasicResponse;
 use netPhramework\responding\DisplayableContent;
 use netPhramework\responding\Redirection;
 use netPhramework\responding\Response;
@@ -23,7 +23,7 @@ use netPhramework\responding\ResponseCode;
 class SocketExchange implements Exchange
 {
 	/**
-	 * Display wrapper. Usually set by Socket and configured by Application
+	 * BasicResponse wrapper. Usually set by Socket and configured by Application
 	 * Configuration.
 	 *
 	 * @var Wrapper
@@ -61,7 +61,7 @@ class SocketExchange implements Exchange
 	private Response $response;
 
 	/** @inheritDoc */
-	public function dispatch(Dispatcher $fallback):self
+	public function redirect(Dispatcher $fallback):self
 	{
 		$path 		= clone $this->path;
 		$parameters = clone $this->parameters;
@@ -93,7 +93,7 @@ class SocketExchange implements Exchange
 	}
 
 	/**
-	 * Centralized method for creating Display responses.
+	 * Centralized method for creating BasicResponse responses.
 	 *
 	 * @param Viewable $content
 	 * @param ResponseCode $code
@@ -102,7 +102,7 @@ class SocketExchange implements Exchange
 	private function directDisplay(Viewable $content, ResponseCode $code):void
 	{
 		$responseContent = new DisplayableContent($content);
-		$this->response  = new Display($responseContent, $code);
+		$this->response  = new BasicResponse($responseContent, $code);
 	}
 
 	/** @inheritDoc */

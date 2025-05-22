@@ -2,7 +2,6 @@
 
 namespace netPhramework\core;
 
-use netPhramework\db\exceptions\MappingException;
 use netPhramework\dispatching\Path;
 use netPhramework\exceptions\ComponentNotFound;
 use netPhramework\exceptions\Exception;

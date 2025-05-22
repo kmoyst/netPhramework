@@ -29,7 +29,7 @@ interface Exchange
 	 * @return $this
 	 * @throws Exception
 	 */
-	public function dispatch(Dispatcher $fallback):self;
+	public function redirect(Dispatcher $fallback):self;
 
 	/**
 	 * Uses custom Exception class to create a DisplayableContent response.

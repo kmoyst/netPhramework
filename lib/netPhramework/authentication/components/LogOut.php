@@ -16,6 +16,6 @@ class LogOut extends Leaf
 	public function handleExchange(Exchange $exchange): void
 	{
 		$exchange->getSession()->logout();
-		$exchange->dispatch($this->dispatcher ?? new DispatchToRootLeaf());
+		$exchange->redirect($this->dispatcher ?? new DispatchToRootLeaf());
 	}
 }

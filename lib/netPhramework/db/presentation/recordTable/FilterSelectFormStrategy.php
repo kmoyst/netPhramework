@@ -34,7 +34,7 @@ class FilterSelectFormStrategy implements FilterFormStrategy
 	public function createLimitInput(string $key, ?int $value): Input
 	{
 		$options = $this->limitOptions();
-		return (new SelectInput($key,$options))->setValue($value);
+		return new SelectInput($key,$options)->setValue($value);
 	}
 
 	private function limitOptions():array

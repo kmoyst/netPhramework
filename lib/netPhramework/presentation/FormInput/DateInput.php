@@ -37,7 +37,7 @@ class DateInput extends Input
 		try {
 			$date = new DateTime($value);
 			$this->value = $date->format('Y-n-j');
-		} catch (DateMalformedStringException $e) {
+		} catch (DateMalformedStringException) {
 			throw new InvalidValue("Invalid value: $value");
 		}
 		return $this;

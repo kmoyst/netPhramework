@@ -61,7 +61,7 @@ class FilterForm implements Viewable
 
 	public function getVariables(): iterable
 	{
-		return (new Variables())
+		return new Variables()
 			->add('limitInput', $this->limitInput ?? '')
 			->add('offsetInput', $this->offsetInput ?? '')
 			->add('sortFieldInput', $this->sortFieldInput ?? '')

@@ -3,7 +3,6 @@
 namespace netPhramework\authentication;
 
 use netPhramework\exceptions\AuthenticationException;
-use netPhramework\exceptions\Exception;
 
 /**
  * Among other things, this class tracks what keys are used to store the

@@ -3,6 +3,8 @@
 namespace netPhramework\db\presentation\recordTable\columns;
 
 use netPhramework\db\core\Record;
+use netPhramework\db\exceptions\FieldAbsent;
+use netPhramework\db\exceptions\MappingException;
 use netPhramework\rendering\ReadableView;
 use netPhramework\rendering\Viewable;
 
@@ -15,6 +17,12 @@ class EmailColumn extends TextColumn
 		parent::__construct($name, $width, $headerText);
 	}
 
+    /**
+     * @param Record $record
+     * @return Viewable|string
+     * @throws FieldAbsent
+     * @throws MappingException
+     */
 	public function getViewableValue(Record $record): Viewable|string
 	{
 		return new ReadableView('email-address',

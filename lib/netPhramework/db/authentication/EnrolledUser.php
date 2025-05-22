@@ -146,6 +146,13 @@ class EnrolledUser implements User
 		return password_verify($password, $this->getPassword());
 	}
 
+    /**
+     * @param UserRole $role
+     * @return $this
+     * @throws FieldAbsent
+     * @throws InvalidValue
+     * @throws MappingException
+     */
 	public function setRole(UserRole $role):self
 	{
 		$this->record->getCell($this->roleField->value)->setValue($role->value);

@@ -2,7 +2,6 @@
 
 namespace netPhramework\responding;
 
-use netPhramework\dispatching\Location;
 use netPhramework\rendering\Viewable;
 
 readonly class DisplayableContent implements ResponseContent

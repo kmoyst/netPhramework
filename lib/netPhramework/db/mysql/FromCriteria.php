@@ -27,6 +27,10 @@ readonly class FromCriteria implements Stringable
 		return "WHERE ".implode($glue, $bits);
 	}
 
+    /**
+     * @return string
+     * @throws MysqlException
+     */
 	public function __toString(): string
 	{
 		return $this->get();

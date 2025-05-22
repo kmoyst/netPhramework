@@ -27,6 +27,7 @@ interface Column
      * @return Viewable|string
      * @throws ValueInaccessible
      * @throws FieldAbsent
+     * @throws Exception
      */
 	public function getViewableValue(Record $record):Viewable|string;
 }

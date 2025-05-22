@@ -12,7 +12,6 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\AuthenticationException;
-use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;
 
 class ViewProfile extends Leaf

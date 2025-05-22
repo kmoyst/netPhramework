@@ -51,6 +51,6 @@ class UserSave extends Save
 			return;
 		}
 		$exchange->getSession()->login($enrolledUser);
-		$exchange->dispatch($this->dispatcher ?? new DispatchToParent(''));
+		$exchange->redirect($this->dispatcher ?? new DispatchToParent(''));
 	}
 }
