@@ -8,7 +8,6 @@ use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\Path;
-use netPhramework\dispatching\ReadablePath;
 use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Wrappable;
@@ -56,6 +55,13 @@ interface Exchange
 	public function getRequestParameters(): Variables;
 
 	/**
+	 * Returns a mutable copy of the originally requested Location
+	 *
+	 * @return MutableLocation
+	 */
+	public function getRequestLocation(): MutableLocation;
+
+	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
 	 * @param bool $chain - False (default) only uses current location when
@@ -83,12 +89,5 @@ interface Exchange
 	 * @return Session
 	 */
 	public function getSession():Session;
-
-	/**
-	 * Returns a mutable copy of the originally requested Location
-	 *
-	 * @return MutableLocation
-	 */
-	public function getRequestLocation(): MutableLocation;
 
 }
