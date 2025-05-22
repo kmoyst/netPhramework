@@ -40,6 +40,8 @@ class ViewProfile extends Leaf
 			$exchange->getCallbackKey(), $exchange->stickyCallback())
 		;
 		$exchange->ok(new View('view-profile')
+			->addVariable('firstName', $profile->getFirstName())
+			->addVariable('lastName', $profile->getLastName())
 			->addVariable('username', $profile->getUsername())
 			->addVariable('role', $profile->getRole()->friendlyName())
 			->addVariable('emailAddress', $profile->getEmailAddress())

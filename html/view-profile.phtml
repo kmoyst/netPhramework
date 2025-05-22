@@ -1,8 +1,10 @@
 <div class="userProfileView">
+	<h2><?=$firstName?> <?=$lastName?></h2>
 <ul>
 	<li>Username: <?=$username?></li>
 	<li>Role: <?=$role?></li>
-	<li>Email Address: <?=$emailAddress?></li>
+	<li>Email Address: <a href="mailto:
+	<?="$firstName $lastName <$emailAddress>"?>"><?=$emailAddress?></li>
 </ul>
 	<div>
 		<form name="edit-profile" action="edit-profile"

@@ -11,6 +11,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\processes\Save;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToParent;
+use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 
@@ -41,7 +42,10 @@ class UserSave extends Save
 			$enrolledUser->save();
 			$exchange->getSession()->login($enrolledUser);
 			$exchange->callback($this->dispatcher ?? new DispatchToParent(''));
-		} catch (DuplicateEntryException|InvalidValue|InvalidPassword $e) {
+		} catch (DuplicateEntryException) {
+			$exchange->error(
+				new DuplicateEntryException("Username already exists"));
+		} catch (InvalidPassword $e) {
 			$exchange->error($e);
 		}
 	}

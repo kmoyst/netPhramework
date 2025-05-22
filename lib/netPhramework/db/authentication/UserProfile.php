@@ -54,6 +54,26 @@ class UserProfile
 	}
 
 	/**
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getFirstName(): ?string
+	{
+		return $this->record->getValue(UserProfileField::FIRST_NAME->value);
+	}
+
+	/**
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getLastName(): ?string
+	{
+		return $this->record->getValue(UserProfileField::LAST_NAME->value);
+	}
+
+	/**
 	 * @param InputSet $inputSet
 	 * @return UserProfile
 	 * @throws FieldAbsent
@@ -64,7 +84,15 @@ class UserProfile
 		$inputSet
 			->textInput(UserProfileField::EMAIL->value)
 			->setValue($this->getEmailAddress())
-		;
+			;
+		$inputSet
+			->textInput(UserProfileField::FIRST_NAME->value)
+			->setValue($this->getFirstName())
+			;
+		$inputSet
+			->textInput(UserProfileField::LAST_NAME->value)
+			->setValue($this->getLastName())
+			;
 		return $this;
 	}
 

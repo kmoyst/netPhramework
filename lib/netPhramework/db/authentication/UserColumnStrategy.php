@@ -16,7 +16,8 @@ readonly class UserColumnStrategy implements ColumnStrategy
 
 	public function configureColumnSet(ColumnSet $columnSet): void
 	{
-		$columnSet->clear()
+		$columnSet
+			->remove('password')
 			->add(new TextColumn($this->usernameField))
 			->add(new UserRoleColumn())
 		;

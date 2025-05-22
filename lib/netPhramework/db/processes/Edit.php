@@ -22,7 +22,7 @@ class Edit extends RecordProcess
 	public function execute(Exchange $exchange, Record $record): void
 	{
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
-		$inputSet = (new RecordFormBuilder($strategy))
+		$inputSet = new RecordFormBuilder($strategy)
 			->setRecord($record)
 			->addRecordInputs()
 			->setCallbackKey($exchange->getCallbackKey())
