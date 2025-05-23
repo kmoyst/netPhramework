@@ -63,15 +63,12 @@ class SocketExchange implements Exchange
 	public function error(Exception $exception, Dispatcher $fallback): void
 	{
         try {
-            //$vars = $this->redirect($fallback);
 			$this->redirect($fallback);
             $this->session->addErrorMessage(
                 rtrim($exception->getMessage(),": "));
             $this->session->addErrorCode($exception->getResponseCode());
-			//return $vars;
         } catch (Exception) {
             $this->response = $exception->setWrapper($this->wrapper);
-			//return $exception->getVariables();
         }
 	}
 
