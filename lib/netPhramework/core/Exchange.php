@@ -12,6 +12,10 @@ use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Wrappable;
 use netPhramework\responding\ResponseCode;
 
+/**
+ * The central mediator for the Request-Response cycle
+ *
+ */
 interface Exchange
 {
 	/**

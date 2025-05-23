@@ -8,6 +8,8 @@ use netPhramework\authentication\SessionUserProvider;
 use netPhramework\authentication\User;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\Exception;
+use netPhramework\rendering\ReadableView;
+use netPhramework\rendering\Viewable;
 use netPhramework\responding\ResponseCode;
 
 class Session
@@ -79,6 +81,22 @@ class Session
             return $code;
         }
         else return ResponseCode::OK;
+    }
+
+    /**
+     * Convenience method to generate a basic error Viewable and clear
+     * the error data from the Session. Return null when no error exists.
+     *
+     * @return Viewable|null
+     * @throws Exception
+     */
+    public function getViewableError():?Viewable
+    {
+        if($errorMessage = $this->getErrorMessageAndClear())
+        {
+            return new ReadableView('error-message',['message'=>$errorMessage]);
+        }
+        else return null;
     }
 
 	/**

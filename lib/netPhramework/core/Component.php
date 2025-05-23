@@ -8,6 +8,10 @@ use netPhramework\exceptions\Exception;
 interface Component
 {
 
+    /**
+     * @param Exchange $exchange
+     * @return void
+     */
 	public function handleExchange(Exchange $exchange):void;
 
 	/**

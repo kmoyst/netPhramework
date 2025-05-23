@@ -20,42 +20,21 @@ use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {
-	/**
-	 * BasicResponse wrapper. Usually set by Socket and configured by Application
-	 * Configuration.
-	 *
-	 * @var Wrapper
-	 */
-    private Wrapper $wrapper;
-	/**
-	 * The original request Path - remains immutable.
-	 *
-	 * @var Path
-	 */
+    /**
+     * The request Path. SocketExchange protects immutability.
+     *
+     * @var Path
+     */
 	private Path $path;
-	/**
-	 * The original request Parameters - remains immutable.
-	 *
-	 * @var Variables
-	 */
+    /**
+     * The request Parameters. SocketExchange protects immutability.
+     *
+     * @var Variables
+     */
 	private Variables $parameters;
-	/**
-	 * Current Session.
-	 *
-	 * @var Session
-	 */
 	private Session $session;
-	/**
-	 * Centralized manager for callbacks.
-	 *
-	 * @var CallbackManager
-	 */
 	private CallbackManager $callbackManager;
-	/**
-	 * Response set by Exchange handler
-	 *
-	 * @var Response
-	 */
+    private Wrapper $wrapper;
 	private Response $response;
 
 	/** @inheritDoc */
@@ -75,13 +54,7 @@ class SocketExchange implements Exchange
 		$this->display($content, ResponseCode::OK);
 	}
 
-    /**
-     * Centralized method for responding with wrapped Display
-     *
-     * @param Wrappable $content
-     * @param ResponseCode $code
-     * @return void
-     */
+    /** @inheritDoc */
 	public function display(Wrappable $content, ResponseCode $code):void
 	{
 		$this->directDisplay($this->wrapper->wrap($content), $code);
