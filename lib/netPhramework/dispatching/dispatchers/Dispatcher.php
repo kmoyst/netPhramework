@@ -25,6 +25,6 @@ readonly class Dispatcher
 	{
 		$this->relocator->relocate($dispatchable->getPath());
 		$dispatchable->getParameters()->merge($this->parameters ?? []);
-		$dispatchable->redirect($this->code);
+		$dispatchable->setResponseCode($this->code);
 	}
 }

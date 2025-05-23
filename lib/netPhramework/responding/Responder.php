@@ -27,6 +27,6 @@ readonly class Responder
     public function redirect(ReadableLocation $location, ResponseCode $code):void
     {
         http_response_code($code->value);
-        header("ReadableLocation: " . new UriFromLocation($location));
+        header("Location: " . new UriFromLocation($location));
     }
 }
