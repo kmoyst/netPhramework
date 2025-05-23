@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\dispatching;
+namespace netPhramework\dispatching\interfaces;
 
 /**
  * Basic Path interface. Can be read / traversed, but not modified.

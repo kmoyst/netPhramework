@@ -3,8 +3,10 @@
 namespace netPhramework\rendering;
 
 use netPhramework\common\FileFinder;
-use netPhramework\dispatching\Location;
+use netPhramework\dispatching\interfaces\ReadableLocation;
+use netPhramework\dispatching\interfaces\ReadablePath;
 use netPhramework\dispatching\UriFromLocation;
+use netPhramework\dispatching\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
 
 readonly class Encoder
@@ -29,12 +31,21 @@ readonly class Encoder
 	}
 
 	/**
-	 * @param Location $location
+	 * @param ReadableLocation $location
 	 * @return string
 	 */
-	public function encodeLocation(Location $location):string
+	public function encodeLocation(ReadableLocation $location):string
 	{
 		return new UriFromLocation($location);
+	}
+
+	/**
+	 * @param ReadablePath $path
+	 * @return string
+	 */
+	public function encodePath(ReadablePath $path):string
+	{
+		return new UriFromPath($path);
 	}
 
 	/**
@@ -55,16 +66,18 @@ readonly class Encoder
     }
 
     private function encode(
-        Encodable|Viewable|Location|
+        Encodable|Viewable|ReadableLocation|ReadablePath|
 		string|iterable|null $encodable):string|array
     {
 		if($encodable instanceof Encodable)
 			return $encodable->encode($this);
         elseif($encodable instanceof Viewable)
             return $this->encodeViewable($encodable);
-		elseif($encodable instanceof Location)
+		elseif($encodable instanceof ReadableLocation)
 			return $this->encodeLocation($encodable);
-        elseif(is_string($encodable))
+		elseif($encodable instanceof ReadablePath)
+			return $this->encodePath($encodable);
+		elseif(is_string($encodable))
             return $this->encodeText($encodable);
         elseif(is_iterable($encodable))
             return $this->encodeIterable($encodable);

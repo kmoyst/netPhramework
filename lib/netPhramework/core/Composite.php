@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-use netPhramework\dispatching\DispatchToChild;
+use netPhramework\dispatching\dispatchers\DispatchToChild;
 use netPhramework\exceptions\Exception;
 
 abstract class Composite implements Component

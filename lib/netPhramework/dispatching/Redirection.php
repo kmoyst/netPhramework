@@ -2,11 +2,13 @@
 
 namespace netPhramework\dispatching;
 
+use netPhramework\dispatching\interfaces\DispatchableLocation;
 use netPhramework\responding\Responder;
 use netPhramework\responding\Response;
 use netPhramework\responding\ResponseCode;
 
-class DispatchableLocation extends MutableLocation implements Dispatchable, Response
+class Redirection
+	extends MutableLocation implements DispatchableLocation, Response
 {
 	private ResponseCode $responseCode;
 
@@ -15,7 +17,12 @@ class DispatchableLocation extends MutableLocation implements Dispatchable, Resp
 		$responder->redirect($this, $this->responseCode);
 	}
 
-	/** @inheritDoc */
+	/**
+	 * Convenience method to set common Response code for redirect method.
+	 * Finalizes the dispatch based on current Path and Parameters.
+	 *
+	 * @return $this
+	 */
 	public function seeOther(): self
 	{
 		$this->redirect(ResponseCode::SEE_OTHER);
@@ -23,6 +30,8 @@ class DispatchableLocation extends MutableLocation implements Dispatchable, Resp
 	}
 
 	/**
+	 * To set Response to redirectable with explicit code.
+	 * Finalizes the dispatch based on current Path and Parameters.
 	 *
 	 * @param ResponseCode $code
 	 * @return $this

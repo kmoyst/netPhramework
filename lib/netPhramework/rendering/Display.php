@@ -1,10 +1,12 @@
 <?php
 
-namespace netPhramework\responding;
+namespace netPhramework\rendering;
 
-use netPhramework\rendering\Viewable;
+use netPhramework\responding\Responder;
+use netPhramework\responding\Response;
+use netPhramework\responding\ResponseCode;
 
-readonly class DisplayableResponse implements Response
+readonly class Display implements Response
 {
 	public function __construct(private Viewable $content, private ResponseCode $code) {}
 

@@ -10,13 +10,10 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\processes\Save;
-use netPhramework\dispatching\Dispatcher;
-use netPhramework\dispatching\DispatchToParent;
-use netPhramework\dispatching\DispatchToRootLeaf;
-use netPhramework\dispatching\DispatchToSibling;
+use netPhramework\dispatching\dispatchers\Dispatcher;
+use netPhramework\dispatching\dispatchers\DispatchToSibling;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
-use netPhramework\exceptions\InvalidSession;
 
 class UserSave extends Save
 {

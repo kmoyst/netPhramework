@@ -1,13 +1,13 @@
 <?php
 
-namespace netPhramework\dispatching;
+namespace netPhramework\dispatching\interfaces;
 
 /**
- * The most basic Location interface. Provides ReadablePath and iterable
+ * The most basic ReadableLocation interface. Provides ReadablePath and iterable
  * Parameters.
  *
  */
-interface Location
+interface ReadableLocation
 {
 	/**
 	 * Returns a readable Path.

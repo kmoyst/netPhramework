@@ -3,8 +3,8 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\DispatchToAbsolute;
-use netPhramework\dispatching\Location;
+use netPhramework\dispatching\dispatchers\DispatchToRoot;
+use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\Path;
 use netPhramework\dispatching\UriAdapter;
@@ -43,14 +43,14 @@ readonly class CallbackManager
 	 *
 	 * @param bool $chain - False only uses current location when
 	 * existing callback is not present. If no callback is present, it WILL
-	 * return the current Location. True interjects with current location
+	 * return the current ReadableLocation. True interjects with current location
 	 * even when callback is present. It propagates the existing callback to
 	 * allows that information to be preserved upon return to the current
 	 * location.
 	 *
-	 * @return string|Location
+	 * @return string|ReadableLocation
 	 */
-	public function callbackLink(bool $chain):string|Location
+	public function callbackLink(bool $chain):string|ReadableLocation
 	{
 		if($chain)
 		{
@@ -68,17 +68,17 @@ readonly class CallbackManager
 	}
 
 	/**
-	 * Returns a dispatcher to a callback Location if it exists in the current
-	 * Location's parameters (referenced by callbackKey). Null otherwise.
+	 * Returns a dispatcher to a callback ReadableLocation if it exists in the current
+	 * ReadableLocation's parameters (referenced by callbackKey). Null otherwise.
 	 *
-	 * @return DispatchToAbsolute|null - dispatcher to callback, null if absent
+	 * @return DispatchToRoot|null - dispatcher to callback, null if absent
 	 * @throws Exception
 	 */
-	public function callbackDispatcher():?DispatchToAbsolute
+	public function callbackDispatcher():?DispatchToRoot
 	{
 		if(!($callbackUri = $this->fromParameters())) return null;
 		$adapter = new UriAdapter($callbackUri);
-		return new DispatchToAbsolute(
+		return new DispatchToRoot(
 			$adapter->getPath(), $adapter->getParameters());
 	}
 

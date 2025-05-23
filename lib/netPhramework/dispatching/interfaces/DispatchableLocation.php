@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\dispatching;
+namespace netPhramework\dispatching\interfaces;
 
 use netPhramework\common\Variables;
 use netPhramework\responding\ResponseCode;
@@ -8,7 +8,7 @@ use netPhramework\responding\ResponseCode;
 /**
  * Used by Dispatcher to prepare Redirectable ResponseContent.
  */
-interface Dispatchable extends Relocatable
+interface DispatchableLocation
 {
 	/**
 	 * Convenience method to set common Response code for redirect method.
@@ -27,9 +27,13 @@ interface Dispatchable extends Relocatable
 	 */
 	public function redirect(ResponseCode $code):self;
 
-	/** @inheritDoc */
+	/***
+	 * @return RelocatablePath
+	 */
 	public function getPath():RelocatablePath;
 
-	/** @inheritDoc */
+	/**
+	 * @return Variables
+	 */
 	public function getParameters():Variables;
 }

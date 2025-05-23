@@ -6,8 +6,6 @@ use netPhramework\authentication\SessionUser;
 use netPhramework\authentication\SessionUserAggregate;
 use netPhramework\authentication\SessionUserProvider;
 use netPhramework\authentication\User;
-use netPhramework\exceptions\AuthenticationException;
-use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\ReadableView;
 use netPhramework\rendering\Viewable;

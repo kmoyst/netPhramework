@@ -1,7 +1,7 @@
 <?php
 
 namespace netPhramework\responding;
-use netPhramework\dispatching\Location;
+use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\UriFromLocation;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Viewable;
@@ -24,9 +24,9 @@ readonly class Responder
         echo $this->encoder->encodeViewable($content);
     }
 
-    public function redirect(Location $location, ResponseCode $code):void
+    public function redirect(ReadableLocation $location, ResponseCode $code):void
     {
         http_response_code($code->value);
-        header("Location: " . new UriFromLocation($location));
+        header("ReadableLocation: " . new UriFromLocation($location));
     }
 }

@@ -4,10 +4,16 @@ namespace netPhramework\authentication\components;
 
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
+use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 
 class LogInStatus extends Leaf
 {
+	/**
+	 * @param Exchange $exchange
+	 * @return void
+	 * @throws InvalidSession
+	 */
 	public function handleExchange(Exchange $exchange): void
 	{
 		if($exchange->getSession()->confirmLoggedIn())

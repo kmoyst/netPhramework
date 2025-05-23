@@ -5,8 +5,8 @@ namespace netPhramework\authentication\components;
 use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
-use netPhramework\dispatching\RelocateToSibling;
-use netPhramework\dispatching\Relocator;
+use netPhramework\dispatching\relocators\RelocateToSibling;
+use netPhramework\dispatching\relocators\Relocator;
 use netPhramework\exceptions\Exception;
 use netPhramework\rendering\View;
 
@@ -27,7 +27,7 @@ class LogInPage extends Leaf
     {
         $manager    = new LogInManager();
         $relocator  = $this->forForm ?? new RelocateToSibling('authenticate');
-        $formAction = $exchange->getLocation();
+        $formAction = $exchange->getPath();
         $relocator->relocate($formAction);
         $errorView    = $exchange->getSession()->getViewableError();
         $responseCode = $exchange->getSession()->resolveResponseCode();

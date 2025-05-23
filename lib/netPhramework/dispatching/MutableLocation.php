@@ -3,11 +3,12 @@
 namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
+use netPhramework\dispatching\interfaces\ReadableLocation;
 
 /**
- * A fully readable and modifiable Location
+ * A fully readable and modifiable ReadableLocation
  */
-class MutableLocation implements Relocatable, Location
+class MutableLocation implements ReadableLocation
 {
     private Path $path;
     private Variables $parameters;

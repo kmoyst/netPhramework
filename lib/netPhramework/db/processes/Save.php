@@ -8,9 +8,8 @@ use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\dispatching\Dispatcher;
-use netPhramework\dispatching\DispatchToParent;
-use netPhramework\dispatching\DispatchToSibling;
+use netPhramework\dispatching\dispatchers\Dispatcher;
+use netPhramework\dispatching\dispatchers\DispatchToParent;
 use netPhramework\exceptions\Exception;
 
 class Save extends RecordProcess

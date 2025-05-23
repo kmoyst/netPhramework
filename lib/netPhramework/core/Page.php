@@ -2,7 +2,8 @@
 
 namespace netPhramework\core;
 
-use netPhramework\dispatching\Location;
+use netPhramework\dispatching\interfaces\ReadableLocation;
+use netPhramework\dispatching\interfaces\ReadablePath;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
@@ -32,8 +33,8 @@ class Page extends Leaf
 	}
 
     public function addVariable(string $key,
-                                string|Viewable|Encodable|
-                                Location|iterable|null $value):self
+                                string|Viewable|Encodable|ReadablePath|
+                                ReadableLocation|iterable|null $value):self
     {
         $this->view->addVariable($key, $value);
         return $this;

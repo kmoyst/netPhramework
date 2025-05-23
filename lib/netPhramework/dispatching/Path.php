@@ -2,6 +2,9 @@
 
 namespace netPhramework\dispatching;
 
+use netPhramework\dispatching\interfaces\ReadablePath;
+use netPhramework\dispatching\interfaces\RelocatablePath;
+
 /**
  * A fully readable and modifiable Path
  *

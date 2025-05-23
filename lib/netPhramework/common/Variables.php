@@ -2,7 +2,8 @@
 
 namespace netPhramework\common;
 use Iterator;
-use netPhramework\dispatching\Location;
+use netPhramework\dispatching\interfaces\ReadableLocation;
+use netPhramework\dispatching\interfaces\ReadablePath;
 use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Viewable;
@@ -24,7 +25,8 @@ class Variables implements Iterator
 
     public function add(string $key,
 						string|Viewable|Encodable|
-						Location|iterable|null $value):Variables
+						ReadableLocation|ReadablePath|
+						iterable|null $value):Variables
     {
         $this->values[$key] = $value;
         return $this;
@@ -32,18 +34,18 @@ class Variables implements Iterator
 
 	/**
 	 * @param string $key
-	 * @return string|Viewable|Encodable|Location|iterable|null
+	 * @return string|Viewable|Encodable|ReadableLocation|iterable|null
 	 * @throws Exception
 	 */
 	public function get(string $key):
-		string|Viewable|Encodable|Location|iterable|null
+		string|Viewable|Encodable|ReadableLocation|iterable|null
 	{
 		if($this->has($key)) return $this->values[$key];
 		throw new Exception("No value in Variables with name: $key");
 	}
 
 	public function getOrNull(string $key):
-		string|Viewable|Encodable|Location|iterable|null
+		string|Viewable|Encodable|ReadableLocation|iterable|null
 	{
 		return $this->has($key) ? $this->values[$key] : null;
 	}

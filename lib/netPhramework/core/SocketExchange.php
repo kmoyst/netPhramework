@@ -3,16 +3,16 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\Dispatcher;
-use netPhramework\dispatching\Location;
+use netPhramework\dispatching\dispatchers\Dispatcher;
+use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\Path;
-use netPhramework\dispatching\DispatchableLocation;
+use netPhramework\dispatching\Redirection;
 use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
+use netPhramework\rendering\Display;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\DisplayableResponse;
 use netPhramework\responding\Response;
 use netPhramework\responding\ResponseCode;
 
@@ -38,11 +38,11 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function redirect(Dispatcher $fallback):Variables
 	{
-		$location 	= new DispatchableLocation(clone $this->path);
-		$dispatcher = $this->callbackManager->callbackDispatcher() ?: $fallback;
-		$dispatcher->dispatch($location);
-		$this->response = $location;
-		return $this->response->getParameters();
+		$redirection 	= new Redirection(clone $this->path);
+		$callback		= $this->callbackManager->callbackDispatcher();
+		($callback??$fallback)->dispatch($redirection);
+		$this->response = $redirection;
+		return $redirection->getParameters();
 	}
 
 	/** @inheritDoc */
@@ -55,7 +55,7 @@ class SocketExchange implements Exchange
 	public function display(Wrappable $content, ResponseCode $code):void
 	{
 		$wrappedViewable = $this->wrapper->wrap($content);
-        $this->response  = new DisplayableResponse($wrappedViewable, $code);
+        $this->response  = new Display($wrappedViewable, $code);
 	}
 
 	/** @inheritDoc */
@@ -72,7 +72,7 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function callbackLink(bool $chain = false):string|Location
+	public function callbackLink(bool $chain = false):string|ReadableLocation
 	{
 		return $this->callbackManager->callbackLink($chain);
 	}

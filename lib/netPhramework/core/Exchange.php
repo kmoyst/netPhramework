@@ -3,8 +3,8 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\Dispatcher;
-use netPhramework\dispatching\Location;
+use netPhramework\dispatching\dispatchers\Dispatcher;
+use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\Path;
 use netPhramework\exceptions\Exception;
@@ -40,7 +40,7 @@ interface Exchange
 	 * Configures the Exchange for a Redirection Response
 	 *
 	 * @param Dispatcher $fallback
-	 * @return Variables - mutable parameters for destination Location
+	 * @return Variables - mutable parameters for destination ReadableLocation
 	 * @throws Exception
 	 */
 	public function redirect(Dispatcher $fallback):Variables;
@@ -55,7 +55,7 @@ interface Exchange
 	public function error(Exception $exception, Dispatcher $fallback):void;
 
 	/**
-	 * Returns a mutable copy of the Path of the originally requested Location
+	 * Returns a mutable copy of the Path of the originally requested ReadableLocation
 	 *
 	 * @return Path
 	 */
@@ -63,14 +63,14 @@ interface Exchange
 
 	/**
 	 * Returns a mutable copy of the parameters of the originally requested
-	 * Location
+	 * ReadableLocation
 	 *
 	 * @return Variables
 	 */
 	public function getParameters(): Variables;
 
 	/**
-	 * Returns a mutable copy of the originally requested Location
+	 * Returns a mutable copy of the originally requested ReadableLocation
 	 *
 	 * @return MutableLocation
 	 */
@@ -79,27 +79,27 @@ interface Exchange
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
-     * If $chain is false (default) Returns any callback Location found in the
-     * Exchange Parameters OR the current Location if none is found.
+     * If $chain is false (default) Returns any callback ReadableLocation found in the
+     * Exchange Parameters OR the current ReadableLocation if none is found.
      *
-     * If $chain is true, it will insert the current Location as the first in
-     * the callback chain and append any callback Location found in the Exchange
+     * If $chain is true, it will insert the current ReadableLocation as the first in
+     * the callback chain and append any callback ReadableLocation found in the Exchange
      * Parameters.
 	 *
      * @param bool $chain - false: defer to existing callback, true: inject
      * current location into callback chain to request a return to this location
      * first.
      *
-	 * @return string|Location
+	 * @return string|ReadableLocation
 	 */
-	public function callbackLink(bool $chain = false):string|Location;
+	public function callbackLink(bool $chain = false):string|ReadableLocation;
 
 	/**
 	 * A convenience method to generate a Hidden Form Input with callback link
 	 *
-	 * @param bool $chain - False (default) only uses current Location when
+	 * @param bool $chain - False (default) only uses current ReadableLocation when
 	 * existing callback is not present. If no callback is present, it WILL
-	 * return the current Location. True interjects with current location
+	 * return the current ReadableLocation. True interjects with current location
 	 * even when callback is present. It propagates the existing callback to
 	 * allow that information to be preserved upon return to the current
 	 * location.

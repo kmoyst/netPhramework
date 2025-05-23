@@ -4,7 +4,6 @@ namespace netPhramework\core;
 
 use netPhramework\common\Utils;
 use netPhramework\exceptions\ComponentNotFound;
-use netPhramework\exceptions\Exception;
 
 abstract class Leaf implements Component
 {

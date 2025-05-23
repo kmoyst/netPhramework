@@ -13,7 +13,7 @@ use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
-use netPhramework\dispatching\DispatchToSibling;
+use netPhramework\dispatching\dispatchers\DispatchToSibling;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 

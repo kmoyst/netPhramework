@@ -6,7 +6,7 @@ use netPhramework\db\core\RecordProcess;
 use netPhramework\db\processes\Delete;
 use netPhramework\db\processes\Insert;
 use netPhramework\db\processes\Update;
-use netPhramework\dispatching\Dispatcher;
+use netPhramework\dispatching\dispatchers\Dispatcher;
 use netPhramework\exceptions\Exception;
 
 class ActiveAssetAssembler extends AssetAssembler
