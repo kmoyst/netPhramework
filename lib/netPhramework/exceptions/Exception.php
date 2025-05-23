@@ -3,25 +3,29 @@
 namespace netPhramework\exceptions;
 
 use netPhramework\bootstrap\Environment;
+use netPhramework\common\Variables;
 use netPhramework\core\Responder;
 use netPhramework\core\Response;
 use netPhramework\core\ResponseCode;
+use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Message;
 use netPhramework\rendering\Viewable;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 
-class Exception extends \Exception implements Response, Wrappable, Viewable
+class Exception extends \Exception implements Response, Viewable, Wrappable
 {
 	protected string $friendlyMessage = "SERVER ERROR";
-    protected ResponseCode $responseCode;
+    protected readonly ResponseCode $responseCode;
     private Wrapper $wrapper;
 	private Environment $environment;
+	//private Variables $variables;
 
     public function __construct(
 		string $message = "", ?ResponseCode $responseCode = null)
     {
         $this->responseCode = $responseCode ?? ResponseCode::SERVER_ERROR;
+		//	$this->variables = new Variables();
         parent::__construct($message, $this->responseCode->value);
     }
 
@@ -71,7 +75,7 @@ class Exception extends \Exception implements Response, Wrappable, Viewable
         return "ERROR";
     }
 
-    public function getContent(): Viewable
+    public function getContent(): self
     {
         return $this;
     }

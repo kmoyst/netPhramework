@@ -24,7 +24,7 @@ class Message implements Viewable, Wrappable
 		return $this;
 	}
 
-	public function getContent(): Viewable
+	public function getContent(): self
 	{
 		return $this;
 	}

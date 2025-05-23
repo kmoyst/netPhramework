@@ -4,7 +4,7 @@ namespace netPhramework\db\configuration;
 
 use netPhramework\bootstrap\Configuration;
 use netPhramework\core\Directory;
-use netPhramework\rendering\WrapperSetup;
+use netPhramework\rendering\WrapperConfiguration;
 
 class AdminConfiguration extends Configuration
 {
@@ -25,7 +25,7 @@ class AdminConfiguration extends Configuration
 		;
 	}
 
-	public function configureWrapper(WrapperSetup $wrapper): void
+	public function configureWrapper(WrapperConfiguration $wrapper): void
 	{
 		$wrapper->setTitlePrefix('ADMINISTRATION');
 	}

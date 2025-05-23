@@ -2,7 +2,7 @@
 
 namespace netPhramework\rendering;
 
-interface WrapperSetup
+interface WrapperConfiguration
 {
 	public function setTitlePrefix(string $titlePrefix): self;
 	public function setTemplateName(string $templateName): self;

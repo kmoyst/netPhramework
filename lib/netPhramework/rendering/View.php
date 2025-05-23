@@ -7,9 +7,9 @@ use netPhramework\common\Variables;
 use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\interfaces\ReadablePath;
 
-class View implements Viewable, Wrappable
+class View implements ConfigurableView
 {
-    private Variables $variables;
+    private readonly Variables $variables;
 
     public function __construct(
         private readonly string $templateName,
@@ -48,7 +48,7 @@ class View implements Viewable, Wrappable
 		return $this;
 	}
 
-    public function getContent(): Viewable
+    public function getContent(): self
     {
         return $this;
     }

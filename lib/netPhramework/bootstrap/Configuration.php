@@ -4,7 +4,7 @@ namespace netPhramework\bootstrap;
 
 use netPhramework\core\Directory;
 use netPhramework\core\Page;
-use netPhramework\rendering\WrapperSetup;
+use netPhramework\rendering\WrapperConfiguration;
 
 class Configuration
 {
@@ -27,8 +27,8 @@ class Configuration
 	public function configureActiveNode(Directory $directory):void {}
 
 	/**
-	 * @param WrapperSetup $wrapper
+	 * @param WrapperConfiguration $wrapper
 	 * @return void
 	 */
-	public function configureWrapper(WrapperSetup $wrapper):void {}
+	public function configureWrapper(WrapperConfiguration $wrapper):void {}
 }

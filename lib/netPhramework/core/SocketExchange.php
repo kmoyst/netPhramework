@@ -10,8 +10,8 @@ use netPhramework\dispatching\Path;
 use netPhramework\dispatching\Redirection;
 use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
+use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Display;
-use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 
 class SocketExchange implements Exchange
@@ -44,28 +44,31 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function ok(Wrappable $content):void
+	public function ok(ConfigurableView $view):Variables
 	{
-		$this->display($content, ResponseCode::OK);
+		return $this->display($view, ResponseCode::OK);
 	}
 
     /** @inheritDoc */
-	public function display(Wrappable $content, ResponseCode $code):void
+	public function display(ConfigurableView $view, ResponseCode $code):Variables
 	{
-		$wrappedViewable = $this->wrapper->wrap($content);
+		$wrappedViewable = $this->wrapper->wrap($view);
         $this->response  = new Display($wrappedViewable, $code);
+		return $view->getVariables();
 	}
 
 	/** @inheritDoc */
 	public function error(Exception $exception, Dispatcher $fallback): void
 	{
         try {
-            $this->redirect($fallback);
+            $vars = $this->redirect($fallback);
             $this->session->addErrorMessage(
                 rtrim($exception->getMessage(),": "));
             $this->session->addErrorCode($exception->getResponseCode());
+			//return $vars;
         } catch (Exception) {
             $this->response = $exception->setWrapper($this->wrapper);
+			//return $exception->getVariables();
         }
 	}
 

@@ -2,7 +2,7 @@
 
 namespace netPhramework\rendering;
 
-class Wrapper implements Viewable, WrapperSetup
+class Wrapper implements Viewable, WrapperConfiguration
 {
     private string $title;
     private Viewable $content;
