@@ -32,8 +32,10 @@ interface Exchange
 	public function redirect(Dispatcher $fallback):self;
 
 	/**
-	 * Uses custom Exception class to create a DisplayableContent response.
-	 *
+	 * Uses custom Exception class as a Response. This is displayed.
+     *
+     * @TODO Implement a way to redirect with message and error code.
+     *
 	 * @param Exception $exception
 	 * @return $this
 	 */
@@ -64,13 +66,17 @@ interface Exchange
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
-	 * @param bool $chain - False (default) only uses current location when
-	 * existing callback is not present. If no callback is present, it WILL
-	 * return the current Location. True interjects with current location
-	 * even when callback is present. It propagates the existing callback to
-	 * allows that information to be preserved upon return to the current
-	 * location.
+     * If $chain is false (default) Returns any callback Location found in the
+     * Exchange Parameters OR the current Location if none is found.
+     *
+     * If $chain is true, it will insert the current Location as the first in
+     * the callback chain and append any callback Location found in the Exchange
+     * Parameters.
 	 *
+     * @param bool $chain - false: defer to existing callback, true: inject
+     * current location into callback chain to request a return to this location
+     * first.
+     *
 	 * @return string|Location
 	 */
 	public function callbackLink(bool $chain = false):string|Location;
@@ -82,7 +88,7 @@ interface Exchange
 	 * existing callback is not present. If no callback is present, it WILL
 	 * return the current Location. True interjects with current location
 	 * even when callback is present. It propagates the existing callback to
-	 * allows that information to be preserved upon return to the current
+	 * allow that information to be preserved upon return to the current
 	 * location.
 	 *
 	 * @return HiddenInput

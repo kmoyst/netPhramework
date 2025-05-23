@@ -6,10 +6,22 @@ use netPhramework\common\Variables;
 
 class MutableLocation implements Relocatable, Location
 {
-	public function __construct(private readonly Path $path,
-								private readonly Variables $parameters) {}
+    private Path $path;
+    private Variables $parameters;
 
-	public function getPath(): Path
+    /**
+     * @param Path|null $path
+     * @param Variables|null $parameters
+     */
+    public function __construct(?Path $path = null,
+                                ?Variables $parameters = null)
+    {
+        $this->path = $path ?? new Path();
+        $this->parameters = $parameters ?? new Variables();
+    }
+
+
+    public function getPath(): Path
 	{
 		return $this->path;
 	}

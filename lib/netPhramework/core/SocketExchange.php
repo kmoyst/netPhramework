@@ -79,14 +79,14 @@ class SocketExchange implements Exchange
 		return $this;
 	}
 
-	/**
-	 * Centralized method for wrapping wrappable content a passing to
-	 * final display method.
-	 *
-	 * @param Wrappable $content
-	 * @param ResponseCode $code
-	 * @return void
-	 */
+    /**
+     * Centralized method for wrapping wrappable content a passing to
+     * final display method.
+     *
+     * @param Wrappable $content
+     * @param ResponseCode $code
+     * @return void
+     */
 	private function wrappedDisplay(Wrappable $content, ResponseCode $code):void
 	{
 		$this->directDisplay($this->wrapper->wrap($content), $code);
