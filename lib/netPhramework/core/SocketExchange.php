@@ -3,7 +3,6 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\CallbackManager;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\MutableLocation;

@@ -3,7 +3,6 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\CallbackManager;
 use netPhramework\dispatching\Path;
 use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Wrapper;

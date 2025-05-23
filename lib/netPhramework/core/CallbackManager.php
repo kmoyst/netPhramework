@@ -1,8 +1,13 @@
 <?php
 
-namespace netPhramework\dispatching;
+namespace netPhramework\core;
 
 use netPhramework\common\Variables;
+use netPhramework\dispatching\DispatchToAbsolute;
+use netPhramework\dispatching\Location;
+use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\Path;
+use netPhramework\dispatching\UriAdapter;
 use netPhramework\exceptions\Exception;
 
 /**
