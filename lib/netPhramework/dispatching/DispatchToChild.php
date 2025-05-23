@@ -2,7 +2,7 @@
 
 namespace netPhramework\dispatching;
 
-readonly class DispatchToChild implements Dispatcher
+readonly class DispatchToChild extends Dispatcher
 {
 	public function __construct(
         private string $leafName,

@@ -2,11 +2,17 @@
 
 namespace netPhramework\dispatching;
 
-readonly class DispatchToAbsolute extends RelocateToAbsolute implements Dispatcher
+use netPhramework\common\Variables;
+
+readonly class DispatchToAbsolute extends Dispatcher
 {
+	public function __construct(protected Path $path,
+								protected Variables $parameters) {}
+
 	public function dispatch(Dispatchable $dispatchable): void
 	{
-        $this->relocate($dispatchable);
+		$relocator = new RelocateToAbsolute($this->path, $this->parameters);
+		$relocator->relocate($dispatchable);
 		$dispatchable->seeOther();
 	}
 }

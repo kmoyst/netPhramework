@@ -2,7 +2,7 @@
 
 namespace netPhramework\dispatching;
 
-readonly class RelocateToRootLeaf implements Relocator
+readonly class RelocateToRootLeaf extends Relocator
 {
 	public function __construct(private string $leafName = '') {}
 

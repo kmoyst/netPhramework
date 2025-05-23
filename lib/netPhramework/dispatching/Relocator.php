@@ -2,7 +2,7 @@
 
 namespace netPhramework\dispatching;
 
-interface Relocator
+readonly abstract class Relocator
 {
     /**
      * Modifies a Relocatable location. ReloctablePaths cannot be read.
@@ -10,5 +10,5 @@ interface Relocator
      * @param Relocatable $location
      * @return void
      */
-    public function relocate(Relocatable $location):void;
+    abstract public function relocate(Relocatable $location):void;
 }

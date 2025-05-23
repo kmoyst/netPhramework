@@ -2,9 +2,9 @@
 
 namespace netPhramework\dispatching;
 
-readonly class RelocateToSibling implements Relocator
+readonly class RelocateToSibling extends Relocator
 {
-    public function __construct(protected string $leafName) {}
+    public function __construct(protected string $leafName = '') {}
 
     public function relocate(Relocatable $location): void
     {

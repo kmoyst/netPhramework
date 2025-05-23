@@ -4,7 +4,7 @@ namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
 
-readonly class RelocateToAbsolute implements Relocator
+readonly class RelocateToAbsolute extends Relocator
 {
     public function __construct(protected Path $path,
                                 protected Variables $parameters) {}
