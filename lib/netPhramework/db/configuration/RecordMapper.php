@@ -25,4 +25,9 @@ readonly class RecordMapper implements RecordAccess
 		$table 	= $this->database->getTable($name);
 		return new RecordSet($name, $schema, $table);
 	}
+
+    public function listAllRecordSets():array
+    {
+        return $this->database->listTables();
+    }
 }

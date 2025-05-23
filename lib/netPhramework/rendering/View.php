@@ -8,12 +8,12 @@ use netPhramework\dispatching\Location;
 
 class View implements Viewable, Wrappable
 {
-    private ?string $title;
     private Variables $variables;
 
-    public function __construct(private readonly string $templateName)
+    public function __construct(
+        private readonly string $templateName,
+        private ?string $title = null)
     {
-        $this->title = null;
         $this->variables = new Variables();
     }
 

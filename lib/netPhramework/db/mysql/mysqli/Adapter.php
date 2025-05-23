@@ -23,7 +23,7 @@ readonly class Adapter implements \netPhramework\db\mysql\Adapter
 			$dataSet = $query->getDataSet();
 			if ($dataSet !== null && count($dataSet) > 0)
 			{
-				$mapper = new DataMapper();
+				$mapper = new DataItemMapper();
 				foreach($query->getDataSet() as $item)
 					$mapper->mapItem($item);
 				$statement->bind_param(

@@ -2,10 +2,13 @@
 
 namespace netPhramework\db\mysql;
 
+use netPhramework\db\exceptions\MysqlException;
+
 class Database implements \netPhramework\db\abstraction\Database
 {
     private array $schemas = [];
 	private array $tables = [];
+    private array $tableList;
 
     public function __construct(private readonly Adapter $adapter) {}
 
@@ -21,4 +24,20 @@ class Database implements \netPhramework\db\abstraction\Database
 			$this->tables[$name] = new Table($name, $this->adapter);
 		return $this->tables[$name];
 	}
+
+    /**
+     * @return array
+     * @throws MysqlException
+     */
+    public function listTables(): array
+    {
+        if(!isset($this->tableNames))
+        {
+            $names = [];
+            foreach($this->adapter->runQuery(new TablesQuery())->fetchAll()
+                    as $t) $names[] = array_pop($t);
+            $this->tableList = $names;
+        }
+        return $this->tableList;
+    }
 }

@@ -7,9 +7,28 @@ use netPhramework\db\processes\Delete;
 use netPhramework\db\processes\Insert;
 use netPhramework\db\processes\Update;
 use netPhramework\dispatching\Dispatcher;
+use netPhramework\exceptions\Exception;
 
 class ActiveAssetAssembler extends AssetAssembler
 {
+    /**
+     * This is a potent method, only meant to be used during initial
+     * development. It fetches every table name from the database and
+     * generates an asset with all default processes for each one and adds
+     * them to the Directory.
+     *
+     * @return self
+     * @throws Exception
+     */
+    public function addAllAssetsWithDefaults():self
+    {
+        foreach($this->recordMapper->listAllRecordSets() as $name)
+        {
+            $this->defaults()->commit($name);
+        }
+        return $this;
+    }
+
 	public function defaults(): self
 	{
 		return $this

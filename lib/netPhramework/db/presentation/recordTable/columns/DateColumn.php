@@ -21,7 +21,7 @@ class DateColumn extends TextColumn
 	public function getSortableValue(Record $record): string
 	{
 		try {
-			$dt = new DateTime($record->getValue($this->getName()));
+			$dt = new DateTime($record->getValue($this->getName()) ?? '');
 			return $dt->format($this->format);
 		} catch (DateMalformedStringException) {
 			return $record->getValue($this->getName());

@@ -6,7 +6,7 @@ use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\DataItem;
 use netPhramework\db\mapping\FieldType;
 
-class DataMapper
+class DataItemMapper
 {
 	private Bindings $bindings;
 

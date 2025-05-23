@@ -2,53 +2,46 @@
 
 namespace netPhramework\core;
 
-use netPhramework\common\Utils;
+use netPhramework\dispatching\Location;
+use netPhramework\rendering\Encodable;
+use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
-use netPhramework\rendering\Wrappable;
 
-class Page extends Leaf implements Viewable, Wrappable
+class Page extends Leaf
 {
+    protected View $view;
+    protected string $templateName;
+
 	public function __construct(
-		private readonly string $templateName,
+        string $templateName,
 		?string $name = null,
-		private ?string $title = null)
+        ?string $title = null)
 	{
 		parent::__construct($name);
+        $this->view = new View($templateName, $title);
 	}
 
 	public function handleExchange(Exchange $exchange): void
 	{
-		$exchange->ok($this);
-	}
-
-	public function setTitle(?string $title): Page
-	{
-		$this->title = $title;
-		return $this;
-	}
-
-	public function getTemplateName(): string
-	{
-		return $this->templateName;
-	}
-
-	public function getVariables(): iterable
-	{
-		return [];
-	}
-
-	public function getTitle(): string
-	{
-		return $this->title ?? Utils::kebabToSpace($this->getName());
-	}
-
-	public function getContent(): Viewable
-	{
-		return $this;
+		$exchange->ok($this->view);
 	}
 
 	public function getName(): string
 	{
-		return $this->name ?? $this->templateName;
+		return $this->name ?? $this->view->getTemplateName();
 	}
+
+    public function addVariable(string $key,
+                                string|Viewable|Encodable|
+                                Location|iterable|null $value):self
+    {
+        $this->view->addVariable($key, $value);
+        return $this;
+    }
+
+    public function setTitle(?string $title = null):self
+    {
+        $this->view->setTitle($title);
+        return $this;
+    }
 }

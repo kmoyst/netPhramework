@@ -8,9 +8,28 @@ use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\processes\Add;
 use netPhramework\db\processes\Browse;
 use netPhramework\db\processes\Edit;
+use netPhramework\exceptions\Exception;
 
 class PassiveAssetAssembler extends AssetAssembler
 {
+    /**
+     * This is a potent method, only meant to be used during initial
+     * development. It fetches every table name from the database and
+     * generates an asset with all default processes for each one and adds
+     * them to the Directory.
+     *
+     * @return self
+     * @throws Exception
+     */
+    public function addAllAssetsWithDefaults():self
+    {
+        foreach($this->recordMapper->listAllRecordSets() as $name)
+        {
+            $this->defaults()->commit($name);
+        }
+        return $this;
+    }
+
 	public function defaults(): self
 	{
 		return $this
