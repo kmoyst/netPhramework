@@ -57,20 +57,9 @@ class SocketExchange implements Exchange
     /** @inheritDoc */
 	public function display(Wrappable $content, ResponseCode $code):void
 	{
-		$this->directDisplay($this->wrapper->wrap($content), $code);
-	}
-
-	/**
-	 * Centralized method for creating BasicResponse responses.
-	 *
-	 * @param Viewable $content
-	 * @param ResponseCode $code
-	 * @return void
-	 */
-	private function directDisplay(Viewable $content, ResponseCode $code):void
-	{
-		$responseContent = new DisplayableContent($content);
-		$this->response  = new BasicResponse($responseContent, $code);
+		$wrappedViewable = $this->wrapper->wrap($content);
+        $responseContent = new DisplayableContent($wrappedViewable);
+        $this->response  = new BasicResponse($responseContent, $code);
 	}
 
 	/** @inheritDoc */
