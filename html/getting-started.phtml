@@ -23,6 +23,11 @@
         directory. Override the methods as needed to configure your Application.
         You can create multiple configurations.
 	</li>
+    <li>
+        There is a netPhramework\db\configuration\AdminConfiguration that
+        indexes all the tables in the database with basic CRUD processes. It
+        can be subclassed, if needed. Definitely ONLY for administrators.
+    </li>
 	<li>
 		Subclass netPhramework\bootstrap\SiteContext and override
 		the getConfiguration() method.
