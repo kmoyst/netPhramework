@@ -6,7 +6,7 @@ use netPhramework\common\Variables;
 use netPhramework\responding\ResponseCode;
 
 /**
- * Adjustable location and receives response preparation
+ * Used by Dispatcher to prepare Redirectable ResponseContent.
  */
 interface Dispatchable extends Relocatable
 {

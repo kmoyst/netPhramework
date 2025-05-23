@@ -4,6 +4,10 @@ namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
 
+/**
+ * Provides modifiable RelocatablePath and Parameters.
+ * ReloctablePath can be modified, but not read (the inverse of ReadablePath)
+ */
 interface Relocatable
 {
 	/**

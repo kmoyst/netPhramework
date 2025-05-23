@@ -4,7 +4,7 @@ namespace netPhramework\dispatching;
 
 /**
  * The purpose of this class is simply to provide the setMessage() method
- * and property on top a relocator. Further abstraction is not useful.
+ * and property on top a relocator.
  */
 abstract class DispatchWithMessage implements Dispatcher
 {

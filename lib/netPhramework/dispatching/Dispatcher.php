@@ -3,7 +3,7 @@
 namespace netPhramework\dispatching;
 
 /**
- * Dispatches an exchange, changing the Location and preparing Response
+ * Relocates and dispatches. Used to prepare redirect Responses.
  */
 interface Dispatcher
 {

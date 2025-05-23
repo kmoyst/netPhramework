@@ -12,6 +12,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\AuthenticationException;
+use netPhramework\exceptions\InvalidSession;
 use netPhramework\presentation\FormInput\InputSet;
 use netPhramework\rendering\View;
 
@@ -28,7 +29,7 @@ class EditProfile extends Leaf
 	 * @throws MappingException
 	 * @throws RecordNotFound
 	 * @throws RecordRetrievalException
-	 * @throws AuthenticationException
+	 * @throws InvalidSession
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{

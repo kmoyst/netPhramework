@@ -2,6 +2,11 @@
 
 namespace netPhramework\dispatching;
 
+/**
+ * The most basic Location interface. Provides ReadablePath and iterable
+ * Parameters.
+ *
+ */
 interface Location
 {
 	/**

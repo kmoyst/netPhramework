@@ -2,6 +2,9 @@
 
 namespace netPhramework\dispatching;
 
+/**
+ * Simplest implementation of Location interface. Readonly.
+ */
 readonly class ReadableLocation implements Location
 {
 	public function __construct(

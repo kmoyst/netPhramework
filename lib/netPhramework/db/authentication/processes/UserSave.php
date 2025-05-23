@@ -7,21 +7,25 @@ use netPhramework\db\authentication\EnrolledUser;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
+use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\processes\Save;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToParent;
+use netPhramework\dispatching\DispatchToRootLeaf;
+use netPhramework\dispatching\DispatchToSibling;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
+use netPhramework\exceptions\InvalidSession;
 
 class UserSave extends Save
 {
 	public function __construct(
-		?Dispatcher $dispatcher = null,
+		?Dispatcher $onSuccess = null,
 		?string $name = null,
 		private readonly ?EnrolledUser $enrolledUser = null)
 	{
-		parent::__construct($dispatcher, $name);
+		parent::__construct($onSuccess, $name);
 	}
 
 	/**
@@ -37,16 +41,16 @@ class UserSave extends Save
 		$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
 		$enrolledUser->setRecord($record);
 		try {
-			$enrolledUser->parseAndSet($exchange->getParameters());
-			$enrolledUser->save();
+            $enrolledUser->parseAndSet($exchange->getParameters());
+            $enrolledUser->save();
             $exchange->getSession()->login($enrolledUser);
-            $exchange->redirect($this->dispatcher);
-		} catch (DuplicateEntryException) {
-            $message = "User already exists: ". $enrolledUser->getUsername();
-			$exchange->error(new Exception($message), $this->dispatcher);
-		} catch (InvalidPassword $e) {
-            $message = $e->getMessage();
-            $exchange->error(new Exception($message), $this->dispatcher);
+            $exchange->redirect($this->onSuccess);
+        } catch (DuplicateEntryException) {
+            $message = "User already exists: " . $enrolledUser->getUsername();
+            $exchange->error(new Exception($message),
+                new DispatchToSibling('sign-up'));
+        } catch (InvalidValue|InvalidPassword $e) {
+            $exchange->error($e, new DispatchToSibling('sign-up'));
         }
 	}
 }

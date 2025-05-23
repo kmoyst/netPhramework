@@ -3,7 +3,8 @@
 namespace netPhramework\dispatching;
 
 /**
- * Path can be read, but not changed.
+ * Basic Path interface. Can be read / traversed, but not modified.
+ *
  */
 interface ReadablePath
 {

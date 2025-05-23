@@ -10,17 +10,18 @@ use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToParent;
+use netPhramework\dispatching\DispatchToSibling;
 use netPhramework\exceptions\Exception;
 
 class Save extends RecordProcess
 {
-    protected Dispatcher $dispatcher;
+    protected Dispatcher $onSuccess;
 
 	public function __construct(
-        ?Dispatcher $dispatcher = null,
+        ?Dispatcher $onSuccess = null,
         ?string $name = null)
     {
-        $this->dispatcher = $dispatcher ?? new DispatchToParent('');
+        $this->onSuccess = $onSuccess ?? new DispatchToParent('');
         parent::__construct($name);
     }
 
@@ -39,9 +40,9 @@ class Save extends RecordProcess
 				if($record->getCellSet()->has($k))
 					$record->getCell($k)->setValue($v);
 			$record->save();
-			$exchange->redirect($this->dispatcher);
+			$exchange->redirect($this->onSuccess);
 		} catch (InvalidValue $e) {
-            $exchange->error($e, $this->dispatcher);
+            $exchange->error($e, new DispatchToParent());
 		}
 	}
 }

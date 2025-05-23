@@ -8,6 +8,7 @@ use netPhramework\authentication\SessionUserProvider;
 use netPhramework\authentication\User;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\ReadableView;
 use netPhramework\rendering\Viewable;
 use netPhramework\responding\ResponseCode;
@@ -29,7 +30,7 @@ class Session
     /**
      * @param string $message
      * @return $this
-     * @throws Exception
+     * @throws InvalidSession
      */
     public function addErrorMessage(string $message):Session
     {
@@ -40,7 +41,7 @@ class Session
 
     /**
      * @return string|null
-     * @throws Exception
+     * @throws InvalidSession
      */
     public function getErrorMessageAndClear():?string
     {
@@ -57,7 +58,7 @@ class Session
     /**
      * @param ResponseCode $code
      * @return $this
-     * @throws Exception
+     * @throws InvalidSession
      */
     public function addErrorCode(ResponseCode $code):self
     {
@@ -68,7 +69,7 @@ class Session
 
     /**
      * @return ResponseCode
-     * @throws Exception
+     * @throws InvalidSession
      */
     public function resolveResponseCode():ResponseCode
     {
@@ -88,7 +89,7 @@ class Session
      * the error data from the Session. Return null when no error exists.
      *
      * @return Viewable|null
-     * @throws Exception
+     * @throws InvalidSession
      */
     public function getViewableError():?Viewable
     {
@@ -102,7 +103,7 @@ class Session
 	/**
 	 * @param User $user
 	 * @return $this
-	 * @throws Exception
+	 * @throws InvalidSession
 	 */
 	public function login(User $user):Session
 	{
@@ -114,7 +115,7 @@ class Session
 
 	/**
 	 * @return $this
-	 * @throws Exception
+	 * @throws InvalidSession
 	 */
 	public function logout():Session
 	{
@@ -135,7 +136,7 @@ class Session
 
 	/**
 	 * @return bool
-	 * @throws Exception
+	 * @throws InvalidSession
 	 */
 	public function confirmLoggedIn():bool
 	{
@@ -145,7 +146,7 @@ class Session
 
 	/**
 	 * @return User|null
-	 * @throws Exception
+	 * @throws InvalidSession
 	 */
 	public function getUser(): ?User
 	{
@@ -155,7 +156,7 @@ class Session
 
 	/**
 	 * @return void
-	 * @throws Exception
+	 * @throws InvalidSession
 	 */
 	private function start(): void
 	{

@@ -5,6 +5,9 @@ namespace netPhramework\dispatching;
 use netPhramework\common\Variables;
 use netPhramework\exceptions\Exception;
 
+/**
+ * Adapts string Uri to Path and Variables
+ */
 readonly class UriAdapter
 {
 	public function __construct(private string $uri) {}

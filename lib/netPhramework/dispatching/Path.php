@@ -2,6 +2,10 @@
 
 namespace netPhramework\dispatching;
 
+/**
+ * A fully readable and modifiable Path
+ *
+ */
 class Path implements RelocatablePath, ReadablePath
 {
 	private ?string $name = null;

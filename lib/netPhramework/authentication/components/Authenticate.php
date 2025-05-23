@@ -9,36 +9,41 @@ use netPhramework\core\Leaf;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\DispatchToSiblingWithMessage as ToSibling;
 use netPhramework\dispatching\DispatchWithMessage;
+use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\InvalidPassword;
+use netPhramework\exceptions\InvalidUsername;
 
 class Authenticate extends Leaf
 {
-	private string $failedUsernameMessage = 'User not found.';
-	private string $failedPasswordMessage = 'Password incorrect.';
-
 	public function __construct(
 		private readonly Authenticator $authenticator,
 		private readonly ?Dispatcher $onSuccess = null,
-        private readonly ?DispatchWithMessage $onFailure = null)
+        private readonly ?Dispatcher $onFailure = null)
 	{
 		parent::__construct('authenticate');
 	}
 
+    /**
+     * @param Exchange $exchange
+     * @return void
+     * @throws Exception
+     */
 	public function handleExchange(Exchange $exchange): void
     {
         $manager   = new LogInManager();
-		$onFailure = $this->onFailure ?? new ToSibling('log-in-failure');
+		$onFailure = $this->onFailure ?? new ToSibling('log-in');
 		$onSuccess = $this->onSuccess ?? new ToSibling('log-in-status');
 		$user	   = $manager->userFromVariables($exchange->getParameters());
 		$this->authenticator->setUserLoggingIn($user);
 		if(!$this->authenticator->checkUsername())
 		{
-			$onFailure->setMessage($this->failedUsernameMessage);
-			$exchange->redirect($onFailure);
+			$exchange->error(
+                new InvalidUsername("User not found"), $onFailure);
 		}
 		elseif(!$this->authenticator->checkPassword())
 		{
-			$onFailure->setMessage($this->failedPasswordMessage);
-			$exchange->redirect($onFailure);
+            $exchange->error(
+                new InvalidPassword('Password incorrect'), $onFailure);
 		}
 		else
 		{

@@ -4,6 +4,9 @@ namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
 
+/**
+ * A fully readable and modifiable Location
+ */
 class MutableLocation implements Relocatable, Location
 {
     private Path $path;

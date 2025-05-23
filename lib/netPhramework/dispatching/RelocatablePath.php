@@ -3,7 +3,7 @@
 namespace netPhramework\dispatching;
 
 /**
- * Path can be changed, but not read.
+ * ReloctablePath can be modified, but not read (the inverse of ReadablePath)
  */
 interface RelocatablePath
 {
