@@ -64,7 +64,7 @@ class Controller
 			$this->errorIsFatal($error['type']) &&
 			!$this->fatalErrorHandled)
 		{
-			$this->handleError(...$error);
+			$this->handleError(...(array_values($error)));
 			echo "SERVER ERROR";
 			exit(1);
 		}
