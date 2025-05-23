@@ -32,9 +32,9 @@ class Page extends Leaf
 		return $this->name ?? $this->view->getTemplateName();
 	}
 
-    public function addVariable(string $key,
-                                string|Viewable|Encodable|ReadablePath|
-                                ReadableLocation|iterable|null $value):self
+    public function add(string $key,
+						string|Viewable|Encodable|ReadablePath|
+						ReadableLocation|iterable|null $value):self
     {
         $this->view->add($key, $value);
         return $this;

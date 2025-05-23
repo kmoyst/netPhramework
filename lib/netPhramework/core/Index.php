@@ -25,7 +25,7 @@ class Index extends Page
 				$name .= '/';
 			$links[$name] = $desc;
 		}
-		$this->addVariable('links', $links);
+		$this->add('links', $links);
 		parent::handleExchange($exchange);
 	}
 }
