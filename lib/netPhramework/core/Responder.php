@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\responding;
+namespace netPhramework\core;
 use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\UriFromLocation;
 use netPhramework\rendering\Encoder;

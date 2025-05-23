@@ -3,13 +3,13 @@
 namespace netPhramework\exceptions;
 
 use netPhramework\bootstrap\Environment;
+use netPhramework\core\Responder;
+use netPhramework\core\Response;
+use netPhramework\core\ResponseCode;
 use netPhramework\rendering\Message;
 use netPhramework\rendering\Viewable;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\Responder;
-use netPhramework\responding\Response;
-use netPhramework\responding\ResponseCode;
 
 class Exception extends \Exception implements Response, Wrappable, Viewable
 {

@@ -13,8 +13,6 @@ use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Display;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\Response;
-use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {

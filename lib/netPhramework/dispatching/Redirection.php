@@ -2,10 +2,10 @@
 
 namespace netPhramework\dispatching;
 
+use netPhramework\core\Responder;
+use netPhramework\core\Response;
+use netPhramework\core\ResponseCode;
 use netPhramework\dispatching\interfaces\DispatchableLocation;
-use netPhramework\responding\Responder;
-use netPhramework\responding\Response;
-use netPhramework\responding\ResponseCode;
 
 class Redirection
 	extends MutableLocation implements DispatchableLocation, Response

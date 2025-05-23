@@ -2,7 +2,7 @@
 
 namespace netPhramework\exceptions;
 
-use netPhramework\responding\ResponseCode;
+use netPhramework\core\ResponseCode;
 
 class NoContent extends ResponseException
 {

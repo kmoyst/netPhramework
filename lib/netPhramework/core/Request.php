@@ -4,7 +4,6 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\dispatching\Path;
-use netPhramework\responding\Response;
 
 readonly class Request
 {

@@ -6,7 +6,6 @@ use netPhramework\common\Variables;
 use netPhramework\dispatching\Path;
 use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\Response;
 
 readonly class Socket
 {

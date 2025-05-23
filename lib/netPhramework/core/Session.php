@@ -9,7 +9,6 @@ use netPhramework\authentication\User;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\ReadableView;
 use netPhramework\rendering\Viewable;
-use netPhramework\responding\ResponseCode;
 
 class Session
 {
