@@ -2,13 +2,6 @@
 <project version="4">
   <component name="PublishConfigData" serverName="Development" createEmptyFolders="true" autoUploadExternalChanges="true">
     <serverData>
-      <paths name="!! PRODUCTION !!">
-        <serverdata>
-          <mappings>
-            <mapping deploy="/lib/netPhramework/0.9" local="$PROJECT_DIR$" web="/" />
-          </mappings>
-        </serverdata>
-      </paths>
       <paths name="Development">
         <serverdata>
           <mappings>

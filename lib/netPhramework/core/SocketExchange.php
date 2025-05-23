@@ -39,9 +39,7 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function redirect(Dispatcher $fallback):void
 	{
-		$path 		= clone $this->path;
-		$parameters = clone $this->parameters;
-		$response 	= new Redirection($path, $parameters);
+		$response 	= new Redirection(clone $this->path);
 		$dispatcher = $this->callbackManager->callbackDispatcher() ?: $fallback;
 		$dispatcher->dispatch($response);
 		$this->response = $response;
