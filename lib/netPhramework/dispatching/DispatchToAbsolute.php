@@ -4,6 +4,9 @@ namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
 
+/**
+ * Dispatches to a Location irrelevant of the $dispatchable's initial state
+ */
 readonly class DispatchToAbsolute extends Dispatcher
 {
 	public function __construct(protected Path $path,

@@ -4,6 +4,9 @@ namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
 
+/**
+ * Relocates to a new Location. Ignores original state
+ */
 readonly class RelocateToAbsolute extends Relocator
 {
     public function __construct(protected Path $path,

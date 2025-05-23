@@ -36,12 +36,13 @@ class SocketExchange implements Exchange
 	private Response $response;
 
 	/** @inheritDoc */
-	public function redirect(Dispatcher $fallback):void
+	public function redirect(Dispatcher $fallback):Variables
 	{
 		$location 	= new DispatchableLocation(clone $this->path);
 		$dispatcher = $this->callbackManager->callbackDispatcher() ?: $fallback;
 		$dispatcher->dispatch($location);
 		$this->response = $location;
+		return $this->response->getParameters();
 	}
 
 	/** @inheritDoc */

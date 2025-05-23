@@ -37,13 +37,13 @@ interface Exchange
     public function display(Wrappable $content, ResponseCode $code):void;
 
 	/**
-	 * Configures the Exchange for a RedirectableContent Response
+	 * Configures the Exchange for a Redirection Response
 	 *
 	 * @param Dispatcher $fallback
-	 * @return void
+	 * @return Variables - mutable parameters for destination Location
 	 * @throws Exception
 	 */
-	public function redirect(Dispatcher $fallback):void;
+	public function redirect(Dispatcher $fallback):Variables;
 
 	/**
      * Dispatches with an error code and message stored in Session for display
