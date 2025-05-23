@@ -61,7 +61,7 @@ class SocketExchange implements Exchange
 	private Response $response;
 
 	/** @inheritDoc */
-	public function redirect(Dispatcher $fallback):self
+	public function redirect(Dispatcher $fallback):void
 	{
 		$path 		= clone $this->path;
 		$parameters = clone $this->parameters;
@@ -69,14 +69,12 @@ class SocketExchange implements Exchange
 		$dispatcher = $this->callbackManager->callbackDispatcher() ?: $fallback;
 		$dispatcher->dispatch($response);
 		$this->response = $response;
-		return $this;
 	}
 
 	/** @inheritDoc */
-	public function ok(Wrappable $content):self
+	public function ok(Wrappable $content):void
 	{
 		$this->wrappedDisplay($content, ResponseCode::OK);
-		return $this;
 	}
 
     /**
@@ -106,10 +104,9 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function error(Exception $exception): self
+	public function error(Exception $exception): void
 	{
 		$this->response = $exception->setWrapper($this->wrapper);
-		return $this;
 	}
 
 	/** @inheritDoc */

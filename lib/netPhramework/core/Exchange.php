@@ -18,18 +18,18 @@ interface Exchange
 	 * Generate a standard displayable Response to be wrapped.
 	 *
 	 * @param Wrappable $content
-	 * @return self
+	 * @return void
 	 */
-	public function ok(Wrappable $content):self;
+	public function ok(Wrappable $content):void;
 
 	/**
 	 * Configures the Exchange for a RedirectableContent Response
 	 *
 	 * @param Dispatcher $fallback
-	 * @return $this
+	 * @return void
 	 * @throws Exception
 	 */
-	public function redirect(Dispatcher $fallback):self;
+	public function redirect(Dispatcher $fallback):void;
 
 	/**
 	 * Uses custom Exception class as a Response. This is displayed.
@@ -37,9 +37,9 @@ interface Exchange
      * @TODO Implement a way to redirect with message and error code.
      *
 	 * @param Exception $exception
-	 * @return $this
+	 * @return void
 	 */
-	public function error(Exception $exception):self;
+	public function error(Exception $exception):void;
 
 	/**
 	 * Returns a mutable copy of the Path of the originally requested Location
