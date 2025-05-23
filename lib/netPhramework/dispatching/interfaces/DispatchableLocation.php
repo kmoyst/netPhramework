@@ -5,9 +5,6 @@ namespace netPhramework\dispatching\interfaces;
 use netPhramework\common\Variables;
 use netPhramework\core\ResponseCode;
 
-/**
- * Used by Dispatcher to prepare Redirectable ResponseContent.
- */
 interface DispatchableLocation
 {
 	/**
