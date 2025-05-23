@@ -14,13 +14,11 @@ class Exception extends \Exception implements Response, Viewable, Wrappable
     protected readonly ResponseCode $responseCode;
     private Wrapper $wrapper;
 	private Environment $environment;
-	//private Variables $variables;
 
     public function __construct(
 		string $message = "", ?ResponseCode $responseCode = null)
     {
         $this->responseCode = $responseCode ?? ResponseCode::SERVER_ERROR;
-		//	$this->variables = new Variables();
         parent::__construct($message, $this->responseCode->value);
     }
 
