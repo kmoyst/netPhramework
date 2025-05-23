@@ -7,13 +7,12 @@ use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\Path;
+use netPhramework\dispatching\DispatchableLocation;
 use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\BasicResponse;
-use netPhramework\responding\DisplayableContent;
-use netPhramework\responding\Redirection;
+use netPhramework\responding\DisplayableResponse;
 use netPhramework\responding\Response;
 use netPhramework\responding\ResponseCode;
 
@@ -39,10 +38,10 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function redirect(Dispatcher $fallback):void
 	{
-		$response 	= new Redirection(clone $this->path);
+		$location 	= new DispatchableLocation(clone $this->path);
 		$dispatcher = $this->callbackManager->callbackDispatcher() ?: $fallback;
-		$dispatcher->dispatch($response);
-		$this->response = $response;
+		$dispatcher->dispatch($location);
+		$this->response = $location;
 	}
 
 	/** @inheritDoc */
@@ -55,8 +54,7 @@ class SocketExchange implements Exchange
 	public function display(Wrappable $content, ResponseCode $code):void
 	{
 		$wrappedViewable = $this->wrapper->wrap($content);
-        $responseContent = new DisplayableContent($wrappedViewable);
-        $this->response  = new BasicResponse($responseContent, $code);
+        $this->response  = new DisplayableResponse($wrappedViewable, $code);
 	}
 
 	/** @inheritDoc */

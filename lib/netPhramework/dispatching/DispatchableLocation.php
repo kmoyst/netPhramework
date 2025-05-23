@@ -1,17 +1,18 @@
 <?php
 
-namespace netPhramework\responding;
+namespace netPhramework\dispatching;
 
-use netPhramework\dispatching\Dispatchable;
-use netPhramework\dispatching\MutableLocation;
+use netPhramework\responding\Responder;
+use netPhramework\responding\Response;
+use netPhramework\responding\ResponseCode;
 
-class Redirection extends MutableLocation implements Dispatchable, Response
+class DispatchableLocation extends MutableLocation implements Dispatchable, Response
 {
 	private ResponseCode $responseCode;
 
 	public function deliver(Responder $responder): void
 	{
-        new RedirectableContent($this)->relay($responder, $this->responseCode);
+		$responder->redirect($this, $this->responseCode);
 	}
 
 	/** @inheritDoc */
