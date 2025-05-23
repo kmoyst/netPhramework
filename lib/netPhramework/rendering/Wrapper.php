@@ -4,15 +4,13 @@ namespace netPhramework\rendering;
 
 class Wrapper implements Viewable, WrapperConfiguration
 {
-    private string $title;
-    private Viewable $content;
+	private Wrappable $wrappable;
 	private string $templateName = 'wrapper';
 	private string $titlePrefix = '';
 
 	public function wrap(Wrappable $wrappable):Viewable
     {
-        $this->content = $wrappable->getContent();
-        $this->title   = $wrappable->getTitle();
+		$this->wrappable = $wrappable;
         return $this;
     }
 
@@ -21,12 +19,6 @@ class Wrapper implements Viewable, WrapperConfiguration
 		$this->titlePrefix = $titlePrefix;
 		return $this;
 	}
-
-    public function setTitle(string $title): self
-    {
-        $this->title = $title;
-		return $this;
-    }
 
 	public function setTemplateName(string $templateName): self
 	{
@@ -41,9 +33,12 @@ class Wrapper implements Viewable, WrapperConfiguration
 
     public function getVariables(): iterable
     {
+		$title =
+			trim("$this->titlePrefix - ".$this->wrappable->getTitle(),'- ');
+		$content = $this->wrappable->getContent();
         return [
-            'content' => $this->content,
-            'title' => trim("$this->titlePrefix - $this->title", '- ')
+            'content' => $content,
+            'title' => $title
         ];
     }
 }

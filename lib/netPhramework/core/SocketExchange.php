@@ -12,6 +12,7 @@ use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Display;
 use netPhramework\rendering\View;
+use netPhramework\rendering\ViewConfiguration;
 use netPhramework\rendering\Wrapper;
 
 class SocketExchange implements Exchange
@@ -44,14 +45,14 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function ok(View $view):View
+	public function ok(View $view):ViewConfiguration
 	{
 		return $this->display($view, ResponseCode::OK);
 	}
 
     /** @inheritDoc */
 	public function display(
-		View $view, ResponseCode $code):View
+		View $view, ResponseCode $code):ViewConfiguration
 	{
 		$wrappedViewable = $this->wrapper->wrap($view);
         $this->response  = new Display($wrappedViewable, $code);

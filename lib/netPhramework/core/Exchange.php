@@ -10,6 +10,7 @@ use netPhramework\dispatching\Path;
 use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;
+use netPhramework\rendering\ViewConfiguration;
 
 /**
  * The central mediator for the Request-Response cycle
@@ -21,9 +22,9 @@ interface Exchange
 	 * Generate a standard displayable Response to be wrapped.
 	 *
 	 * @param View $view
-	 * @return View - Passes the View in the method call back for further config
+	 * @return ViewConfiguration - Passes back the content for additional config
 	 */
-	public function ok(View $view):View;
+	public function ok(View $view):ViewConfiguration;
 
     /**
      * Centralized method for wrapping wrappable content a passing to
@@ -31,10 +32,10 @@ interface Exchange
      *
      * @param View $view
      * @param ResponseCode $code
-     * @return View - Passes the View in the method call back for further config
+     * @return ViewConfiguration - Passes back the content for additional config
      */
     public function display(
-		View $view, ResponseCode $code):View;
+		View $view, ResponseCode $code):ViewConfiguration;
 
 	/**
 	 * Configures the Exchange for a Redirection Response

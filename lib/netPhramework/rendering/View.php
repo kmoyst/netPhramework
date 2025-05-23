@@ -7,7 +7,7 @@ use netPhramework\common\Variables;
 use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\interfaces\ReadablePath;
 
-class View implements Wrappable, Viewable
+class View implements Wrappable, Viewable, ViewConfiguration
 {
     private readonly Variables $variables;
 
@@ -25,7 +25,7 @@ class View implements Wrappable, Viewable
 
 	public function add(string $key,
 						string|Viewable|Encodable|ReadablePath|
-						ReadableLocation|iterable|null $value):self
+						ReadableLocation|iterable|null $value):View
 	{
 		$this->getVariables()->add($key, $value);
 		return $this;
