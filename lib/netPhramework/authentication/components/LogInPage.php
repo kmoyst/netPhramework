@@ -25,19 +25,20 @@ class LogInPage extends Leaf
      */
     public function handleExchange(Exchange $exchange): void
     {
-        $manager    = new LogInManager();
-        $relocator  = $this->forForm ?? new RelocateToSibling('authenticate');
-        $formAction = $exchange->getPath();
-        $relocator->relocate($formAction);
+        $manager    = new LogInManager()
+		;
+		$formAction = $exchange->getPath();
+        $relocator  = $this->forForm??new RelocateToSibling('authenticate');
+        $relocator->relocate($formAction)
+		;
         $errorView    = $exchange->getSession()->getViewableError();
-        $responseCode = $exchange->getSession()->resolveResponseCode();
-        $view = $this->view ?? new View('log-in-page');
-        $view->getVariables()
-            ->add('usernameInput', $manager->getUsernameInput())
-            ->add('passwordInput', $manager->getPasswordInput())
-            ->add('formAction', $formAction)
-            ->add('errorView', $errorView ?? '')
+        $responseCode = $exchange->getSession()->resolveResponseCode()
+		;
+		$exchange->display($this->view??new View('log-in-page'), $responseCode)
+            ->add('usernameInput', 	$manager->getUsernameInput())
+            ->add('passwordInput', 	$manager->getPasswordInput())
+            ->add('formAction', 	$formAction)
+            ->add('errorView', 		$errorView??'')
             ;
-        $exchange->display($view, $responseCode);
     }
 }
