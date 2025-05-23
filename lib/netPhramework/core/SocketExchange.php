@@ -8,7 +8,6 @@ use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\Path;
 use netPhramework\dispatching\Redirection;
-use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Display;
 use netPhramework\rendering\View;
@@ -39,7 +38,7 @@ class SocketExchange implements Exchange
 	{
 		$redirection 	= new Redirection(clone $this->path);
 		$callback		= $this->callbackManager->callbackDispatcher();
-		($callback??$fallback)->dispatch($redirection);
+		($callback ?? $fallback)->dispatch($redirection);
 		$this->response = $redirection;
 		return $redirection->getParameters();
 	}
@@ -51,8 +50,7 @@ class SocketExchange implements Exchange
 	}
 
     /** @inheritDoc */
-	public function display(
-		View $view, ResponseCode $code):ViewConfiguration
+	public function display(View $view, ResponseCode $code):ViewConfiguration
 	{
 		$wrappedViewable = $this->wrapper->wrap($view);
         $this->response  = new Display($wrappedViewable, $code);

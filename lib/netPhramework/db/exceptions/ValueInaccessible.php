@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\exceptions;
 
-use netPhramework\exceptions\Exception;
+use netPhramework\core\Exception;
 
 class ValueInaccessible extends Exception
 {

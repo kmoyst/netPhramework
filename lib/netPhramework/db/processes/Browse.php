@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\processes;
 
+use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\core\RecordSet;
 use netPhramework\db\core\RecordSetProcess;
@@ -16,7 +17,6 @@ use netPhramework\db\presentation\recordTable\FilterFormDirector;
 use netPhramework\db\presentation\recordTable\FilterSelectFormStrategy;
 use netPhramework\db\presentation\recordTable\PaginatorBuilder;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
-use netPhramework\exceptions\Exception;
 use netPhramework\rendering\View;
 
 class Browse extends RecordSetProcess

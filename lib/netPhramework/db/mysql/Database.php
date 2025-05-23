@@ -18,6 +18,7 @@ class Database implements \netPhramework\db\abstraction\Database
 			$this->schemas[$name] = new Schema($name, $this->adapter);
 		return $this->schemas[$name];
 	}
+
 	public function getTable(string $name):Table
 	{
 		if(!isset($this->tables[$name]))

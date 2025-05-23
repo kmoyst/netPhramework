@@ -4,7 +4,6 @@ namespace netPhramework\core;
 
 use netPhramework\dispatching\Path;
 use netPhramework\exceptions\ComponentNotFound;
-use netPhramework\exceptions\Exception;
 
 class Navigator
 {

@@ -3,11 +3,11 @@
 namespace netPhramework\authentication\components;
 
 use netPhramework\authentication\LogInManager;
+use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\dispatching\relocators\RelocateToSibling;
 use netPhramework\dispatching\relocators\Relocator;
-use netPhramework\exceptions\Exception;
 use netPhramework\rendering\View;
 
 class LogInPage extends Leaf

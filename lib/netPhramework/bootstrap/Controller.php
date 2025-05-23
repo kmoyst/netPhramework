@@ -3,7 +3,7 @@
 namespace netPhramework\bootstrap;
 
 use netPhramework\core\Application;
-use netPhramework\exceptions\Exception;
+use netPhramework\core\Exception;
 
 class Controller
 {

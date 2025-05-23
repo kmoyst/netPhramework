@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\authentication\components;
 
+use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\db\authentication\EnrolledUserField;
@@ -14,7 +15,6 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\dispatching\dispatchers\DispatchToSibling;
-use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 
 class SaveProfile extends Leaf

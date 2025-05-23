@@ -3,7 +3,6 @@
 namespace netPhramework\core;
 
 use netPhramework\exceptions\ComponentNotFound;
-use netPhramework\exceptions\Exception;
 
 final class Directory extends Composite
 {

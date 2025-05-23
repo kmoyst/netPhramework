@@ -3,7 +3,7 @@
 namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
-use netPhramework\exceptions\Exception;
+use netPhramework\core\Exception;
 
 /**
  * Adapts string Uri to Path and Variables

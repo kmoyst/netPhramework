@@ -1,11 +1,11 @@
 <?php
 
 namespace netPhramework\db\presentation\recordTable;
+use netPhramework\core\Exception;
 use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\exceptions\Exception;
 
 class RowSetBuilder
 {

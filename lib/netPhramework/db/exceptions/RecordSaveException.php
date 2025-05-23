@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\exceptions;
 
-use netPhramework\exceptions\Exception;
+use netPhramework\core\Exception;
 
 class RecordSaveException extends Exception
 {

@@ -4,12 +4,12 @@ namespace netPhramework\db\authentication;
 
 use netPhramework\authentication\UserRole;
 use netPhramework\common\Variables;
+use netPhramework\core\Exception;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\InputSet;
 
 class UserProfile

@@ -3,13 +3,13 @@
 namespace netPhramework\db\configuration;
 
 use netPhramework\core\Directory;
+use netPhramework\core\Exception;
 use netPhramework\db\core\Asset;
-use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\core\Process;
-use netPhramework\db\core\RecordSetProcessSet;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\core\RecordProcessSet;
-use netPhramework\exceptions\Exception;
+use netPhramework\db\core\RecordSetProcess;
+use netPhramework\db\core\RecordSetProcessSet;
 
 class AssetAssembler
 {
@@ -25,8 +25,8 @@ class AssetAssembler
 
 	protected function reset():void
 	{
-		$this->recordSetProcessSet = new RecordSetProcessSet();
-		$this->recordProcessSet = new RecordProcessSet();
+		$this->recordSetProcessSet 	= new RecordSetProcessSet();
+		$this->recordProcessSet		= new RecordProcessSet();
 	}
 
 	public function strategy(ProcessStrategy $strategy):self

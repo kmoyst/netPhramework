@@ -2,6 +2,7 @@
 
 namespace netPhramework\exceptions;
 
+use netPhramework\core\Exception;
 use netPhramework\core\ResponseCode;
 
 class NotFound extends Exception

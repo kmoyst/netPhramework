@@ -4,7 +4,6 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\dispatching\Path;
-use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Wrapper;
 
 readonly class Socket

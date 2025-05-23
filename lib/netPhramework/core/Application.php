@@ -4,7 +4,6 @@ namespace netPhramework\core;
 
 
 use netPhramework\bootstrap\Configuration;
-use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Wrapper;
 
 class Application

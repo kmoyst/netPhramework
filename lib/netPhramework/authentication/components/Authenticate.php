@@ -4,11 +4,11 @@ namespace netPhramework\authentication\components;
 
 use netPhramework\authentication\Authenticator;
 use netPhramework\authentication\LogInManager;
+use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\dispatching\dispatchers\Dispatcher;
 use netPhramework\dispatching\dispatchers\DispatchToSibling as ToSibling;
-use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 

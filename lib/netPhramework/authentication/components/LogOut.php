@@ -2,11 +2,11 @@
 
 namespace netPhramework\authentication\components;
 
+use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\dispatching\dispatchers\Dispatcher;
 use netPhramework\dispatching\dispatchers\DispatchToRoot;
-use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 
 class LogOut extends Leaf

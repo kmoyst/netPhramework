@@ -3,10 +3,10 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use Iterator;
+use netPhramework\core\Exception;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Viewable;
 
 readonly class Row implements Iterator

@@ -2,9 +2,9 @@
 
 namespace netPhramework\common;
 use Iterator;
+use netPhramework\core\Exception;
 use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\interfaces\ReadablePath;
-use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Viewable;
 

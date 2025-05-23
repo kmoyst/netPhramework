@@ -2,13 +2,13 @@
 
 namespace netPhramework\db\configuration;
 
+use netPhramework\core\Exception;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\processes\Add;
 use netPhramework\db\processes\Browse;
 use netPhramework\db\processes\Edit;
-use netPhramework\exceptions\Exception;
 
 class PassiveAssetAssembler extends AssetAssembler
 {

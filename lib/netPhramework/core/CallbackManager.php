@@ -8,7 +8,6 @@ use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\Path;
 use netPhramework\dispatching\UriAdapter;
-use netPhramework\exceptions\Exception;
 
 /**
  * A central manager for callbacks usually used by SocketExchange.

@@ -2,13 +2,13 @@
 
 namespace netPhramework\db\processes;
 
+use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\dispatching\dispatchers\Dispatcher;
 use netPhramework\dispatching\dispatchers\DispatchToParent;
-use netPhramework\exceptions\Exception;
 
 class Delete extends RecordProcess
 {

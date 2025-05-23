@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\authentication\processes;
 
+use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\EnrolledUser;
 use netPhramework\db\core\Record;
@@ -12,7 +13,6 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\processes\Save;
 use netPhramework\dispatching\dispatchers\Dispatcher;
 use netPhramework\dispatching\dispatchers\DispatchToSibling;
-use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 
 class UserSave extends Save

@@ -1,11 +1,8 @@
 <?php
 
-namespace netPhramework\exceptions;
+namespace netPhramework\core;
 
 use netPhramework\bootstrap\Environment;
-use netPhramework\core\Responder;
-use netPhramework\core\Response;
-use netPhramework\core\ResponseCode;
 use netPhramework\rendering\Message;
 use netPhramework\rendering\Viewable;
 use netPhramework\rendering\Wrappable;
