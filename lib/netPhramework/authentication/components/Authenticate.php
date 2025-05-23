@@ -7,8 +7,7 @@ use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\dispatching\Dispatcher;
-use netPhramework\dispatching\DispatchToSiblingWithMessage as ToSibling;
-use netPhramework\dispatching\DispatchWithMessage;
+use netPhramework\dispatching\DispatchToSibling as ToSibling;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
@@ -37,13 +36,19 @@ class Authenticate extends Leaf
 		$this->authenticator->setUserLoggingIn($user);
 		if(!$this->authenticator->checkUsername())
 		{
-			$exchange->error(
-                new InvalidUsername("User not found"), $onFailure);
+			$username = $user->getUsername();
+			$msg = $username ?
+				"User not found: $username" :
+				"Please enter your username and password to login";
+			$exchange->error(new InvalidUsername($msg), $onFailure);
 		}
 		elseif(!$this->authenticator->checkPassword())
 		{
-            $exchange->error(
-                new InvalidPassword('Password incorrect'), $onFailure);
+			$password = $user->getPassword();
+			$msg = $password ?
+				"Password incorrect" :
+				"Please enter your password";
+            $exchange->error(new InvalidPassword($msg), $onFailure);
 		}
 		else
 		{
