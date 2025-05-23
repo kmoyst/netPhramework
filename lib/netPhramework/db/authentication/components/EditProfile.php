@@ -41,9 +41,9 @@ class EditProfile extends Leaf
 		$profile = new UserProfile();
 		$profile->setRecord($record)->addInputs($inputs);
 		$exchange->ok(new View('edit-profile')
-			->addVariable('inputs', $inputs)
-			->addVariable('userDescription', $user->getUsername())
-			->addVariable('role',$user->getRole()->friendlyName())
+			->add('inputs', $inputs)
+			->add('userDescription', $user->getUsername())
+			->add('role',$user->getRole()->friendlyName())
 		);
 	}
 }

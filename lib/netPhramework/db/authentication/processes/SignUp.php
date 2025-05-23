@@ -31,10 +31,10 @@ class SignUp extends RecordSetProcess
         $errorView    = $exchange->getSession()->getViewableError();
         $responseCode = $exchange->getSession()->resolveResponseCode();
         $view = new View('sign-up')
-			->addVariable('usernameInput', $user->getUsernameInput())
-			->addVariable('passwordInput', $user->getPasswordInput())
-			->addVariable('formAction', $this->actionLeaf)
-            ->addVariable('errorView', $errorView ?? '')
+			->add('usernameInput', $user->getUsernameInput())
+			->add('passwordInput', $user->getPasswordInput())
+			->add('formAction', $this->actionLeaf)
+            ->add('errorView', $errorView ?? '')
         ;
 		$exchange->display($view, $responseCode);
 	}

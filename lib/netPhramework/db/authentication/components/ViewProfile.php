@@ -39,12 +39,12 @@ class ViewProfile extends Leaf
 		$profile = new UserProfile()->setRecord($record);
 		$callbackInput = $exchange->callbackFormInput();
 		$exchange->ok(new View('view-profile')
-			->addVariable('firstName', $profile->getFirstName())
-			->addVariable('lastName', $profile->getLastName())
-			->addVariable('username', $profile->getUsername())
-			->addVariable('role', $profile->getRole()->friendlyName())
-			->addVariable('emailAddress', $profile->getEmailAddress())
-			->addVariable('callbackInput', $callbackInput)
+			->add('firstName', $profile->getFirstName())
+			->add('lastName', $profile->getLastName())
+			->add('username', $profile->getUsername())
+			->add('role', $profile->getRole()->friendlyName())
+			->add('emailAddress', $profile->getEmailAddress())
+			->add('callbackInput', $callbackInput)
 		);
 	}
 }

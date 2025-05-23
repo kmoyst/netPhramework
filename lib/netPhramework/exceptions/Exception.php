@@ -3,11 +3,9 @@
 namespace netPhramework\exceptions;
 
 use netPhramework\bootstrap\Environment;
-use netPhramework\common\Variables;
 use netPhramework\core\Responder;
 use netPhramework\core\Response;
 use netPhramework\core\ResponseCode;
-use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Message;
 use netPhramework\rendering\Viewable;
 use netPhramework\rendering\Wrappable;

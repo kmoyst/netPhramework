@@ -36,7 +36,7 @@ class Page extends Leaf
                                 string|Viewable|Encodable|ReadablePath|
                                 ReadableLocation|iterable|null $value):self
     {
-        $this->view->addVariable($key, $value);
+        $this->view->add($key, $value);
         return $this;
     }
 
