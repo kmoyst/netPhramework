@@ -21,8 +21,13 @@ class Exception extends \Exception implements Response, Wrappable, Viewable
     public function __construct(
 		string $message = "", ?ResponseCode $responseCode = null)
     {
-        parent::__construct($message, $responseCode->value);
-		$this->responseCode = $responseCode ?? ResponseCode::SERVER_ERROR;
+        $this->responseCode = $responseCode ?? ResponseCode::SERVER_ERROR;
+        parent::__construct($message, $this->responseCode->value);
+    }
+
+    public function getResponseCode(): ResponseCode
+    {
+        return $this->responseCode;
     }
 
     public function setWrapper(Wrapper $wrapper): Exception

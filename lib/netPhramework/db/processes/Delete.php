@@ -12,10 +12,12 @@ use netPhramework\exceptions\Exception;
 
 class Delete extends RecordProcess
 {
-	public function __construct(
-        private readonly ?Dispatcher $dispatcher = null,
-		?string $name = null)
+    protected Dispatcher $dispatcher;
+
+	public function __construct(?Dispatcher $dispatcher = null,
+                                ?string $name = null)
 	{
+        $this->dispatcher = $this->dispatcher ?? new DispatchToParent('');
 		parent::__construct($name);
 	}
 
@@ -29,6 +31,6 @@ class Delete extends RecordProcess
 	public function handleExchange(Exchange $exchange, Record $record): void
 	{
 		$record->drop();
-		$exchange->redirect($this->dispatcher ?? new DispatchToParent(''));
+		$exchange->redirect($this->dispatcher);
 	}
 }

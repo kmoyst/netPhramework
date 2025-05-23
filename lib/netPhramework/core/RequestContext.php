@@ -2,7 +2,6 @@
 
 namespace netPhramework\core;
 
-use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
 
 interface RequestContext

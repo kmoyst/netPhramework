@@ -38,19 +38,15 @@ class UserSave extends Save
 		$enrolledUser->setRecord($record);
 		try {
 			$enrolledUser->parseAndSet($exchange->getParameters());
-		} catch (InvalidPassword $e) {
-			$exchange->error($e);
-			return;
-		}
-		try {
 			$enrolledUser->save();
+            $exchange->getSession()->login($enrolledUser);
+            $exchange->redirect($this->dispatcher);
 		} catch (DuplicateEntryException) {
-			$exchange->error(
-				new Exception(
-					"User already exists: ". $enrolledUser->getUsername()));
-			return;
-		}
-		$exchange->getSession()->login($enrolledUser);
-		$exchange->redirect($this->dispatcher ?? new DispatchToParent(''));
+            $message = "User already exists: ". $enrolledUser->getUsername();
+			$exchange->error(new Exception($message), $this->dispatcher);
+		} catch (InvalidPassword $e) {
+            $message = $e->getMessage();
+            $exchange->error(new Exception($message), $this->dispatcher);
+        }
 	}
 }

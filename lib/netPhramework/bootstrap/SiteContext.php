@@ -2,10 +2,10 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\authentication\Session;
 use netPhramework\common\FileFinder;
 use netPhramework\core\RequestContext;
 use netPhramework\core\RequestInterpreter;
+use netPhramework\core\Session;
 use netPhramework\rendering\Encoder;
 use netPhramework\responding\Responder;
 

@@ -14,9 +14,15 @@ use netPhramework\exceptions\Exception;
 
 class Save extends RecordProcess
 {
+    protected Dispatcher $dispatcher;
+
 	public function __construct(
-		protected readonly ?Dispatcher $dispatcher = null,
-	 	?string $name = null) { parent::__construct($name); }
+        ?Dispatcher $dispatcher = null,
+        ?string $name = null)
+    {
+        $this->dispatcher = $dispatcher ?? new DispatchToParent('');
+        parent::__construct($name);
+    }
 
     /**
      * @param Exchange $exchange
@@ -33,9 +39,9 @@ class Save extends RecordProcess
 				if($record->getCellSet()->has($k))
 					$record->getCell($k)->setValue($v);
 			$record->save();
-			$exchange->redirect($this->dispatcher ?? new DispatchToParent(''));
+			$exchange->redirect($this->dispatcher);
 		} catch (InvalidValue $e) {
-			$exchange->error($e);
+            $exchange->error($e, $this->dispatcher);
 		}
 	}
 }

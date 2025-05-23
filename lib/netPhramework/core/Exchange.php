@@ -2,7 +2,6 @@
 
 namespace netPhramework\core;
 
-use netPhramework\authentication\Session;
 use netPhramework\common\Variables;
 use netPhramework\dispatching\Dispatcher;
 use netPhramework\dispatching\Location;
@@ -11,6 +10,7 @@ use netPhramework\dispatching\Path;
 use netPhramework\exceptions\Exception;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Wrappable;
+use netPhramework\responding\ResponseCode;
 
 interface Exchange
 {
@@ -22,6 +22,16 @@ interface Exchange
 	 */
 	public function ok(Wrappable $content):void;
 
+    /**
+     * Centralized method for wrapping wrappable content a passing to
+     * final display method.
+     *
+     * @param Wrappable $content
+     * @param ResponseCode $code
+     * @return void
+     */
+    public function display(Wrappable $content, ResponseCode $code):void;
+
 	/**
 	 * Configures the Exchange for a RedirectableContent Response
 	 *
@@ -32,14 +42,13 @@ interface Exchange
 	public function redirect(Dispatcher $fallback):void;
 
 	/**
-	 * Uses custom Exception class as a Response. This is displayed.
-     *
-     * @TODO Implement a way to redirect with message and error code.
+     * Dispatches with an error code and message stored in Session for display
      *
 	 * @param Exception $exception
+     * @param Dispatcher $fallback
 	 * @return void
 	 */
-	public function error(Exception $exception):void;
+	public function error(Exception $exception, Dispatcher $fallback):void;
 
 	/**
 	 * Returns a mutable copy of the Path of the originally requested Location

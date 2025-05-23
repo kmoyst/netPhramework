@@ -17,6 +17,7 @@ use netPhramework\db\presentation\recordTable\FilterSelectFormStrategy;
 use netPhramework\db\presentation\recordTable\PaginatorBuilder;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
 use netPhramework\exceptions\Exception;
+use netPhramework\rendering\ReadableView;
 use netPhramework\rendering\View;
 
 class Browse extends RecordSetProcess
@@ -86,13 +87,19 @@ class Browse extends RecordSetProcess
 		$addButtonForm = new View('add-button-form');
 		$addButtonForm->getVariables()->add('callbackInput', $callbackInput)
 		;
-		$view = new View('browse');
+        $errorMessage = $exchange->getSession()->getErrorMessageAndClear();
+        $responseCode = $exchange->getSession()->resolveResponseCode();
+        $errorView    = $errorMessage ?
+            new ReadableView('error-message', ['message' => $errorMessage]):''
+        ;
+        $view = new View('browse');
 		$view->getVariables()
 			->add('filterSelectForm', 	$filterSelectForm)
 			->add('addButtonForm', 		$addButtonForm)
 			->add('recordTable', 		$recordTable)
 			->add('paginator', 			$paginator)
+            ->add('errorView',          $errorView)
 		;
-		$exchange->ok($view->setTitle('Browse Records'));
+        $exchange->display($view->setTitle('Browse Records'), $responseCode);
 	}
 }

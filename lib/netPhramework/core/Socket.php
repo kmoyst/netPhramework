@@ -48,7 +48,8 @@ readonly class Socket
 				->setRoot($this->root)
 				->setGuide($path)
 				->navigate()
-				->handleExchange($exchange);
+				->handleExchange($exchange)
+            ;
 			return $exchange->getResponse();
 		}
 		catch (Exception $exception)

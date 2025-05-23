@@ -2,7 +2,6 @@
 
 namespace netPhramework\core;
 
-use netPhramework\authentication\Session;
 use netPhramework\common\Variables;
 use netPhramework\dispatching\CallbackManager;
 use netPhramework\dispatching\Dispatcher;
@@ -74,18 +73,17 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function ok(Wrappable $content):void
 	{
-		$this->wrappedDisplay($content, ResponseCode::OK);
+		$this->display($content, ResponseCode::OK);
 	}
 
     /**
-     * Centralized method for wrapping wrappable content a passing to
-     * final display method.
+     * Centralized method for responding with wrapped Display
      *
      * @param Wrappable $content
      * @param ResponseCode $code
      * @return void
      */
-	private function wrappedDisplay(Wrappable $content, ResponseCode $code):void
+	public function display(Wrappable $content, ResponseCode $code):void
 	{
 		$this->directDisplay($this->wrapper->wrap($content), $code);
 	}
@@ -104,9 +102,16 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function error(Exception $exception): void
+	public function error(Exception $exception, Dispatcher $fallback): void
 	{
-		$this->response = $exception->setWrapper($this->wrapper);
+        try {
+            $this->redirect($fallback);
+            $this->session->addErrorMessage(
+                rtrim($exception->getMessage(),": "));
+            $this->session->addErrorCode($exception->getResponseCode());
+        } catch (Exception) {
+            $this->response = $exception->setWrapper($this->wrapper);
+        }
 	}
 
 	/** @inheritDoc */
