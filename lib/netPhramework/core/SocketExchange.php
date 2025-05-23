@@ -50,7 +50,8 @@ class SocketExchange implements Exchange
 	}
 
     /** @inheritDoc */
-	public function display(ConfigurableView $view, ResponseCode $code):Variables
+	public function display(
+		ConfigurableView $view, ResponseCode $code):Variables
 	{
 		$wrappedViewable = $this->wrapper->wrap($view);
         $this->response  = new Display($wrappedViewable, $code);

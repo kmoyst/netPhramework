@@ -89,14 +89,13 @@ class Browse extends RecordSetProcess
         $errorView    = $exchange->getSession()->getViewableError() ?? '';
         $responseCode = $exchange->getSession()->resolveResponseCode()
         ;
-        $view = new View('browse');
-		$view->getVariables()
+		$view = new View('browse')->setTitle('Browse Records');
+		$exchange->display($view, $responseCode)
 			->add('filterSelectForm', 	$filterSelectForm)
 			->add('addButtonForm', 		$addButtonForm)
 			->add('recordTable', 		$recordTable)
 			->add('paginator', 			$paginator)
-            ->add('errorView',          $errorView)
+			->add('errorView',          $errorView)
 		;
-        $exchange->display($view->setTitle('Browse Records'), $responseCode);
 	}
 }
