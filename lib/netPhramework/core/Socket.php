@@ -55,6 +55,7 @@ readonly class Socket
 			return $exception
 				->setWrapper($this->wrapper)
 				->setEnvironment($context->getEnvironment())
+				->getResponse()
 				;
 		}
 	}

@@ -1,8 +1,6 @@
 <?php
 
-namespace netPhramework\dispatching\interfaces;
-
-use netPhramework\dispatching\Path;
+namespace netPhramework\dispatching;
 
 /**
  * ReloctablePath can be modified, but not read (the inverse of ReadablePath)

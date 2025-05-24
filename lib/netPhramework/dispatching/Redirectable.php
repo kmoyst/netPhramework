@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\dispatching\interfaces;
+namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
 use netPhramework\responding\ResponseCode;
 
-interface DispatchableLocation
+interface Redirectable
 {
 	/**
 	 * To set Response to redirectable with explicit code.

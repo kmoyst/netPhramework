@@ -2,8 +2,8 @@
 
 namespace netPhramework\dispatching\relocators;
 
-use netPhramework\dispatching\interfaces\RelocatablePath;
 use netPhramework\dispatching\Path;
+use netPhramework\dispatching\RelocatablePath;
 
 readonly abstract class Relocator
 {

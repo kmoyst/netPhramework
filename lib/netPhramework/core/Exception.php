@@ -8,10 +8,13 @@ use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 use netPhramework\responding\Relayer;
 use netPhramework\responding\Responder;
+use netPhramework\responding\Response;
 use netPhramework\responding\ResponseContent;
 use netPhramework\responding\ResponseCode;
+use netPhramework\responding\ResponseFactory;
 
-class Exception extends \Exception implements ResponseContent, Wrappable
+class Exception extends \Exception
+	implements ResponseContent, Wrappable, ResponseFactory
 {
 	protected string $friendlyMessage = "SERVER ERROR";
     protected readonly ResponseCode $responseCode;
@@ -80,5 +83,13 @@ class Exception extends \Exception implements ResponseContent, Wrappable
 	public function chooseRelay(Responder $responder): Relayer
 	{
 		return $responder->getDisplayer();
+	}
+
+	public function getResponse():Response
+	{
+		return new Response()
+			->setContent($this)
+			->setCode($this->responseCode)
+			;
 	}
 }

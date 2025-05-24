@@ -2,7 +2,7 @@
 
 namespace netPhramework\dispatching\relocators;
 
-use netPhramework\dispatching\interfaces\RelocatablePath;
+use netPhramework\dispatching\RelocatablePath;
 
 readonly class RelocateToChild extends Relocator
 {

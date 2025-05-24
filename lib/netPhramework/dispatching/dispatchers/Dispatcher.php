@@ -3,7 +3,7 @@
 namespace netPhramework\dispatching\dispatchers;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\interfaces\DispatchableLocation;
+use netPhramework\dispatching\Redirectable;
 use netPhramework\dispatching\relocators\Relocator;
 use netPhramework\responding\ResponseCode;
 
@@ -18,10 +18,10 @@ readonly class Dispatcher
 		protected ResponseCode $code = ResponseCode::SEE_OTHER) {}
 
 	/**
-	 * @param DispatchableLocation $dispatchable
+	 * @param Redirectable $dispatchable
 	 * @return void
 	 */
-	public function dispatch(DispatchableLocation $dispatchable):void
+	public function dispatch(Redirectable $dispatchable):void
 	{
 		$this->relocator->relocate($dispatchable->getPath());
 		$dispatchable->getParameters()->merge($this->parameters ?? []);
