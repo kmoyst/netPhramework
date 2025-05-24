@@ -18,8 +18,7 @@ class Redirection
 	}
 
 	/**
-	 * To set Response to redirectable with explicit code.
-	 * Finalizes the dispatch based on current Path and Parameters.
+	 * Sets Response Code for Redireciton (usually SEE_OTHER)
 	 *
 	 * @param ResponseCode $code
 	 * @return $this

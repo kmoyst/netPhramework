@@ -16,7 +16,7 @@ class Path implements RelocatablePath, ReadablePath
 
 	public function setName(string $name): Path
 	{
-		$this->name = $name; // null can't be set outside class
+		$this->name = $name;
 		return $this;
 	}
 

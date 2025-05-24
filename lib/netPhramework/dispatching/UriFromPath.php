@@ -4,6 +4,10 @@ namespace netPhramework\dispatching;
 
 use netPhramework\dispatching\interfaces\ReadablePath;
 use Stringable;
+
+/**
+ * Converts a ReadablePath to uri string
+ */
 readonly class UriFromPath implements Stringable
 {
 	public function __construct(private ReadablePath $path) {}

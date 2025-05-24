@@ -6,7 +6,8 @@ use netPhramework\common\Variables;
 use netPhramework\dispatching\interfaces\ReadableLocation;
 
 /**
- * A fully readable and modifiable ReadableLocation
+ * A fully readable and modifiable Location
+ *
  */
 class Location implements ReadableLocation
 {
