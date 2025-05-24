@@ -13,6 +13,8 @@ use netPhramework\rendering\Display;
 use netPhramework\rendering\View;
 use netPhramework\rendering\ViewConfiguration;
 use netPhramework\rendering\Wrapper;
+use netPhramework\responding\Response;
+use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {
@@ -36,11 +38,13 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function redirect(Dispatcher $fallback):Variables
 	{
-		$redirection 	= new Redirection(clone $this->path);
-		$callback		= $this->callbackManager->callbackDispatcher();
-		($callback ?? $fallback)->dispatch($redirection);
-		$this->response = $redirection;
-		return $redirection->getParameters();
+		//$redirection 	= new Redirection(clone $this->path);
+		$location = new Location(clone $this->path);
+		$callback = $this->callbackManager->callbackDispatcher();
+		//($callback ?? $fallback)->dispatch($redirection);
+
+//		$this->response = $redirection;
+//		return $redirection->getParameters();
 	}
 
 	/** @inheritDoc */
@@ -52,8 +56,10 @@ class SocketExchange implements Exchange
     /** @inheritDoc */
 	public function display(View $view, ResponseCode $code):ViewConfiguration
 	{
-		$wrappedView 	 = $this->wrapper->wrap($view);
-        $this->response  = new Display($wrappedView, $code);
+        $this->response = new Response()
+			->setContent($this->wrapper->wrap($view))
+			->setCode($code)
+		;
 		return $view;
 	}
 
@@ -66,7 +72,10 @@ class SocketExchange implements Exchange
                 rtrim($exception->getMessage(),": "));
             $this->session->addErrorCode($exception->getResponseCode());
         } catch (Exception) {
-            $this->response = $exception->setWrapper($this->wrapper);
+			$this->response = new Response()
+				->setContent($exception->setWrapper($this->wrapper))
+				->setCode($exception->getResponseCode())
+				;
         }
 	}
 

@@ -3,14 +3,15 @@
 namespace netPhramework\core;
 
 use netPhramework\bootstrap\Environment;
-use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
-use netPhramework\rendering\Message;
-use netPhramework\rendering\View;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
+use netPhramework\responding\Relayer;
+use netPhramework\responding\Responder;
+use netPhramework\responding\ResponseContent;
+use netPhramework\responding\ResponseCode;
 
-class Exception extends \Exception implements Response, Encodable, Wrappable
+class Exception extends \Exception implements ResponseContent, Wrappable
 {
 	protected string $friendlyMessage = "SERVER ERROR";
     protected readonly ResponseCode $responseCode;
@@ -41,33 +42,43 @@ class Exception extends \Exception implements Response, Encodable, Wrappable
 		return $this;
 	}
 
-    public function deliver(Responder $responder): void
-    {
-		if(isset($this->environment) && $this->environment->inDevelopment())
-		{
-			$content = $this;
-		}
-		else
-		{
-			$content = new Message($this->friendlyMessage)->setTitle('Error');
-		}
-		$responder->display(
-			$this->wrapper->wrap($content), $this->responseCode);
-    }
-
+	/** @inheritDoc */
     public function getTitle(): string
     {
         return "ERROR";
     }
 
-    public function getContent(): self
+	/**
+	 * Used by wrapper
+	 *
+	 * @return string
+	 */
+    public function getContent(): string
     {
-        return $this;
+		if(isset($this->environment) && $this->environment->inDevelopment())
+		{
+			$message = $this->message;
+		}
+		else
+		{
+			$message = $this->friendlyMessage;
+		}
+		return $message;
     }
 
+	/**
+	 * Used by Response
+	 *
+	 * @param Encoder $encoder
+	 * @return string
+	 */
 	public function encode(Encoder $encoder): string
 	{
-		return $encoder->encodeViewable(
-			new View('message')->add('message', $this->message));
+		return $this->wrapper->encode($encoder);
+	}
+
+	public function chooseRelay(Responder $responder): Relayer
+	{
+		return $responder->getDisplayer();
 	}
 }

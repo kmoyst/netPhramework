@@ -2,21 +2,28 @@
 
 namespace netPhramework\dispatching;
 
-use netPhramework\dispatching\interfaces\ReadablePath;
-use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
+use netPhramework\responding\Relayer;
+use netPhramework\responding\Responder;
+use netPhramework\responding\ResponseContent;
 
 /**
  * The most basic ReadableLocation interface. Provides ReadablePath and iterable
  * Parameters.
  *
  */
-abstract class ReadableLocation implements Encodable
+abstract class ReadableLocation implements ResponseContent
 {
 	public function encode(Encoder $encoder):string
 	{
 		return $encoder->encodeLocation($this);
 	}
+
+	public function chooseRelay(Responder $responder): Relayer
+	{
+		return $responder->getRedirector();
+	}
+
 	/**
 	 * Returns a readable Path.
 	 *

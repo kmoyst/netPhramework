@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\exceptions;
 
-use netPhramework\core\ResponseCode;
+use netPhramework\responding\ResponseCode;
 
 class InvalidValue extends RecordSaveException
 {

@@ -2,7 +2,6 @@
 
 namespace netPhramework\dispatching;
 
-use netPhramework\dispatching\interfaces\ReadablePath;
 use Stringable;
 
 /**

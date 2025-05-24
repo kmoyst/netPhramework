@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\responding;
 
 enum ResponseCode:int
 {
@@ -69,4 +69,9 @@ enum ResponseCode:int
 	case INSUFFICIENT_STORAGE = 507;
 	case LOOP_DETECTED = 508;
 	case NETWORK_AUTHENTICATION_REQUIRED = 511;
+
+	public function isRedirection():bool
+	{
+		return $this->value >= 300 && $this->value < 400;
+	}
 }

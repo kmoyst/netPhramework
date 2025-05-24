@@ -3,8 +3,8 @@
 namespace netPhramework\rendering;
 
 use netPhramework\common\FileFinder;
-use netPhramework\dispatching\interfaces\ReadablePath;
 use netPhramework\dispatching\ReadableLocation;
+use netPhramework\dispatching\ReadablePath;
 use netPhramework\dispatching\UriFromLocation;
 use netPhramework\dispatching\UriFromPath;
 use netPhramework\exceptions\FileNotFound;

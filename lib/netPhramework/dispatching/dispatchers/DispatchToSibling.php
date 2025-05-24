@@ -3,9 +3,9 @@
 namespace netPhramework\dispatching\dispatchers;
 
 use netPhramework\common\Variables;
-use netPhramework\core\ResponseCode;
 use netPhramework\dispatching\Path;
 use netPhramework\dispatching\relocators\RelocateToSibling;
+use netPhramework\responding\ResponseCode;
 
 readonly class DispatchToSibling extends Dispatcher
 {

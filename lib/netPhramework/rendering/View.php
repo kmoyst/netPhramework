@@ -4,8 +4,8 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
-use netPhramework\dispatching\interfaces\ReadablePath;
 use netPhramework\dispatching\ReadableLocation;
+use netPhramework\dispatching\ReadablePath;
 
 class View extends Viewable implements Wrappable, ViewConfiguration
 {
