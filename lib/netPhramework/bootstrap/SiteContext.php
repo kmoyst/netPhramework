@@ -7,8 +7,6 @@ use netPhramework\core\RequestContext;
 use netPhramework\core\RequestInterpreter;
 use netPhramework\core\Session;
 use netPhramework\rendering\Encoder;
-use netPhramework\responding\Displayer;
-use netPhramework\responding\Redirector;
 use netPhramework\responding\Responder;
 
 class SiteContext implements RequestContext
@@ -40,7 +38,7 @@ class SiteContext implements RequestContext
 
 	public function getResponder(Encoder $encoder):Responder
 	{
-		return new Responder(new Displayer($encoder), new Redirector($encoder));
+		return new Responder($encoder);
 	}
 
 	public function getEncoder():Encoder

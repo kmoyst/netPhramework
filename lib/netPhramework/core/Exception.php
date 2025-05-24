@@ -3,18 +3,14 @@
 namespace netPhramework\core;
 
 use netPhramework\bootstrap\Environment;
-use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\Relayer;
 use netPhramework\responding\Responder;
-use netPhramework\responding\Response;
-use netPhramework\responding\ResponseContent;
 use netPhramework\responding\ResponseCode;
-use netPhramework\responding\ResponseFactory;
+use netPhramework\responding\ResponseInterface;
 
 class Exception extends \Exception
-	implements ResponseContent, Wrappable, ResponseFactory
+	implements Wrappable, ResponseInterface
 {
 	protected string $friendlyMessage = "SERVER ERROR";
     protected readonly ResponseCode $responseCode;
@@ -69,27 +65,8 @@ class Exception extends \Exception
 		return $message;
     }
 
-	/**
-	 * Used by Response
-	 *
-	 * @param Encoder $encoder
-	 * @return string
-	 */
-	public function encode(Encoder $encoder): string
+	public function deliver(Responder $responder): void
 	{
-		return $this->wrapper->encode($encoder);
-	}
-
-	public function chooseRelay(Responder $responder): Relayer
-	{
-		return $responder->getDisplayer();
-	}
-
-	public function getResponse():Response
-	{
-		return new Response()
-			->setContent($this)
-			->setCode($this->responseCode)
-			;
+		$responder->present($this->wrapper->wrap($this), $this->code);
 	}
 }

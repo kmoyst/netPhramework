@@ -2,12 +2,11 @@
 
 namespace netPhramework\dispatching;
 
-use netPhramework\responding\Response;
+use netPhramework\responding\Responder;
 use netPhramework\responding\ResponseCode;
-use netPhramework\responding\ResponseFactory;
+use netPhramework\responding\ResponseInterface;
 
-class Redirection extends Location
-	implements Redirectable, ResponseFactory
+class Redirection extends Location implements Redirectable, ResponseInterface
 {
 	private ResponseCode $code;
 
@@ -17,11 +16,8 @@ class Redirection extends Location
 		return $this;
 	}
 
-	public function getResponse():Response
+	public function deliver(Responder $responder): void
 	{
-		return new Response()
-			->setContent($this)
-			->setCode($this->code)
-			;
+		$responder->redirect($this, $this->code);
 	}
 }

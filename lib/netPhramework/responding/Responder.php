@@ -2,19 +2,22 @@
 
 namespace netPhramework\responding;
 
+use netPhramework\rendering\Encodable;
+use netPhramework\rendering\Encoder;
+
 readonly class Responder
 {
-	public function __construct(
-		private Displayer $displayer,
-		private Redirector $redirector) {}
+	public function __construct(private Encoder $encoder) {}
 
-	public function getDisplayer(): Relayer
+	public function present(Encodable $content, ResponseCode $code): void
 	{
-		return $this->displayer;
+		http_response_code($code->value);
+		echo $content->encode($this->encoder);
 	}
 
-	public function getRedirector(): Relayer
+	public function redirect(Encodable $content, ResponseCode $code): void
 	{
-		return $this->redirector;
+		http_response_code($code->value);
+		header("Location: " . $content->encode($this->encoder));
 	}
 }

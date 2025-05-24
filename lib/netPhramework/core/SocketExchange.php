@@ -9,14 +9,14 @@ use netPhramework\dispatching\Path;
 use netPhramework\dispatching\ReadableLocation;
 use netPhramework\dispatching\Redirection;
 use netPhramework\presentation\FormInput\HiddenInput;
+use netPhramework\rendering\Presentation;
 use netPhramework\rendering\View;
 use netPhramework\rendering\ViewConfiguration;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\Response;
 use netPhramework\responding\ResponseCode;
-use netPhramework\responding\ResponseFactory;
+use netPhramework\responding\ResponseInterface;
 
-class SocketExchange implements Exchange, ResponseFactory
+class SocketExchange implements Exchange
 {
     /**
      * The request Path. SocketExchange protects immutability.
@@ -33,7 +33,7 @@ class SocketExchange implements Exchange, ResponseFactory
 	private Session $session;
 	private CallbackManager $callbackManager;
     private Wrapper $wrapper;
-	private Response $response;
+	private ResponseInterface $response;
 
 	/** @inheritDoc */
 	public function redirect(Dispatcher $fallback):Variables
@@ -41,7 +41,7 @@ class SocketExchange implements Exchange, ResponseFactory
 		$redirection = new Redirection(clone $this->path);
 		$callback = $this->callbackManager->callbackDispatcher();
 		($callback ?? $fallback)->dispatch($redirection);
-		$this->response = $redirection->getResponse();
+		$this->response = $redirection;
 		return $redirection->getParameters();
 	}
 
@@ -54,7 +54,7 @@ class SocketExchange implements Exchange, ResponseFactory
     /** @inheritDoc */
 	public function display(View $view, ResponseCode $code):ViewConfiguration
 	{
-        $this->response = new Response()
+		$this->response = new Presentation()
 			->setContent($this->wrapper->wrap($view))
 			->setCode($code)
 		;
@@ -70,11 +70,7 @@ class SocketExchange implements Exchange, ResponseFactory
                 rtrim($exception->getMessage(),": "));
             $this->session->addErrorCode($exception->getResponseCode());
         } catch (Exception) {
-			$this->response = $exception->getResponse()
-//			$this->response = new Response()
-//				->setContent($exception->setWrapper($this->wrapper))
-//				->setCode($exception->getResponseCode())
-				;
+			$this->response = $exception->setWrapper($this->wrapper);
         }
 	}
 
@@ -119,9 +115,9 @@ class SocketExchange implements Exchange, ResponseFactory
 	/**
 	 * For returning the Response set by Exchange handlers to Socket
 	 *
-	 * @return Response
+	 * @return ResponseInterface
 	 */
-	public function getResponse(): Response
+	public function getResponse(): ResponseInterface
 	{
 		return $this->response;
 	}
