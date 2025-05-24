@@ -4,10 +4,10 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
-use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\interfaces\ReadablePath;
+use netPhramework\dispatching\ReadableLocation;
 
-class View implements Wrappable, Viewable, ViewConfiguration
+class View extends Viewable implements Wrappable, ViewConfiguration
 {
     private readonly Variables $variables;
 

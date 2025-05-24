@@ -9,7 +9,7 @@ use netPhramework\dispatching\interfaces\RelocatablePath;
  * A fully readable and modifiable Path
  *
  */
-class Path implements RelocatablePath, ReadablePath
+class Path extends ReadablePath implements RelocatablePath
 {
 	private ?string $name = null;
 	private ?Path $next = null;

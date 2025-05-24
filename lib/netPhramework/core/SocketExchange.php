@@ -4,9 +4,9 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\Path;
+use netPhramework\dispatching\ReadableLocation;
 use netPhramework\dispatching\Redirection;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Display;
@@ -52,8 +52,8 @@ class SocketExchange implements Exchange
     /** @inheritDoc */
 	public function display(View $view, ResponseCode $code):ViewConfiguration
 	{
-		$wrappedViewable = $this->wrapper->wrap($view);
-        $this->response  = new Display($wrappedViewable, $code);
+		$wrappedView 	 = $this->wrapper->wrap($view);
+        $this->response  = new Display($wrappedView, $code);
 		return $view;
 	}
 

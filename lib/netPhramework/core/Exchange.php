@@ -4,9 +4,9 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\Path;
+use netPhramework\dispatching\ReadableLocation;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;
 use netPhramework\rendering\ViewConfiguration;

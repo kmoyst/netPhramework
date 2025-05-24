@@ -7,8 +7,8 @@ use netPhramework\authentication\SessionUserAggregate;
 use netPhramework\authentication\SessionUserProvider;
 use netPhramework\authentication\User;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\ReadableView;
-use netPhramework\rendering\Viewable;
 
 class Session
 {
@@ -85,10 +85,10 @@ class Session
      * Convenience method to generate a basic error Viewable and clear
      * the error data from the Session. Return null when no error exists.
      *
-     * @return Viewable|null
+     * @return Encodable|null
      * @throws InvalidSession
      */
-    public function getViewableError():?Viewable
+    public function getEncodableValue():?Encodable
     {
         if($errorMessage = $this->getErrorMessageAndClear())
         {

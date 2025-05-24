@@ -3,8 +3,8 @@
 namespace netPhramework\rendering;
 
 use netPhramework\common\FileFinder;
-use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\dispatching\interfaces\ReadablePath;
+use netPhramework\dispatching\ReadableLocation;
 use netPhramework\dispatching\UriFromLocation;
 use netPhramework\dispatching\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
@@ -58,7 +58,7 @@ readonly class Encoder
 		return $this->templateFinder->findPath($templateName);
 	}
 
-    private function encodeIterable(iterable $iterable):array
+    private function encodeIterable(iterable $iterable):iterable
     {
         $a = [];
         foreach ($iterable as $k => $v) $a[$k] = $this->encode($v);
@@ -66,17 +66,10 @@ readonly class Encoder
     }
 
     private function encode(
-        Encodable|Viewable|ReadableLocation|ReadablePath|
-		string|iterable|null $encodable):string|array
+		Encodable|string|iterable|null $encodable):string|iterable
     {
 		if($encodable instanceof Encodable)
 			return $encodable->encode($this);
-        elseif($encodable instanceof Viewable)
-            return $this->encodeViewable($encodable);
-		elseif($encodable instanceof ReadableLocation)
-			return $this->encodeLocation($encodable);
-		elseif($encodable instanceof ReadablePath)
-			return $this->encodePath($encodable);
 		elseif(is_string($encodable))
             return $this->encodeText($encodable);
         elseif(is_iterable($encodable))

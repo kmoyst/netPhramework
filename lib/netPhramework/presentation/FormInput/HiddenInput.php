@@ -2,7 +2,7 @@
 
 namespace netPhramework\presentation\FormInput;
 
-use netPhramework\dispatching\interfaces\ReadableLocation;
+use netPhramework\dispatching\ReadableLocation;
 
 class HiddenInput extends Input
 {

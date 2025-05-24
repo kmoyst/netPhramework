@@ -6,7 +6,7 @@ use netPhramework\core\Exception;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\Encodable;
 
 interface Column
 {
@@ -24,10 +24,10 @@ interface Column
 
     /**
      * @param Record $record
-     * @return Viewable|string
+     * @return Encodable|string
      * @throws ValueInaccessible
      * @throws FieldAbsent
      * @throws Exception
      */
-	public function getViewableValue(Record $record):Viewable|string;
+	public function getEncodableValue(Record $record):Encodable|string;
 }

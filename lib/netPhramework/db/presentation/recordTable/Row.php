@@ -7,7 +7,7 @@ use netPhramework\core\Exception;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\Encodable;
 
 readonly class Row implements Iterator
 {
@@ -16,14 +16,14 @@ readonly class Row implements Iterator
 		private Record $record) {}
 
     /**
-     * @return string|Viewable
+     * @return string|Encodable
      * @throws FieldAbsent
      * @throws ValueInaccessible
      * @throws Exception
      */
-	public function current(): string|Viewable
+	public function current(): string|Encodable
 	{
-		return $this->columnSet->current()->getViewableValue($this->record);
+		return $this->columnSet->current()->getEncodableValue($this->record);
 	}
 
 	public function next(): void

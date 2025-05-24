@@ -5,8 +5,8 @@ namespace netPhramework\db\presentation\recordTable\columns;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\ReadableView;
-use netPhramework\rendering\Viewable;
 
 class EmailColumn extends TextColumn
 {
@@ -19,11 +19,11 @@ class EmailColumn extends TextColumn
 
     /**
      * @param Record $record
-     * @return Viewable|string
+     * @return Encodable|string
      * @throws FieldAbsent
      * @throws MappingException
      */
-	public function getViewableValue(Record $record): Viewable|string
+	public function getEncodableValue(Record $record): Encodable|string
 	{
 		return new ReadableView('email-address',
 			['emailAddress' => $record->getValue($this->name)]);

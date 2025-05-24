@@ -6,7 +6,7 @@ use netPhramework\common\Variables;
 use netPhramework\presentation\FormInput\Input;
 use netPhramework\rendering\Viewable;
 
-class FilterForm implements Viewable
+class FilterForm extends Viewable
 {
 	private string $formName;
 	private string $buttonText;

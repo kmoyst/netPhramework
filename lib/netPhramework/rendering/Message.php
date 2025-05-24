@@ -2,7 +2,7 @@
 
 namespace netPhramework\rendering;
 
-class Message implements Viewable, Wrappable
+class Message extends Viewable implements Wrappable
 {
 	private ?string $title;
 

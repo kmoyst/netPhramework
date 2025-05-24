@@ -1,7 +1,6 @@
 <?php
 
 namespace netPhramework\dispatching;
-use netPhramework\dispatching\interfaces\ReadableLocation;
 use Stringable;
 
 /**
