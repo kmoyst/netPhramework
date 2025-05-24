@@ -8,7 +8,7 @@ use netPhramework\common\Variables;
  * A fully readable and modifiable Location
  *
  */
-class Location implements ReadableLocation
+class Location extends ReadableLocation
 {
     private Path $path;
     private Variables $parameters;

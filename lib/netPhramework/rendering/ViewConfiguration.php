@@ -2,8 +2,6 @@
 
 namespace netPhramework\rendering;
 
-use netPhramework\dispatching\interfaces\ReadablePath;
-use netPhramework\dispatching\ReadableLocation;
 
 interface ViewConfiguration
 {
