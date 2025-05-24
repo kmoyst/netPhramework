@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\Variables;
 use netPhramework\dispatching\dispatchers\DispatchToRoot;
 use netPhramework\dispatching\interfaces\ReadableLocation;
-use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\Location;
 use netPhramework\dispatching\Path;
 use netPhramework\dispatching\UriAdapter;
 
@@ -96,11 +96,11 @@ readonly class CallbackManager
 	 * Generates a readable location based on the contained Path / Parameters.
 	 * Cloned and immutable.
 	 *
-	 * @return MutableLocation
+	 * @return Location
 	 */
-	private function fromCurrentLocation():MutableLocation
+	private function fromCurrentLocation():Location
 	{
-		return new MutableLocation(
+		return new Location(
 			clone $this->requestPath, clone $this->parameters);
 	}
 }

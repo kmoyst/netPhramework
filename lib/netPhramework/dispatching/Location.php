@@ -8,7 +8,7 @@ use netPhramework\dispatching\interfaces\ReadableLocation;
 /**
  * A fully readable and modifiable ReadableLocation
  */
-class MutableLocation implements ReadableLocation
+class Location implements ReadableLocation
 {
     private Path $path;
     private Variables $parameters;

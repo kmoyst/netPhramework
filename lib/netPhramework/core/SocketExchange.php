@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\Variables;
 use netPhramework\dispatching\dispatchers\Dispatcher;
 use netPhramework\dispatching\interfaces\ReadableLocation;
-use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\Location;
 use netPhramework\dispatching\Path;
 use netPhramework\dispatching\Redirection;
 use netPhramework\presentation\FormInput\HiddenInput;
@@ -97,15 +97,25 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function getLocation(): MutableLocation
+	public function getLocation(): Location
 	{
-		return new MutableLocation(clone $this->path, clone $this->parameters);
+		return new Location(clone $this->path, clone $this->parameters);
 	}
 
 	/** @inheritDoc */
 	public function getSession(): Session
 	{
 		return $this->session;
+	}
+
+	/**
+	 * For returning the Response set by Exchange handlers to Socket
+	 *
+	 * @return Response
+	 */
+	public function getResponse(): Response
+	{
+		return $this->response;
 	}
 
 	/**
@@ -166,15 +176,5 @@ class SocketExchange implements Exchange
 	{
 		$this->wrapper = $wrapper;
 		return $this;
-	}
-
-	/**
-	 * For returning the Response set by Exchange handlers to Socket
-	 *
-	 * @return Response
-	 */
-	public function getResponse(): Response
-	{
-		return $this->response;
 	}
 }

@@ -26,7 +26,6 @@ enum ResponseCode:int
 	case SEE_OTHER = 303;
 	case NOT_MODIFIED = 304;
 	case USE_PROXY = 305;
-//	case UNUSED = 306; // Reserved
 	case TEMPORARY_REDIRECT = 307;
 	case PERMANENT_REDIRECT = 308;
 
@@ -69,6 +68,5 @@ enum ResponseCode:int
 	case VARIANT_ALSO_NEGOTIATES = 506;
 	case INSUFFICIENT_STORAGE = 507;
 	case LOOP_DETECTED = 508;
-//	case NOT_EXTENDED = 510; // Obsoleted
 	case NETWORK_AUTHENTICATION_REQUIRED = 511;
 }

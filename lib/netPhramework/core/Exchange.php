@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\Variables;
 use netPhramework\dispatching\dispatchers\Dispatcher;
 use netPhramework\dispatching\interfaces\ReadableLocation;
-use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\Location;
 use netPhramework\dispatching\Path;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;
@@ -73,9 +73,9 @@ interface Exchange
 	/**
 	 * Returns a mutable copy of the originally requested ReadableLocation
 	 *
-	 * @return MutableLocation
+	 * @return Location
 	 */
-	public function getLocation(): MutableLocation;
+	public function getLocation(): Location;
 
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)

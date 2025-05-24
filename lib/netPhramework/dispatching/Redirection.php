@@ -8,7 +8,7 @@ use netPhramework\core\ResponseCode;
 use netPhramework\dispatching\interfaces\DispatchableLocation;
 
 class Redirection
-	extends MutableLocation implements DispatchableLocation, Response
+	extends Location implements DispatchableLocation, Response
 {
 	private ResponseCode $responseCode;
 

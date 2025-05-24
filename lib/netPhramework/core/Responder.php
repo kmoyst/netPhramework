@@ -11,8 +11,7 @@ readonly class Responder
 	public function __construct(private Encoder $encoder) {}
 
 	/**
-	 * Displays viewable content. Usually from an Exception or a DisplayableContent
-	 * Response.
+	 * Displays viewable content.
 	 *
 	 * @param Viewable $content
 	 * @param ResponseCode $code
@@ -24,7 +23,14 @@ readonly class Responder
         echo $this->encoder->encodeViewable($content);
     }
 
-    public function redirect(ReadableLocation $location, ResponseCode $code):void
+	/**
+	 * Redirects to new Location
+	 *
+	 * @param ReadableLocation $location
+	 * @param ResponseCode $code
+	 * @return void
+	 */
+    public function redirect(ReadableLocation $location,ResponseCode $code):void
     {
         http_response_code($code->value);
         header("Location: " . new UriFromLocation($location));
