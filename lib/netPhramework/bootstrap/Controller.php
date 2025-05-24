@@ -34,7 +34,7 @@ class Controller
 			{
 				$exception
 					->setEnvironment($this->environment)
-					->deliver($responder);
+					->getResponse()->deliver($responder);
 				return;
 			}
 			$interpreter

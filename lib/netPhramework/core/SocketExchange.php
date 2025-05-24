@@ -70,7 +70,7 @@ class SocketExchange implements Exchange, ResponseFactory
                 rtrim($exception->getMessage(),": "));
             $this->session->addErrorCode($exception->getResponseCode());
         } catch (Exception) {
-			$this->response = $exception->getResponse();
+			$this->response = $exception->getResponse()
 //			$this->response = new Response()
 //				->setContent($exception->setWrapper($this->wrapper))
 //				->setCode($exception->getResponseCode())

@@ -5,8 +5,8 @@ namespace netPhramework\responding;
 readonly class Responder
 {
 	public function __construct(
-		private Relayer $displayer,
-		private Relayer $redirector) {}
+		private Displayer $displayer,
+		private Redirector $redirector) {}
 
 	public function getDisplayer(): Relayer
 	{

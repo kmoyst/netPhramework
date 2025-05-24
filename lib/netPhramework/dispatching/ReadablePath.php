@@ -2,7 +2,6 @@
 
 namespace netPhramework\dispatching;
 
-use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
 use netPhramework\responding\Relayer;
 use netPhramework\responding\Responder;
