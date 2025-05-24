@@ -31,7 +31,7 @@ class LogInPage extends Leaf
         $relocator  = $this->forForm??new RelocateToSibling('authenticate');
         $relocator->relocate($formAction)
 		;
-        $errorView    = $exchange->getSession()->getViewableError();
+        $errorView    = $exchange->getSession()->getEncodableValue();
         $responseCode = $exchange->getSession()->resolveResponseCode()
 		;
 		$exchange->display($this->view??new View('log-in-page'), $responseCode)

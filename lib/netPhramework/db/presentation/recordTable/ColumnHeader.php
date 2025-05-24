@@ -5,12 +5,12 @@ namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\rendering\Viewable;
 
-readonly class ColumnHeader implements Viewable
+class ColumnHeader extends Viewable
 {
 	public function __construct(
-		private string $name,
-		private string $text,
-		private int $width) {}
+		private readonly string $name,
+		private readonly string $text,
+		private readonly int $width) {}
 
 	public function getTemplateName(): string
 	{

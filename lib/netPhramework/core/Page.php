@@ -2,11 +2,8 @@
 
 namespace netPhramework\core;
 
-use netPhramework\dispatching\interfaces\ReadableLocation;
-use netPhramework\dispatching\interfaces\ReadablePath;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
-use netPhramework\rendering\Viewable;
 
 class Page extends Leaf
 {
@@ -32,9 +29,7 @@ class Page extends Leaf
 		return $this->name ?? $this->view->getTemplateName();
 	}
 
-    public function add(string $key,
-						string|Viewable|Encodable|ReadablePath|
-						ReadableLocation|iterable|null $value):self
+    public function add(string $key, string|Encodable|iterable|null $value):self
     {
         $this->view->add($key, $value);
         return $this;

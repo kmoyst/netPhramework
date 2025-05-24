@@ -3,12 +3,14 @@
 namespace netPhramework\core;
 
 use netPhramework\bootstrap\Environment;
+use netPhramework\rendering\Encodable;
+use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Message;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\View;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 
-class Exception extends \Exception implements Response, Viewable, Wrappable
+class Exception extends \Exception implements Response, Encodable, Wrappable
 {
 	protected string $friendlyMessage = "SERVER ERROR";
     protected readonly ResponseCode $responseCode;
@@ -53,16 +55,6 @@ class Exception extends \Exception implements Response, Viewable, Wrappable
 			$this->wrapper->wrap($content), $this->responseCode);
     }
 
-    public function getTemplateName(): string
-    {
-        return 'message';
-    }
-
-    public function getVariables(): iterable
-    {
-        return ['message' => $this->message];
-    }
-
     public function getTitle(): string
     {
         return "ERROR";
@@ -72,4 +64,10 @@ class Exception extends \Exception implements Response, Viewable, Wrappable
     {
         return $this;
     }
+
+	public function encode(Encoder $encoder): string
+	{
+		return $encoder->encodeViewable(
+			new View('message')->add('message', $this->message));
+	}
 }

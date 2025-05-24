@@ -6,7 +6,7 @@ use netPhramework\common\Utils;
 use netPhramework\db\core\Record;
 use netPhramework\db\presentation\recordTable\Column;
 use netPhramework\db\presentation\recordTable\ColumnHeader;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\Encodable;
 
 class TextColumn implements Column
 {
@@ -37,7 +37,8 @@ class TextColumn implements Column
 		return $record->getValue($this->name) ?? '';
 	}
 
-	public function getViewableValue(Record $record): Viewable|string
+	/** @inheritDoc */
+	public function getEncodableValue(Record $record): Encodable|string
 	{
 		return $this->getSortableValue($record);
 	}

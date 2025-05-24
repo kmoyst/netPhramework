@@ -7,7 +7,7 @@ use netPhramework\db\authentication\EnrolledUserField;
 use netPhramework\db\core\Record;
 use netPhramework\db\presentation\recordTable\Column;
 use netPhramework\db\presentation\recordTable\ColumnHeader;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\Encodable;
 
 class UserRoleColumn implements Column
 {
@@ -28,7 +28,7 @@ class UserRoleColumn implements Column
 				EnrolledUserField::ROLE->value))->name;
 	}
 
-	public function getViewableValue(Record $record): Viewable|string
+	public function getEncodableValue(Record $record): Encodable|string
 	{
 		return $this->getSortableValue($record);
 	}

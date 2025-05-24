@@ -86,7 +86,7 @@ class Browse extends RecordSetProcess
 		$addButtonForm = new View('add-button-form');
 		$addButtonForm->getVariables()->add('callbackInput', $callbackInput)
 		;
-        $errorView    = $exchange->getSession()->getViewableError() ?? '';
+        $errorView    = $exchange->getSession()->getEncodableValue() ?? '';
         $responseCode = $exchange->getSession()->resolveResponseCode()
         ;
 		$exchange->display(new View('browse'), $responseCode)

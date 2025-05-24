@@ -2,11 +2,11 @@
 
 namespace netPhramework\rendering;
 
-readonly class ReadableView implements Viewable
+class ReadableView extends Viewable
 {
 	public function __construct(
-		private string $templateName,
-		private iterable $variables
+		private readonly string $templateName,
+		private readonly iterable $variables
 	) {}
 
 	public function getTemplateName(): string

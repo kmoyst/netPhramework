@@ -2,7 +2,7 @@
 
 namespace netPhramework\rendering;
 
-class Wrapper implements Viewable, WrapperConfiguration
+class Wrapper extends Viewable implements WrapperConfiguration
 {
 	private Wrappable $wrappable;
 	private string $templateName = 'wrapper';
