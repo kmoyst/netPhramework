@@ -23,14 +23,19 @@ final class Directory extends Composite
 	{
 		if($composite->getName() === '')
 			throw new Exception("Composite children must have names");
-        $this->children->add($composite);
+        $this->add($composite);
         return $this;
 	}
 
 	public function leaf(Leaf $leaf):Directory
 	{
-		$this->children->add($leaf);
+		$this->add($leaf);
 		return $this;
+	}
+
+	private function add(Component $component):void
+	{
+		$this->children->add($component);
 	}
 
     public function getChild(string $name): Component

@@ -17,14 +17,14 @@ class Index extends Page
 	public function handleExchange(Exchange $exchange): void
 	{
 		$links = [];
-		foreach($this->components as $component)
+		foreach($this->components as $name => $component)
 		{
-			$name = $component->getName();
 			$desc = Utils::kebabToSpace($name);
 			if($component instanceof Composite)
 				$name .= '/';
 			$links[$name] = $desc;
 		}
+		ksort($links);
 		$this->add('links', $links);
 		parent::handleExchange($exchange);
 	}
