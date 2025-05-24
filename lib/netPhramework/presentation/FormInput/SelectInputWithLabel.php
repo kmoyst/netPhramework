@@ -8,7 +8,7 @@ class SelectInputWithLabel extends SelectInput
 {
 	protected string $label;
 
-	public function setLabel(string $label): SelectInputWithLabel
+	public function setLabel(string $label): self
 	{
 		$this->label = $label;
 		return $this;

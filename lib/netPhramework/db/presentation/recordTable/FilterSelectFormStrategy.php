@@ -4,6 +4,7 @@ namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\presentation\FormInput\Input;
+use netPhramework\presentation\FormInput\InputSet;
 use netPhramework\presentation\FormInput\SelectInput;
 
 class FilterSelectFormStrategy implements FilterFormStrategy
@@ -31,10 +32,10 @@ class FilterSelectFormStrategy implements FilterFormStrategy
 		return 'Filter';
 	}
 
-	public function createLimitInput(string $key, ?int $value): Input
+	public function createLimitInput(string $name): Input
 	{
 		$options = $this->limitOptions();
-		return new SelectInput($key,$options)->setValue($value);
+		return new SelectInput($name,$options);
 	}
 
 	private function limitOptions():array
@@ -44,9 +45,9 @@ class FilterSelectFormStrategy implements FilterFormStrategy
 		return $a;
 	}
 
-	public function createOffsetInput(string $key, int $value): Input
+	public function createOffsetInput(string $name): Input
 	{
-		return new HiddenInput($key, $value);
+		return new HiddenInput($name);
 	}
 
 	public function createSortFieldInput(string $key, ?string $value): Input

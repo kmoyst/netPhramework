@@ -7,18 +7,25 @@ class SelectInput extends Input
 	protected ?string $value;
 	protected string $id;
 
-	public function __construct(string $name, protected iterable $options)
+	public function __construct(string $name,
+								protected iterable $options = [])
 	{
 		parent::__construct($name);
 	}
 
-	public function setId(string $id): SelectInput
+	public function setOptions(iterable $options): self
+	{
+		$this->options = $options;
+		return $this;
+	}
+
+	public function setId(string $id): self
 	{
 		$this->id = $id;
 		return $this;
 	}
 
-	public function setValue(?string $value): SelectInput
+	public function setValue(?string $value): self
 	{
 		$this->value = $value;
 		return $this;

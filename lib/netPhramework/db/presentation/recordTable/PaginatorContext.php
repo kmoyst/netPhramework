@@ -14,14 +14,9 @@ class PaginatorContext implements FilterFormContext
 		return $this;
 	}
 
-	public function getSortField(): ?string
+	public function getSortArray(): ?array
 	{
-		return $this->baseContext->getSortField();
-	}
-
-	public function getSortDirection(): int
-	{
-		return $this->baseContext->getSortDirection();
+		return $this->baseContext->getSortArray();
 	}
 
 	public function getLimit(): ?int

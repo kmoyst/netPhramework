@@ -9,8 +9,8 @@ interface FilterFormStrategy
 	public function getTemplateName():string;
 	public function getFormName():string;
 	public function getButtonText():string;
-	public function createLimitInput(string $key, ?int $value):Input;
-	public function createOffsetInput(string $key, int $value):Input;
-	public function createSortFieldInput(string $key, string $value):Input;
-	public function createSortDirectionInput(string $key, int $value):Input;
+	public function createLimitInput(string $name):Input;
+	public function createOffsetInput(string $name):Input;
+	public function createSortFieldInput(string $name):Input;
+	public function createSortDirectionInput(string $name):Input;
 }

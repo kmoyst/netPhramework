@@ -2,6 +2,7 @@
 
 namespace netPhramework\presentation\FormInput;
 
+use netPhramework\dispatching\interfaces\ReadableLocation;
 use netPhramework\rendering\Viewable;
 
 abstract class Input implements Viewable
@@ -12,4 +13,6 @@ abstract class Input implements Viewable
 	{
 		return $this->name;
 	}
+
+	abstract public function setValue(ReadableLocation|string|null $value):self;
 }

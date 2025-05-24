@@ -13,8 +13,9 @@ class FilterForm implements Viewable
 	private string $templateName;
 	private Input $limitInput;
 	private Input $offsetInput;
-	private Input $sortFieldInput;
-	private Input $sortDirectionInput;
+	//private Input $sortFieldInput;
+	//private Input $sortDirectionInput;
+	private Viewable $sortInputs;
 
 	public function setFormName(string $formName): FilterForm
 	{
@@ -44,6 +45,12 @@ class FilterForm implements Viewable
 		$this->offsetInput = $input;
 	}
 
+	public function setSortInputs(Viewable $sortInputs): void
+	{
+		$this->sortInputs = $sortInputs;
+	}
+
+	/**
 	public function setSortFieldInput(Input $input): void
 	{
 		$this->sortFieldInput = $input;
@@ -53,7 +60,7 @@ class FilterForm implements Viewable
 	{
 		$this->sortDirectionInput = $input;
 	}
-
+	**/
 	public function getTemplateName(): string
 	{
 		return $this->templateName;

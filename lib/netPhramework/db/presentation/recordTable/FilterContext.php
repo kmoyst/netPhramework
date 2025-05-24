@@ -9,8 +9,7 @@ class FilterContext implements FilterFormContext
 {
 	private RecordSet $recordSet;
 	private Variables $variables;
-	private ?string $sortField = null;
-	private int $sortDirection = 0;
+	private ?array $sortArray = null;
 	private ?int $limit;
 	private int $offset = 0;
 	private int $count;
@@ -33,24 +32,17 @@ class FilterContext implements FilterFormContext
 		$recordSet = $this->recordSet;
 		$limit = $vars->getOrNull(FilterKeys::LIMIT->value);
 		$offset = $vars->getOrNull(FilterKeys::OFFSET->value) ?? 0;
-		$sortField = $vars->getOrNull(FilterKeys::SORT_FIELD->value);
-		$sortDirection = $vars->getOrNull(FilterKeys::SORT_DIRECTION->value);
+		$sortArray = $vars->getOrNull(FilterKeys::SORT_ARRAY->value);
 		$this->count = count($recordSet);
 		$this->limit = is_numeric($limit) && $limit > 0 ? $limit : null;
 		$this->offset = $offset < $this->count ? $offset : 0;
-		$this->sortField = $sortField !== '' ? $sortField : null;
-		$this->sortDirection = (int)$sortDirection === 1 ? 1 : 0;
+		$this->sortArray = $sortArray;
 		return $this;
 	}
 
-	public function getSortField(): ?string
+	public function getSortArray(): ?array
 	{
-		return $this->sortField;
-	}
-
-	public function getSortDirection(): int
-	{
-		return $this->sortDirection;
+		return $this->sortArray;
 	}
 
 	public function getLimit(): ?int

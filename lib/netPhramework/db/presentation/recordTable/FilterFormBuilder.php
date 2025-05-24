@@ -2,6 +2,9 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
+use netPhramework\presentation\FormInput\InputSet;
+use netPhramework\rendering\View;
+
 class FilterFormBuilder
 {
 	private FilterFormStrategy $strategy;
@@ -62,6 +65,12 @@ class FilterFormBuilder
 		return $this;
 	}
 
+	public function addSortInputs():FilterFormBuilder
+	{
+		$inputSet = new InputSet();
+
+	}
+/**
 	public function addSortFieldInput():FilterFormBuilder
 	{
 		$field = $this->context->getSortField();
@@ -79,7 +88,7 @@ class FilterFormBuilder
 		$this->form->setSortDirectionInput($i);
 		return $this;
 	}
-
+**/
 	public function getFilterForm(): FilterForm
 	{
 		return $this->form;
