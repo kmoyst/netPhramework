@@ -3,7 +3,7 @@
 namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
-use netPhramework\responding\ResponseCode;
+use netPhramework\core\ResponseCode;
 
 interface Redirectable
 {

@@ -13,8 +13,6 @@ use netPhramework\rendering\Presentation;
 use netPhramework\rendering\View;
 use netPhramework\rendering\ViewConfiguration;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\ResponseCode;
-use netPhramework\responding\Response;
 
 class SocketExchange implements Exchange
 {

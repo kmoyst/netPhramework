@@ -2,9 +2,9 @@
 
 namespace netPhramework\dispatching;
 
-use netPhramework\responding\Responder;
-use netPhramework\responding\ResponseCode;
-use netPhramework\responding\Response;
+use netPhramework\core\Responder;
+use netPhramework\core\Response;
+use netPhramework\core\ResponseCode;
 
 class Redirection extends Location implements Redirectable, Response
 {

@@ -5,7 +5,6 @@ namespace netPhramework\core;
 use netPhramework\common\Variables;
 use netPhramework\dispatching\Path;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\Response;
 
 readonly class Socket
 {

@@ -3,7 +3,7 @@
 namespace netPhramework\exceptions;
 
 use netPhramework\core\Exception;
-use netPhramework\responding\ResponseCode;
+use netPhramework\core\ResponseCode;
 
 class BadRequest extends Exception
 {
