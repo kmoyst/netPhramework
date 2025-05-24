@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\dispatching\Path;
-use netPhramework\responding\ResponseInterface;
+use netPhramework\responding\Response;
 
 readonly class Request
 {
@@ -15,10 +15,10 @@ readonly class Request
 
 	/**
 	 * @param RequestContext $context
-	 * @return ResponseInterface
+	 * @return Response
 	 * @throws \Exception
 	 */
-	public function process(RequestContext $context):ResponseInterface
+	public function process(RequestContext $context):Response
 	{
 		return $this->socket
 			->processRequest($this->path, $this->parameters, $context);

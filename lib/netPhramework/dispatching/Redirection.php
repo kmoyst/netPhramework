@@ -4,9 +4,9 @@ namespace netPhramework\dispatching;
 
 use netPhramework\responding\Responder;
 use netPhramework\responding\ResponseCode;
-use netPhramework\responding\ResponseInterface;
+use netPhramework\responding\Response;
 
-class Redirection extends Location implements Redirectable, ResponseInterface
+class Redirection extends Location implements Redirectable, Response
 {
 	private ResponseCode $code;
 

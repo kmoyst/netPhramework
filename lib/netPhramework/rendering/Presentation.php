@@ -4,9 +4,9 @@ namespace netPhramework\rendering;
 
 use netPhramework\responding\Responder;
 use netPhramework\responding\ResponseCode;
-use netPhramework\responding\ResponseInterface;
+use netPhramework\responding\Response;
 
-class Presentation implements ResponseInterface
+class Presentation implements Response
 {
 	private Encodable $content;
 	private ResponseCode $code;

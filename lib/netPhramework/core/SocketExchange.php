@@ -14,7 +14,7 @@ use netPhramework\rendering\View;
 use netPhramework\rendering\ViewConfiguration;
 use netPhramework\rendering\Wrapper;
 use netPhramework\responding\ResponseCode;
-use netPhramework\responding\ResponseInterface;
+use netPhramework\responding\Response;
 
 class SocketExchange implements Exchange
 {
@@ -33,7 +33,7 @@ class SocketExchange implements Exchange
 	private Session $session;
 	private CallbackManager $callbackManager;
     private Wrapper $wrapper;
-	private ResponseInterface $response;
+	private Response $response;
 
 	/** @inheritDoc */
 	public function redirect(Dispatcher $fallback):Variables
@@ -115,9 +115,9 @@ class SocketExchange implements Exchange
 	/**
 	 * For returning the Response set by Exchange handlers to Socket
 	 *
-	 * @return ResponseInterface
+	 * @return Response
 	 */
-	public function getResponse(): ResponseInterface
+	public function getResponse(): Response
 	{
 		return $this->response;
 	}

@@ -2,7 +2,7 @@
 
 namespace netPhramework\responding;
 
-interface ResponseInterface
+interface Response
 {
 	public function deliver(Responder $responder):void;
 }

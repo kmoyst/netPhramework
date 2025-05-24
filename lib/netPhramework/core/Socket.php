@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\Variables;
 use netPhramework\dispatching\Path;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\ResponseInterface;
+use netPhramework\responding\Response;
 
 readonly class Socket
 {
@@ -22,11 +22,11 @@ readonly class Socket
 	 * @param Path $path
 	 * @param Variables $parameters
 	 * @param RequestContext $context
-	 * @return ResponseInterface
+	 * @return Response
 	 * @throws \Exception
 	 */
     public function processRequest(Path $path, Variables $parameters,
-								   RequestContext $context):ResponseInterface
+								   RequestContext $context):Response
 	{
         try
 		{

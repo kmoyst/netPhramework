@@ -7,10 +7,10 @@ use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 use netPhramework\responding\Responder;
 use netPhramework\responding\ResponseCode;
-use netPhramework\responding\ResponseInterface;
+use netPhramework\responding\Response;
 
 class Exception extends \Exception
-	implements Wrappable, ResponseInterface
+	implements Wrappable, Response
 {
 	protected string $friendlyMessage = "SERVER ERROR";
     protected readonly ResponseCode $responseCode;
