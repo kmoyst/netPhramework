@@ -48,10 +48,11 @@ class Variables implements Iterator
 		return array_key_exists($key, $this->values);
 	}
 
-    public function merge(iterable $iterable):Variables
+    public function merge(iterable $iterable, bool $overwrite = true):Variables
     {
         foreach ($iterable as $k => $v)
-            $this->values[$k] = $v;
+            if($this->has($k) && !$overwrite) continue;
+			else $this->values[$k] = $v;
         return $this;
     }
 
