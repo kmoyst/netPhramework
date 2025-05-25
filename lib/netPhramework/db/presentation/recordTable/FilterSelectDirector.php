@@ -2,18 +2,26 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormBuilder;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormDirector;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputFactory;
 use netPhramework\rendering\View;
+use netPhramework\db\presentation\recordTable\
+{
+	FilterForm\FilterFormBuilder,
+	FilterForm\FilterFormContext,
+	FilterForm\FilterFormDirector,
+	FilterForm\FilterFormInputFactory,
+	FilterSelectForm\FilterSelectFormInputFactory
+};
 
 class FilterSelectDirector
 {
 	private FilterFormDirector $director;
-	private FilterFormBuilder $builder;
 	private FilterFormInputFactory $factory;
 	private View $form;
+
+	public function __construct()
+	{
+		$this->factory = new FilterSelectFormInputFactory();
+	}
 
 	public function setDirector(FilterFormDirector $director): self
 	{
@@ -21,27 +29,24 @@ class FilterSelectDirector
 		return $this;
 	}
 
-	public function setBuilder(FilterFormBuilder $builder): self
+	public function configure(
+		FilterFormContext $context, array $columnHeaders):self
 	{
-		$this->builder = $builder;
-		return $this;
-	}
-
-	public function setFactory(FilterFormInputFactory $factory): self
-	{
-		$this->factory = $factory;
-		return $this;
-	}
-
-	public function buildForm(FilterFormContext $context):self
-	{
+		$this->factory->setColumnHeaders($columnHeaders);
 		$this->director
-			->setBuilder($this->builder)
 			->setFactory($this->factory)
 			->setContext($context)
-			->buildFilterForm()
-			;
-		$this->form = $this->builder->getFilterForm('filter-select');
+		;
+		return $this;
+	}
+
+	public function buildForm():self
+	{
+		$builder = new FilterFormBuilder();
+		$this->director
+			->setBuilder($builder)
+			->buildFilterForm();
+		$this->form = $builder->getFilterForm('filter-select');
 		return $this;
 	}
 

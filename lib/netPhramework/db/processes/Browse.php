@@ -63,29 +63,20 @@ class Browse extends RecordSetProcess
 			->setContext($filterContext)
 			->sort()
 		;
-		$filterFormDirector 			= new FilterFormDirector();
-		$filterFormBuilder 				= new FilterFormBuilder();
-		$filterSelectFormInputFactory 	= new FilterSelectFormInputFactory()
-			->setColumnHeaders($columnSet->getHeaders())
-		;
-		$filterSelectView = new FilterSelectDirector()
-			->setBuilder($filterFormBuilder)
+		$filterFormDirector = new FilterFormDirector();
+		$filterSelectView   = new FilterSelectDirector()
 			->setDirector($filterFormDirector)
-			->setFactory($filterSelectFormInputFactory)
-			->buildForm($filterContext)
+			->configure($filterContext, $columnSet->getHeaders())
+			->buildForm()
 			->getView()
-			;
-		$paginatorView = $filterContext->getLimit() === null ? '' :
-			new PaginatorDirector()
-				->setDirector($filterFormDirector)
-				->setContext(new PaginatorFormContext())
-				->setCalculator(new PaginatorCalculator())
-				->setFactory(new PaginatorFormInputFactory())
-				->configureCalculator($filterContext)
-				->prepareDirector($filterContext)
-				->buildNextForm()
-				->buildPreviousForm()
-				->getView()
+		;
+		$paginatorView =
+			$filterContext->getLimit() === null ? '' : new PaginatorDirector()
+			->setDirector($filterFormDirector)
+			->configure($filterContext)
+			->buildNextForm()
+			->buildPreviousForm()
+			->getView()
 		;
 		$callbackInput = $exchange->callbackFormInput()
 		;

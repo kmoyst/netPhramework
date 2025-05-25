@@ -2,11 +2,15 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormBuilder;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormDirector;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputFactory;
-use netPhramework\db\presentation\recordTable\PaginatorForm\PaginatorFormContext;
+use netPhramework\db\presentation\recordTable\
+{
+	FilterForm\FilterFormBuilder,
+	FilterForm\FilterFormContext,
+	FilterForm\FilterFormDirector,
+	FilterForm\FilterFormInputFactory,
+	PaginatorForm\PaginatorFormContext,
+	PaginatorForm\PaginatorFormInputFactory
+};
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 
@@ -19,21 +23,17 @@ class PaginatorDirector
 	private Viewable $prevForm;
 	private Viewable $nextForm;
 
+	public function __construct()
+	{
+		$this->context 		= new PaginatorFormContext();
+		$this->calculator  	= new PaginatorCalculator();
+		$this->factory 		= new PaginatorFormInputFactory();
+	}
+
+
 	public function setDirector(FilterFormDirector $director): self
 	{
 		$this->director = $director;
-		return $this;
-	}
-
-	public function setFactory(FilterFormInputFactory $factory): self
-	{
-		$this->factory = $factory;
-		return $this;
-	}
-
-	public function setContext(PaginatorFormContext $context): self
-	{
-		$this->context = $context;
 		return $this;
 	}
 
@@ -43,16 +43,11 @@ class PaginatorDirector
 		return $this;
 	}
 
-	public function configureCalculator(FilterFormContext $context):self
+	public function configure(FilterFormContext $context):self
 	{
 		$this->calculator->setLimit($context->getLimit());
 		$this->calculator->setCurrentOffset($context->getOffset());
 		$this->calculator->setTotalCount($context->getCount());
-		return $this;
-	}
-
-	public function prepareDirector(FilterFormContext $context):self
-	{
 		$this->director
 			->setContext($this->context->setBaseContext($context))
 			->setFactory($this->factory)

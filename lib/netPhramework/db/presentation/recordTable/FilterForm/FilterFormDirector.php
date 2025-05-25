@@ -10,6 +10,12 @@ class FilterFormDirector
 	private FilterFormInputFactory $factory;
 	private FilterFormBuilder $builder;
 
+	public function setBuilder(FilterFormBuilder $builder): self
+	{
+		$this->builder = $builder;
+		return $this;
+	}
+
 	public function setContext(FilterFormContext $context): self
 	{
 		$this->context = $context;
@@ -19,12 +25,6 @@ class FilterFormDirector
 	public function setFactory(FilterFormInputFactory $factory): self
 	{
 		$this->factory = $factory;
-		return $this;
-	}
-
-	public function setBuilder(FilterFormBuilder $builder): self
-	{
-		$this->builder = $builder;
 		return $this;
 	}
 

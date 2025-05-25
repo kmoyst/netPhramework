@@ -19,7 +19,6 @@ class FilterFormBuilder
 		$this->sortDirectionInputs = new InputSet();
 	}
 
-
 	public function addLimitInput(Input $input):self
 	{
 		$this->limitInput = $input;
