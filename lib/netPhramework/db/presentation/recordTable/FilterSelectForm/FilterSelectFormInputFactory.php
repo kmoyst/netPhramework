@@ -18,8 +18,7 @@ class FilterSelectFormInputFactory implements FilterFormInputFactory
 	public function __construct()
 	{
 		$this->sortInputConfigurator = new FilterFormInputConfigurator(
-			FilterKey::SORT_ARRAY->value,
-			'form/select-input-array'
+			FilterKey::SORT_ARRAY->value, 'form/select-input-array'
 		);
 	}
 

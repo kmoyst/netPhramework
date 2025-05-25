@@ -31,14 +31,18 @@ class PaginatorFormInputFactory implements FilterFormInputFactory
 	public function makeSortFieldInput(int $index): Input
 	{
 		$input = new HiddenInput(FilterKey::SORT_FIELD->value);
-		$this->sortInputConfigurator->configureViewable($input);
+		$this->sortInputConfigurator
+			->setIndex($index)
+			->configureViewable($input);
 		return $input;
 	}
 
 	public function makeSortDirectionInput(int $index): Input
 	{
 		$input = new HiddenInput(FilterKey::SORT_DIRECTION->value);
-		$this->sortInputConfigurator->configureViewable($input);
+		$this->sortInputConfigurator
+			->setIndex($index)
+			->configureViewable($input);
 		return $input;
 	}
 }
