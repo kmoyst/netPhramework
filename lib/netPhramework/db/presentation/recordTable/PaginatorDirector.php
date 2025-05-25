@@ -2,15 +2,6 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\
-{
-	FilterForm\FilterFormBuilder,
-	FilterForm\FilterFormContext,
-	FilterForm\FilterFormDirector,
-	FilterForm\FilterFormInputFactory,
-	PaginatorForm\PaginatorFormContext,
-	PaginatorForm\PaginatorFormInputFactory
-};
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 

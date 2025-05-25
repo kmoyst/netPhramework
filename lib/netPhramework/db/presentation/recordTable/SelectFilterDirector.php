@@ -3,16 +3,8 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\rendering\View;
-use netPhramework\db\presentation\recordTable\
-{
-	FilterForm\FilterFormBuilder,
-	FilterForm\FilterFormContext,
-	FilterForm\FilterFormDirector,
-	FilterForm\FilterFormInputFactory,
-	FilterSelectForm\FilterSelectFormInputFactory
-};
 
-class FilterSelectDirector
+class SelectFilterDirector
 {
 	private FilterFormDirector $director;
 	private FilterFormInputFactory $factory;
@@ -20,7 +12,7 @@ class FilterSelectDirector
 
 	public function __construct()
 	{
-		$this->factory = new FilterSelectFormInputFactory();
+		$this->factory = new SelectFilterFormInputFactory();
 	}
 
 	public function setDirector(FilterFormDirector $director): self

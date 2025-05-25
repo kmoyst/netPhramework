@@ -4,7 +4,6 @@ namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\common\Variables;
 use netPhramework\db\core\RecordSet;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
 
 class FilterContext implements FilterFormContext
 {

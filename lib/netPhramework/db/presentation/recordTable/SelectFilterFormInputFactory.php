@@ -1,16 +1,13 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\FilterSelectForm;
+namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\db\mapping\SortDirection;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputConfigurator;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputFactory;
-use netPhramework\db\presentation\recordTable\FilterKey;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\presentation\FormInput\Input;
 use netPhramework\presentation\FormInput\SelectInput;
 
-class FilterSelectFormInputFactory implements FilterFormInputFactory
+class SelectFilterFormInputFactory implements FilterFormInputFactory
 {
 	private array $columnHeaders;
 	private FilterFormInputConfigurator $sortInputConfigurator;

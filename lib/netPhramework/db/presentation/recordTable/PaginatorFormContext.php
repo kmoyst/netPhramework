@@ -1,8 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\PaginatorForm;
-
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
+namespace netPhramework\db\presentation\recordTable;
 
 class PaginatorFormContext implements FilterFormContext
 {

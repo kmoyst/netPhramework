@@ -1,10 +1,7 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\PaginatorForm;
+namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputConfigurator;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputFactory;
-use netPhramework\db\presentation\recordTable\FilterKey;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\presentation\FormInput\Input;
 

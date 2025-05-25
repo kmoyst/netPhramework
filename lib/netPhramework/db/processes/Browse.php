@@ -13,15 +13,10 @@ use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnSetBuilder;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\presentation\recordTable\FilterContext;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormBuilder;
-use netPhramework\db\presentation\recordTable\FilterForm\FilterFormDirector;
-use netPhramework\db\presentation\recordTable\FilterSelectDirector;
-use netPhramework\db\presentation\recordTable\FilterSelectForm\FilterSelectFormInputFactory;
-use netPhramework\db\presentation\recordTable\PaginatorCalculator;
+use netPhramework\db\presentation\recordTable\FilterFormDirector;
 use netPhramework\db\presentation\recordTable\PaginatorDirector;
-use netPhramework\db\presentation\recordTable\PaginatorForm\PaginatorFormContext;
-use netPhramework\db\presentation\recordTable\PaginatorForm\PaginatorFormInputFactory;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
+use netPhramework\db\presentation\recordTable\SelectFilterDirector;
 use netPhramework\rendering\View;
 
 class Browse extends RecordSetProcess
@@ -64,7 +59,7 @@ class Browse extends RecordSetProcess
 			->sort()
 		;
 		$filterFormDirector = new FilterFormDirector();
-		$filterSelectView   = new FilterSelectDirector()
+		$filterSelectView   = new SelectFilterDirector()
 			->setDirector($filterFormDirector)
 			->configure($filterContext, $columnSet->getHeaders())
 			->buildForm()

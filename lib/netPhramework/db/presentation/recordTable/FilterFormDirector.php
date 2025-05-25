@@ -1,8 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\FilterForm;
-
-use netPhramework\db\presentation\recordTable\FilterKey;
+namespace netPhramework\db\presentation\recordTable;
 
 class FilterFormDirector
 {
