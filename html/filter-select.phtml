@@ -1,14 +1,32 @@
 <div class="filterForm">
 	<form name="filterForm" method="get">
-        <ul>
-			<?foreach($conditions as $condition) {?>
-                <?=$condition?>
-			<?}?>
-			<?foreach($sortArray as $vector) {?>
-				<?=$vector?>
-			<?}?>
-            <li><?=$limitInput?></li>
-        </ul>
-		<input type="submit" name="action" value="Filter"/>
+        <table>
+            <tr>
+                <td style="vertical-align: top">
+                    <table class="recordConditions">
+						<?foreach($conditions as $condition) {?>
+							<?=$condition?>
+						<?}?>
+                    </table>
+                </td>
+                <td style="vertical-align: top">
+                    <table class="recordSortVectors">
+						<?foreach($sortArray as $vector) {?>
+							<?=$vector?>
+						<?}?>
+                    </table>
+                </td>
+                <td style="vertical-align: top">
+                    <table class="recordSortVectors">
+					    <tr>
+                            <td><?=$limitInput?></td>
+                            <td style="vertical-align: top">
+                                <input type="submit" name="action" value="Filter"/>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
 	</form>
 </div>
