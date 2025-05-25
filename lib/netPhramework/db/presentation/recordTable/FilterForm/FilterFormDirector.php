@@ -47,8 +47,10 @@ class FilterFormDirector
 	public function addSortInputs(FilterKey $parentKey,
 		FilterKey $fieldKey, FilterKey $directionKey):self
 	{
-		foreach($this->context->getSortArray() as $i => $vector)
+		$i = 0;
+		foreach($this->context->getSortArray() as $vector)
 		{
+			if($vector[$fieldKey->value] === '') break;
 			$this->builder->addSortFieldInput($this->factory
 				->makeSortFieldInput($fieldKey, $parentKey, $i)
 				->setValue($vector[$fieldKey->value])
@@ -57,12 +59,13 @@ class FilterFormDirector
 				->makeSortDirectionInput($directionKey, $parentKey, $i)
 				->setValue($vector[$directionKey->value])
 			);
+			$i++;
 		}
 		$this->builder->addSortFieldInput($this->factory
-			->makeSortFieldInput($fieldKey, $parentKey, 0)
+			->makeSortFieldInput($fieldKey, $parentKey, $i)
 		);
 		$this->builder->addSortDirectionInput($this->factory
-			->makeSortDirectionInput($directionKey, $parentKey, 0)
+			->makeSortDirectionInput($directionKey, $parentKey, $i)
 		);
 		return $this;
 	}

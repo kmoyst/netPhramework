@@ -3,9 +3,7 @@
 namespace netPhramework\presentation\FormInput;
 
 use netPhramework\common\Utils;
-use netPhramework\common\Variables;
 use netPhramework\rendering\Encodable;
-use netPhramework\rendering\Encoder;
 
 class TextInput extends Input
 {

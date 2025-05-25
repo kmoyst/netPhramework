@@ -33,7 +33,7 @@ class FilterContext implements FilterFormContext
 		$recordSet = $this->recordSet;
 		$limit = $vars->getOrNull(FilterKey::LIMIT->value);
 		$offset = $vars->getOrNull(FilterKey::OFFSET->value) ?? 0;
-		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value) ?? [];
+		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value);
 		$this->count = count($recordSet);
 		$this->limit = is_numeric($limit) && $limit > 0 ? $limit : null;
 		$this->offset = $offset < $this->count ? $offset : 0;
@@ -41,9 +41,9 @@ class FilterContext implements FilterFormContext
 		return $this;
 	}
 
-	public function getSortArray(): ?array
+	public function getSortArray(): array
 	{
-		return $this->sortArray;
+		return $this->sortArray ?? [];
 	}
 
 	public function getLimit(): ?int

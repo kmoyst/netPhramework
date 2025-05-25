@@ -48,10 +48,30 @@ class RowSetBuilder
 			$ids = $this->recordSet->getIds();
 		else
 		{
-
+			$args = [];
+			foreach($this->context->getSortArray() as $vector)
+			{
+				$field = $vector[FilterKey::SORT_FIELD->value];
+				$direction = $vector[FilterKey::SORT_DIRECTION->value];
+				if(empty($field)) break;
+				$parsedDirection = SortDirection::tryFrom($direction)->value;
+				$column = $this->columnSet->getColumn($field);
+				$values = [];
+				foreach($this->recordSet as $record)
+				{
+					$values[] = $column->getSortableValue($record);
+				}
+				$args[] = $values;
+				$args[] = $parsedDirection === 2 ? SORT_DESC : SORT_ASC;
+				$args[] = SORT_NATURAL;
+			}
+			$args[] = $this->recordSet->getIds();
+			array_multisort(...$args);
+			$ids = array_pop($args);
 		}
-		$this->sortedIds = array_slice(
-			$ids, $this->context->getOffset(), $this->context->getLimit());
+		$limit = $this->context->getLimit();
+		$offset = $this->context->getOffset();
+		$this->sortedIds = array_slice($ids, $offset, $limit);
 		return $this;
 	}
 
