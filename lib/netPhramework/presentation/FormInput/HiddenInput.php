@@ -7,6 +7,8 @@ use netPhramework\rendering\Encodable;
 
 class HiddenInput extends Input
 {
+	protected string $templateName = 'form/hidden-input';
+
 	public function __construct(
 		string $name,
 		private string|Location|null $value = null
@@ -21,16 +23,12 @@ class HiddenInput extends Input
 		return $this;
 	}
 
-	public function getTemplateName(): string
-	{
-		return 'form/hidden-input';
-	}
-
 	public function getVariables(): iterable
 	{
-		return [
-			'name' => $this->name,
-			'value' => $this->value ?? ''
-		];
+		parent::getVariables();
+		return $this->variables
+			->add('name', $this->name)
+			->add('value', $this->value ?? '')
+		;
 	}
 }

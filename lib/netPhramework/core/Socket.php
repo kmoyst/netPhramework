@@ -43,7 +43,7 @@ readonly class Socket
 			;
 			$navigator
 				->setRoot($this->root)
-				->setGuide($path)
+				->setPath($path)
 				->navigate()
 				->handleExchange($exchange)
             ;

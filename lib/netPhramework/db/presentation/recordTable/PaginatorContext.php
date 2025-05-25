@@ -1,6 +1,8 @@
 <?php
 
 namespace netPhramework\db\presentation\recordTable;
+use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
+
 class PaginatorContext implements FilterFormContext
 {
 	private int $offset;

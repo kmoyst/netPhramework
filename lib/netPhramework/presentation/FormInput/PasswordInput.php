@@ -9,6 +9,8 @@ class PasswordInput extends TextInput
 {
 	public function getVariables(): Variables
 	{
-		return parent::getVariables()->add('type', 'password');
+		parent::getVariables();
+		return $this->variables
+			->add('type', 'password');
 	}
 }

@@ -6,6 +6,7 @@ use netPhramework\common\Utils;
 
 class SelectInputWithLabel extends SelectInput
 {
+	protected string $templateName = 'select-input-with-label';
 	protected string $label;
 
 	public function setLabel(string $label): self
@@ -14,15 +15,10 @@ class SelectInputWithLabel extends SelectInput
 		return $this;
 	}
 
-	public function getTemplateName(): string
+	public function getVariables(): iterable
 	{
-		return 'select-input-with-label';
-	}
-
-	public function getVariables(): array
-	{
-		$v = parent::getVariables();
-		$v['label'] = $this->label ?? Utils::kebabToSpace($this->name);
-		return $v;
+		parent::getVariables();
+		return $this->variables
+			->add('label', $this->label ?? Utils::kebabToSpace($this->name));
 	}
 }

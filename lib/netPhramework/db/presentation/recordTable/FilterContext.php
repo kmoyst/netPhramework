@@ -4,6 +4,7 @@ namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\common\Variables;
 use netPhramework\db\core\RecordSet;
+use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
 
 class FilterContext implements FilterFormContext
 {
@@ -30,9 +31,9 @@ class FilterContext implements FilterFormContext
 	{
 		$vars = $this->variables;
 		$recordSet = $this->recordSet;
-		$limit = $vars->getOrNull(FilterKeys::LIMIT->value);
-		$offset = $vars->getOrNull(FilterKeys::OFFSET->value) ?? 0;
-		$sortArray = $vars->getOrNull(FilterKeys::SORT_ARRAY->value);
+		$limit = $vars->getOrNull(FilterKey::LIMIT->value);
+		$offset = $vars->getOrNull(FilterKey::OFFSET->value) ?? 0;
+		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value) ?? [];
 		$this->count = count($recordSet);
 		$this->limit = is_numeric($limit) && $limit > 0 ? $limit : null;
 		$this->offset = $offset < $this->count ? $offset : 0;

@@ -1,0 +1,16 @@
+<div class="filterForm">
+	<form name="filterForm" method="get">
+        <ul>
+            <?foreach($sortFieldInputs as $input) {?>
+                <li><?=$input?></li>
+            <?}?>
+         </ul>
+        <ul>
+			<?foreach($sortDirectionInputs as $input) {?>
+                <li><?=$input?></li>
+			<?}?>
+        </ul>
+        <div><?=$limitInput?></div>
+		<input type="submit" name="action" value="Filter"/>
+	</form>
+</div>

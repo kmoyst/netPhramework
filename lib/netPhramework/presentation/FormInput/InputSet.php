@@ -10,8 +10,7 @@ use netPhramework\rendering\View;
 class InputSet implements Iterator, InputSetBuilder
 {
 	private array $inputs = [];
-
-	public function __construct() {}
+	private int $pointer = 0;
 
 	public function generateView(string $templateName): View
 	{
@@ -29,21 +28,21 @@ class InputSet implements Iterator, InputSetBuilder
 	public function hiddenInput(string $name):HiddenInput
 	{
 		$input = new HiddenInput($name);
-		$this->inputs[$name] = $input;
+		$this->inputs[] = $input;
 		return $input;
 	}
 
 	public function textInput(string $name):TextInput
 	{
 		$input = new TextInput($name);
-		$this->inputs[$name] = $input;
+		$this->inputs[] = $input;
 		return $input;
 	}
 
 	public function passwordInput(string $name):PasswordInput
 	{
 		$input = new PasswordInput($name);
-		$this->inputs[$name] = $input;
+		$this->inputs[] = $input;
 		return $input;
 	}
 
@@ -59,32 +58,32 @@ class InputSet implements Iterator, InputSetBuilder
 
 	public function addCustom(Input $input):InputSet
 	{
-		$this->inputs[$input->getName()] = $input;
+		$this->inputs[] = $input;
 		return $this;
 	}
 
 	public function current(): Input
 	{
-		return current($this->inputs);
+		return $this->inputs[$this->pointer];
 	}
 
 	public function next(): void
 	{
-		next($this->inputs);
+		++$this->pointer;
 	}
 
-	public function key(): string
+	public function key(): int
 	{
-		return key($this->inputs);
+		return $this->pointer;
 	}
 
 	public function valid(): bool
 	{
-		return key($this->inputs) !== null;
+		return $this->pointer < sizeof($this->inputs);
 	}
 
 	public function rewind(): void
 	{
-		reset($this->inputs);
+		$this->pointer = 0;
 	}
 }

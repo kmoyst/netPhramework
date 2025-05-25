@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable;
+namespace netPhramework\db\presentation\recordTable\FilterForm;
 
 interface FilterFormContext
 {

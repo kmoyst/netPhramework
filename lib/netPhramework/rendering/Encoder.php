@@ -20,12 +20,19 @@ readonly class Encoder
 
 	public function encodeViewable(Viewable $viewable):Buffer|string
     {
+		return $this->encodeTemplate(
+			$viewable->getTemplateName(), $viewable->getVariables());
+	}
+
+	public function encodeTemplate(
+		string $templateName, iterable $variables):Buffer|string
+	{
 		try {
-			$path = $this->findTemplatePath($viewable->getTemplateName());
-			$variables = $this->encodeIterable($viewable->getVariables());
+			$path = $this->findTemplatePath($templateName);
+			$variables = $this->encodeIterable($variables);
 			return new Buffer($path, $variables);
 		} catch (FileNotFound) {
-            // @TODO probably log the error here
+			// @TODO probably log the error here
 			return 'template missing';
 		}
 	}

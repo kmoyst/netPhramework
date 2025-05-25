@@ -1,0 +1,7 @@
+<select name="<?=$parentName?>[<?=$index?>][<?=$name?>]">
+	<? foreach($options as $value => $description) { ?>
+		<option
+			value="<?=$value?>"<?=$value==$selectedValue ?
+			" selected='selected'":''?>><?=$description?></option>
+	<?}?>
+</select>

@@ -5,9 +5,11 @@ namespace netPhramework\presentation\FormInput;
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
 use netPhramework\rendering\Encodable;
+use netPhramework\rendering\Encoder;
 
 class TextInput extends Input
 {
+	protected string $templateName = 'form/text-input';
 	protected ?string $value;
 
 	public function setValue(string|Encodable|null $value): Input
@@ -16,14 +18,10 @@ class TextInput extends Input
 		return $this;
 	}
 
-	public function getTemplateName(): string
+	public function getVariables(): iterable
 	{
-		return 'form/text-input';
-	}
-
-	public function getVariables(): Variables
-	{
-		$v = new Variables();
+		parent::getVariables();
+		$v = $this->variables;
 		$v->add('name', $this->name);
 		$v->add('label', Utils::kebabToSpace($this->name));
 		$v->add('id', $this->name);

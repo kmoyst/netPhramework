@@ -13,9 +13,10 @@ use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnSetBuilder;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\presentation\recordTable\FilterContext;
-use netPhramework\db\presentation\recordTable\FilterFormDirector;
-use netPhramework\db\presentation\recordTable\FilterSelectFormStrategy;
-use netPhramework\db\presentation\recordTable\PaginatorBuilder;
+use netPhramework\db\presentation\recordTable\FilterForm\FilterFormBuilder;
+use netPhramework\db\presentation\recordTable\FilterForm\FilterFormDirector;
+use netPhramework\db\presentation\recordTable\FilterSelectForm\FilterSelectFormInputFactory;
+use netPhramework\db\presentation\recordTable\FilterSelectDirector;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
 use netPhramework\rendering\View;
 
@@ -58,23 +59,29 @@ class Browse extends RecordSetProcess
 			->setContext($filterContext)
 			->sort()
 		;
-		$filterFormDirector = new FilterFormDirector()
-		;
-		$filterSelectFormStrategy = new FilterSelectFormStrategy()
+		$filterFormDirector 			= new FilterFormDirector();
+		$filterFormBuilder 				= new FilterFormBuilder();
+		$filterSelectFormInputFactory 	= new FilterSelectFormInputFactory()
 			->setColumnHeaders($columnSet->getHeaders())
 		;
-		$filterSelectForm = $filterFormDirector
-			->setStrategy($filterSelectFormStrategy)
-			->setContext($filterContext)
-			->createForm()
-		;
-		$paginator = $filterContext->getLimit() === null ? '' :
-			new PaginatorBuilder($filterContext, $filterFormDirector)
+		$filterSelectView = new FilterSelectDirector()
+			->setBuilder($filterFormBuilder)
+			->setDirector($filterFormDirector)
+			->setFactory($filterSelectFormInputFactory)
+			->buildForm($filterContext)
+			;
+			/**
+		$paginatorView = $filterContext->getLimit() === null ? '' :
+			new PaginatorBuilder()
+				->setBuilder(new PaginatorFormBuilder())
+				->setDirector($filterFormDirector)
+				->setBaseContext($filterContext)
 				->initCalculator()
 				->buildNextForm()
 				->buildPreviousForm()
-				->getPaginator()
+				->getPaginatorView()
 		;
+		 * **/
 		$callbackInput = $exchange->callbackFormInput()
 		;
 		$recordTable = new View('record-table');
@@ -91,10 +98,10 @@ class Browse extends RecordSetProcess
         ;
 		$exchange->display(new View('browse'), $responseCode)
 			->setTitle('Browse Records')
-			->add('filterSelectForm', 	$filterSelectForm)
+			->add('filterSelectView', 	$filterSelectView)
 			->add('addButtonForm', 		$addButtonForm)
 			->add('recordTable', 		$recordTable)
-			->add('paginator', 			$paginator)
+			->add('paginator', 			'')
 			->add('errorView',          $errorView)
 		;
 	}

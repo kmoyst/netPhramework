@@ -1,7 +1,7 @@
 <?php
 
 namespace netPhramework\common;
-
+use BackedEnum;
 class Utils
 {
 	public static function kebabToSpace(string $kebab):string

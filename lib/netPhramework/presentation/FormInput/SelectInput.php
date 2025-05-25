@@ -6,6 +6,7 @@ use netPhramework\rendering\Encodable;
 
 class SelectInput extends Input
 {
+	protected string $templateName = 'form/select-input';
 	protected ?string $value;
 	protected string $id;
 
@@ -33,19 +34,14 @@ class SelectInput extends Input
 		return $this;
 	}
 
-	public function getTemplateName(): string
+	public function getVariables(): iterable
 	{
-		return 'form/select-input';
+		parent::getVariables();
+		return $this->variables
+			->add('name', $this->name)
+			->add('options', $this->options)
+			->add('id', $this->id ?? $this->name)
+			->add('selectedValue', $this->value ?? '')
+			;
 	}
-
-	public function getVariables(): array
-	{
-		return [
-			'name' => $this->name,
-			'options' => $this->options,
-			'id' => $this->id ?? $this->name,
-			'selectedValue' => $this->value ?? ''
-		];
-	}
-
 }

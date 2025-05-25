@@ -6,6 +6,7 @@ use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\ValueInaccessible;
+use netPhramework\db\mapping\SortDirection;
 
 class RowSetBuilder
 {
@@ -42,21 +43,12 @@ class RowSetBuilder
 	 */
 	public function sort():RowSetBuilder
 	{
-		if($this->context->getSortField() === null)
+		if(empty($this->context->getSortArray()) ||
+		$this->context->getSortArray()[0][FilterKey::SORT_FIELD->value] === '')
 			$ids = $this->recordSet->getIds();
 		else
 		{
-			$sortableValues = [];
-			$column = $this->columnSet->getColumn(
-				$this->context->getSortField());
-			foreach($this->recordSet as $id => $record)
-				$sortableValues[$id] = $column->getSortableValue($record);
-			$sortFlag = SORT_STRING | SORT_NATURAL | SORT_FLAG_CASE;
-			if($this->context->getSortDirection() === 1)
-				arsort($sortableValues, $sortFlag);
-			else
-				asort($sortableValues, $sortFlag);
-			$ids = array_keys($sortableValues);
+
 		}
 		$this->sortedIds = array_slice(
 			$ids, $this->context->getOffset(), $this->context->getLimit());
