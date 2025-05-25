@@ -63,7 +63,7 @@ class RowSetBuilder
 				}
 				$args[] = $values;
 				$args[] = $parsedDirection === 2 ? SORT_DESC : SORT_ASC;
-				$args[] = SORT_NATURAL;
+				$args[] = SORT_STRING | SORT_NATURAL | SORT_FLAG_CASE;
 			}
 			$args[] = $this->recordSet->getIds();
 			array_multisort(...$args);
