@@ -33,7 +33,7 @@ readonly class Encoder
 			return new Buffer($path, $variables);
 		} catch (FileNotFound) {
 			// @TODO probably log the error here
-			return 'template missing';
+			return "template missing: $templateName";
 		}
 	}
 

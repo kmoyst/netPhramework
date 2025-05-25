@@ -9,6 +9,7 @@ class FilterContext implements FilterFormContext
 {
 	private RecordSet $recordSet;
 	private Variables $variables;
+	private ?array $conditionSet = null;
 	private ?array $sortArray = null;
 	private ?int $limit;
 	private int $offset = 0;
@@ -33,11 +34,18 @@ class FilterContext implements FilterFormContext
 		$limit = $vars->getOrNull(FilterKey::LIMIT->value);
 		$offset = $vars->getOrNull(FilterKey::OFFSET->value) ?? 0;
 		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value);
+		$conditions = $vars->getOrNull(FilterKey::CONDITION_SET->value);
 		$this->count = count($recordSet);
 		$this->limit = is_numeric($limit) && $limit > 0 ? $limit : null;
 		$this->offset = $offset < $this->count ? $offset : 0;
 		$this->sortArray = $sortArray;
+		$this->conditionSet = $conditions;
 		return $this;
+	}
+
+	public function getConditionSet(): array
+	{
+		return $this->conditionSet ?? [];
 	}
 
 	public function getSortArray(): array

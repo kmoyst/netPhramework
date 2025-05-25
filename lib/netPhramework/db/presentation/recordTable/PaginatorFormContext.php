@@ -29,6 +29,11 @@ class PaginatorFormContext implements FilterFormContext
 		return $this->baseContext->getLimit();
 	}
 
+	public function getConditionSet(): array
+	{
+		return $this->baseContext->getConditionSet();
+	}
+
 	public function getOffset(): int
 	{
 		return $this->offset;

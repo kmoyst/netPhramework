@@ -26,13 +26,6 @@ class FilterFormDirector
 		return $this;
 	}
 
-	public function buildFilterForm():void
-	{
-		$this->addSortInputs();
-		$this->addLimitInput();
-		$this->addOffsetInput();
-	}
-
 	private function addSortInputs():void
 	{
 		$i = 0;
@@ -69,5 +62,51 @@ class FilterFormDirector
 		$input = $this->factory->makeOffsetInput();
 		$input->setValue($this->context->getOffset());
 		$this->builder->addOffsetInput($input);
+	}
+
+	private function addConditionInputs():void
+	{
+		$i = 0;
+		foreach($this->context->getConditionSet() as $condition)
+		{
+			if($condition[FilterKey::CONDITION_FIELD->value] === '') break;
+			$this->builder->addConditionFieldInput($this->factory
+				->makeConditionFieldInput($i)
+				->setValue($condition[FilterKey::CONDITION_FIELD->value])
+			);
+			$this->builder->addConditionOperatorInput($this->factory
+				->makeConditionOperatorInput($i)
+				->setValue($condition[FilterKey::CONDITION_OPERATOR->value])
+			);
+			$this->builder->addConditionValueInput($this->factory
+				->makeConditionValueInput($i)
+				->setValue($condition[FilterKey::CONDITION_VALUE->value])
+			);
+			$this->builder->addCondtionGlueInput($this->factory
+				->makeConditionGlueInput($i)
+				->setValue($condition[FilterKey::CONDITION_GLUE->value])
+			);
+			$i++;
+		}
+		$this->builder->addConditionFieldInput(
+			$this->factory->makeConditionFieldInput($i)
+		);
+		$this->builder->addConditionOperatorInput(
+			$this->factory->makeConditionOperatorInput($i)
+		);
+		$this->builder->addConditionValueInput(
+			$this->factory->makeConditionValueInput($i)
+		);
+		$this->builder->addCondtionGlueInput(
+			$this->factory->makeConditionGlueInput($i)
+		);
+	}
+
+	public function buildFilterForm():void
+	{
+		$this->addConditionInputs();
+		$this->addSortInputs();
+		$this->addLimitInput();
+		$this->addOffsetInput();
 	}
 }

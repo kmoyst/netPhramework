@@ -8,11 +8,14 @@ use netPhramework\presentation\FormInput\Input;
 class PaginatorFormInputFactory implements FilterFormInputFactory
 {
 	private FilterFormInputConfigurator $sortInputConfigurator;
+	private FilterFormInputConfigurator $conditionInputConfigurator;
 
 	public function __construct()
 	{
 		$this->sortInputConfigurator = new FilterFormInputConfigurator(
 			FilterKey::SORT_ARRAY->value, 'form/hidden-input-array');
+		$this->conditionInputConfigurator = new FilterFormInputConfigurator(
+			FilterKey::CONDITION_SET->value, 'form/hidden-input-array');
 	}
 
 	public function makeLimitInput(): Input
@@ -38,6 +41,42 @@ class PaginatorFormInputFactory implements FilterFormInputFactory
 	{
 		$input = new HiddenInput(FilterKey::SORT_DIRECTION->value);
 		$this->sortInputConfigurator
+			->setIndex($index)
+			->configureViewable($input);
+		return $input;
+	}
+
+	public function makeConditionFieldInput(int $index): Input
+	{
+		$input = new HiddenInput(FilterKey::CONDITION_FIELD->value);
+		$this->conditionInputConfigurator
+			->setIndex($index)
+			->configureViewable($input);
+		return $input;
+	}
+
+	public function makeConditionOperatorInput(int $index): Input
+	{
+		$input = new HiddenInput(FilterKey::CONDITION_OPERATOR->value);
+		$this->conditionInputConfigurator
+			->setIndex($index)
+			->configureViewable($input);
+		return $input;
+	}
+
+	public function makeConditionValueInput(int $index): Input
+	{
+		$input = new HiddenInput(FilterKey::CONDITION_VALUE->value);
+		$this->conditionInputConfigurator
+			->setIndex($index)
+			->configureViewable($input);
+		return $input;
+	}
+
+	public function makeConditionGlueInput(int $index): Input
+	{
+		$input = new HiddenInput(FilterKey::CONDITION_GLUE->value);
+		$this->conditionInputConfigurator
 			->setIndex($index)
 			->configureViewable($input);
 		return $input;

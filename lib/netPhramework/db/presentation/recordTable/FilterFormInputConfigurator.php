@@ -11,13 +11,19 @@ class FilterFormInputConfigurator implements ViewableConfigurator
 
 	public function __construct(
 		private readonly string $parentKey,
-		private readonly string $templateName,
+		private ?string $templateName = null,
 		private readonly string $parentKeyVarName = 'parentName',
 		private readonly string $indexVarName = 'index') {}
 
 	public function setIndex(int $index): self
 	{
 		$this->index = $index;
+		return $this;
+	}
+
+	public function setTemplateName(string $templateName): self
+	{
+		$this->templateName = $templateName;
 		return $this;
 	}
 

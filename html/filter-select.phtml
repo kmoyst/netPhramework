@@ -1,6 +1,26 @@
 <div class="filterForm">
 	<form name="filterForm" method="get">
         <ul>
+			<?foreach($conditionFieldInputs as $input) {?>
+                <li><?=$input?></li>
+			<?}?>
+        </ul>
+        <ul>
+			<?foreach($conditionOperatorInputs as $input) {?>
+                <li><?=$input?></li>
+			<?}?>
+        </ul>
+        <ul>
+			<?foreach($conditionValueInputs as $input) {?>
+                <li><?=$input?></li>
+			<?}?>
+        </ul>
+        <ul>
+			<?foreach($conditionGlueInputs as $input) {?>
+                <li><?=$input?></li>
+			<?}?>
+        </ul>
+        <ul>
             <?foreach($sortFieldInputs as $input) {?>
                 <li><?=$input?></li>
             <?}?>

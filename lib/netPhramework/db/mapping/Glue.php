@@ -4,11 +4,10 @@ namespace netPhramework\db\mapping;
 
 use netPhramework\common\EnumToArray;
 
-enum SortDirection:int
+enum Glue:int
 {
 	use EnumToArray;
 
-	case ASCENDING  = 1;
-	case DESCENDING = 2;
-
+	case AND = 1;
+	case OR = 2;
 }

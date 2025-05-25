@@ -6,6 +6,18 @@
 	<?foreach($sortDirectionInputs as $input) {?>
 		<?=$input?>
 	<?}?>
+	<?foreach($conditionFieldInputs as $input) {?>
+        <?=$input?>
+	<?}?>
+    <?foreach($conditionOperatorInputs as $input) {?>
+        <?=$input?>
+    <?}?>
+    <?foreach($conditionValueInputs as $input) {?>
+        <?=$input?>
+    <?}?>
+    <?foreach($conditionGlueInputs as $input) {?>
+        <?=$input?>
+    <?}?>
 	<?=$offsetInput?>
 	<input name="action" value="<?=$buttonText?>" type="submit"/>
 </form>

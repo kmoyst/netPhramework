@@ -36,9 +36,11 @@ class PaginatorDirector
 
 	public function configure(FilterFormContext $context):self
 	{
-		$this->calculator->setLimit($context->getLimit());
-		$this->calculator->setCurrentOffset($context->getOffset());
-		$this->calculator->setTotalCount($context->getCount());
+		$this->calculator
+			->setLimit($context->getLimit())
+			->setCurrentOffset($context->getOffset())
+			->setTotalCount($context->getCount())
+		;
 		$this->director
 			->setContext($this->context->setBaseContext($context))
 			->setFactory($this->factory)
@@ -48,9 +50,9 @@ class PaginatorDirector
 
 	public function buildPreviousForm():self
 	{
-		$builder = new FilterFormBuilder();
 		$this->context
 			->setOffset($this->calculator->previousOffset());
+		$builder = new FilterFormBuilder();
 		$this->director
 			->setBuilder($builder)
 			->buildFilterForm()
@@ -65,9 +67,9 @@ class PaginatorDirector
 
 	public function buildNextForm():self
 	{
-		$builder = new FilterFormBuilder();
 		$this->context
 			->setOffset($this->calculator->nextOffset());
+		$builder = new FilterFormBuilder();
 		$this->director
 			->setBuilder($builder)
 			->buildFilterForm()
