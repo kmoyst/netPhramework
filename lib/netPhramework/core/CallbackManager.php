@@ -3,10 +3,10 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\dispatchers\DispatchToRoot;
+use netPhramework\dispatching\redirectors\RedirectToRoot;
+use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\MutablePath;
 use netPhramework\dispatching\Location;
-use netPhramework\dispatching\Path;
-use netPhramework\dispatching\ReadableLocation;
 use netPhramework\dispatching\UriAdapter;
 
 /**
@@ -18,13 +18,13 @@ readonly class CallbackManager
 	 * Takes necessary context to function, usually from SocketExchange
 	 *
 	 * @param string $callbackKey
-	 * @param Path $requestPath
+	 * @param MutablePath $requestPath
 	 * @param Variables $parameters
 	 */
 	public function __construct(
-		private string $callbackKey,
-		private Path   $requestPath,
-		private Variables $parameters) {}
+		private string      $callbackKey,
+		private MutablePath $requestPath,
+		private Variables   $parameters) {}
 
 	/**
 	 * Key used for callback inputs and location parameters.
@@ -42,14 +42,14 @@ readonly class CallbackManager
 	 *
 	 * @param bool $chain - False only uses current location when
 	 * existing callback is not present. If no callback is present, it WILL
-	 * return the current ReadableLocation. True interjects with current location
+	 * return the current Location. True interjects with current location
 	 * even when callback is present. It propagates the existing callback to
 	 * allows that information to be preserved upon return to the current
 	 * location.
 	 *
-	 * @return string|ReadableLocation
+	 * @return string|Location
 	 */
-	public function callbackLink(bool $chain):string|ReadableLocation
+	public function callbackLink(bool $chain):string|Location
 	{
 		if($chain)
 		{
@@ -67,17 +67,17 @@ readonly class CallbackManager
 	}
 
 	/**
-	 * Returns a dispatcher to a callback ReadableLocation if it exists in the current
-	 * ReadableLocation's parameters (referenced by callbackKey). Null otherwise.
+	 * Returns a dispatcher to a callback Location if it exists in the current
+	 * Location's parameters (referenced by callbackKey). Null otherwise.
 	 *
-	 * @return DispatchToRoot|null - dispatcher to callback, null if absent
+	 * @return RedirectToRoot|null - dispatcher to callback, null if absent
 	 * @throws Exception
 	 */
-	public function callbackDispatcher():?DispatchToRoot
+	public function callbackDispatcher():?RedirectToRoot
 	{
 		if(!($callbackUri = $this->fromParameters())) return null;
 		$adapter = new UriAdapter($callbackUri);
-		return new DispatchToRoot(
+		return new RedirectToRoot(
 			$adapter->getPath(), $adapter->getParameters());
 	}
 
@@ -93,14 +93,14 @@ readonly class CallbackManager
 	}
 
 	/**
-	 * Generates a readable location based on the contained Path / Parameters.
+	 * Generates a readable location based on the contained MutablePath / Parameters.
 	 * Cloned and immutable.
 	 *
-	 * @return Location
+	 * @return MutableLocation
 	 */
-	private function fromCurrentLocation():Location
+	private function fromCurrentLocation():MutableLocation
 	{
-		return new Location(
+		return new MutableLocation(
 			clone $this->requestPath, clone $this->parameters);
 	}
 }

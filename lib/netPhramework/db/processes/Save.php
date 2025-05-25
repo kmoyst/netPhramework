@@ -9,18 +9,18 @@ use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\dispatchers\DispatchToParent;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\redirectors\RedirectToParent;
 
 class Save extends RecordProcess
 {
-    protected Dispatcher $onSuccess;
+    protected Redirector $onSuccess;
 
 	public function __construct(
-        ?Dispatcher $onSuccess = null,
-        ?string $name = null)
+        ?Redirector $onSuccess = null,
+        ?string     $name = null)
     {
-        $this->onSuccess = $onSuccess ?? new DispatchToParent('');
+        $this->onSuccess = $onSuccess ?? new RedirectToParent('');
         parent::__construct($name);
     }
 
@@ -41,7 +41,7 @@ class Save extends RecordProcess
 			$record->save();
 			$exchange->redirect($this->onSuccess);
 		} catch (InvalidValue $e) {
-            $exchange->error($e, new DispatchToParent());
+            $exchange->error($e, new RedirectToParent());
 		}
 	}
 }

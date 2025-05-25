@@ -18,6 +18,6 @@ readonly class Responder
 	public function redirect(Encodable $content, ResponseCode $code): void
 	{
 		http_response_code($code->value);
-		header("Location: " . $content->encode($this->encoder));
+		header("MutableLocation: " . $content->encode($this->encoder));
 	}
 }

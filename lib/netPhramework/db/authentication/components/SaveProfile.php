@@ -14,7 +14,7 @@ use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
-use netPhramework\dispatching\dispatchers\DispatchToSibling;
+use netPhramework\dispatching\redirectors\RedirectToSibling;
 use netPhramework\exceptions\InvalidSession;
 
 class SaveProfile extends Leaf
@@ -46,6 +46,6 @@ class SaveProfile extends Leaf
 			->parseForValues($exchange->getParameters())
 			->save()
 		;
-		$exchange->redirect(new DispatchToSibling('view-profile'));
+		$exchange->redirect(new RedirectToSibling('view-profile'));
 	}
 }

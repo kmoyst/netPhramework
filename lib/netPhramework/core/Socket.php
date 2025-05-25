@@ -3,7 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\Path;
+use netPhramework\dispatching\MutablePath;
 use netPhramework\rendering\Wrapper;
 
 readonly class Socket
@@ -18,13 +18,13 @@ readonly class Socket
     }
 
 	/**
-	 * @param Path $path
+	 * @param MutablePath $path
 	 * @param Variables $parameters
 	 * @param RequestContext $context
 	 * @return Response
 	 * @throws \Exception
 	 */
-    public function processRequest(Path $path, Variables $parameters,
+    public function processRequest(MutablePath    $path, Variables $parameters,
 								   RequestContext $context):Response
 	{
         try

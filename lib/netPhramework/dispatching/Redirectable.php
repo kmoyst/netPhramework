@@ -9,7 +9,7 @@ interface Redirectable
 {
 	/**
 	 * To set Response to redirectable with explicit code.
-	 * Finalizes the dispatch based on current Path and Parameters.
+	 * Finalizes the dispatch based on current MutablePath and Parameters.
 	 *
 	 * @param ResponseCode $code
 	 * @return $this
@@ -17,9 +17,9 @@ interface Redirectable
 	public function setResponseCode(ResponseCode $code):self;
 
 	/***
-	 * @return RelocatablePath
+	 * @return Reroutable
 	 */
-	public function getPath():RelocatablePath;
+	public function getPath():Reroutable;
 
 	/**
 	 * @return Variables

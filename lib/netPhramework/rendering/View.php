@@ -4,8 +4,8 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
-use netPhramework\dispatching\ReadableLocation;
-use netPhramework\dispatching\ReadablePath;
+use netPhramework\dispatching\Location;
+use netPhramework\dispatching\Path;
 
 class View extends Viewable implements Wrappable, ViewConfiguration
 {
@@ -23,9 +23,9 @@ class View extends Viewable implements Wrappable, ViewConfiguration
         return $this->templateName;
     }
 
-	public function add(string $key,
-						string|Viewable|Encodable|ReadablePath|
-						ReadableLocation|iterable|null $value):View
+	public function add(string                 $key,
+						string|Viewable|Encodable|Path|
+						Location|iterable|null $value):View
 	{
 		$this->getVariables()->add($key, $value);
 		return $this;

@@ -2,19 +2,19 @@
 
 namespace netPhramework\presentation\FormInput;
 
-use netPhramework\dispatching\ReadableLocation;
+use netPhramework\dispatching\Location;
 
 class HiddenInput extends Input
 {
 	public function __construct(
 		string $name,
-		private string|ReadableLocation|null $value = null
+		private string|Location|null $value = null
 	)
 	{
 		parent::__construct($name);
 	}
 
-	public function setValue(ReadableLocation|string|null $value): HiddenInput
+	public function setValue(Location|string|null $value): HiddenInput
 	{
 		$this->value = $value;
 		return $this;

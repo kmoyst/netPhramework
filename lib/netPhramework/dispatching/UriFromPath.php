@@ -5,11 +5,11 @@ namespace netPhramework\dispatching;
 use Stringable;
 
 /**
- * Converts a ReadablePath to uri string
+ * Converts a Path to uri string
  */
 readonly class UriFromPath implements Stringable
 {
-	public function __construct(private ReadablePath $path) {}
+	public function __construct(private Path $path) {}
 
 	public function get():string
 	{
@@ -19,7 +19,7 @@ readonly class UriFromPath implements Stringable
 		return $s.implode($s, $names);
 	}
 
-	private function traversePath(array &$names, ?ReadablePath $path):void
+	private function traversePath(array &$names, ?Path $path):void
 	{
 		if($path === null) return;
 		$names[] = $path->getName();

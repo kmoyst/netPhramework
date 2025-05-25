@@ -2,13 +2,13 @@
 
 namespace netPhramework\core;
 
-use netPhramework\dispatching\Path;
+use netPhramework\dispatching\MutablePath;
 use netPhramework\exceptions\ComponentNotFound;
 
 class Navigator
 {
 	private Component $root;
-	private Path $guide;
+	private MutablePath $guide;
 
 	public function setRoot(Component $root): Navigator
 	{
@@ -16,7 +16,7 @@ class Navigator
 		return $this;
 	}
 
-	public function setGuide(Path $guide): Navigator
+	public function setGuide(MutablePath $guide): Navigator
 	{
 		$this->guide = $guide;
 		return $this;
@@ -34,12 +34,12 @@ class Navigator
 
 	/**
 	 * @param Component $component
-	 * @param Path|null $guide
+	 * @param MutablePath|null $guide
 	 * @return Component
 	 * @throws ComponentNotFound
 	 * @throws Exception
 	 */
-    private function traverse(Component $component, ?Path $guide):Component
+    private function traverse(Component $component, ?MutablePath $guide):Component
     {
         if($guide === null) return $component;
         $child = $component->getChild($guide->getName());

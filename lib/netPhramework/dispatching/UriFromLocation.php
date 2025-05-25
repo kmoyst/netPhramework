@@ -4,11 +4,11 @@ namespace netPhramework\dispatching;
 use Stringable;
 
 /**
- * Converts and ReadableLocation to a URI string
+ * Converts and Location to a URI string
  */
 readonly class UriFromLocation implements Stringable
 {
-    public function __construct(private ReadableLocation $location) {}
+    public function __construct(private Location $location) {}
 
 	public function get():string
 	{

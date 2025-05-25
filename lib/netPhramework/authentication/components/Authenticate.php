@@ -7,8 +7,8 @@ use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
-use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\dispatchers\DispatchToSibling as ToSibling;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\redirectors\RedirectToSibling as ToSibling;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 
@@ -16,8 +16,8 @@ class Authenticate extends Leaf
 {
 	public function __construct(
 		private readonly Authenticator $authenticator,
-		private readonly ?Dispatcher $onSuccess = null,
-        private readonly ?Dispatcher $onFailure = null)
+		private readonly ?Redirector   $onSuccess = null,
+        private readonly ?Redirector   $onFailure = null)
 	{
 		parent::__construct('authenticate');
 	}

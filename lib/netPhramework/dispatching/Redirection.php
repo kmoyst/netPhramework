@@ -6,7 +6,7 @@ use netPhramework\core\Responder;
 use netPhramework\core\Response;
 use netPhramework\core\ResponseCode;
 
-class Redirection extends Location implements Redirectable, Response
+class Redirection extends MutableLocation implements Redirectable, Response
 {
 	private ResponseCode $code;
 

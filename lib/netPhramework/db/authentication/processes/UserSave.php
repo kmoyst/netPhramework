@@ -11,15 +11,15 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\processes\Save;
-use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\dispatchers\DispatchToSibling;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\redirectors\RedirectToSibling;
 use netPhramework\exceptions\InvalidPassword;
 
 class UserSave extends Save
 {
 	public function __construct(
-		?Dispatcher $onSuccess = null,
-		?string $name = null,
+		?Redirector                    $onSuccess = null,
+		?string                        $name = null,
 		private readonly ?EnrolledUser $enrolledUser = null)
 	{
 		parent::__construct($onSuccess, $name);
@@ -45,9 +45,9 @@ class UserSave extends Save
         } catch (DuplicateEntryException) {
             $message = "User already exists: " . $enrolledUser->getUsername();
             $exchange->error(new Exception($message),
-                new DispatchToSibling('sign-up'));
+                new RedirectToSibling('sign-up'));
         } catch (InvalidValue|InvalidPassword $e) {
-            $exchange->error($e, new DispatchToSibling('sign-up'));
+            $exchange->error($e, new RedirectToSibling('sign-up'));
         }
 	}
 }

@@ -3,10 +3,10 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\dispatchers\Dispatcher;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\MutablePath;
 use netPhramework\dispatching\Location;
-use netPhramework\dispatching\Path;
-use netPhramework\dispatching\ReadableLocation;
 use netPhramework\dispatching\Redirection;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Presentation;
@@ -17,11 +17,11 @@ use netPhramework\rendering\Wrapper;
 class SocketExchange implements Exchange
 {
     /**
-     * The request Path. SocketExchange protects immutability.
+     * The request MutablePath. SocketExchange protects immutability.
      *
-     * @var Path
+     * @var MutablePath
      */
-	private Path $path;
+	private MutablePath $path;
     /**
      * The request Parameters. SocketExchange protects immutability.
      *
@@ -34,7 +34,7 @@ class SocketExchange implements Exchange
 	private Response $response;
 
 	/** @inheritDoc */
-	public function redirect(Dispatcher $fallback):Variables
+	public function redirect(Redirector $fallback):Variables
 	{
 		$redirection = new Redirection(clone $this->path);
 		$callback = $this->callbackManager->callbackDispatcher();
@@ -60,7 +60,7 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function error(Exception $exception, Dispatcher $fallback): void
+	public function error(Exception $exception, Redirector $fallback): void
 	{
         try {
 			$this->redirect($fallback);
@@ -73,7 +73,7 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function callbackLink(bool $chain = false):string|ReadableLocation
+	public function callbackLink(bool $chain = false):string|Location
 	{
 		return $this->callbackManager->callbackLink($chain);
 	}
@@ -87,7 +87,7 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function getPath(): Path
+	public function getPath(): MutablePath
 	{
 		return clone $this->path;
 	}
@@ -99,9 +99,9 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function getLocation(): Location
+	public function getLocation(): MutableLocation
 	{
-		return new Location(clone $this->path, clone $this->parameters);
+		return new MutableLocation(clone $this->path, clone $this->parameters);
 	}
 
 	/** @inheritDoc */
@@ -121,12 +121,12 @@ class SocketExchange implements Exchange
 	}
 
 	/**
-	 * Sets the Request Path (usually by Socket)
+	 * Sets the Request MutablePath (usually by Socket)
 	 *
-	 * @param Path $path
+	 * @param MutablePath $path
 	 * @return $this
 	 */
-	public function setPath(Path $path): SocketExchange
+	public function setPath(MutablePath $path): SocketExchange
 	{
 		$this->path = $path;
 		return $this;

@@ -5,15 +5,15 @@ namespace netPhramework\authentication\components;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
-use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\dispatchers\DispatchToRoot;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\redirectors\RedirectToRoot;
 use netPhramework\exceptions\InvalidSession;
 
 class LogOut extends Leaf
 {
 	public function __construct(
-		private readonly ?Dispatcher $dispatcher = null,
-		?string $name = null) { parent::__construct($name); }
+		private readonly ?Redirector $dispatcher = null,
+		?string                      $name = null) { parent::__construct($name); }
 
 	/**
 	 * @param Exchange $exchange
@@ -24,6 +24,6 @@ class LogOut extends Leaf
 	public function handleExchange(Exchange $exchange): void
 	{
 		$exchange->getSession()->logout();
-		$exchange->redirect($this->dispatcher ?? new DispatchToRoot());
+		$exchange->redirect($this->dispatcher ?? new RedirectToRoot());
 	}
 }

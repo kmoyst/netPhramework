@@ -6,8 +6,8 @@ use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
-use netPhramework\dispatching\relocators\RelocateToSibling;
-use netPhramework\dispatching\relocators\Relocator;
+use netPhramework\dispatching\rerouters\RerouteToSibling;
+use netPhramework\dispatching\rerouters\Rerouter;
 use netPhramework\rendering\View;
 
 class LogInPage extends Leaf
@@ -15,7 +15,7 @@ class LogInPage extends Leaf
     public function __construct(
 		string $name = 'log-in',
 		private readonly ?View $view = null,
-		private readonly ?Relocator $forForm = null
+		private readonly ?Rerouter $forForm = null
     ) { parent::__construct($name); }
 
     /**
@@ -28,7 +28,7 @@ class LogInPage extends Leaf
         $manager    = new LogInManager()
 		;
 		$formAction = $exchange->getPath();
-        $relocator  = $this->forForm??new RelocateToSibling('authenticate');
+        $relocator  = $this->forForm??new RerouteToSibling('authenticate');
         $relocator->relocate($formAction)
 		;
         $errorView    = $exchange->getSession()->getEncodableValue();
