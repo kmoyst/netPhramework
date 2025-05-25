@@ -4,12 +4,13 @@ namespace netPhramework\presentation\FormInput;
 
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
+use netPhramework\rendering\Encodable;
 
 class TextInput extends Input
 {
 	protected ?string $value;
 
-	public function setValue(?string $value): Input
+	public function setValue(string|Encodable|null $value): Input
 	{
 		$this->value = $value;
 		return $this;

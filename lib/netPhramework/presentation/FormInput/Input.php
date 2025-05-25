@@ -2,7 +2,7 @@
 
 namespace netPhramework\presentation\FormInput;
 
-use netPhramework\dispatching\interfaces\ReadableLocation;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Viewable;
 
 abstract class Input extends Viewable
@@ -14,5 +14,5 @@ abstract class Input extends Viewable
 		return $this->name;
 	}
 
-	abstract public function setValue(ReadableLocation|string|null $value):self;
+	abstract public function setValue(Encodable|string|null $value):self;
 }

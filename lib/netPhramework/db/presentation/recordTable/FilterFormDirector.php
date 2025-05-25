@@ -36,8 +36,8 @@ class FilterFormDirector
 			->setButtonText()
 			->addLimitInput()
 			->addOffsetInput()
-			->addSortFieldInput()
-			->addSortDirectionInput()
+//			->addSortFieldInput()
+//			->addSortDirectionInput()
 			->getFilterForm()
 			;
 	}

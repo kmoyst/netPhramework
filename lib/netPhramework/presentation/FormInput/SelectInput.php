@@ -2,6 +2,8 @@
 
 namespace netPhramework\presentation\FormInput;
 
+use netPhramework\rendering\Encodable;
+
 class SelectInput extends Input
 {
 	protected ?string $value;
@@ -25,7 +27,7 @@ class SelectInput extends Input
 		return $this;
 	}
 
-	public function setValue(?string $value): self
+	public function setValue(string|Encodable|null $value): self
 	{
 		$this->value = $value;
 		return $this;

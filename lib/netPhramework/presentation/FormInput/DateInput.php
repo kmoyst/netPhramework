@@ -7,6 +7,7 @@ use DateTime;
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
 use netPhramework\db\exceptions\InvalidValue;
+use netPhramework\rendering\Encodable;
 
 class DateInput extends Input
 {
@@ -28,11 +29,11 @@ class DateInput extends Input
 	}
 
 	/**
-	 * @param string|null $value
+	 * @param Encodable|string|null $value
 	 * @return Input
 	 * @throws InvalidValue
 	 */
-	public function setValue(?string $value): Input
+	public function setValue(Encodable|string|null $value): Input
 	{
 		try {
 			$date = new DateTime($value);
