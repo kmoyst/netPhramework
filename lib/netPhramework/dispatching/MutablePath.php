@@ -11,7 +11,7 @@ class MutablePath extends Path implements Reroutable
 	private ?string $name = null;
 	private ?MutablePath $next = null;
 
-	public function setName(string $name): MutablePath
+	public function setName(string $name): self
 	{
 		$this->name = $name;
 		return $this;
@@ -42,7 +42,7 @@ class MutablePath extends Path implements Reroutable
 		return $this;
 	}
 
-	public function pop():MutablePath
+	public function pop():self
 	{
 		if($this->name === null)
 			return $this;
@@ -55,7 +55,7 @@ class MutablePath extends Path implements Reroutable
 		return $this;
 	}
 
-	public function clear():MutablePath
+	public function clear():self
 	{
 		$this->name = null;
 		$this->next = null;
