@@ -7,14 +7,16 @@ use netPhramework\rendering\Viewable;
 
 class PaginatorDirector
 {
+	private PaginatorFormDirector $director;
 	private FilterFormInputFactory $factory;
 	private PaginatorFormContext $context;
 	private PaginatorCalculator $calculator;
 	private Viewable $prevForm;
 	private Viewable $nextForm;
 
-	public function __construct(private readonly FilterFormDirector $director)
+	public function __construct()
 	{
+		$this->director		= new PaginatorFormDirector();
 		$this->context 		= new PaginatorFormContext();
 		$this->calculator  	= new PaginatorCalculator();
 		$this->factory 		= new PaginatorFormInputFactory();
@@ -24,25 +26,20 @@ class PaginatorDirector
 	{
 		$this->context->setBaseContext($baseContext);
 		$this->calculator
-			->setLimit($this->context->getLimit())
-			->setCurrentOffset($this->context->getOffset())
-			->setTotalCount($this->context->getCount())
+			->setLimit($baseContext->getLimit())
+			->setCurrentOffset($baseContext->getOffset())
+			->setTotalCount($baseContext->getCount())
 		;
 		return $this;
 	}
 
 	public function buildPreviousForm():self
 	{
-		$builder = new FilterFormBuilder()
+		$this->director->setBuilder(new FilterFormBuilder()
 			->setFactory($this->factory)
-			->setContext($this->context
-				->setOffset($this->calculator->previousOffset()))
+			->setContext($this->context->setOffset($this->calculator->previousOffset())))
 		;
-		$this->director
-			->setBuilder($builder)
-			->constructForm();
-		$this->prevForm = $builder
-			->createFilterForm('paginator-form')
+		$this->prevForm = $this->director->createForm()
 				->add('buttonText', 'Previous')
 				->add('formName', 'previousPage')
 		;
@@ -51,19 +48,13 @@ class PaginatorDirector
 
 	public function buildNextForm():self
 	{
-		$builder = new FilterFormBuilder()
+		$this->director->setBuilder(new FilterFormBuilder()
 			->setFactory($this->factory)
-			->setContext($this->context
-				->setOffset($this->calculator->nextOffset()))
-		;
-		$this->director
-			->setBuilder($builder)
-			->constructForm();
-		$this->nextForm = $builder
-			->createFilterForm('paginator-form')
-				->add('buttonText', 'Next')
-				->add('formName', 'nextPage')
-		;
+			->setContext($this->context->setOffset($this->calculator->nextOffset())));
+		$this->nextForm = $this->director->createForm()
+			->add('buttonText', 'Next')
+			->add('formName', 'nextPage')
+			;
 		return $this;
 	}
 

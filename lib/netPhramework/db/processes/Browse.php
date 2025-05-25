@@ -13,8 +13,6 @@ use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnSetBuilder;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\presentation\recordTable\FilterContext;
-use netPhramework\db\presentation\recordTable\FilterFormBuilder;
-use netPhramework\db\presentation\recordTable\FilterFormDirector;
 use netPhramework\db\presentation\recordTable\PaginatorDirector;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
 use netPhramework\db\presentation\recordTable\SelectFilterDirector;
@@ -59,15 +57,14 @@ class Browse extends RecordSetProcess
 			->setContext($filterContext)
 			->sort()
 		;
-		$filterFormDirector = new FilterFormDirector();
-		$filterSelectView   = new SelectFilterDirector($filterFormDirector)
-			->configure($columnSet->getHeaders())
+		$filterSelectView   = new SelectFilterDirector()
+			->configure($columnSet->getNames())
 			->buildSelectFilterForm($filterContext)
 			->getView()
 		;
 		$paginatorView =
 			$filterContext->getLimit() === null ? '' :
-				new PaginatorDirector($filterFormDirector)
+				new PaginatorDirector()
 			->configure($filterContext)
 			->buildPreviousForm()
 			->buildNextForm()

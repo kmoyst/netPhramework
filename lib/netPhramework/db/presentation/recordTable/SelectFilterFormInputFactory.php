@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
+use netPhramework\common\Utils;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
@@ -12,7 +13,7 @@ use netPhramework\presentation\FormInput\TextInput;
 
 class SelectFilterFormInputFactory implements FilterFormInputFactory
 {
-	private array $columnHeaders;
+	private array $columnNames;
 	private FilterFormInputConfigurator $sortInputConfigurator;
 	private FilterFormInputConfigurator $conditionInputConfigurator;
 
@@ -26,9 +27,9 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 		);
 	}
 
-	public function setColumnHeaders(array $columnHeaders): self
+	public function setColumnNames(array $columnNames): self
 	{
-		$this->columnHeaders = $columnHeaders;
+		$this->columnNames = $columnNames;
 		return $this;
 	}
 
@@ -115,13 +116,23 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 	private function sortFieldOptions():array
 	{
 		$blank = ['' => '---SORT FIELD---'];
-		return array_merge($blank, $this->columnHeaders);
+		return array_merge($blank, $this->fieldOptions());
 	}
 
 	private function conditionFieldOptions():array
 	{
 		$blank = ['' => '---CONDITION FIELD---'];
-		return array_merge($blank, $this->columnHeaders);
+		return array_merge($blank, $this->fieldOptions());
+	}
+
+	private function fieldOptions():array
+	{
+		$options = [];
+		foreach ($this->columnNames as $name)
+		{
+			$options[$name] = Utils::kebabToSpace($name);
+		}
+		return $options;
 	}
 
 	private function limitOptions():iterable

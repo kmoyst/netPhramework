@@ -3,31 +3,16 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\presentation\FormInput\Input;
-use netPhramework\presentation\FormInput\InputSet;
 use netPhramework\rendering\View;
 
 class FilterFormBuilder
 {
 	private FilterFormContext $context;
 	private FilterFormInputFactory $factory;
+	private array $conditionViews = [];
+	private array $sortViews = [];
 	private Input $limitInput;
 	private Input $offsetInput;
-	private InputSet $sortFieldInputs;
-	private InputSet $sortDirectionInputs;
-	private InputSet $conditionFieldInputs;
-	private InputSet $conditionOperatorInputs;
-	private InputSet $conditionValueInputs;
-	private InputSet $conditionGlueInputs;
-
-	public function __construct()
-	{
-		$this->sortFieldInputs = new InputSet();
-		$this->sortDirectionInputs = new InputSet();
-		$this->conditionFieldInputs = new InputSet();
-		$this->conditionOperatorInputs = new InputSet();
-		$this->conditionValueInputs = new InputSet();
-		$this->conditionGlueInputs = new InputSet();
-	}
 
 	public function setContext(FilterFormContext $context): self
 	{
@@ -41,28 +26,27 @@ class FilterFormBuilder
 		return $this;
 	}
 
-	public function buildSortInputs():self
+	public function buildSortInputs(string $templateName):self
 	{
 		$i = 0;
 		foreach($this->context->getSortArray() as $vector)
 		{
+			$view = new FilterFormSortVector($templateName);
 			if($vector[FilterKey::SORT_FIELD->value] === '') break;
-			$this->sortFieldInputs->addCustom($this->factory
+			$view->setFieldInput($this->factory
 				->makeSortFieldInput($i)
-				->setValue($vector[FilterKey::SORT_FIELD->value])
-			);
-			$this->sortDirectionInputs->addCustom($this->factory
+				->setValue($vector[FilterKey::SORT_FIELD->value]));
+			$view->setDirectionInput($this->factory
 				->makeSortDirectionInput($i)
-				->setValue($vector[FilterKey::SORT_DIRECTION->value])
-			);
+				->setValue($vector[FilterKey::SORT_DIRECTION->value]))
+			;
+			$this->sortViews[] = $view;
 			$i++;
 		}
-		$this->sortFieldInputs->addCustom($this->factory
-			->makeSortFieldInput($i)
-		);
-		$this->sortDirectionInputs->addCustom($this->factory
-			->makeSortDirectionInput($i)
-		);
+		$view = new FilterFormSortVector($templateName);
+		$view->setFieldInput($this->factory->makeSortFieldInput($i));
+		$view->setDirectionInput($this->factory->makeSortDirectionInput($i));
+		$this->sortViews[] = $view;
 		return $this;
 	}
 
@@ -82,54 +66,74 @@ class FilterFormBuilder
 		return $this;
 	}
 
-	public function buildConditionInputs():self
+	public function buildConditionInputs(string $templateName):self
 	{
 		$i = 0;
 		foreach($this->context->getConditionSet() as $condition)
 		{
+			$view = new FilterFormCondition($templateName);
 			if($condition[FilterKey::CONDITION_FIELD->value] === '') break;
-			$this->conditionFieldInputs->addCustom($this->factory
+			$view->setFieldInput($this->factory
 				->makeConditionFieldInput($i)
 				->setValue($condition[FilterKey::CONDITION_FIELD->value]));
 
-			$this->conditionOperatorInputs->addCustom($this->factory
+			$view->setOperatorInput($this->factory
 				->makeConditionOperatorInput($i)
 				->setValue($condition[FilterKey::CONDITION_OPERATOR->value])
 			);
-			$this->conditionValueInputs->addCustom($this->factory
+			$view->setValueInput($this->factory
 				->makeConditionValueInput($i)
 				->setValue($condition[FilterKey::CONDITION_VALUE->value])
 			);
-			$this->conditionGlueInputs->addCustom($this->factory
+			$view->setGlueInput($this->factory
 				->makeConditionGlueInput($i)
 				->setValue($condition[FilterKey::CONDITION_GLUE->value])
 			);
+			$this->conditionViews[] = $view;
 			$i++;
 		}
-		$this->conditionFieldInputs->addCustom(
+		$view = new FilterFormCondition($templateName);
+		$view->setFieldInput(
 			$this->factory->makeConditionFieldInput($i)
 		);
-		$this->conditionOperatorInputs->addCustom(
+		$view->setOperatorInput(
 			$this->factory->makeConditionOperatorInput($i)
 		);
-		$this->conditionValueInputs->addCustom(
+		$view->setValueInput(
 			$this->factory->makeConditionValueInput($i)
 		);
-		$this->conditionGlueInputs->addCustom(
+		$view->setGlueInput(
 			$this->factory->makeConditionGlueInput($i)
 		);
+		$this->conditionViews[] = $view;
 		return $this;
+	}
+
+	public function getConditionViews(): array
+	{
+		return $this->conditionViews;
+	}
+
+	public function getSortViews(): array
+	{
+		return $this->sortViews;
+	}
+
+	public function getLimitInput(): Input
+	{
+		return $this->limitInput;
+	}
+
+	public function getOffsetInput(): Input
+	{
+		return $this->offsetInput;
 	}
 
 	public function createFilterForm(string $templateName):View
 	{
 		return new View($templateName)
-			->add('conditionFieldInputs', $this->conditionFieldInputs)
-			->add('conditionOperatorInputs', $this->conditionOperatorInputs)
-			->add('conditionValueInputs', $this->conditionValueInputs)
-			->add('conditionGlueInputs', $this->conditionGlueInputs)
-			->add('sortFieldInputs', $this->sortFieldInputs)
-			->add('sortDirectionInputs', $this->sortDirectionInputs)
+			->add('conditions', $this->conditionViews)
+			->add('sortArray', $this->sortViews)
 			->add('limitInput', $this->limitInput)
 			->add('offsetInput', $this->offsetInput)
 			;

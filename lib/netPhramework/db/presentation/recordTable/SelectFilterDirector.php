@@ -9,14 +9,14 @@ class SelectFilterDirector
 	private FilterFormInputFactory $factory;
 	private View $form;
 
-	public function __construct(private readonly FilterFormDirector $director)
+	public function __construct()
 	{
 		$this->factory = new SelectFilterFormInputFactory();
 	}
 
-	public function configure(array $columnHeaders):self
+	public function configure(array $columnNames):self
 	{
-		$this->factory->setColumnHeaders($columnHeaders);
+		$this->factory->setColumnNames($columnNames);
 		return $this;
 	}
 
@@ -25,13 +25,15 @@ class SelectFilterDirector
 		$builder = new FilterFormBuilder()
 			->setFactory($this->factory)
 			->setContext($context)
+			->buildConditionInputs('select-filter-condition')
+			->buildSortInputs('select-filter-sort-vector')
+			->buildLimitInput()
 			;
-		$this->director
-			->setBuilder($builder)
-			->constructForm()
-		;
-		$this->form = $builder
-			->createFilterForm('filter-select');
+		$this->form = new View('filter-select')
+			->add('conditions', $builder->getConditionViews())
+			->add('sortArray', $builder->getSortViews())
+			->add('limitInput', $builder->getLimitInput())
+			;
 		return $this;
 	}
 

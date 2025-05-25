@@ -1,23 +1,4 @@
 <form name='<?=$formName?>' method='get' class="inlineButton">
-	<?=$limitInput?>
-	<?foreach($sortFieldInputs as $input) {?>
-        <?=$input?>
-	<?}?>
-	<?foreach($sortDirectionInputs as $input) {?>
-		<?=$input?>
-	<?}?>
-	<?foreach($conditionFieldInputs as $input) {?>
-        <?=$input?>
-	<?}?>
-    <?foreach($conditionOperatorInputs as $input) {?>
-        <?=$input?>
-    <?}?>
-    <?foreach($conditionValueInputs as $input) {?>
-        <?=$input?>
-    <?}?>
-    <?foreach($conditionGlueInputs as $input) {?>
-        <?=$input?>
-    <?}?>
-	<?=$offsetInput?>
+    <?= implode('', $inputs) ?>
 	<input name="action" value="<?=$buttonText?>" type="submit"/>
 </form>

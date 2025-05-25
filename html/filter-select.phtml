@@ -1,36 +1,14 @@
 <div class="filterForm">
 	<form name="filterForm" method="get">
         <ul>
-			<?foreach($conditionFieldInputs as $input) {?>
-                <li><?=$input?></li>
+			<?foreach($conditions as $condition) {?>
+                <?=$condition?>
 			<?}?>
-        </ul>
-        <ul>
-			<?foreach($conditionOperatorInputs as $input) {?>
-                <li><?=$input?></li>
+			<?foreach($sortArray as $vector) {?>
+				<?=$vector?>
 			<?}?>
+            <li><?=$limitInput?></li>
         </ul>
-        <ul>
-			<?foreach($conditionValueInputs as $input) {?>
-                <li><?=$input?></li>
-			<?}?>
-        </ul>
-        <ul>
-			<?foreach($conditionGlueInputs as $input) {?>
-                <li><?=$input?></li>
-			<?}?>
-        </ul>
-        <ul>
-            <?foreach($sortFieldInputs as $input) {?>
-                <li><?=$input?></li>
-            <?}?>
-         </ul>
-        <ul>
-			<?foreach($sortDirectionInputs as $input) {?>
-                <li><?=$input?></li>
-			<?}?>
-        </ul>
-        <div><?=$limitInput?></div>
 		<input type="submit" name="action" value="Filter"/>
 	</form>
 </div>
