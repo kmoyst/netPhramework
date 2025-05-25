@@ -6,39 +6,32 @@ use netPhramework\rendering\View;
 
 class SelectFilterDirector
 {
-	private FilterFormDirector $director;
 	private FilterFormInputFactory $factory;
 	private View $form;
 
-	public function __construct()
+	public function __construct(private readonly FilterFormDirector $director)
 	{
 		$this->factory = new SelectFilterFormInputFactory();
 	}
 
-	public function setDirector(FilterFormDirector $director): self
-	{
-		$this->director = $director;
-		return $this;
-	}
-
-	public function configure(
-		FilterFormContext $context, array $columnHeaders):self
+	public function configure(array $columnHeaders):self
 	{
 		$this->factory->setColumnHeaders($columnHeaders);
-		$this->director
-			->setFactory($this->factory)
-			->setContext($context)
-		;
 		return $this;
 	}
 
-	public function buildForm():self
+	public function buildSelectFilterForm(FilterFormContext $context):self
 	{
-		$builder = new FilterFormBuilder();
+		$builder = new FilterFormBuilder()
+			->setFactory($this->factory)
+			->setContext($context)
+			;
 		$this->director
 			->setBuilder($builder)
-			->buildFilterForm();
-		$this->form = $builder->getFilterForm('filter-select');
+			->constructForm()
+		;
+		$this->form = $builder
+			->createFilterForm('filter-select');
 		return $this;
 	}
 

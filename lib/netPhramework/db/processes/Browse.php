@@ -13,6 +13,7 @@ use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnSetBuilder;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\presentation\recordTable\FilterContext;
+use netPhramework\db\presentation\recordTable\FilterFormBuilder;
 use netPhramework\db\presentation\recordTable\FilterFormDirector;
 use netPhramework\db\presentation\recordTable\PaginatorDirector;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
@@ -59,18 +60,17 @@ class Browse extends RecordSetProcess
 			->sort()
 		;
 		$filterFormDirector = new FilterFormDirector();
-		$filterSelectView   = new SelectFilterDirector()
-			->setDirector($filterFormDirector)
-			->configure($filterContext, $columnSet->getHeaders())
-			->buildForm()
+		$filterSelectView   = new SelectFilterDirector($filterFormDirector)
+			->configure($columnSet->getHeaders())
+			->buildSelectFilterForm($filterContext)
 			->getView()
 		;
 		$paginatorView =
-			$filterContext->getLimit() === null ? '' : new PaginatorDirector()
-			->setDirector($filterFormDirector)
+			$filterContext->getLimit() === null ? '' :
+				new PaginatorDirector($filterFormDirector)
 			->configure($filterContext)
-			->buildNextForm()
 			->buildPreviousForm()
+			->buildNextForm()
 			->getView()
 		;
 		$callbackInput = $exchange->callbackFormInput()
