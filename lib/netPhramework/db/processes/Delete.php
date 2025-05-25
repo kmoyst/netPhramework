@@ -7,17 +7,17 @@ use netPhramework\core\Exchange;
 use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\dispatchers\DispatchToParent;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\redirectors\RedirectToParent;
 
 class Delete extends RecordProcess
 {
-    protected Dispatcher $dispatcher;
+    protected Redirector $dispatcher;
 
-	public function __construct(?Dispatcher $dispatcher = null,
-                                ?string $name = null)
+	public function __construct(?Redirector $dispatcher = null,
+                                ?string     $name = null)
 	{
-        $this->dispatcher = $this->dispatcher ?? new DispatchToParent('');
+        $this->dispatcher = $this->dispatcher ?? new RedirectToParent('');
 		parent::__construct($name);
 	}
 

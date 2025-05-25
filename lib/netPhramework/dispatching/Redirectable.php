@@ -1,15 +1,15 @@
 <?php
 
-namespace netPhramework\dispatching\interfaces;
+namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
 use netPhramework\core\ResponseCode;
 
-interface DispatchableLocation
+interface Redirectable
 {
 	/**
 	 * To set Response to redirectable with explicit code.
-	 * Finalizes the dispatch based on current Path and Parameters.
+	 * Finalizes the dispatch based on current MutablePath and Parameters.
 	 *
 	 * @param ResponseCode $code
 	 * @return $this
@@ -17,9 +17,9 @@ interface DispatchableLocation
 	public function setResponseCode(ResponseCode $code):self;
 
 	/***
-	 * @return RelocatablePath
+	 * @return Reroutable
 	 */
-	public function getPath():RelocatablePath;
+	public function getPath():Reroutable;
 
 	/**
 	 * @return Variables

@@ -3,14 +3,11 @@
 namespace netPhramework\core;
 
 use netPhramework\bootstrap\Environment;
-use netPhramework\rendering\Encodable;
-use netPhramework\rendering\Encoder;
-use netPhramework\rendering\Message;
-use netPhramework\rendering\View;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 
-class Exception extends \Exception implements Response, Encodable, Wrappable
+class Exception extends \Exception
+	implements Wrappable, Response
 {
 	protected string $friendlyMessage = "SERVER ERROR";
     protected readonly ResponseCode $responseCode;
@@ -41,33 +38,32 @@ class Exception extends \Exception implements Response, Encodable, Wrappable
 		return $this;
 	}
 
-    public function deliver(Responder $responder): void
-    {
-		if(isset($this->environment) && $this->environment->inDevelopment())
-		{
-			$content = $this;
-		}
-		else
-		{
-			$content = new Message($this->friendlyMessage)->setTitle('Error');
-		}
-		$responder->display(
-			$this->wrapper->wrap($content), $this->responseCode);
-    }
-
+	/** @inheritDoc */
     public function getTitle(): string
     {
         return "ERROR";
     }
 
-    public function getContent(): self
+	/**
+	 * Used by wrapper
+	 *
+	 * @return string
+	 */
+    public function getContent(): string
     {
-        return $this;
+		if(isset($this->environment) && $this->environment->inDevelopment())
+		{
+			$message = $this->message;
+		}
+		else
+		{
+			$message = $this->friendlyMessage;
+		}
+		return $message;
     }
 
-	public function encode(Encoder $encoder): string
+	public function deliver(Responder $responder): void
 	{
-		return $encoder->encodeViewable(
-			new View('message')->add('message', $this->message));
+		$responder->present($this->wrapper->wrap($this), $this->code);
 	}
 }

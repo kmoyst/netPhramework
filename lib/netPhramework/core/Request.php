@@ -3,14 +3,14 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\Path;
+use netPhramework\dispatching\MutablePath;
 
 readonly class Request
 {
 	public function __construct(
-		private Path $path,
-		private Variables $parameters,
-		private Socket $socket) {}
+		private MutablePath $path,
+		private Variables   $parameters,
+		private Socket      $socket) {}
 
 	/**
 	 * @param RequestContext $context

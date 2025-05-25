@@ -7,7 +7,7 @@ use netPhramework\db\core\RecordProcess;
 use netPhramework\db\processes\Delete;
 use netPhramework\db\processes\Insert;
 use netPhramework\db\processes\Update;
-use netPhramework\dispatching\dispatchers\Dispatcher;
+use netPhramework\dispatching\redirectors\Redirector;
 
 class ActiveAssetAssembler extends AssetAssembler
 {
@@ -38,8 +38,8 @@ class ActiveAssetAssembler extends AssetAssembler
 
 	public function insert(
 		?RecordProcess $saveProcess = null,
-		?Dispatcher $onSuccess = null,
-		?string $processName = 'insert'): self
+		?Redirector    $onSuccess = null,
+		?string        $processName = 'insert'): self
 	{
 		$this->process(new Insert($saveProcess, $onSuccess, $processName));
 		return $this;
@@ -47,8 +47,8 @@ class ActiveAssetAssembler extends AssetAssembler
 
 	public function update(
 		?RecordProcess $saveProcess = null,
-		?Dispatcher $onSuccess = null,
-		?string $processName = 'update'): self
+		?Redirector    $onSuccess = null,
+		?string        $processName = 'update'): self
 	{
 		$this->process(new Update($saveProcess, $onSuccess, $processName));
 		return $this;
@@ -56,7 +56,7 @@ class ActiveAssetAssembler extends AssetAssembler
 
 	public function insertAndUpdate(
 		?RecordProcess $saveProcess = null,
-		?Dispatcher $onSuccess = null): self
+		?Redirector    $onSuccess = null): self
 	{
 		$this->insert($saveProcess, $onSuccess);
 		$this->update($saveProcess, $onSuccess);
@@ -64,8 +64,8 @@ class ActiveAssetAssembler extends AssetAssembler
 	}
 
 	public function delete(
-		?Dispatcher $onSuccess = null,
-		string $processName = 'delete'
+		?Redirector $onSuccess = null,
+		string      $processName = 'delete'
 	): self
 	{
 		$this->process(new Delete($onSuccess, $processName));

@@ -8,15 +8,15 @@ use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\dispatchers\DispatchToParent;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\redirectors\RedirectToParent;
 
 class Update extends RecordProcess
 {
 	public function __construct(
 		private readonly ?RecordProcess $saveProcess = null,
-		private readonly ?Dispatcher $dispatcher = null,
-		?string $name = null)
+		private readonly ?Redirector    $dispatcher = null,
+		?string                         $name = null)
 	{
 		parent::__construct($name);
 	}
@@ -32,7 +32,7 @@ class Update extends RecordProcess
 	public function handleExchange(Exchange $exchange, Record $record): void
 	{
         ($this->saveProcess ??
-			new Save($this->dispatcher ?? new DispatchToParent('')))
+			new Save($this->dispatcher ?? new RedirectToParent('')))
 			    ->handleExchange($exchange, $record);
     }
 }

@@ -9,15 +9,15 @@ use netPhramework\db\core\RecordSet;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\dispatching\dispatchers\Dispatcher;
-use netPhramework\dispatching\dispatchers\DispatchToParent;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\redirectors\RedirectToParent;
 
 class Insert extends RecordSetProcess
 {
 	public function __construct(
 		private readonly ?RecordProcess $saveProcess = null,
-        private readonly ?Dispatcher $dispatcher = null,
-		?string $name = null)
+        private readonly ?Redirector    $dispatcher = null,
+		?string                         $name = null)
 	{
 		parent::__construct($name);
 	}
@@ -34,7 +34,7 @@ class Insert extends RecordSetProcess
         Exchange $exchange, RecordSet $recordSet): void
 	{
         ($this->saveProcess ??
-            new Save($this->dispatcher ?? new DispatchToParent('')))
+            new Save($this->dispatcher ?? new RedirectToParent('')))
 			    ->handleExchange($exchange, $recordSet->newRecord());
 	}
 }

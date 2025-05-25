@@ -6,7 +6,7 @@ use netPhramework\common\Variables;
 use netPhramework\core\Exception;
 
 /**
- * Adapts string Uri to Path and Variables
+ * Adapts string Uri to MutablePath and Variables
  */
 readonly class UriAdapter
 {
@@ -25,12 +25,12 @@ readonly class UriAdapter
 	}
 
 	/**
-	 * @return Path
+	 * @return MutablePath
 	 * @throws Exception
 	 */
-	public function getPath():Path
+	public function getPath():MutablePath
     {
-        $path = new Path();
+        $path = new MutablePath();
         $pattern = '|^/([^?]*)|';
         if(!preg_match($pattern, $this->uri, $matches))
 			throw new Exception("Invalid Uri: $this->uri");
@@ -38,7 +38,7 @@ readonly class UriAdapter
         return $path;
     }
 
-    private function traverseArray(Path $path, array $names):void
+    private function traverseArray(MutablePath $path, array $names):void
     {
         $path->setName($names[0]);
         if(sizeof($names) > 1)

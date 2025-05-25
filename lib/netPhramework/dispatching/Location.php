@@ -2,36 +2,32 @@
 
 namespace netPhramework\dispatching;
 
-use netPhramework\common\Variables;
+use netPhramework\rendering\Encodable;
+use netPhramework\rendering\Encoder;
 
 /**
- * A fully readable and modifiable Location
+ * The most basic Location interface. Provides Path and iterable
+ * Parameters.
  *
  */
-class Location extends ReadableLocation
+abstract class Location implements Encodable
 {
-    private Path $path;
-    private Variables $parameters;
-
-    /**
-     * @param Path|null $path
-     * @param Variables|null $parameters
-     */
-    public function __construct(?Path $path = null,
-                                ?Variables $parameters = null)
-    {
-        $this->path = $path ?? new Path();
-        $this->parameters = $parameters ?? new Variables();
-    }
-
-
-    public function getPath(): Path
+	public function encode(Encoder $encoder):string
 	{
-		return $this->path;
+		return $encoder->encodeLocation($this);
 	}
 
-	public function getParameters(): Variables
-	{
-		return $this->parameters;
-	}
+	/**
+	 * Returns a readable MutablePath.
+	 *
+	 * @return Path
+	 */
+    abstract public function getPath():Path;
+
+	/**
+	 * Returns parameters for iteration.
+	 *
+	 * @return iterable
+	 */
+    abstract public function getParameters():iterable;
 }

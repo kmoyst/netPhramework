@@ -3,8 +3,8 @@
 namespace netPhramework\rendering;
 
 use netPhramework\common\FileFinder;
-use netPhramework\dispatching\interfaces\ReadablePath;
-use netPhramework\dispatching\ReadableLocation;
+use netPhramework\dispatching\Location;
+use netPhramework\dispatching\Path;
 use netPhramework\dispatching\UriFromLocation;
 use netPhramework\dispatching\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
@@ -31,19 +31,19 @@ readonly class Encoder
 	}
 
 	/**
-	 * @param ReadableLocation $location
+	 * @param Location $location
 	 * @return string
 	 */
-	public function encodeLocation(ReadableLocation $location):string
+	public function encodeLocation(Location $location):string
 	{
 		return new UriFromLocation($location);
 	}
 
 	/**
-	 * @param ReadablePath $path
+	 * @param Path $path
 	 * @return string
 	 */
-	public function encodePath(ReadablePath $path):string
+	public function encodePath(Path $path):string
 	{
 		return new UriFromPath($path);
 	}

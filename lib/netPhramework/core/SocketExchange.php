@@ -3,13 +3,13 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\dispatchers\Dispatcher;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\MutablePath;
 use netPhramework\dispatching\Location;
-use netPhramework\dispatching\Path;
-use netPhramework\dispatching\ReadableLocation;
 use netPhramework\dispatching\Redirection;
 use netPhramework\presentation\FormInput\HiddenInput;
-use netPhramework\rendering\Display;
+use netPhramework\rendering\Presentation;
 use netPhramework\rendering\View;
 use netPhramework\rendering\ViewConfiguration;
 use netPhramework\rendering\Wrapper;
@@ -17,13 +17,13 @@ use netPhramework\rendering\Wrapper;
 class SocketExchange implements Exchange
 {
     /**
-     * The request Path. SocketExchange protects immutability.
+     * The request Path. Protected from mutability through cloning.
      *
-     * @var Path
+     * @var MutablePath
      */
-	private Path $path;
+	private MutablePath $path;
     /**
-     * The request Parameters. SocketExchange protects immutability.
+     * The request Parameters. Protected from mutability through cloning.
      *
      * @var Variables
      */
@@ -34,10 +34,10 @@ class SocketExchange implements Exchange
 	private Response $response;
 
 	/** @inheritDoc */
-	public function redirect(Dispatcher $fallback):Variables
+	public function redirect(Redirector $fallback):Variables
 	{
-		$redirection 	= new Redirection(clone $this->path);
-		$callback		= $this->callbackManager->callbackDispatcher();
+		$redirection = new Redirection(clone $this->path);
+		$callback = $this->callbackManager->callbackDispatcher();
 		($callback ?? $fallback)->dispatch($redirection);
 		$this->response = $redirection;
 		return $redirection->getParameters();
@@ -52,13 +52,15 @@ class SocketExchange implements Exchange
     /** @inheritDoc */
 	public function display(View $view, ResponseCode $code):ViewConfiguration
 	{
-		$wrappedView 	 = $this->wrapper->wrap($view);
-        $this->response  = new Display($wrappedView, $code);
+		$this->response = new Presentation()
+			->setContent($this->wrapper->wrap($view))
+			->setCode($code)
+		;
 		return $view;
 	}
 
 	/** @inheritDoc */
-	public function error(Exception $exception, Dispatcher $fallback): void
+	public function error(Exception $exception, Redirector $fallback): void
 	{
         try {
 			$this->redirect($fallback);
@@ -66,12 +68,12 @@ class SocketExchange implements Exchange
                 rtrim($exception->getMessage(),": "));
             $this->session->addErrorCode($exception->getResponseCode());
         } catch (Exception) {
-            $this->response = $exception->setWrapper($this->wrapper);
+			$this->response = $exception->setWrapper($this->wrapper);
         }
 	}
 
 	/** @inheritDoc */
-	public function callbackLink(bool $chain = false):string|ReadableLocation
+	public function callbackLink(bool $chain = false):string|Location
 	{
 		return $this->callbackManager->callbackLink($chain);
 	}
@@ -85,7 +87,7 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function getPath(): Path
+	public function getPath(): MutablePath
 	{
 		return clone $this->path;
 	}
@@ -97,9 +99,9 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function getLocation(): Location
+	public function getLocation(): MutableLocation
 	{
-		return new Location(clone $this->path, clone $this->parameters);
+		return new MutableLocation(clone $this->path, clone $this->parameters);
 	}
 
 	/** @inheritDoc */
@@ -121,10 +123,10 @@ class SocketExchange implements Exchange
 	/**
 	 * Sets the Request Path (usually by Socket)
 	 *
-	 * @param Path $path
+	 * @param MutablePath $path
 	 * @return $this
 	 */
-	public function setPath(Path $path): SocketExchange
+	public function setPath(MutablePath $path): SocketExchange
 	{
 		$this->path = $path;
 		return $this;

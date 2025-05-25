@@ -3,10 +3,10 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\dispatchers\Dispatcher;
+use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\MutablePath;
 use netPhramework\dispatching\Location;
-use netPhramework\dispatching\Path;
-use netPhramework\dispatching\ReadableLocation;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;
 use netPhramework\rendering\ViewConfiguration;
@@ -39,54 +39,54 @@ interface Exchange
 	/**
 	 * Configures the Exchange for a Redirection Response
 	 *
-	 * @param Dispatcher $fallback
-	 * @return Variables - mutable parameters for destination ReadableLocation
+	 * @param Redirector $fallback
+	 * @return Variables - mutable parameters for destination Location
 	 * @throws Exception
 	 */
-	public function redirect(Dispatcher $fallback):Variables;
+	public function redirect(Redirector $fallback):Variables;
 
 	/**
      * Dispatches with an error code and message stored in Session for display
      *
 	 * @param Exception $exception
-     * @param Dispatcher $fallback
+     * @param Redirector $fallback
 	 * @return void
 	 */
-	public function error(Exception $exception, Dispatcher $fallback):void;
+	public function error(Exception $exception, Redirector $fallback):void;
 
 	/**
-	 * Returns a mutable copy of the Path of the originally requested
-	 * ReadableLocation
+	 * Returns a mutable copy of the MutablePath of the originally requested
+	 * Location
 	 *
-	 * @return Path
+	 * @return MutablePath
 	 */
-	public function getPath(): Path;
+	public function getPath(): MutablePath;
 
 	/**
 	 * Returns a mutable copy of the parameters of the originally requested
-	 * ReadableLocation
+	 * Location
 	 *
 	 * @return Variables
 	 */
 	public function getParameters(): Variables;
 
 	/**
-	 * Returns a mutable copy of the originally requested ReadableLocation
+	 * Returns a mutable copy of the originally requested Location
 	 *
-	 * @return Location
+	 * @return MutableLocation
 	 */
-	public function getLocation(): Location;
+	public function getLocation(): MutableLocation;
 
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
-     * If $chain is false (default) Returns any callback ReadableLocation found
-	 * in the Exchange Parameters OR the current ReadableLocation if none is
+     * If $chain is false (default) Returns any callback Location found
+	 * in the Exchange Parameters OR the current Location if none is
 	 * found.
      *
-     * If $chain is true, it will insert the current ReadableLocation as the
+     * If $chain is true, it will insert the current Location as the
 	 * first in
-     * the callback chain and append any callback ReadableLocation found in
+     * the callback chain and append any callback Location found in
 	 * the Exchange
      * Parameters.
 	 *
@@ -95,17 +95,17 @@ interface Exchange
 	 * location
      * first.
      *
-	 * @return string|ReadableLocation
+	 * @return string|Location
 	 */
-	public function callbackLink(bool $chain = false):string|ReadableLocation;
+	public function callbackLink(bool $chain = false):string|Location;
 
 	/**
 	 * A convenience method to generate a Hidden Form Input with callback link
 	 *
-	 * @param bool $chain - False (default) only uses current ReadableLocation
+	 * @param bool $chain - False (default) only uses current Location
 	 * when
 	 * existing callback is not present. If no callback is present, it WILL
-	 * return the current ReadableLocation. True interjects with current
+	 * return the current Location. True interjects with current
 	 * location
 	 * even when callback is present. It propagates the existing callback to
 	 * allow that information to be preserved upon return to the current

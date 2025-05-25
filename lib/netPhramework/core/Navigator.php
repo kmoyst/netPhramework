@@ -8,7 +8,7 @@ use netPhramework\exceptions\ComponentNotFound;
 class Navigator
 {
 	private Component $root;
-	private Path $guide;
+	private Path $path;
 
 	public function setRoot(Component $root): Navigator
 	{
@@ -16,9 +16,9 @@ class Navigator
 		return $this;
 	}
 
-	public function setGuide(Path $guide): Navigator
+	public function setPath(Path $path): Navigator
 	{
-		$this->guide = $guide;
+		$this->path = $path;
 		return $this;
 	}
 
@@ -29,20 +29,20 @@ class Navigator
 	 */
 	public function navigate():Component
 	{
-        return $this->traverse($this->root, $this->guide);
+        return $this->traverse($this->root, $this->path);
 	}
 
 	/**
 	 * @param Component $component
-	 * @param Path|null $guide
+	 * @param Path|null $path
 	 * @return Component
 	 * @throws ComponentNotFound
 	 * @throws Exception
 	 */
-    private function traverse(Component $component, ?Path $guide):Component
+    private function traverse(Component $component, ?Path $path):Component
     {
-        if($guide === null) return $component;
-        $child = $component->getChild($guide->getName());
-        return $this->traverse($child, $guide->getNext());
+        if($path === null) return $component;
+        $child = $component->getChild($path->getName());
+        return $this->traverse($child, $path->getNext());
     }
 }
