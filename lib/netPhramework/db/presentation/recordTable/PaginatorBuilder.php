@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\common\Variables;
-use netPhramework\rendering\ReadonlyView;
+use netPhramework\rendering\ImmutableView;
 
 class PaginatorBuilder
 {
@@ -47,7 +47,7 @@ class PaginatorBuilder
 		return $this;
 	}
 
-	public function getPaginator():ReadonlyView
+	public function getPaginator():ImmutableView
 	{
 		$variables = new Variables();
 		$variables
@@ -59,6 +59,6 @@ class PaginatorBuilder
 			->add('previousForm', $this->previousForm)
 			->add('nextForm', $this->nextForm)
 			;
-		return new ReadonlyView('paginator', $variables);
+		return new ImmutableView('paginator', $variables);
 	}
 }

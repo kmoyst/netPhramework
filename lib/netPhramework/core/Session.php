@@ -8,7 +8,7 @@ use netPhramework\authentication\SessionUserProvider;
 use netPhramework\authentication\User;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\Encodable;
-use netPhramework\rendering\ReadonlyView;
+use netPhramework\rendering\ImmutableView;
 
 class Session
 {
@@ -92,7 +92,7 @@ class Session
     {
         if($errorMessage = $this->getErrorMessageAndClear())
         {
-            return new ReadonlyView('error-message',['message'=>$errorMessage]);
+            return new ImmutableView('error-message',['message'=>$errorMessage]);
         }
         else return null;
     }

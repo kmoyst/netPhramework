@@ -6,7 +6,7 @@ use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\rendering\Encodable;
-use netPhramework\rendering\ReadonlyView;
+use netPhramework\rendering\ImmutableView;
 
 class EmailColumn extends TextColumn
 {
@@ -25,7 +25,7 @@ class EmailColumn extends TextColumn
      */
 	public function getEncodableValue(Record $record): Encodable|string
 	{
-		return new ReadonlyView('email-address',
+		return new ImmutableView('email-address',
 			['emailAddress' => $record->getValue($this->name)]);
 	}
 }
