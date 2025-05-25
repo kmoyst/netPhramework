@@ -7,8 +7,9 @@ use netPhramework\rendering\Viewable;
 
 class PaginatorDirector
 {
-	private PaginatorFormDirector $director;
 	private FilterFormInputFactory $factory;
+	private FilterFormBuilder $builder;
+	private PaginatorFormDirector $director;
 	private PaginatorFormContext $context;
 	private PaginatorCalculator $calculator;
 	private Viewable $prevForm;
@@ -16,6 +17,7 @@ class PaginatorDirector
 
 	public function __construct()
 	{
+		$this->builder		= new FilterFormBuilder();
 		$this->director		= new PaginatorFormDirector();
 		$this->context 		= new PaginatorFormContext();
 		$this->calculator  	= new PaginatorCalculator();
@@ -30,27 +32,27 @@ class PaginatorDirector
 			->setCurrentOffset($baseContext->getOffset())
 			->setTotalCount($baseContext->getCount())
 		;
+		$this->director->setBuilder(
+			$this->builder
+				->setContext($this->context)
+				->setFactory($this->factory)
+		);
 		return $this;
 	}
 
 	public function buildPreviousForm():self
 	{
-		$this->director->setBuilder(new FilterFormBuilder()
-			->setFactory($this->factory)
-			->setContext($this->context->setOffset($this->calculator->previousOffset())))
-		;
+		$this->context->setOffset($this->calculator->previousOffset());
 		$this->prevForm = $this->director->createForm()
-				->add('buttonText', 'Previous')
-				->add('formName', 'previousPage')
+			->add('buttonText', 'Previous')
+			->add('formName', 'previousPage')
 		;
 		return $this;
 	}
 
 	public function buildNextForm():self
 	{
-		$this->director->setBuilder(new FilterFormBuilder()
-			->setFactory($this->factory)
-			->setContext($this->context->setOffset($this->calculator->nextOffset())));
+		$this->context->setOffset($this->calculator->nextOffset());
 		$this->nextForm = $this->director->createForm()
 			->add('buttonText', 'Next')
 			->add('formName', 'nextPage')

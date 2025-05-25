@@ -1,4 +1,11 @@
 <form name='<?=$formName?>' method='get' class="inlineButton">
-    <?= implode('', $inputs) ?>
-	<input name="action" value="<?=$buttonText?>" type="submit"/>
+	<?foreach($conditions as $condition) {?>
+		<?=$condition?>
+	<?}?>
+	<?foreach($sortArray as $vector) {?>
+		<?=$vector?>
+	<?}?>
+    <?=$limitInput?>
+    <?=$offsetInput?>
+    <input name="action" value="<?=$buttonText?>" type="submit"/>
 </form>

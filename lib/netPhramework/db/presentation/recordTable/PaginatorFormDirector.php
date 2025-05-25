@@ -22,13 +22,11 @@ class PaginatorFormDirector
 			->buildLimitInput()
 			->buildOffsetInput()
 		;
-		$inputViews = array_merge(
-			$this->builder->getConditionViews(),
-			$this->builder->getSortViews());
-		$inputViews[] = $this->builder->getLimitInput();
-		$inputViews[] = $this->builder->getOffsetInput();
 		return new View('paginator-form')
-			->add('inputs', $inputViews)
+			->add('conditions', $this->builder->getConditionViews())
+			->add('sortArray', $this->builder->getSortViews())
+			->add('limitInput', $this->builder->getLimitInput())
+			->add('offsetInput', $this->builder->getOffsetInput())
 		;
 	}
 }
