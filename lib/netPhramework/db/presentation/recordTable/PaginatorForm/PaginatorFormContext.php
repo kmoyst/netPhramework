@@ -8,14 +8,14 @@ class PaginatorFormContext implements FilterFormContext
 {
 	private FilterFormContext $baseContext;
 
-	public function getSortArray(): ?array
+	public function getSortArray():array
 	{
-		// TODO: Implement getSortArray() method.
+		return $this->baseContext->getSortArray();
 	}
 
 	public function getLimit(): ?int
 	{
-		// TODO: Implement getLimit() method.
+		return $this->baseContext->getLimit();
 	}
 
 	public function getOffset(): int
@@ -25,8 +25,6 @@ class PaginatorFormContext implements FilterFormContext
 
 	public function getCount(): int
 	{
-		// TODO: Implement getCount() method.
+		return $this->baseContext->getCount();
 	}
-
-
 }
