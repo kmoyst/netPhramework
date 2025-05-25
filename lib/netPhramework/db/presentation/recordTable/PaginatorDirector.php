@@ -67,10 +67,10 @@ class PaginatorDirector
 			->setOffset($this->calculator->previousOffset());
 		$this->director
 			->setBuilder($builder)
-			->createForm()
+			->buildFilterForm()
 		;
 		$this->prevForm = $builder
-			->buildFilterForm('paginator-form')
+			->getFilterForm('paginator-form')
 			->add('buttonText', 'Previous')
 			->add('formName', 'previousPage')
 		;
@@ -84,17 +84,17 @@ class PaginatorDirector
 			->setOffset($this->calculator->nextOffset());
 		$this->director
 			->setBuilder($builder)
-			->createForm()
+			->buildFilterForm()
 		;
 		$this->nextForm = $builder
-			->buildFilterForm('paginator-form')
+			->getFilterForm('paginator-form')
 			->add('buttonText', 'Next')
 			->add('formName', 'nextPage')
 		;
 		return $this;
 	}
 
-	public function completePaginator():Viewable
+	public function getView():View
 	{
 		return new View('paginator')
 			->add('firstRowNumber', $this->calculator->firstRowNumber())

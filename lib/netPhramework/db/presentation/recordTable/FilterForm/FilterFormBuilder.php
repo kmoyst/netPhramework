@@ -44,7 +44,7 @@ class FilterFormBuilder
 		return $this;
 	}
 
-	public function buildFilterForm(string $templateName):View
+	public function getFilterForm(string $templateName):View
 	{
 		return new View($templateName)
 			->add('sortFieldInputs', $this->sortFieldInputs)

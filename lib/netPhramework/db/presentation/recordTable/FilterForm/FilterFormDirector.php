@@ -28,23 +28,14 @@ class FilterFormDirector
 		return $this;
 	}
 
-	public function addLimitInput():self
+	public function buildFilterForm():void
 	{
-		$input = $this->factory->makeLimitInput();
-		$input->setValue($this->context->getLimit());
-		$this->builder->addLimitInput($input);
-		return $this;
+		$this->addSortInputs();
+		$this->addLimitInput();
+		$this->addOffsetInput();
 	}
 
-	public function addOffsetInput():self
-	{
-		$input = $this->factory->makeOffsetInput();
-		$input->setValue($this->context->getOffset());
-		$this->builder->addOffsetInput($input);
-		return $this;
-	}
-
-	public function addSortInputs():self
+	private function addSortInputs():void
 	{
 		$i = 0;
 		foreach($this->context->getSortArray() as $vector)
@@ -66,15 +57,19 @@ class FilterFormDirector
 		$this->builder->addSortDirectionInput($this->factory
 			->makeSortDirectionInput($i)
 		);
-		return $this;
 	}
 
-	public function createForm():void
+	private function addLimitInput():void
 	{
-		$this
-			->addSortInputs()
-			->addLimitInput()
-			->addOffsetInput()
-			;
+		$input = $this->factory->makeLimitInput();
+		$input->setValue($this->context->getLimit());
+		$this->builder->addLimitInput($input);
+	}
+
+	private function addOffsetInput():void
+	{
+		$input = $this->factory->makeOffsetInput();
+		$input->setValue($this->context->getOffset());
+		$this->builder->addOffsetInput($input);
 	}
 }

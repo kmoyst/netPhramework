@@ -73,6 +73,7 @@ class Browse extends RecordSetProcess
 			->setDirector($filterFormDirector)
 			->setFactory($filterSelectFormInputFactory)
 			->buildForm($filterContext)
+			->getView()
 			;
 		$paginatorView = $filterContext->getLimit() === null ? '' :
 			new PaginatorDirector()
@@ -84,7 +85,7 @@ class Browse extends RecordSetProcess
 				->prepareDirector($filterContext)
 				->buildNextForm()
 				->buildPreviousForm()
-				->completePaginator()
+				->getView()
 		;
 		$callbackInput = $exchange->callbackFormInput()
 		;
@@ -103,9 +104,9 @@ class Browse extends RecordSetProcess
 		$exchange->display(new View('browse'), $responseCode)
 			->setTitle('Browse Records')
 			->add('filterSelectView', 	$filterSelectView)
+			->add('paginator', 			$paginatorView)
 			->add('addButtonForm', 		$addButtonForm)
 			->add('recordTable', 		$recordTable)
-			->add('paginator', 			$paginatorView)
 			->add('errorView',          $errorView)
 		;
 	}
