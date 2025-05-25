@@ -54,7 +54,7 @@ class RowSetBuilder
 				$field = $vector[FilterKey::SORT_FIELD->value];
 				$direction = $vector[FilterKey::SORT_DIRECTION->value];
 				if(empty($field)) break;
-				$parsedDirection = SortDirection::tryFrom($direction)->value;
+				$parsedDirection = SortDirection::tryFrom($direction);
 				$column = $this->columnSet->getColumn($field);
 				$values = [];
 				foreach($this->recordSet as $record)
@@ -62,7 +62,8 @@ class RowSetBuilder
 					$values[] = $column->getSortableValue($record);
 				}
 				$args[] = $values;
-				$args[] = $parsedDirection === 2 ? SORT_DESC : SORT_ASC;
+				$args[] = $parsedDirection ===
+					SortDirection::DESCENDING ? SORT_DESC : SORT_ASC;
 				$args[] = SORT_STRING | SORT_NATURAL | SORT_FLAG_CASE;
 			}
 			$args[] = $this->recordSet->getIds();
