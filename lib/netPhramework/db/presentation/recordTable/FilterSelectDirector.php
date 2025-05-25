@@ -6,6 +6,7 @@ use netPhramework\db\presentation\recordTable\FilterForm\FilterFormBuilder;
 use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
 use netPhramework\db\presentation\recordTable\FilterForm\FilterFormDirector;
 use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputFactory;
+use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 
 class FilterSelectDirector
@@ -38,13 +39,8 @@ class FilterSelectDirector
 			->setBuilder($this->builder)
 			->setFactory($this->factory)
 			->setContext($context)
-			->addSortInputs(
-				FilterKey::SORT_ARRAY,
-				FilterKey::SORT_FIELD,
-				FilterKey::SORT_DIRECTION)
-			->addLimitInput(FilterKey::LIMIT)
-			->addOffsetInput(FilterKey::OFFSET)
+			->createForm()
 			;
-		return $this->builder->getFilterForm('filter-select');
+		return $this->builder->buildFilterForm('filter-select');
 	}
 }

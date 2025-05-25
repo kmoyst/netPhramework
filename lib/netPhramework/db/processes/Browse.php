@@ -17,6 +17,10 @@ use netPhramework\db\presentation\recordTable\FilterForm\FilterFormBuilder;
 use netPhramework\db\presentation\recordTable\FilterForm\FilterFormDirector;
 use netPhramework\db\presentation\recordTable\FilterSelectForm\FilterSelectFormInputFactory;
 use netPhramework\db\presentation\recordTable\FilterSelectDirector;
+use netPhramework\db\presentation\recordTable\PaginatorCalculator;
+use netPhramework\db\presentation\recordTable\PaginatorDirector;
+use netPhramework\db\presentation\recordTable\PaginatorForm\PaginatorFormContext;
+use netPhramework\db\presentation\recordTable\PaginatorForm\PaginatorFormInputFactory;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
 use netPhramework\rendering\View;
 
@@ -70,18 +74,18 @@ class Browse extends RecordSetProcess
 			->setFactory($filterSelectFormInputFactory)
 			->buildForm($filterContext)
 			;
-			/**
 		$paginatorView = $filterContext->getLimit() === null ? '' :
-			new PaginatorBuilder()
-				->setBuilder(new PaginatorFormBuilder())
+			new PaginatorDirector()
 				->setDirector($filterFormDirector)
-				->setBaseContext($filterContext)
-				->initCalculator()
+				->setContext(new PaginatorFormContext())
+				->setCalculator(new PaginatorCalculator())
+				->setFactory(new PaginatorFormInputFactory())
+				->configureCalculator($filterContext)
+				->prepareDirector($filterContext)
 				->buildNextForm()
 				->buildPreviousForm()
-				->getPaginatorView()
+				->completePaginator()
 		;
-		 * **/
 		$callbackInput = $exchange->callbackFormInput()
 		;
 		$recordTable = new View('record-table');
@@ -101,7 +105,7 @@ class Browse extends RecordSetProcess
 			->add('filterSelectView', 	$filterSelectView)
 			->add('addButtonForm', 		$addButtonForm)
 			->add('recordTable', 		$recordTable)
-			->add('paginator', 			'')
+			->add('paginator', 			$paginatorView)
 			->add('errorView',          $errorView)
 		;
 	}

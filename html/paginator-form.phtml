@@ -1,7 +1,11 @@
 <form name='<?=$formName?>' method='get' class="inlineButton">
 	<?=$limitInput?>
-	<?=$sortFieldInput?>
-	<?=$sortDirectionInput?>
+	<?foreach($sortFieldInputs as $input) {?>
+        <?=$input?>
+	<?}?>
+	<?foreach($sortDirectionInputs as $input) {?>
+		<?=$input?>
+	<?}?>
 	<?=$offsetInput?>
 	<input name="action" value="<?=$buttonText?>" type="submit"/>
 </form>

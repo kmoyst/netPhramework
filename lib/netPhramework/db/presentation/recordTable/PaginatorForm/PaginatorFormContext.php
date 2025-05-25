@@ -7,6 +7,19 @@ use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
 class PaginatorFormContext implements FilterFormContext
 {
 	private FilterFormContext $baseContext;
+	private int $offset;
+
+	public function setBaseContext(FilterFormContext $baseContext): self
+	{
+		$this->baseContext = $baseContext;
+		return $this;
+	}
+
+	public function setOffset(int $offset): self
+	{
+		$this->offset = $offset;
+		return $this;
+	}
 
 	public function getSortArray():array
 	{
@@ -20,7 +33,7 @@ class PaginatorFormContext implements FilterFormContext
 
 	public function getOffset(): int
 	{
-		// TODO: Implement getOffset() method.
+		return $this->offset;
 	}
 
 	public function getCount(): int

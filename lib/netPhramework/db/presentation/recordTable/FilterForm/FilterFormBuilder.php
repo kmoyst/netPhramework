@@ -6,6 +6,7 @@ use netPhramework\common\Variables;
 use netPhramework\presentation\FormInput\Input;
 use netPhramework\presentation\FormInput\InputSet;
 use netPhramework\rendering\ImmutableView;
+use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 
 class FilterFormBuilder
@@ -46,14 +47,13 @@ class FilterFormBuilder
 		return $this;
 	}
 
-	public function getFilterForm(string $template):Viewable
+	public function buildFilterForm(string $templateName):View
 	{
-		$vars = new Variables()
+		return new View($templateName)
 			->add('sortFieldInputs', $this->sortFieldInputs)
 			->add('sortDirectionInputs', $this->sortDirectionInputs)
 			->add('limitInput', $this->limitInput)
 			->add('offsetInput', $this->offsetInput)
 		;
-		return new ImmutableView($template, $vars);
 	}
 }

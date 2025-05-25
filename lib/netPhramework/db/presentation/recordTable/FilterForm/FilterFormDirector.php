@@ -69,4 +69,16 @@ class FilterFormDirector
 		);
 		return $this;
 	}
+
+	public function createForm():void
+	{
+		$this
+			->addSortInputs(
+				FilterKey::SORT_ARRAY,
+				FilterKey::SORT_FIELD,
+				FilterKey::SORT_DIRECTION)
+			->addLimitInput(FilterKey::LIMIT)
+			->addOffsetInput(FilterKey::OFFSET)
+			;
+	}
 }

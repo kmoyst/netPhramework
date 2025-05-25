@@ -2,18 +2,35 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-readonly class PaginatorCalculator
+class PaginatorCalculator
 {
-	public function __construct(
-		private int $limit,
-		private int $offset,
-		private int $rowCount) {}
+	private int $limit;
+	private int $currentOffset;
+	private int $totalCount;
+
+	public function setLimit(int $limit): self
+	{
+		$this->limit = $limit;
+		return $this;
+	}
+
+	public function setCurrentOffset(int $currentOffset): self
+	{
+		$this->currentOffset = $currentOffset;
+		return $this;
+	}
+
+	public function setTotalCount(int $totalCount): self
+	{
+		$this->totalCount = $totalCount;
+		return $this;
+	}
 
 	public function previousOffset():int
 	{
-		$offset 	= $this->offset;
+		$offset 	= $this->currentOffset;
 		$limit 		= $this->limit;
-		$count 		= $this->rowCount;
+		$count 		= $this->totalCount;
 		$previous 	= $offset - $limit;
 		return
 			$previous >= 0 ? $previous :
@@ -23,27 +40,27 @@ readonly class PaginatorCalculator
 
 	public function nextOffset():int
 	{
-		$next = $this->offset + $this->limit;
-		return $next < $this->rowCount ? $next : 0;
+		$next = $this->currentOffset + $this->limit;
+		return $next < $this->totalCount ? $next : 0;
 	}
 
 	public function firstRowNumber():int
 	{
-		return $this->offset + 1;
+		return $this->currentOffset + 1;
 	}
 
 	public function lastRowNumber():int
 	{
-		return min($this->offset + $this->limit, $this->rowCount);
+		return min($this->currentOffset + $this->limit, $this->totalCount);
 	}
 
 	public function pageCount():int
 	{
-		return ceil($this->rowCount / $this->limit);
+		return ceil($this->totalCount / $this->limit);
 	}
 
 	public function pageNumber():int
 	{
-		return ceil($this->offset / $this->limit) + 1;
+		return ceil($this->currentOffset / $this->limit) + 1;
 	}
 }
