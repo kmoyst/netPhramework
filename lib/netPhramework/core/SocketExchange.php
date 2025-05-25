@@ -17,13 +17,13 @@ use netPhramework\rendering\Wrapper;
 class SocketExchange implements Exchange
 {
     /**
-     * The request MutablePath. SocketExchange protects immutability.
+     * The request Path. Protected from mutability through cloning.
      *
      * @var MutablePath
      */
 	private MutablePath $path;
     /**
-     * The request Parameters. SocketExchange protects immutability.
+     * The request Parameters. Protected from mutability through cloning.
      *
      * @var Variables
      */
@@ -121,7 +121,7 @@ class SocketExchange implements Exchange
 	}
 
 	/**
-	 * Sets the Request MutablePath (usually by Socket)
+	 * Sets the Request Path (usually by Socket)
 	 *
 	 * @param MutablePath $path
 	 * @return $this
