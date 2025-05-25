@@ -11,7 +11,7 @@ use netPhramework\dispatching\Redirection;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\Presentation;
 use netPhramework\rendering\View;
-use netPhramework\rendering\ViewConfiguration;
+use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Wrapper;
 
 class SocketExchange implements Exchange
@@ -44,13 +44,13 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function ok(View $view):ViewConfiguration
+	public function ok(View $view):ConfigurableView
 	{
 		return $this->display($view, ResponseCode::OK);
 	}
 
     /** @inheritDoc */
-	public function display(View $view, ResponseCode $code):ViewConfiguration
+	public function display(View $view, ResponseCode $code):ConfigurableView
 	{
 		$this->response = new Presentation()
 			->setContent($this->wrapper->wrap($view))

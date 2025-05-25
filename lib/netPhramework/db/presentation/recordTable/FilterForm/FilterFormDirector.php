@@ -28,44 +28,43 @@ class FilterFormDirector
 		return $this;
 	}
 
-	public function addLimitInput(FilterKey $limitKey):self
+	public function addLimitInput():self
 	{
-		$input = $this->factory->makeLimitInput($limitKey);
+		$input = $this->factory->makeLimitInput();
 		$input->setValue($this->context->getLimit());
 		$this->builder->addLimitInput($input);
 		return $this;
 	}
 
-	public function addOffsetInput(FilterKey $offsetKey):self
+	public function addOffsetInput():self
 	{
-		$input = $this->factory->makeOffsetInput($offsetKey);
+		$input = $this->factory->makeOffsetInput();
 		$input->setValue($this->context->getOffset());
 		$this->builder->addOffsetInput($input);
 		return $this;
 	}
 
-	public function addSortInputs(FilterKey $parentKey,
-		FilterKey $fieldKey, FilterKey $directionKey):self
+	public function addSortInputs():self
 	{
 		$i = 0;
 		foreach($this->context->getSortArray() as $vector)
 		{
-			if($vector[$fieldKey->value] === '') break;
+			if($vector[FilterKey::SORT_FIELD->value] === '') break;
 			$this->builder->addSortFieldInput($this->factory
-				->makeSortFieldInput($fieldKey, $parentKey, $i)
-				->setValue($vector[$fieldKey->value])
+				->makeSortFieldInput($i)
+				->setValue($vector[FilterKey::SORT_FIELD->value])
 			);
 			$this->builder->addSortDirectionInput($this->factory
-				->makeSortDirectionInput($directionKey, $parentKey, $i)
-				->setValue($vector[$directionKey->value])
+				->makeSortDirectionInput($i)
+				->setValue($vector[FilterKey::SORT_DIRECTION->value])
 			);
 			$i++;
 		}
 		$this->builder->addSortFieldInput($this->factory
-			->makeSortFieldInput($fieldKey, $parentKey, $i)
+			->makeSortFieldInput($i)
 		);
 		$this->builder->addSortDirectionInput($this->factory
-			->makeSortDirectionInput($directionKey, $parentKey, $i)
+			->makeSortDirectionInput($i)
 		);
 		return $this;
 	}
@@ -73,12 +72,9 @@ class FilterFormDirector
 	public function createForm():void
 	{
 		$this
-			->addSortInputs(
-				FilterKey::SORT_ARRAY,
-				FilterKey::SORT_FIELD,
-				FilterKey::SORT_DIRECTION)
-			->addLimitInput(FilterKey::LIMIT)
-			->addOffsetInput(FilterKey::OFFSET)
+			->addSortInputs()
+			->addLimitInput()
+			->addOffsetInput()
 			;
 	}
 }

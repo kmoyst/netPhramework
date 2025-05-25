@@ -9,7 +9,7 @@ use netPhramework\dispatching\MutablePath;
 use netPhramework\dispatching\Location;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;
-use netPhramework\rendering\ViewConfiguration;
+use netPhramework\rendering\ConfigurableView;
 
 /**
  * The central mediator for the Request-Response cycle
@@ -21,9 +21,9 @@ interface Exchange
 	 * Generate a standard displayable Response to be wrapped.
 	 *
 	 * @param View $view
-	 * @return ViewConfiguration - Passes back the content for additional config
+	 * @return ConfigurableView - Passes back the content for additional config
 	 */
-	public function ok(View $view):ViewConfiguration;
+	public function ok(View $view):ConfigurableView;
 
     /**
      * Centralized method for wrapping wrappable content a passing to
@@ -31,10 +31,10 @@ interface Exchange
      *
      * @param View $view
      * @param ResponseCode $code
-     * @return ViewConfiguration - Passes back the content for additional config
+     * @return ConfigurableView - Passes back the content for additional config
      */
     public function display(
-		View $view, ResponseCode $code):ViewConfiguration;
+		View $view, ResponseCode $code):ConfigurableView;
 
 	/**
 	 * Configures the Exchange for a Redirection Response

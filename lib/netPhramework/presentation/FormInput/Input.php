@@ -4,9 +4,10 @@ namespace netPhramework\presentation\FormInput;
 
 use netPhramework\common\Variables;
 use netPhramework\rendering\Encodable;
+use netPhramework\rendering\ConfigurableViewable;
 use netPhramework\rendering\Viewable;
 
-abstract class Input extends Viewable
+abstract class Input extends Viewable implements ConfigurableViewable
 {
 	protected string $templateName;
 	protected Variables $variables;
@@ -32,8 +33,8 @@ abstract class Input extends Viewable
 		return $this->templateName;
 	}
 
-	public function addVariable(
-		string $key, Encodable|string|iterable|null $value):Input
+	public function add(
+		string $key, Encodable|string|iterable|null $value):self
 	{
 		$this->variables->add($key, $value);
 		return $this;

@@ -6,7 +6,6 @@ use netPhramework\db\presentation\recordTable\FilterForm\FilterFormBuilder;
 use netPhramework\db\presentation\recordTable\FilterForm\FilterFormContext;
 use netPhramework\db\presentation\recordTable\FilterForm\FilterFormDirector;
 use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputFactory;
-use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 
 class FilterSelectDirector

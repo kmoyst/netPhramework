@@ -7,12 +7,12 @@ use netPhramework\common\Variables;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\Path;
 
-class View extends Viewable implements Wrappable, ViewConfiguration
+class View extends Viewable implements Wrappable, ConfigurableView
 {
     private readonly Variables $variables;
 
     public function __construct(
-        private readonly string $templateName,
+        private string $templateName,
         private ?string $title = null)
     {
         $this->variables = new Variables();
@@ -23,7 +23,7 @@ class View extends Viewable implements Wrappable, ViewConfiguration
         return $this->templateName;
     }
 
-	public function add(string                 $key,
+	public function add(string $key,
 						string|Viewable|Encodable|Path|
 						Location|iterable|null $value):View
 	{
@@ -31,8 +31,13 @@ class View extends Viewable implements Wrappable, ViewConfiguration
 		return $this;
 	}
 
+	public function setTemplateName(string $templateName): self
+	{
+		$this->templateName = $templateName;
+		return $this;
+	}
 
-    public function getVariables(): Variables
+	public function getVariables(): Variables
     {
         return $this->variables;
     }

@@ -16,7 +16,7 @@ class PaginatorContext implements FilterFormContext
 		return $this;
 	}
 
-	public function getSortArray(): ?array
+	public function getSortArray(): array
 	{
 		return $this->baseContext->getSortArray();
 	}

@@ -2,12 +2,9 @@
 
 namespace netPhramework\db\presentation\recordTable\FilterForm;
 
-use netPhramework\common\Variables;
 use netPhramework\presentation\FormInput\Input;
 use netPhramework\presentation\FormInput\InputSet;
-use netPhramework\rendering\ImmutableView;
 use netPhramework\rendering\View;
-use netPhramework\rendering\Viewable;
 
 class FilterFormBuilder
 {

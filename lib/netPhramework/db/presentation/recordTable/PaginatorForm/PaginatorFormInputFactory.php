@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable\PaginatorForm;
 
+use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputConfigurator;
 use netPhramework\db\presentation\recordTable\FilterForm\FilterFormInputFactory;
 use netPhramework\db\presentation\recordTable\FilterKey;
 use netPhramework\presentation\FormInput\HiddenInput;
@@ -9,36 +10,35 @@ use netPhramework\presentation\FormInput\Input;
 
 class PaginatorFormInputFactory implements FilterFormInputFactory
 {
-	private string $templateParentKey = 'parentName';
-	private string $templateIndexKey = 'index';
+	private FilterFormInputConfigurator $sortInputConfigurator;
 
-	public function makeLimitInput(FilterKey $key): Input
+	public function __construct()
 	{
-		return new HiddenInput($key->value);
+		$this->sortInputConfigurator = new FilterFormInputConfigurator(
+			FilterKey::SORT_ARRAY->value, 'form/hidden-input-array');
 	}
 
-	public function makeOffsetInput(FilterKey $key): Input
+	public function makeLimitInput(): Input
 	{
-		return new HiddenInput($key->value);
+		return new HiddenInput(FilterKey::LIMIT->value);
 	}
 
-	public function makeSortFieldInput(
-		FilterKey $key, FilterKey $parentKey, int $index): Input
+	public function makeOffsetInput(): Input
 	{
-		return new HiddenInput($key->value)
-			->setTemplateName('form/hidden-input-array')
-			->addVariable($this->templateParentKey, $parentKey->value)
-			->addVariable($this->templateIndexKey, $index)
-			;
+		return new HiddenInput(FilterKey::OFFSET->value);
 	}
 
-	public function makeSortDirectionInput(
-		FilterKey $key, FilterKey $parentKey, int $index): Input
+	public function makeSortFieldInput(int $index): Input
 	{
-		return new HiddenInput($key->value)
-			->setTemplateName('form/hidden-input-array')
-			->addVariable($this->templateParentKey, $parentKey->value)
-			->addVariable($this->templateIndexKey, $index)
-			;
+		$input = new HiddenInput(FilterKey::SORT_FIELD->value);
+		$this->sortInputConfigurator->configureViewable($input);
+		return $input;
+	}
+
+	public function makeSortDirectionInput(int $index): Input
+	{
+		$input = new HiddenInput(FilterKey::SORT_DIRECTION->value);
+		$this->sortInputConfigurator->configureViewable($input);
+		return $input;
 	}
 }
