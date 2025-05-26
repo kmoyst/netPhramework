@@ -79,8 +79,17 @@ class FilterFormBuilder
 		$i = 0;
 		foreach($this->context->getConditionSet() as $condition)
 		{
-			$view = new FilterFormCondition($templateName);
-			if($condition[FilterKey::CONDITION_FIELD->value] === '') break;
+			if(
+				$condition[FilterKey::CONDITION_FIELD->value] == '' ||
+				$condition[FilterKey::CONDITION_VALUE->value] == ''
+			)
+				continue;
+			$view = new FilterFormCondition($templateName)
+			;
+			$view->setGlueInput($this->factory
+				->makeConditionGlueInput($i)
+				->setValue($condition[FilterKey::CONDITION_GLUE->value] ?? ''))
+			;
 			$view->setFieldInput($this->factory
 				->makeConditionFieldInput($i)
 				->setValue($condition[FilterKey::CONDITION_FIELD->value]))
@@ -93,18 +102,14 @@ class FilterFormBuilder
 				->makeConditionValueInput($i)
 				->setValue($condition[FilterKey::CONDITION_VALUE->value]))
 			;
-			$view->setGlueInput($this->factory
-				->makeConditionGlueInput($i)
-				->setValue($condition[FilterKey::CONDITION_GLUE->value] ?? ''))
-			;
 			$this->conditionViews[] = $view;
 			$i++;
 		}
 		$view = new FilterFormCondition($templateName);
+		$view->setGlueInput($this->factory->makeConditionGlueInput($i));
 		$view->setFieldInput($this->factory->makeConditionFieldInput($i));
 		$view->setOperatorInput($this->factory->makeConditionOperatorInput($i));
 		$view->setValueInput($this->factory->makeConditionValueInput($i));
-		$view->setGlueInput($this->factory->makeConditionGlueInput($i));
 		$this->conditionViews[] = $view;
 		$this->conditionViews[0]->setGlueInput(null);
 		return $this;
