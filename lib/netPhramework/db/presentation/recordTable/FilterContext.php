@@ -30,14 +30,14 @@ class FilterContext implements FilterFormContext
 	public function parse():self
 	{
 		$vars = $this->variables;
-		$recordSet = $this->recordSet;
+		//$recordSet = $this->recordSet;
 		$limit = $vars->getOrNull(FilterKey::LIMIT->value);
 		$offset = $vars->getOrNull(FilterKey::OFFSET->value) ?? 0;
 		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value) ?? [];
 		$conditions = $vars->getOrNull(FilterKey::CONDITION_SET->value) ?? [];
-		$this->count = count($recordSet);
+		//$this->count = count($recordSet);
 		$this->limit = is_numeric($limit) && $limit > 0 ? $limit : null;
-		$this->offset = $offset < $this->count ? $offset : 0;
+		$this->offset = $offset;
 		$this->sortArray = $sortArray;
 		$this->conditionSet = $conditions;
 		return $this;
@@ -61,6 +61,12 @@ class FilterContext implements FilterFormContext
 		return $sortArray;
 	}
 
+	public function setCount(int $count): self
+	{
+		$this->count = $count;
+		return $this;
+	}
+
 	public function getLimit(): ?int
 	{
 		return $this->limit;
@@ -68,7 +74,7 @@ class FilterContext implements FilterFormContext
 
 	public function getOffset(): int
 	{
-		return $this->offset;
+		return $this->offset < $this->count ? $this->offset : 0;
 	}
 
 	public function getCount(): int

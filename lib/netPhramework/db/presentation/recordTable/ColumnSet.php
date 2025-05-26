@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable;
 use Iterator;
+use netPhramework\db\exceptions\ColumnAbsent;
 
 class ColumnSet implements Iterator
 {
@@ -14,8 +15,15 @@ class ColumnSet implements Iterator
 		return $this;
 	}
 
+	/**
+	 * @param string $name
+	 * @return Column
+	 * @throws ColumnAbsent
+	 */
 	public function getColumn(string $name):Column
 	{
+		if(!isset($this->columns[$name]))
+			throw new ColumnAbsent("Column absent: $name");
 		return $this->columns[$name];
 	}
 

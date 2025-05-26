@@ -3,8 +3,10 @@
 namespace netPhramework\db\presentation\recordTable;
 use netPhramework\core\Exception;
 use netPhramework\db\core\RecordSet;
+use netPhramework\db\exceptions\ColumnAbsent;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
@@ -16,6 +18,7 @@ class RowSetBuilder
 	private ColumnSet $columnSet;
 	private FilterContext $context;
 
+	private array $filteredIds;
 	private array $sortedIds;
 
 	public function setRecordSet(RecordSet $recordSet):self
@@ -38,6 +41,57 @@ class RowSetBuilder
 
 	/**
 	 * @return $this
+	 * @throws Exception
+	 * @throws MappingException
+	 * @throws RecordNotFound
+	 */
+	public function filter():RowSetBuilder
+	{
+		$rsIds  = $this->recordSet->getIds();
+		$allIds = array_combine($rsIds, $rsIds);
+		$glues  = []; // glue at the end of every condition
+		$ids    = []; // multidimensional array per condition
+		foreach($this->context->getConditionSet() as $i => $condition)
+		{
+			$strOperator = $condition[FilterKey::CONDITION_OPERATOR->value];
+			$strGlue 	 = $condition[FilterKey::CONDITION_GLUE->value];
+			if(($operator = Operator::tryFrom($strOperator)) === null)
+				throw new Exception("Invalid Operator: $strOperator");
+			if(($glue = Glue::tryFrom($strGlue)) === null)
+				throw new Exception("Invalid Glue: $strGlue")
+				;
+			$field  = $condition[FilterKey::CONDITION_FIELD->value];
+			$value  = $condition[FilterKey::CONDITION_VALUE->value];
+			try {
+				$column = $this->columnSet->getColumn($field);
+			} catch (ColumnAbsent) {
+				break;
+			}
+			$currentConditionIds = $allIds;
+			foreach($allIds as $id)
+			{
+				$record 	 = $this->recordSet->getRecord($id);
+				$recordValue = $column->getSortableValue($record);
+				if(!$operator->check($recordValue, $value))
+					unset($currentConditionIds[$id]);
+			}
+			$ids[$i]   = $currentConditionIds;
+			$glues[$i] = $glue;
+		}
+		$filteredIds = $allIds; // "full universe" is true
+		array_unshift($glues, Glue::AND); // AND first condition
+		array_pop($glues); // pop off the unattached glue at the top
+		foreach($glues as $i => $glue)
+		{
+			$filteredIds = $glue->check($filteredIds, $ids[$i]);
+		}
+		$this->filteredIds = $filteredIds;
+		$this->context->setCount(count($this->filteredIds));
+		return $this;
+	}
+
+	/**
+	 * @return $this
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 * @throws ValueInaccessible
@@ -46,45 +100,7 @@ class RowSetBuilder
 	public function sort():RowSetBuilder
 	{
 		$args = [];
-		$allIds = $this->recordSet->getIds();
-		$ids   = [];
-		$ids[0] = array_combine($allIds, $allIds);
-		$glues = [];
-		foreach($this->context->getConditionSet() as $i => $condition)
-		{
-			$field    = $condition[FilterKey::CONDITION_FIELD->value];
-			$cOper	  = $condition[FilterKey::CONDITION_OPERATOR->value];
-			$cValue	  = $condition[FilterKey::CONDITION_VALUE->value];
-			$cGlue 	  = $condition[FilterKey::CONDITION_GLUE->value];
-			if(($operator = Operator::tryFrom($cOper)) === null)
-				throw new Exception("Invalid Operator: $cOper");
-			if(($glue = Glue::tryFrom($cGlue)) === null)
-				throw new Exception("Invalid Glue: $cGlue");
-			$evalIds = $ids[0];
-			foreach($ids[0] as $id)
-			{
-				$record = $this->recordSet->getRecord($id);
-				try {
-					$value = $record->getValue($field);
-				} catch (FieldAbsent) {
-					break;
-				}
-				if(!$operator->check($value, $cValue))
-				{
-					unset($evalIds[$id]);
-				}
-			}
-			$ids[$i+1] = $evalIds;
-			$glues[]  = $glue;
-		}
-		array_unshift($glues, Glue::AND);
-		array_pop($glues);
-		$filteredIds = $ids[0];
-		foreach($glues as $i => $glue)
-		{
-			$filteredIds = $glue->check($filteredIds, $ids[$i+1]);
-		}
-		$ids = $filteredIds; // now start sorting
+		$ids  = $this->filteredIds;
 		foreach($this->context->getSortArray() as $vector)
 		{
 			$field = $vector[FilterKey::SORT_FIELD->value];

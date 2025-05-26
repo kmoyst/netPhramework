@@ -55,6 +55,7 @@ class Browse extends RecordSetProcess
 			->setRecordSet($recordSet)
 			->setColumnSet($columnSet)
 			->setContext($filterContext)
+			->filter()
 			->sort()
 		;
 		$filterSelectView   = new SelectFilterDirector()
