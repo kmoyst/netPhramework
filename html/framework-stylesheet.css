@@ -93,6 +93,11 @@ ul.filterForm li
 {
     margin-bottom:3px;
 }
+div.addButton
+{
+    display: block;
+    text-align: center;
+}
 table.recordList tbody tr td.primary-phone
 {
     text-align: center;
@@ -164,4 +169,40 @@ div.filterForm form ul
 div.filterForm form ul li
 {
     display: inline-block;
+}
+
+div.userProfileView
+{
+    display: block;
+    text-align: center;
+    width:500px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.loginForm, div.signUpLink, div.signUp, div.editProfile
+{
+    text-align: left;
+    width:200px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+div.loginForm li, div.signUp li, div.editProfile li
+{
+    padding-top: 10px;
+}
+div.loginForm form input, div.signUp form input, div.editProfile form input
+{
+    margin-top: 10px;
+}
+div.errorMessage
+{
+    text-align: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(80,0,0,0.3);
+    font-size:medium;
 }

@@ -8,12 +8,20 @@ class Wrapper extends Viewable implements WrapperConfiguration
 {
 	private Variables $variables;
 	private Wrappable $wrappable;
-	private string $templateName = 'wrapper';
-	private string $titlePrefix = '';
+	private array $styleSheets = [];
 
-	public function __construct()
+	public function __construct(
+		private string $templateName = 'wrapper',
+		private string $titlePrefix = '')
 	{
 		$this->variables = new Variables();
+	}
+
+	/** @inheritdoc  */
+	public function addStyleSheet(string $templateName):self
+	{
+		$this->styleSheets[] = new Template($templateName);
+		return $this;
 	}
 
 	public function wrap(Wrappable $wrappable):Viewable
@@ -39,6 +47,7 @@ class Wrapper extends Viewable implements WrapperConfiguration
         return $this->templateName;
     }
 
+	/**@inheritdoc */
 	public function add(string $key, string|Encodable|iterable|null $value):self
 	{
 		$this->variables->add($key, $value);
@@ -51,6 +60,7 @@ class Wrapper extends Viewable implements WrapperConfiguration
 			->add('content', $this->wrappable->getContent())
 			->add('title',
 				trim("$this->titlePrefix - ".$this->wrappable->getTitle(),'- '))
+			->add('stylesheets', $this->styleSheets)
 			;
     }
 }

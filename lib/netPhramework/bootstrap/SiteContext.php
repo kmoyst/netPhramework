@@ -14,11 +14,6 @@ class SiteContext implements RequestContext
 	protected readonly Environment $environment;
 	protected readonly Session $session;
 
-	protected string $customTemplateDir = '../html';
-	protected string $baseTemplateDir 	= __DIR__.'/../../../html';
-	protected string $templateExtension = "phtml";
-	protected string $callbackKey 		= "callback";
-
     public function __construct(
 		?Environment $environment = null, ?Session $session = null)
 	{
@@ -28,7 +23,7 @@ class SiteContext implements RequestContext
 
 	public function getCallbackKey(): string
 	{
-		return $this->callbackKey;
+		return 'callback';
 	}
 
 	public function getRequestInterpreter():RequestInterpreter
@@ -49,9 +44,10 @@ class SiteContext implements RequestContext
 	protected function configureFileFinder(FileFinder $fileFinder): FileFinder
 	{
 		return $fileFinder
-			->directory($this->customTemplateDir)
-			->directory($this->baseTemplateDir)
-			->extension($this->templateExtension)
+			->directory('../html')
+			->directory(__DIR__.'/../../../html')
+			->extension('phtml')
+			->extension('css')
 			;
 	}
 

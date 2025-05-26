@@ -25,7 +25,7 @@ readonly class Encoder
 	}
 
 	public function encodeTemplate(
-		string $templateName, iterable $variables):Buffer|string
+		string $templateName, ?iterable $variables = []):Buffer|string
 	{
 		try {
 			$path = $this->findTemplatePath($templateName);
