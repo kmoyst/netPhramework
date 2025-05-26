@@ -5,7 +5,7 @@ namespace netPhramework\db\core;
 use netPhramework\core\Component;
 use netPhramework\core\Composite;
 
-final class RecordActionComposite extends Composite
+final class RecordProcessComposite extends Composite
 {
 	public function __construct(
 		private readonly RecordProcessSet $processSet,

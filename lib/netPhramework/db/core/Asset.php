@@ -15,7 +15,7 @@ final class Asset extends Composite
 	public function getChild(string $name): Component
     {
         if (is_numeric($name))
-            return new RecordActionComposite(
+            return new RecordProcessComposite(
                 $this->recordProcessSet,
                 $this->recordSet->getRecord($name));
         else
