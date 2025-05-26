@@ -23,11 +23,9 @@ class View extends Viewable implements Wrappable, ConfigurableView
         return $this->templateName;
     }
 
-	public function add(string $key,
-						string|Viewable|Encodable|Path|
-						Location|iterable|null $value):View
+	public function add(string $key, string|Encodable|iterable|null $value):self
 	{
-		$this->getVariables()->add($key, $value);
+		$this->variables->add($key, $value);
 		return $this;
 	}
 
