@@ -2,14 +2,14 @@
 
 namespace netPhramework\db\core;
 
+use netPhramework\core\Exchange;
+use netPhramework\core\Leaf;
 
-abstract class RecordSetProcess extends Process
+class RecordSetProcess extends Leaf
 {
-	protected RecordSet $recordSet;
-
-	public function setRecordSet(RecordSet $recordSet): self
+	public function handleExchange(Exchange $exchange): void
 	{
-		$this->recordSet = $recordSet;
-		return $this;
+		// TODO: Implement handleExchange() method.
 	}
+
 }

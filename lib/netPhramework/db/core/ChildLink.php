@@ -3,11 +3,9 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Component;
-use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\exceptions\ComponentNotFound;
 
-class RecordProcess extends RecordComponent
+class ChildLink extends RecordComponent
 {
 	public function handleExchange(Exchange $exchange): void
 	{
