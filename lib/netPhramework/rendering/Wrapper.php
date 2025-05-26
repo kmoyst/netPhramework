@@ -14,13 +14,22 @@ class Wrapper extends Viewable implements WrapperConfiguration
 		private string $templateName = 'wrapper',
 		private string $titlePrefix = '')
 	{
-		$this->variables = new Variables();
+		$this->variables = new Variables(); }
+
+	public function getTemplateName(): string
+	{
+		return $this->templateName;
 	}
 
-	/** @inheritdoc  */
-	public function addStyleSheet(string $templateName):self
+	public function add(string $key, string|Encodable|iterable|null $value):self
 	{
-		array_push($this->styleSheets, new Template($templateName));
+		$this->variables->add($key, $value);
+		return $this;
+	}
+
+	public function setTemplateName(string $templateName): self
+	{
+		$this->templateName = $templateName;
 		return $this;
 	}
 
@@ -36,25 +45,14 @@ class Wrapper extends Viewable implements WrapperConfiguration
 		return $this;
 	}
 
-	public function setTemplateName(string $templateName): self
+	/** @inheritdoc  */
+	public function addStyleSheet(string $templateName):self
 	{
-		$this->templateName = $templateName;
+		array_push($this->styleSheets, new Template($templateName));
 		return $this;
 	}
 
-    public function getTemplateName(): string
-    {
-        return $this->templateName;
-    }
-
-	/**@inheritdoc */
-	public function add(string $key, string|Encodable|iterable|null $value):self
-	{
-		$this->variables->add($key, $value);
-		return $this;
-	}
-
-    public function getVariables(): iterable
+	public function getVariables(): iterable
     {
 		return $this->variables
 			->add('content', $this->wrappable->getContent())

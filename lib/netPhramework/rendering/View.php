@@ -4,8 +4,6 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
-use netPhramework\dispatching\Location;
-use netPhramework\dispatching\Path;
 
 class View extends Viewable implements Wrappable, ConfigurableView
 {
@@ -18,7 +16,7 @@ class View extends Viewable implements Wrappable, ConfigurableView
         $this->variables = new Variables();
     }
 
-    public function getTemplateName(): string
+	public function getTemplateName(): string
     {
         return $this->templateName;
     }
@@ -35,11 +33,6 @@ class View extends Viewable implements Wrappable, ConfigurableView
 		return $this;
 	}
 
-	public function getVariables(): Variables
-    {
-        return $this->variables;
-    }
-
     public function getTitle(): string
     {
         return $this->title ?? Utils::kebabToSpace($this->templateName);
@@ -55,4 +48,9 @@ class View extends Viewable implements Wrappable, ConfigurableView
     {
         return $this;
     }
+
+	public function getVariables(): Variables
+	{
+		return $this->variables;
+	}
 }
