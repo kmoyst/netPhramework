@@ -1,26 +1,29 @@
 <div class="filterForm">
+    <table>
+        <tr>
+            <td>
 	<form name="filterForm" method="get">
         <table>
             <tr>
-                <td style="vertical-align: top">
+                <td>
                     <table class="recordConditions">
 						<?foreach($conditions as $condition) {?>
 							<?=$condition?>
 						<?}?>
                     </table>
                 </td>
-                <td style="vertical-align: top">
+                <td>
                     <table class="recordSortVectors">
 						<?foreach($sortArray as $vector) {?>
 							<?=$vector?>
 						<?}?>
                     </table>
                 </td>
-                <td style="vertical-align: top">
+                <td>
                     <table class="recordSortVectors">
 					    <tr>
                             <td><?=$limitInput?></td>
-                            <td style="vertical-align: top">
+                            <td>
                                 <input type="submit" name="action" value="Filter"/>
                             </td>
                         </tr>
@@ -29,4 +32,12 @@
             </tr>
         </table>
 	</form>
+            </td>
+           <td>
+               <form name="resetForm" method="get">
+                   <input type="submit" name="action" value="Reset"/>
+               </form>
+           </td>
+        </tr>
+    </table>
 </div>

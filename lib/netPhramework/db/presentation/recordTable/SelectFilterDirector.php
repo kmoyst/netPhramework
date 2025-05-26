@@ -29,7 +29,7 @@ class SelectFilterDirector
 			->buildSortInputs('select-filter-sort-vector')
 			->buildLimitInput()
 			;
-		$this->form = new View('filter-select')
+		$this->form = new View('select-filter')
 			->add('conditions', $builder->getConditionViews())
 			->add('sortArray', $builder->getSortViews())
 			->add('limitInput', $builder->getLimitInput())
