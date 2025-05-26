@@ -49,15 +49,15 @@ class RowSetBuilder
 	{
 		$rsIds  = $this->recordSet->getIds();
 		$allIds = array_combine($rsIds, $rsIds);
-		$glues  = []; // glue at the end of every condition
+		$glues  = []; // populated by glue at the end of beginning condition
 		$ids    = []; // multidimensional array per condition
 		foreach($this->context->getConditionSet() as $i => $condition)
 		{
 			$strOperator = $condition[FilterKey::CONDITION_OPERATOR->value];
-			$strGlue 	 = $condition[FilterKey::CONDITION_GLUE->value];
+			$strGlue 	 = $condition[FilterKey::CONDITION_GLUE->value] ?? '';
 			if(($operator = Operator::tryFrom($strOperator)) === null)
 				throw new Exception("Invalid Operator: $strOperator");
-			if(($glue = Glue::tryFrom($strGlue)) === null)
+			if($strGlue !== '' && ($glue = Glue::tryFrom($strGlue)) === null)
 				throw new Exception("Invalid Glue: $strGlue")
 				;
 			$field  = $condition[FilterKey::CONDITION_FIELD->value];
@@ -76,11 +76,13 @@ class RowSetBuilder
 					unset($currentConditionIds[$id]);
 			}
 			$ids[$i]   = $currentConditionIds;
-			$glues[$i] = $glue;
+			$glues[$i] = $glue ?? '';
 		}
 		$filteredIds = $allIds; // "full universe" is true
-		array_unshift($glues, Glue::AND); // AND first condition
-		array_pop($glues); // pop off the unattached glue at the top
+		if(count($glues) > 0) {
+			array_shift($glues);
+			array_unshift($glues, Glue::AND); // AND first condition
+		}
 		foreach($glues as $i => $glue)
 		{
 			$filteredIds = $glue->check($filteredIds, $ids[$i]);

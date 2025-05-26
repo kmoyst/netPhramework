@@ -87,7 +87,7 @@ class FilterFormBuilder
 			);
 			$view->setGlueInput($this->factory
 				->makeConditionGlueInput($i)
-				->setValue($condition[FilterKey::CONDITION_GLUE->value])
+				->setValue($condition[FilterKey::CONDITION_GLUE->value] ?? '')
 			);
 			$this->conditionViews[] = $view;
 			$i++;
@@ -106,6 +106,7 @@ class FilterFormBuilder
 			$this->factory->makeConditionGlueInput($i)
 		);
 		$this->conditionViews[] = $view;
+		$this->conditionViews[0]->setGlueInput(null);
 		return $this;
 	}
 

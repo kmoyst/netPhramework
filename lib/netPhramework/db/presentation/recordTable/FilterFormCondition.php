@@ -10,7 +10,7 @@ class FilterFormCondition extends Viewable
 	private Input $fieldInput;
 	private Input $operatorInput;
 	private Input $valueInput;
-	private Input $glueInput;
+	private ?Input $glueInput;
 
 	public function __construct(private readonly string $templateName) {}
 
@@ -32,7 +32,7 @@ class FilterFormCondition extends Viewable
 		return $this;
 	}
 
-	public function setGlueInput(Input $glueInput): self
+	public function setGlueInput(?Input $glueInput): self
 	{
 		$this->glueInput = $glueInput;
 		return $this;
@@ -49,7 +49,7 @@ class FilterFormCondition extends Viewable
 		$a['fieldInput'] = $this->fieldInput;
 		$a['operatorInput'] = $this->operatorInput;
 		$a['valueInput'] = $this->valueInput;
-		$a['glueInput'] = $this->glueInput;
+		$a['glueInput'] = $this->glueInput ?? '';
 		return $a;
 	}
 }
