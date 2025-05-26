@@ -7,18 +7,24 @@ use netPhramework\db\abstraction\Schema;
 use netPhramework\db\abstraction\Table;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
+use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\FieldSet;
 
 final class RecordSet implements Iterator, Countable
 {
     private ?array $data = null;
     private array $records = [];
+	private Criteria $criteria;
 
 	public function __construct(
 		private readonly string $name,
 		private readonly Schema $schema,
 		private readonly Table  $table
-	) {}
+	)
+	{
+		$this->criteria = new Criteria();
+	}
 
     public function getName():string
     {
@@ -69,6 +75,13 @@ final class RecordSet implements Iterator, Countable
 		return array_keys($this->data);
 	}
 
+	public function addCondition(Condition $condition):RecordSet
+	{
+		$this->criteria->add($condition);
+		$this->data = null;
+		return $this;
+	}
+
 	/**
 	 * @return void
 	 * @throws MappingException
@@ -76,7 +89,10 @@ final class RecordSet implements Iterator, Countable
 	private function ensureData():void
 	{
 		if ($this->data !== null) return;
-		$unindexed = $this->table->select()->getData();
+		$query = $this->table->select();
+		foreach($this->criteria as $condition)
+			$query->where($condition);
+		$unindexed = $query->getData();
 		$this->data = array_column($unindexed, null, $this->getIdKey());
 	}
 
