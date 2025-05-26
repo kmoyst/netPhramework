@@ -10,4 +10,12 @@ enum Glue:int
 
 	case AND = 1;
 	case OR = 2;
+
+	public function check(array $one, array $two)
+	{
+		if($this === self::AND)
+			return array_intersect($one, $two);
+		else
+			return array_merge($one, $two);
+	}
 }

@@ -6,6 +6,7 @@ use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\ValueInaccessible;
+use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
 
@@ -46,21 +47,44 @@ class RowSetBuilder
 	{
 		$args = [];
 		$allIds = $this->recordSet->getIds();
-		$ids  = array_combine($allIds, $allIds);
-		foreach($this->context->getConditionSet() as $condition)
+		$ids   = [];
+		$ids[0] = array_combine($allIds, $allIds);
+		$glues = [];
+		foreach($this->context->getConditionSet() as $i => $condition)
 		{
 			$field    = $condition[FilterKey::CONDITION_FIELD->value];
-			$operator = $condition[FilterKey::CONDITION_OPERATOR->value];
+			$cOper	  = $condition[FilterKey::CONDITION_OPERATOR->value];
 			$cValue	  = $condition[FilterKey::CONDITION_VALUE->value];
-			if(($enum = Operator::tryFrom($operator)) === null)
-				continue;
-			foreach($ids as $id)
+			$cGlue 	  = $condition[FilterKey::CONDITION_GLUE->value];
+			if(($operator = Operator::tryFrom($cOper)) === null)
+				throw new Exception("Invalid Operator: $cOper");
+			if(($glue = Glue::tryFrom($cGlue)) === null)
+				throw new Exception("Invalid Glue: $cGlue");
+			$evalIds = $ids[0];
+			foreach($ids[0] as $id)
 			{
 				$record = $this->recordSet->getRecord($id);
-				$value = $record->getValue($field); // throws FieldAbsent
-				if(!$enum->check($value, $cValue)) unset($ids[$id]);
+				try {
+					$value = $record->getValue($field);
+				} catch (FieldAbsent) {
+					break;
+				}
+				if(!$operator->check($value, $cValue))
+				{
+					unset($evalIds[$id]);
+				}
 			}
+			$ids[$i+1] = $evalIds;
+			$glues[]  = $glue;
 		}
+		array_unshift($glues, Glue::AND);
+		array_pop($glues);
+		$filteredIds = $ids[0];
+		foreach($glues as $i => $glue)
+		{
+			$filteredIds = $glue->check($filteredIds, $ids[$i+1]);
+		}
+		$ids = $filteredIds; // now start sorting
 		foreach($this->context->getSortArray() as $vector)
 		{
 			$field = $vector[FilterKey::SORT_FIELD->value];
