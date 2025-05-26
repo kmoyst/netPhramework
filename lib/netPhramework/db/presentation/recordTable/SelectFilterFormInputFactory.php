@@ -107,7 +107,7 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 		$input = new SelectInput(
 			FilterKey::CONDITION_GLUE->value, Glue::toArray());
 		$this->conditionInputConfigurator
-			->setTemplateName($index)
+			->setIndex($index)
 			->setTemplateName('form/select-input-array')
 			->configureViewable($input);
 		return $input;
