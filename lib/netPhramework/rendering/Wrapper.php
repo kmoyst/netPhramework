@@ -2,11 +2,19 @@
 
 namespace netPhramework\rendering;
 
+use netPhramework\common\Variables;
+
 class Wrapper extends Viewable implements WrapperConfiguration
 {
+	private Variables $variables;
 	private Wrappable $wrappable;
 	private string $templateName = 'wrapper';
 	private string $titlePrefix = '';
+
+	public function __construct()
+	{
+		$this->variables = new Variables();
+	}
 
 	public function wrap(Wrappable $wrappable):Viewable
     {
@@ -31,14 +39,18 @@ class Wrapper extends Viewable implements WrapperConfiguration
         return $this->templateName;
     }
 
+	public function add(string $key, string|Encodable|iterable|null $value):self
+	{
+		$this->variables->add($key, $value);
+		return $this;
+	}
+
     public function getVariables(): iterable
     {
-		$title =
-			trim("$this->titlePrefix - ".$this->wrappable->getTitle(),'- ');
-		$content = $this->wrappable->getContent();
-        return [
-            'content' => $content,
-            'title' => $title
-        ];
+		return $this->variables
+			->add('content', $this->wrappable->getContent())
+			->add('title',
+				trim("$this->titlePrefix - ".$this->wrappable->getTitle(),'- '))
+			;
     }
 }
