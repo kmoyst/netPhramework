@@ -9,8 +9,8 @@ class FilterContext implements FilterFormContext
 {
 	private RecordSet $recordSet;
 	private Variables $variables;
-	private ?array $conditionSet = null;
-	private ?array $sortArray = null;
+	private array $conditionSet;
+	private array $sortArray;
 	private ?int $limit;
 	private int $offset = 0;
 	private int $count;
@@ -33,8 +33,8 @@ class FilterContext implements FilterFormContext
 		$recordSet = $this->recordSet;
 		$limit = $vars->getOrNull(FilterKey::LIMIT->value);
 		$offset = $vars->getOrNull(FilterKey::OFFSET->value) ?? 0;
-		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value);
-		$conditions = $vars->getOrNull(FilterKey::CONDITION_SET->value);
+		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value) ?? [];
+		$conditions = $vars->getOrNull(FilterKey::CONDITION_SET->value) ?? [];
 		$this->count = count($recordSet);
 		$this->limit = is_numeric($limit) && $limit > 0 ? $limit : null;
 		$this->offset = $offset < $this->count ? $offset : 0;
@@ -45,12 +45,20 @@ class FilterContext implements FilterFormContext
 
 	public function getConditionSet(): array
 	{
-		return $this->conditionSet ?? [];
+		if(empty($this->conditionSet)) return [];
+		$conditionSet = $this->conditionSet;
+		if(empty($conditionSet[count($conditionSet)-1]
+		[FilterKey::CONDITION_FIELD->value])) array_pop($conditionSet);
+		return $conditionSet;
 	}
 
 	public function getSortArray(): array
 	{
-		return $this->sortArray ?? [];
+		if(empty($this->sortArray)) return [];
+		$sortArray = $this->sortArray;
+		if(empty($sortArray[count($sortArray)-1]
+		[FilterKey::SORT_FIELD->value])) array_pop($sortArray);
+		return $sortArray;
 	}
 
 	public function getLimit(): ?int

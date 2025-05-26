@@ -6,6 +6,7 @@ use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\ValueInaccessible;
+use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
 
 class RowSetBuilder
@@ -43,36 +44,51 @@ class RowSetBuilder
 	 */
 	public function sort():RowSetBuilder
 	{
-		if(empty($this->context->getSortArray()) ||
-		$this->context->getSortArray()[0][FilterKey::SORT_FIELD->value] === '')
-			$ids = $this->recordSet->getIds();
-		else
+		$args = [];
+		$allIds = $this->recordSet->getIds();
+		$ids  = array_combine($allIds, $allIds);
+		foreach($this->context->getConditionSet() as $condition)
 		{
-			$args = [];
-			foreach($this->context->getSortArray() as $vector)
+			$field    = $condition[FilterKey::CONDITION_FIELD->value];
+			$operator = $condition[FilterKey::CONDITION_OPERATOR->value];
+			$cValue	  = $condition[FilterKey::CONDITION_VALUE->value];
+			if(($enum = Operator::tryFrom($operator)) === null)
+				continue;
+			foreach($ids as $id)
 			{
-				$field = $vector[FilterKey::SORT_FIELD->value];
-				$direction = $vector[FilterKey::SORT_DIRECTION->value];
-				if(empty($field)) break;
-				$parsedDirection = SortDirection::tryFrom($direction);
-				$column = $this->columnSet->getColumn($field);
-				$values = [];
-				foreach($this->recordSet as $record)
-				{
-					$values[] = $column->getSortableValue($record);
+				$record = $this->recordSet->getRecord($id);
+				try {
+					$value = $record->getValue($field);
+				} catch (FieldAbsent) {
+					continue;
 				}
-				$args[] = $values;
-				$args[] = $parsedDirection ===
-					SortDirection::DESCENDING ? SORT_DESC : SORT_ASC;
-				$args[] = SORT_STRING | SORT_NATURAL | SORT_FLAG_CASE;
+				if(!$enum->check($value, $cValue)) unset($ids[$id]);
 			}
-			$args[] = $this->recordSet->getIds();
-			array_multisort(...$args);
-			$ids = array_pop($args);
 		}
+		foreach($this->context->getSortArray() as $vector)
+		{
+			$field = $vector[FilterKey::SORT_FIELD->value];
+			$direction = $vector[FilterKey::SORT_DIRECTION->value];
+			if(empty($field)) break;
+			$parsedDirection = SortDirection::tryFrom($direction);
+			$column = $this->columnSet->getColumn($field);
+			$values = [];
+			foreach($ids as $id)
+			{
+				$record = $this->recordSet->getRecord($id);
+				$values[] = $column->getSortableValue($record);
+			}
+			$args[] = $values;
+			$args[] = $parsedDirection ===
+				SortDirection::DESCENDING ? SORT_DESC : SORT_ASC;
+			$args[] = SORT_STRING | SORT_NATURAL | SORT_FLAG_CASE;
+		}
+		$args[] = $ids;
+		array_multisort(...$args);
+		$sortedIds = array_pop($args);
 		$limit = $this->context->getLimit();
 		$offset = $this->context->getOffset();
-		$this->sortedIds = array_slice($ids, $offset, $limit);
+		$this->sortedIds = array_slice($sortedIds, $offset, $limit);
 		return $this;
 	}
 

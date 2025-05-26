@@ -64,6 +64,6 @@ class Exception extends \Exception
 
 	public function deliver(Responder $responder): void
 	{
-		$responder->present($this->wrapper->wrap($this), $this->code);
+		$responder->present($this->wrapper->wrap($this), $this->responseCode);
 	}
 }
