@@ -4,30 +4,11 @@ namespace netPhramework\db\mapping;
 
 class Criteria implements DataSet
 {
-	private bool $isOr = false;
-
 	/**
 	 * @var Condition[]
 	 */
 	private array $conditions = [];
 	private int $pointer = 0;
-
-	public function setToOr():Criteria
-	{
-		$this->isOr = true;
-		return $this;
-	}
-
-	public function setToAnd():Criteria
-	{
-		$this->isOr = false;
-		return $this;
-	}
-
-	public function isOr():bool
-	{
-		return $this->isOr;
-	}
 
 	public function add(Condition $condition):Criteria
 	{
