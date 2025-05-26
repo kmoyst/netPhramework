@@ -5,11 +5,13 @@ use Countable;
 use Iterator;
 use netPhramework\db\abstraction\Schema;
 use netPhramework\db\abstraction\Table;
+use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\FieldSet;
+use netPhramework\db\mapping\Field;
 
 final class RecordSet implements Iterator, Countable
 {
@@ -77,14 +79,27 @@ final class RecordSet implements Iterator, Countable
 
 	public function addCondition(Condition $condition):RecordSet
 	{
-		$this->resetData();
 		$this->criteria->add($condition);
 		return $this;
 	}
 
-	private function resetData():void
+	public function reset():self
 	{
-		$this->data = null;
+		$this->records 	= [];
+		$this->data 	= null;
+		$this->criteria = new Criteria();
+		return $this;
+	}
+
+	/**
+	 * @param string $name
+	 * @return Field
+	 * @throws MappingException
+	 * @throws FieldAbsent
+	 */
+	public function getField(string $name):Field
+	{
+		return $this->getFieldSet()->getField($name);
 	}
 
 	/**
