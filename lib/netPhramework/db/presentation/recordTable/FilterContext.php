@@ -30,12 +30,10 @@ class FilterContext implements FilterFormContext
 	public function parse():self
 	{
 		$vars = $this->variables;
-		//$recordSet = $this->recordSet;
 		$limit = $vars->getOrNull(FilterKey::LIMIT->value);
 		$offset = $vars->getOrNull(FilterKey::OFFSET->value) ?? 0;
 		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value) ?? [];
 		$conditions = $vars->getOrNull(FilterKey::CONDITION_SET->value) ?? [];
-		//$this->count = count($recordSet);
 		$this->limit = is_numeric($limit) && $limit > 0 ? $limit : null;
 		$this->offset = $offset;
 		$this->sortArray = $sortArray;

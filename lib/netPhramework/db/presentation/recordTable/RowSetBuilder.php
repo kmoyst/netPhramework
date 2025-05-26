@@ -78,11 +78,11 @@ class RowSetBuilder
 			$ids[$i]   = $currentConditionIds;
 			$glues[$i] = $glue ?? '';
 		}
-		$filteredIds = $allIds; // "full universe" is true
 		if(count($glues) > 0) {
 			array_shift($glues);
 			array_unshift($glues, Glue::AND); // AND first condition
 		}
+		$filteredIds = $allIds; // "full universe" is true
 		foreach($glues as $i => $glue)
 		{
 			$filteredIds = $glue->check($filteredIds, $ids[$i]);
