@@ -2,6 +2,8 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
+use http\Exception\RuntimeException;
+use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\presentation\FormInput\Input;
 use netPhramework\rendering\View;
 
@@ -58,6 +60,12 @@ class FilterFormBuilder
 		return $this;
 	}
 
+	public function getHiddenLimitInput():HiddenInput
+	{
+		return new HiddenInput(
+			FilterKey::LIMIT->value, $this->context->getLimit());
+	}
+
 	public function buildOffsetInput():self
 	{
 		$input = $this->factory->makeOffsetInput();
@@ -75,36 +83,28 @@ class FilterFormBuilder
 			if($condition[FilterKey::CONDITION_FIELD->value] === '') break;
 			$view->setFieldInput($this->factory
 				->makeConditionFieldInput($i)
-				->setValue($condition[FilterKey::CONDITION_FIELD->value]));
-
+				->setValue($condition[FilterKey::CONDITION_FIELD->value]))
+			;
 			$view->setOperatorInput($this->factory
 				->makeConditionOperatorInput($i)
-				->setValue($condition[FilterKey::CONDITION_OPERATOR->value])
-			);
+				->setValue($condition[FilterKey::CONDITION_OPERATOR->value]))
+			;
 			$view->setValueInput($this->factory
 				->makeConditionValueInput($i)
-				->setValue($condition[FilterKey::CONDITION_VALUE->value])
-			);
+				->setValue($condition[FilterKey::CONDITION_VALUE->value]))
+			;
 			$view->setGlueInput($this->factory
 				->makeConditionGlueInput($i)
-				->setValue($condition[FilterKey::CONDITION_GLUE->value] ?? '')
-			);
+				->setValue($condition[FilterKey::CONDITION_GLUE->value] ?? ''))
+			;
 			$this->conditionViews[] = $view;
 			$i++;
 		}
 		$view = new FilterFormCondition($templateName);
-		$view->setFieldInput(
-			$this->factory->makeConditionFieldInput($i)
-		);
-		$view->setOperatorInput(
-			$this->factory->makeConditionOperatorInput($i)
-		);
-		$view->setValueInput(
-			$this->factory->makeConditionValueInput($i)
-		);
-		$view->setGlueInput(
-			$this->factory->makeConditionGlueInput($i)
-		);
+		$view->setFieldInput($this->factory->makeConditionFieldInput($i));
+		$view->setOperatorInput($this->factory->makeConditionOperatorInput($i));
+		$view->setValueInput($this->factory->makeConditionValueInput($i));
+		$view->setGlueInput($this->factory->makeConditionGlueInput($i));
 		$this->conditionViews[] = $view;
 		$this->conditionViews[0]->setGlueInput(null);
 		return $this;

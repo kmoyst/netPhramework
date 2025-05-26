@@ -49,7 +49,7 @@ class RowSetBuilder
 	{
 		$rsIds  = $this->recordSet->getIds();
 		$allIds = array_combine($rsIds, $rsIds);
-		$glues  = []; // populated by glue at the end of beginning condition
+		$glues  = []; // populated by glue at the beginning of condition
 		$ids    = []; // multidimensional array per condition
 		foreach($this->context->getConditionSet() as $i => $condition)
 		{

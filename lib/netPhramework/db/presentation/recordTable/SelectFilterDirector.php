@@ -33,6 +33,7 @@ class SelectFilterDirector
 			->add('conditions', $builder->getConditionViews())
 			->add('sortArray', $builder->getSortViews())
 			->add('limitInput', $builder->getLimitInput())
+			->add('hiddenLimitInput', $builder->getHiddenLimitInput())
 			;
 		return $this;
 	}
