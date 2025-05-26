@@ -77,9 +77,14 @@ final class RecordSet implements Iterator, Countable
 
 	public function addCondition(Condition $condition):RecordSet
 	{
+		$this->resetData();
 		$this->criteria->add($condition);
-		$this->data = null;
 		return $this;
+	}
+
+	private function resetData():void
+	{
+		$this->data = null;
 	}
 
 	/**
