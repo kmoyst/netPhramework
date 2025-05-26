@@ -57,11 +57,7 @@ class RowSetBuilder
 			foreach($ids as $id)
 			{
 				$record = $this->recordSet->getRecord($id);
-				try {
-					$value = $record->getValue($field);
-				} catch (FieldAbsent) {
-					continue;
-				}
+				$value = $record->getValue($field); // throws FieldAbsent
 				if(!$enum->check($value, $cValue)) unset($ids[$id]);
 			}
 		}
