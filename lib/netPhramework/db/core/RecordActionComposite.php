@@ -13,8 +13,9 @@ final class RecordActionComposite extends Composite
 
 	public function getChild(string $name): Component
 	{
-		return new RecordAction(
-            $this->processSet->getProcess($name), $this->record);
+		return $this->processSet
+			->getProcess($name)
+			->setRecord($this->record);
 	}
 
 	public function getName(): string
