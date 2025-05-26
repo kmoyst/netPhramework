@@ -19,11 +19,11 @@ class Edit extends RecordProcess
 		parent::__construct($name);
 	}
 
-	public function handleExchange(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange): void
 	{
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet = new RecordFormBuilder($strategy)
-			->setRecord($record)
+			->setRecord($this->record)
 			->addRecordInputs()
 			->getInputSet()->addCustom($exchange->callbackFormInput())
 		;

@@ -23,16 +23,16 @@ class Update extends RecordProcess
 
     /**
      * @param Exchange $exchange
-     * @param Record $record
      * @return void
      * @throws FieldAbsent
      * @throws MappingException
      * @throws Exception
      */
-	public function handleExchange(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange): void
 	{
         ($this->saveProcess ??
 			new Save($this->dispatcher ?? new RedirectToParent('')))
-			    ->handleExchange($exchange, $record);
+				->setRecord($this->record)
+			    ->handleExchange($exchange);
     }
 }

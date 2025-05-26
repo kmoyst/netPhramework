@@ -9,7 +9,7 @@ final class Asset extends Composite
 {
 	public function __construct(
 		private readonly RecordSet           $recordSet,
-		private readonly RecordSetProcessSet $processSet,
+		private readonly RecordSetProcessSet $recordSetProcessSet,
 		private readonly RecordProcessSet    $recordProcessSet) {}
 
 	public function getChild(string $name): Component
@@ -19,9 +19,11 @@ final class Asset extends Composite
                 $this->recordProcessSet,
                 $this->recordSet->getRecord($name));
         else
-            return new RecordSetAction(
-                $this->recordSet,
-                $this->processSet->getProcess($name));
+			return
+				$this->recordSetProcessSet
+					->getProcess($name)
+						->setRecordSet($this->recordSet)
+				;
     }
 
     public function getName(): string

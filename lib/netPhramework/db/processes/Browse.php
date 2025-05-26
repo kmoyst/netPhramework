@@ -37,9 +37,10 @@ class Browse extends RecordSetProcess
 	 * @throws ValueInaccessible
 	 * @throws Exception
 	 */
-	public function handleExchange(
-		Exchange $exchange, RecordSet $recordSet): void
+	public function handleExchange(Exchange $exchange): void
 	{
+		$recordSet = $this->recordSet
+		;
 		$filterContext = new FilterContext()
 			->setRecordSet($recordSet)
 			->setVariables($exchange->getParameters())

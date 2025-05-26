@@ -23,14 +23,13 @@ class Delete extends RecordProcess
 
     /**
      * @param Exchange $exchange
-     * @param Record $record
      * @return void
      * @throws MappingException
      * @throws Exception
      */
-	public function handleExchange(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange): void
 	{
-		$record->drop();
+		$this->record->drop();
 		$exchange->redirect($this->dispatcher);
 	}
 }

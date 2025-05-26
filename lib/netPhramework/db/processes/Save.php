@@ -26,14 +26,14 @@ class Save extends RecordProcess
 
     /**
      * @param Exchange $exchange
-     * @param Record $record
      * @return void
      * @throws FieldAbsent
      * @throws MappingException
      * @throws Exception
      */
-	public function handleExchange(Exchange $exchange, Record $record):void
+	public function handleExchange(Exchange $exchange):void
 	{
+		$record = $this->record;
 		try {
 			foreach($exchange->getParameters() as $k => $v)
 				if($record->getCellSet()->has($k))

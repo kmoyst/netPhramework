@@ -2,14 +2,8 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\common\Utils;
+use netPhramework\core\Leaf;
 
-abstract class Process
+abstract class Process extends Leaf
 {
-	public function __construct(protected ?string $name = null) {}
-
-	public function getName():string {
-		return $this->name ??
-			Utils::camelToKebab(Utils::baseClassName(get_class($this)));
-	}
 }

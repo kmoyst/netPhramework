@@ -27,16 +27,15 @@ class UserSave extends Save
 
 	/**
 	 * @param Exchange $exchange
-	 * @param Record $record
 	 * @return void
 	 * @throws FieldAbsent
 	 * @throws Exception
 	 * @throws MappingException
 	 */
-	public function handleExchange(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange): void
 	{
 		$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
-		$enrolledUser->setRecord($record);
+		$enrolledUser->setRecord($this->record);
 		try {
             $enrolledUser->parseAndSet($exchange->getParameters());
             $enrolledUser->save();
