@@ -49,7 +49,7 @@ class Browse extends RecordSetProcess
 			->setMapper($this->columnMapper ?? new ColumnMapper())
 			->setStrategy($this->columnStrategy)
 			->setFieldSet($recordSet->getFieldSet())
-			->build()
+			->getColumnSet()
 		;
 		$rowSetBuilder = new RowSetBuilder()
 			->setRecordSet($recordSet)
@@ -73,11 +73,11 @@ class Browse extends RecordSetProcess
 		;
 		$callbackInput = $exchange->callbackFormInput()
 		;
-		$recordTable = new View('record-table');
-		$recordTable->getVariables()
+		$recordTable = new View('record-table')
 			->add('headers', 		$columnSet->getHeaders())
 			->add('rows', 			$rowSetBuilder->getRowSet())
 			->add('callbackInput', 	$callbackInput)
+			->add('actionPrefix', 	$recordSet->getName())
 		;
 		$addButtonForm = new View('add-button-form');
 		$addButtonForm->getVariables()->add('callbackInput', $callbackInput)

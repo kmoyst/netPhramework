@@ -7,7 +7,7 @@ use netPhramework\db\mapping\FieldSet;
 class ColumnSetBuilder
 {
 	private ColumnMapper $mapper;
-	private ?ColumnStrategy $strategy;
+	private ?ColumnStrategy $strategy =  null;
 	private FieldSet $fieldSet;
 
 	public function setMapper(ColumnMapper $mapper): self
@@ -28,7 +28,7 @@ class ColumnSetBuilder
 		return $this;
 	}
 
-	public function build():ColumnSet
+	public function getColumnSet():ColumnSet
 	{
 		$columnSet = new ColumnSet();
 		foreach($this->fieldSet as $field)

@@ -23,8 +23,8 @@ class OneToMany
 	 */
 	public function getChildren(Record $record):RecordSet
 	{
-		$field 	   = $this->parentRecords->getField($this->linkFieldName);
-		$linkId    = $record->getValue($this->linkFieldName);
+		$field 	   = $this->childRecords->getField($this->linkFieldName);
+		$linkId    = $record->getId();
 		$condition = new Condition()->setField($field)->setValue($linkId);
 		$this->childRecords->reset()->addCondition($condition);
 		return $this->childRecords;
