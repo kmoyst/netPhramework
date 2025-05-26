@@ -206,3 +206,38 @@ div.errorMessage
     background-color: rgba(80,0,0,0.3);
     font-size:medium;
 }
+
+div.filterForm table
+{
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+}
+div.filterForm table td
+{
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+div.filterForm table tr
+{
+    vertical-align: top;
+}
+div.filterForm
+{
+    margin-left: auto;
+    margin-right: auto;
+    width:fit-content;
+    margin-bottom: 10px;
+}
+div.filterForm select, div.filterForm input
+{
+    margin-right: 5px;
+    margin-bottom: 5px;
+
+}
+div.addButton
+{
+    margin-bottom: 10px;
+}

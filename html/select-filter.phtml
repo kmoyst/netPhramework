@@ -1,43 +1,43 @@
 <div class="filterForm">
     <table>
         <tr>
-            <td>
-	<form name="filterForm" method="get">
-        <table>
-            <tr>
-                <td>
-                    <table class="recordConditions">
-						<?foreach($conditions as $condition) {?>
-							<?=$condition?>
-						<?}?>
-                    </table>
-                </td>
-                <td>
-                    <table class="recordSortVectors">
-						<?foreach($sortArray as $vector) {?>
-							<?=$vector?>
-						<?}?>
-                    </table>
-                </td>
-                <td>
-                    <table class="recordSortVectors">
-					    <tr>
-                            <td><?=$limitInput?></td>
+			<td>
+                <form name="filterForm" method="get">
+                    <table>
+                        <tr>
                             <td>
-                                <input type="submit" name="action" value="Filter"/>
+                                <table class="recordConditions">
+                                    <?foreach($conditions as $condition) {?>
+                                        <?=$condition?>
+                                    <?}?>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="recordSortVectors">
+                                    <?foreach($sortArray as $vector) {?>
+                                        <?=$vector?>
+                                    <?}?>
+                                </table>
+                            </td>
+                            <td>
+                                <table class="recordSortVectors">
+                                    <tr>
+                                        <td><?=$limitInput?></td>
+                                        <td>
+                                            <input type="submit" name="action" value="Filter"/>
+                                        </td>
+                                    </tr>
+                                </table>
                             </td>
                         </tr>
                     </table>
-                </td>
-            </tr>
-        </table>
-	</form>
-            </td>
-           <td>
+                </form>
+			</td>
+			<td>
                <form name="resetForm" method="get">
-                   <input type="submit" name="action" value="Reset"/>
+				   <input type="submit" name="action" value="Reset"/>
                </form>
-           </td>
+			</td>
         </tr>
     </table>
 </div>
