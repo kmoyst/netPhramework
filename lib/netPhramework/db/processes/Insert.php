@@ -18,7 +18,7 @@ class Insert extends RecordSetProcess
         private readonly ?Redirector    $dispatcher = null,
 		?string                         $name = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
     /**

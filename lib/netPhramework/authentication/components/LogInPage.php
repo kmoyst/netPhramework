@@ -3,6 +3,7 @@
 namespace netPhramework\authentication\components;
 
 use netPhramework\authentication\LogInManager;
+use netPhramework\core\Component;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
@@ -10,13 +11,15 @@ use netPhramework\dispatching\rerouters\RerouteToSibling;
 use netPhramework\dispatching\rerouters\Rerouter;
 use netPhramework\rendering\View;
 
-class LogInPage extends Leaf
+class LogInPage implements Component
 {
+	use Leaf;
+
     public function __construct(
 		string $name = 'log-in',
 		private readonly ?View $view = null,
 		private readonly ?Rerouter $forForm = null
-    ) { parent::__construct($name); }
+    ) { $this->name = $name; }
 
     /**
      * @param Exchange $exchange

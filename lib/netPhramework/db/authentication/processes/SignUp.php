@@ -14,7 +14,9 @@ class SignUp extends RecordSetProcess
 		private readonly ?EnrolledUser $enrolledUser = null,
 		private readonly string $actionLeaf = 'insert',
 		string $name = 'sign-up')
-	{ parent::__construct($name); }
+	{
+		$this->name = $name;
+	}
 
     /**
      * @param Exchange $exchange

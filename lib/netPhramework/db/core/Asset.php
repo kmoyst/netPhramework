@@ -5,8 +5,10 @@ namespace netPhramework\db\core;
 use netPhramework\core\Component;
 use netPhramework\core\Composite;
 
-class Asset extends Composite
+class Asset implements Component
 {
+	use Composite;
+
 	public function __construct(
 		private readonly RecordSet        $recordSet,
 		private readonly RecordSetNodeSet $recordSetNodeSet,

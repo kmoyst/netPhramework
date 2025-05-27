@@ -20,7 +20,7 @@ class Save extends RecordProcess
         ?string     $name = null)
     {
         $this->onSuccess = $onSuccess ?? new RedirectToParent('');
-        parent::__construct($name);
+        $this->name = $name;
     }
 
     /**

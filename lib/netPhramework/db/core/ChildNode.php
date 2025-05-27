@@ -3,20 +3,16 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Component;
-use netPhramework\core\Exchange;
+use netPhramework\core\Composite;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Operator;
-use netPhramework\dispatching\redirectors\RedirectToChild;
 
 class ChildNode extends RecordNode
 {
+	use Composite;
+
 	private Asset $child;
 	private string $parentIdField;
-
-	public function handleExchange(Exchange $exchange): void
-	{
-		$exchange->redirect(new RedirectToChild('',$exchange->getParameters()));
-	}
 
 	public function getChild(string $name): Component
 	{

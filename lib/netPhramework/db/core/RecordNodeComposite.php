@@ -5,8 +5,10 @@ namespace netPhramework\db\core;
 use netPhramework\core\Component;
 use netPhramework\core\Composite;
 
-class RecordNodeComposite extends Composite
+class RecordNodeComposite implements Component
 {
+	use Composite;
+
 	private Record $record;
 	private RecordNodeSet $nodeSet;
 

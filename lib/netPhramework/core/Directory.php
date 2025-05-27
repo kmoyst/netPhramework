@@ -4,8 +4,10 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\ComponentNotFound;
 
-final class Directory extends Composite
+final class Directory implements Component
 {
+	use Composite;
+
 	private ComponentSet $children;
     private string|Index $index;
 
@@ -14,26 +16,7 @@ final class Directory extends Composite
 		$this->children = new ComponentSet();
 	}
 
-	/**
-	 * @param Composite $composite
-	 * @return $this
-	 * @throws Exception
-	 */
-    public function composite(Composite $composite):Directory
-	{
-		if($composite->getName() === '')
-			throw new Exception("Composite children must have names");
-        $this->add($composite);
-        return $this;
-	}
-
-	public function leaf(Leaf $leaf):Directory
-	{
-		$this->add($leaf);
-		return $this;
-	}
-
-	private function add(Component $component):void
+	public function addChild(Component $component):void
 	{
 		$this->children->add($component);
 	}
@@ -52,7 +35,7 @@ final class Directory extends Composite
             throw new ComponentNotFound("Not Found: $name");
     }
 
-    public function getName(): string
+	public function getName(): string
     {
         return $this->name;
     }

@@ -2,6 +2,7 @@
 
 namespace netPhramework\authentication\components;
 
+use netPhramework\core\Component;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
@@ -9,11 +10,16 @@ use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\dispatching\redirectors\RedirectToRoot;
 use netPhramework\exceptions\InvalidSession;
 
-class LogOut extends Leaf
+class LogOut implements Component
 {
+	use Leaf;
+
 	public function __construct(
 		private readonly ?Redirector $dispatcher = null,
-		?string                      $name = null) { parent::__construct($name); }
+		?string $name = null)
+	{
+		$this->name = $name;
+	}
 
 	/**
 	 * @param Exchange $exchange

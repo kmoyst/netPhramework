@@ -15,7 +15,7 @@ class Add extends RecordSetProcess
 		protected readonly ?RecordFormStrategy $formStrategy = null,
 		?string $name = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
 	public function handleExchange(Exchange $exchange): void

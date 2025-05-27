@@ -5,10 +5,15 @@ namespace netPhramework\core;
 use netPhramework\common\Utils;
 use netPhramework\exceptions\ComponentNotFound;
 
-abstract class Leaf implements Component
+trait Leaf
 {
-	public function __construct(protected readonly ?string $name = null) {}
+	protected ?string $name = null;
 
+	/**
+	 * @param string $name
+	 * @return never
+	 * @throws ComponentNotFound
+	 */
 	public function getChild(string $name): never
 	{
 		throw new ComponentNotFound("Not Found: $name");

@@ -17,7 +17,7 @@ class Update extends RecordProcess
 		private readonly ?Redirector    $dispatcher = null,
 		?string                         $name = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
     /**

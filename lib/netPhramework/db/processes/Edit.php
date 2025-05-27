@@ -15,7 +15,7 @@ class Edit extends RecordProcess
 		private readonly ?RecordFormStrategy $formStrategy = null,
 		?string $name = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
 	public function handleExchange(Exchange $exchange): void

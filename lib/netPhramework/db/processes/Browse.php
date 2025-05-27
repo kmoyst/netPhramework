@@ -24,7 +24,7 @@ class Browse extends RecordSetProcess
 		?string $name = null,
 		private readonly ?ColumnMapper   $columnMapper = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
 	/**
