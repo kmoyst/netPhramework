@@ -6,7 +6,6 @@ use netPhramework\core\Directory;
 use netPhramework\core\Node;
 use netPhramework\db\core\Asset;
 use netPhramework\db\core\RecordChild;
-use netPhramework\db\core\RecordChild;
 use netPhramework\db\core\RecordChildSet;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\core\RecordSetProcessSet;
@@ -16,51 +15,13 @@ class AssetComposer
 	protected RecordSetProcessSet $recordSetNodeSet;
 	protected RecordChildSet $recordNodeSet;
 	protected RecordMapper $mapper;
-	protected ?CompositeAdapter $adapter;
+	protected Directory $directory;
 
-	public function __construct(
-		RecordMapper $mapper,
-		?CompositeAdapter $adapter = null)
+	public function __construct(RecordMapper $mapper, Directory $directory)
 	{
 		$this->mapper = $mapper;
-		$this->adapter = $adapter;
+		$this->directory = $directory;
 		$this->reset();
-	}
-
-	/**
-	 * Convenience method to wrap a Directory in an adapter
-	 *
-	 * @param Directory $directory
-	 * @return $this
-	 */
-	public function adaptToDirectory(Directory $directory): self
-	{
-		$this->setAdapter(new DirectoryAdapter($directory));
-		return $this;
-	}
-
-	/**
-	 * Convenience method to wrap a RecordChild Node in an adapter
-	 *
-	 * @param RecordChild $child
-	 * @return $this
-	 */
-	public function adaptToRecordChild(RecordChild $child): self
-	{
-		$this->setAdapter(new RecordChildAdapter($child));
-		return $this;
-	}
-
-	/**
-	 * Adapter that allows the addition of Assets
-	 *
-	 * @param CompositeAdapter $adapter
-	 * @return $this
-	 */
-	public function setAdapter(CompositeAdapter $adapter): self
-	{
-		$this->adapter = $adapter;
-		return $this;
 	}
 
 	protected function reset():void
@@ -86,7 +47,7 @@ class AssetComposer
 
 	public function commit(string $assetName): self
 	{
-		$this->adapter->addAsset(new Asset(
+		$this->directory->add(new Asset(
 			$this->mapper->recordsFor($assetName),
 			$this->recordNodeSet,
 			$this->recordSetNodeSet
