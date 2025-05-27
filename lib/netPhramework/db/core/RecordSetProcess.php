@@ -2,14 +2,21 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\common\Utils;
+use netPhramework\core\Component;
+use netPhramework\exceptions\NotFound;
 
-class RecordSetProcess extends Leaf
+abstract class RecordSetProcess extends RecordSetNode
 {
-	public function handleExchange(Exchange $exchange): void
+	public function __construct(protected readonly ?string $name = null) {}
+
+	public function getName(): string
 	{
-		// TODO: Implement handleExchange() method.
+		return $this->name ?? Utils::camelToKebab(Utils::baseClassName($this));
 	}
 
+	public function getChild(string $name): Component
+	{
+		throw new NotFound("Not Found: $name");
+	}
 }

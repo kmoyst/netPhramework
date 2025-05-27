@@ -3,12 +3,13 @@
 namespace netPhramework\core;
 
 use netPhramework\exceptions\ComponentNotFound;
+use netPhramework\exceptions\InvalidUri;
 
 interface Component
 {
-
     /**
      * @param Exchange $exchange
+	 * @throws InvalidUri
      * @return void
      */
 	public function handleExchange(Exchange $exchange):void;

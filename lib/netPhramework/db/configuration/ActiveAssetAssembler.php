@@ -41,7 +41,7 @@ class ActiveAssetAssembler extends AssetAssembler
 		?Redirector    $onSuccess = null,
 		?string        $processName = 'insert'): self
 	{
-		$this->process(new Insert($saveProcess, $onSuccess, $processName));
+		$this->node(new Insert($saveProcess, $onSuccess, $processName));
 		return $this;
 	}
 
@@ -50,7 +50,7 @@ class ActiveAssetAssembler extends AssetAssembler
 		?Redirector    $onSuccess = null,
 		?string        $processName = 'update'): self
 	{
-		$this->process(new Update($saveProcess, $onSuccess, $processName));
+		$this->node(new Update($saveProcess, $onSuccess, $processName));
 		return $this;
 	}
 
@@ -68,7 +68,7 @@ class ActiveAssetAssembler extends AssetAssembler
 		string      $processName = 'delete'
 	): self
 	{
-		$this->process(new Delete($onSuccess, $processName));
+		$this->node(new Delete($onSuccess, $processName));
 		return $this;
 	}
 }

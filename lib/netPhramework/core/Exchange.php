@@ -7,6 +7,7 @@ use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\MutablePath;
 use netPhramework\dispatching\Location;
+use netPhramework\exceptions\InvalidUri;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\View;
 use netPhramework\rendering\ConfigurableView;
@@ -37,11 +38,9 @@ interface Exchange
 		View $view, ResponseCode $code):ConfigurableView;
 
 	/**
-	 * Configures the Exchange for a Redirection Response
-	 *
 	 * @param Redirector $fallback
-	 * @return Variables - mutable parameters for destination Location
-	 * @throws Exception
+	 * @return Variables
+	 * @throws InvalidUri
 	 */
 	public function redirect(Redirector $fallback):Variables;
 

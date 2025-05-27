@@ -43,7 +43,7 @@ class PassiveAssetAssembler extends AssetAssembler
 		string          $processName = '',
 		?ColumnMapper   $columnMapper = null): self
 	{
-		$this->process(new Browse(
+		$this->node(new Browse(
 			$columnSetStrategy, $processName, $columnMapper));
 		return $this;
 	}
@@ -52,7 +52,7 @@ class PassiveAssetAssembler extends AssetAssembler
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'edit'): self
 	{
-		$this->process(new Edit($formStrategy, $processName));
+		$this->node(new Edit($formStrategy, $processName));
 		return $this;
 	}
 
@@ -67,7 +67,7 @@ class PassiveAssetAssembler extends AssetAssembler
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'add'): self
 	{
-		$this->process(new Add($formStrategy, $processName));
+		$this->node(new Add($formStrategy, $processName));
 		return $this;
 	}
 }
