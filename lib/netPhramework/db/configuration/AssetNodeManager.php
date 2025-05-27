@@ -1,8 +1,13 @@
 <?php
 
-namespace netPhramework\db\core;
+namespace netPhramework\db\configuration;
 
-class NodeManager
+use netPhramework\db\core\RecordNode;
+use netPhramework\db\core\RecordNodeSet;
+use netPhramework\db\core\RecordSetNode;
+use netPhramework\db\core\RecordSetNodeSet;
+
+class AssetNodeManager
 {
 	private RecordSetNodeSet $recordSetNodeSet;
 	private RecordNodeSet 	 $recordNodeSet;

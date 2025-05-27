@@ -2,7 +2,6 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\core\Exception;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\processes\Delete;
 use netPhramework\db\processes\Insert;
@@ -18,7 +17,6 @@ class ActiveAssetAssembler extends AssetAssembler
      * them to the Directory.
      *
      * @return self
-     * @throws Exception
      */
     public function addAllAssetsWithDefaults():self
     {

@@ -15,7 +15,7 @@ class Configuration
 	 */
     public function configurePassiveNode(Directory $directory):void
 	{
-		$directory->leaf(new Page(
+		$directory->addChild(new Page(
 			'getting-started','','Welcome to netPhramework'));
 	}
 

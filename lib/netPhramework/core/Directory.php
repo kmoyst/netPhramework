@@ -16,9 +16,10 @@ final class Directory implements Component
 		$this->children = new ComponentSet();
 	}
 
-	public function addChild(Component $component):void
+	public function addChild(Component $component):self
 	{
 		$this->children->add($component);
+		return $this;
 	}
 
     public function getChild(string $name): Component

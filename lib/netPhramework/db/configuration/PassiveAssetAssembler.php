@@ -2,7 +2,6 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\core\Exception;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
@@ -19,7 +18,6 @@ class PassiveAssetAssembler extends AssetAssembler
      * them to the Directory.
      *
      * @return self
-     * @throws Exception
      */
     public function addAllAssetsWithDefaults():self
     {

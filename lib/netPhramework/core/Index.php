@@ -20,8 +20,8 @@ class Index extends Page
 		foreach($this->components as $name => $component)
 		{
 			$desc = Utils::kebabToSpace($name);
-			if($component instanceof Composite)
-				$name .= '/';
+			//if($component instanceof Composite)
+			//	$name .= '/';
 			$links[$name] = $desc;
 		}
 		ksort($links);
