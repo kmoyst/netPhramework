@@ -2,17 +2,30 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Node;
 use netPhramework\core\CompositeTrait;
+use netPhramework\core\Node;
 
 class Asset implements Node
 {
 	use CompositeTrait;
 
-	public function __construct(
-		private readonly RecordSet        $recordSet,
-		private readonly RecordSetNodeSet $recordSetNodeSet,
-		private readonly RecordNodeSet    $recordNodeSet) {}
+	private RecordSet $recordSet;
+	private RecordNodeSet $recordNodeSet;
+	private RecordSetNodeSet $recordSetProcessSet;
+
+	/**
+	 * @param RecordSet $recordSet
+	 * @param RecordNodeSet $recordNodeSet
+	 * @param RecordSetNodeSet $recordSetProcessSet
+	 */
+	public function __construct(RecordSet        $recordSet,
+								RecordNodeSet    $recordNodeSet,
+								RecordSetNodeSet $recordSetProcessSet)
+	{
+		$this->recordSet = $recordSet;
+		$this->recordNodeSet = $recordNodeSet;
+		$this->recordSetProcessSet = $recordSetProcessSet;
+	}
 
 	public function getRecordSet(): RecordSet
 	{
@@ -23,15 +36,16 @@ class Asset implements Node
 	{
 		if(is_numeric($name))
 		{
-			$composite = new RecordNodeComposite();
-			$composite->setRecord($this->recordSet->getRecord($name));
-			$composite->setNodeSet($this->recordNodeSet);
-			return $composite;
+			return new RecordNodeComposite()
+				->setRecord($this->recordSet->getRecord($name))
+				->setNodeSet($this->recordNodeSet)
+				;
 		}
 		else
 		{
-			$process = $this->recordSetNodeSet->getNode($name);
-			return $process->setRecordSet($this->recordSet);
+			return $this->recordSetProcessSet->get($name)
+				->setRecordSet($this->recordSet)
+				;
 		}
 	}
 

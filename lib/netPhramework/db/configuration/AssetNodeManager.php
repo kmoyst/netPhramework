@@ -26,11 +26,11 @@ class AssetNodeManager
 
 	public function addRecordNode(RecordNode $node):void
 	{
-		$this->recordNodeSet->addNode($node);
+		$this->recordNodeSet->add($node);
 	}
 
 	public function addRecordSetNode(RecordSetNode $node):void
 	{
-		$this->recordSetNodeSet->addNode($node);
+		$this->recordSetNodeSet->add($node);
 	}
 }

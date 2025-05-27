@@ -2,23 +2,64 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\core\Directory;
 use netPhramework\db\core\Asset;
 use netPhramework\db\core\AssetNode;
+use netPhramework\db\core\RecordChild;
 use netPhramework\db\core\RecordNodeSet;
 use netPhramework\db\core\RecordSetNodeSet;
+use netPhramework\core\Directory;
 
 class AssetComposer
 {
 	protected RecordSetNodeSet $recordSetNodeSet;
 	protected RecordNodeSet $recordNodeSet;
 	protected AssetNodeManager $nodeManager;
+	protected RecordMapper $mapper;
+	protected ?CompositeAdapter $adapter;
 
 	public function __construct(
-		protected readonly Directory $directory,
-		protected readonly RecordMapper $recordMapper)
+		RecordMapper $mapper,
+		?CompositeAdapter $adapter = null)
 	{
+		$this->mapper = $mapper;
+		$this->adapter = $adapter;
 		$this->reset();
+	}
+
+	/**
+	 * Convenience method to wrap a Directory in an adapter
+	 *
+	 * @param Directory $directory
+	 * @return $this
+	 */
+	public function adaptToDirectory(Directory $directory): self
+	{
+		$this->setAdapter(new DirectoryAdapter($directory));
+		return $this;
+	}
+
+	/**
+	 * Convenience method to wrap a RecordChild Node in an adapter
+	 *
+	 * @param RecordChild $child
+	 * @return $this
+	 */
+	public function adaptToRecordChild(RecordChild $child): self
+	{
+		$this->setAdapter(new RecordChildAdapter($child));
+		return $this;
+	}
+
+	/**
+	 * Adapter that allows the addition of Assets
+	 *
+	 * @param CompositeAdapter $adapter
+	 * @return $this
+	 */
+	public function setAdapter(CompositeAdapter $adapter): self
+	{
+		$this->adapter = $adapter;
+		return $this;
 	}
 
 	protected function reset():void
@@ -31,7 +72,7 @@ class AssetComposer
 
 	public function strategy(AssetNodeStrategy $strategy):self
 	{
-		$this->node($strategy->createNode($this->recordMapper));
+		$this->node($strategy->createNode($this->mapper));
 		return $this;
 	}
 
@@ -43,10 +84,10 @@ class AssetComposer
 
 	public function commit(string $assetName): self
 	{
-		$this->directory->add(new Asset(
-			$this->recordMapper->recordsFor($assetName),
-			$this->recordSetNodeSet,
-			$this->recordNodeSet
+		$this->adapter->addAsset(new Asset(
+			$this->mapper->recordsFor($assetName),
+			$this->recordNodeSet,
+			$this->recordSetNodeSet
 		));
 		$this->reset();
 		return $this;

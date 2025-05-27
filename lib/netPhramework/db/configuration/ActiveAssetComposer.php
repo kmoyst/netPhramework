@@ -20,7 +20,7 @@ class ActiveAssetComposer extends AssetComposer
      */
     public function addAllAssetsWithDefaults():self
     {
-        foreach($this->recordMapper->listAllRecordSets() as $name)
+        foreach($this->mapper->listAllRecordSets() as $name)
             $this->defaults()->commit($name);
         return $this;
     }
