@@ -8,7 +8,7 @@ use netPhramework\db\processes\Insert;
 use netPhramework\db\processes\Update;
 use netPhramework\dispatching\redirectors\Redirector;
 
-class ActiveAssetAssembler extends AssetAssembler
+class ActiveAssetComposer extends AssetComposer
 {
     /**
      * This is a potent method, only meant to be used during initial

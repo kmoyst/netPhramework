@@ -2,10 +2,10 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Composite;
 
-class RecordNodeComposite implements Component
+class RecordNodeComposite implements Node
 {
 	use Composite;
 
@@ -24,7 +24,7 @@ class RecordNodeComposite implements Component
 		return $this;
 	}
 
-	public function getChild(string $name): Component
+	public function getChild(string $name): Node
 	{
 		$node = $this->nodeSet->getNode($name);
 		$node->setRecord($this->record);

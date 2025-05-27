@@ -3,7 +3,7 @@
 namespace netPhramework\authentication\components;
 
 use netPhramework\authentication\LogInManager;
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
@@ -11,7 +11,7 @@ use netPhramework\dispatching\rerouters\RerouteToSibling;
 use netPhramework\dispatching\rerouters\Rerouter;
 use netPhramework\rendering\View;
 
-class LogInPage implements Component
+class LogInPage implements Node
 {
 	use Leaf;
 

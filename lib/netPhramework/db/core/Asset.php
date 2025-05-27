@@ -2,10 +2,10 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Composite;
 
-class Asset implements Component
+class Asset implements Node
 {
 	use Composite;
 
@@ -19,7 +19,7 @@ class Asset implements Component
 		return $this->recordSet;
 	}
 
-	public function getChild(string $name): Component
+	public function getChild(string $name): Node
 	{
 		if(is_numeric($name))
 		{

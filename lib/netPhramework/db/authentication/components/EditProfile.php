@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\authentication\components;
 
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\db\authentication\EnrolledUserField;
@@ -16,7 +16,7 @@ use netPhramework\exceptions\InvalidSession;
 use netPhramework\presentation\FormInput\InputSet;
 use netPhramework\rendering\View;
 
-class EditProfile implements Component
+class EditProfile implements Node
 {
 	use Leaf;
 

@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class Page implements Component
+class Page implements Node
 {
 	use Leaf;
 

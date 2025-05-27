@@ -4,7 +4,7 @@ namespace netPhramework\authentication\components;
 
 use netPhramework\authentication\Authenticator;
 use netPhramework\authentication\LogInManager;
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
@@ -13,7 +13,7 @@ use netPhramework\dispatching\redirectors\RedirectToSibling as ToSibling;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 
-class Authenticate implements Component
+class Authenticate implements Node
 {
 	use Leaf;
 

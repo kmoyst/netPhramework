@@ -2,11 +2,11 @@
 
 namespace netPhramework\core;
 use Iterator;
-class ComponentSet implements Iterator
+class NodeSet implements Iterator
 {
     private array $components = [];
 
-	public function add(Component $component):void
+	public function add(Node $component):void
 	{
 		$this->components[$component->getName()] = $component;
 	}
@@ -16,7 +16,7 @@ class ComponentSet implements Iterator
 		return array_key_exists($name, $this->components);
 	}
 
-	public function get(string $name):Component
+	public function get(string $name):Node
 	{
 		return $this->components[$name];
 	}
@@ -26,7 +26,7 @@ class ComponentSet implements Iterator
 		return array_keys($this->components);
 	}
 
-    public function current(): Component
+    public function current(): Node
     {
         return current($this->components);
     }

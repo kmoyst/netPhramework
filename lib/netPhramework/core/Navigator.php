@@ -7,10 +7,10 @@ use netPhramework\exceptions\ComponentNotFound;
 
 class Navigator
 {
-	private Component $root;
+	private Node $root;
 	private Path $path;
 
-	public function setRoot(Component $root): Navigator
+	public function setRoot(Node $root): Navigator
 	{
 		$this->root = $root;
 		return $this;
@@ -23,23 +23,23 @@ class Navigator
 	}
 
 	/**
-	 * @return Component
+	 * @return Node
 	 * @throws ComponentNotFound
 	 * @throws Exception
 	 */
-	public function navigate():Component
+	public function navigate():Node
 	{
         return $this->traverse($this->root, $this->path);
 	}
 
 	/**
-	 * @param Component $component
+	 * @param Node $component
 	 * @param Path|null $path
-	 * @return Component
+	 * @return Node
 	 * @throws ComponentNotFound
 	 * @throws Exception
 	 */
-    private function traverse(Component $component, ?Path $path):Component
+    private function traverse(Node $component, ?Path $path):Node
     {
         if($path === null) return $component;
         $child = $component->getChild($path->getName());

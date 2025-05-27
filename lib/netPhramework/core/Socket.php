@@ -8,10 +8,10 @@ use netPhramework\rendering\Wrapper;
 
 readonly class Socket
 {
-	private Component $root;
+	private Node $root;
     private Wrapper $wrapper;
 
-    public function __construct(Component $root, Wrapper $wrapper)
+    public function __construct(Node $root, Wrapper $wrapper)
     {
         $this->root = $root;
         $this->wrapper = $wrapper;

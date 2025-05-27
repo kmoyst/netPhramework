@@ -8,7 +8,7 @@ use netPhramework\db\core\AssetNode;
 use netPhramework\db\core\RecordNodeSet;
 use netPhramework\db\core\RecordSetNodeSet;
 
-class AssetAssembler
+class AssetComposer
 {
 	protected RecordSetNodeSet $recordSetNodeSet;
 	protected RecordNodeSet $recordNodeSet;
@@ -43,7 +43,7 @@ class AssetAssembler
 
 	public function commit(string $assetName): self
 	{
-		$this->directory->addChild(new Asset(
+		$this->directory->add(new Asset(
 			$this->recordMapper->recordsFor($assetName),
 			$this->recordSetNodeSet,
 			$this->recordNodeSet

@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\authentication\components;
 
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
@@ -18,7 +18,7 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\dispatching\redirectors\RedirectToSibling;
 use netPhramework\exceptions\InvalidSession;
 
-class SaveProfile implements Component
+class SaveProfile implements Node
 {
 	use Leaf;
 

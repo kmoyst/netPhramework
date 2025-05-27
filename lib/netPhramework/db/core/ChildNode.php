@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Composite;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Operator;
@@ -14,7 +14,7 @@ class ChildNode extends RecordNode
 	private Asset $child;
 	private string $parentIdField;
 
-	public function getChild(string $name): Component
+	public function getChild(string $name): Node
 	{
 		$recordSet  = $this->child->getRecordSet();
 		$field		= $recordSet->getField($this->parentIdField);

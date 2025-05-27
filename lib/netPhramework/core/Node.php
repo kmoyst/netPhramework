@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\exceptions\ComponentNotFound;
 use netPhramework\exceptions\InvalidUri;
 
-interface Component
+interface Node
 {
     /**
      * @param Exchange $exchange
@@ -16,11 +16,11 @@ interface Component
 
 	/**
 	 * @param string $name
-	 * @return Component
+	 * @return Node
 	 * @throws ComponentNotFound
      * @throws Exception
 	 */
-	public function getChild(string $name):Component;
+	public function getChild(string $name):Node;
 
 	/**
 	 * @return string

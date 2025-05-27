@@ -2,7 +2,7 @@
 
 namespace netPhramework\authentication\components;
 
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
@@ -10,7 +10,7 @@ use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\dispatching\redirectors\RedirectToRoot;
 use netPhramework\exceptions\InvalidSession;
 
-class LogOut implements Component
+class LogOut implements Node
 {
 	use Leaf;
 

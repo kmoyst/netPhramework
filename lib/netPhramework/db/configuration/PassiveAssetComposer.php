@@ -9,7 +9,7 @@ use netPhramework\db\processes\Add;
 use netPhramework\db\processes\Browse;
 use netPhramework\db\processes\Edit;
 
-class PassiveAssetAssembler extends AssetAssembler
+class PassiveAssetComposer extends AssetComposer
 {
     /**
      * This is a potent method, only meant to be used during initial

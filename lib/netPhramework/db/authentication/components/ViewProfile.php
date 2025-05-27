@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\authentication\components;
 
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\db\authentication\EnrolledUserField;
@@ -15,7 +15,7 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 
-class ViewProfile implements Component
+class ViewProfile implements Node
 {
 	use Leaf;
 

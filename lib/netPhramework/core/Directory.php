@@ -4,25 +4,25 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\ComponentNotFound;
 
-final class Directory implements Component
+final class Directory implements Node, Composable
 {
 	use Composite;
 
-	private ComponentSet $children;
+	private NodeSet $children;
     private string|Index $index;
 
     public function __construct(private readonly string $name)
 	{
-		$this->children = new ComponentSet();
+		$this->children = new NodeSet();
 	}
 
-	public function addChild(Component $component):self
+	public function add(Node $component):self
 	{
 		$this->children->add($component);
 		return $this;
 	}
 
-    public function getChild(string $name): Component
+    public function getChild(string $name): Node
     {
         if($this->children->has($name))
             return $this->children->get($name);

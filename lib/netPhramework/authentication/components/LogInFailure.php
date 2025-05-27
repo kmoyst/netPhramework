@@ -2,12 +2,12 @@
 
 namespace netPhramework\authentication\components;
 
-use netPhramework\core\Component;
+use netPhramework\core\Node;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
 use netPhramework\rendering\View;
 
-class LogInFailure implements Component
+class LogInFailure implements Node
 {
 	use Leaf;
 
