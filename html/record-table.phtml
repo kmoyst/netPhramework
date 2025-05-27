@@ -14,12 +14,12 @@
 				<td class="<?=$name?>"><?=$cell?></td>
 			<?}?>
 			<td class="rowButtons">
-				<form name="edit<?=$id?>" action="<?="$actionPrefix$id/edit"?>"
+				<form name="edit<?=$id?>" action="<?="$actionPrefix/$id/edit"?>"
 					  method="get" class="inlineButton">
 					<input type="submit" name="action" value="Edit"/>
                     <?=$callbackInput?>
 				</form>
-				<form name="delete<?=$id?>" action="<?="$actionPrefix$id/delete"?>"
+				<form name="delete<?=$id?>" action="<?="$actionPrefix/$id/delete"?>"
 					  method="post" class="inlineButton"
                       enctype="application/x-www-form-urlencoded">
 					<input type="submit" name="action" value="Delete"/>

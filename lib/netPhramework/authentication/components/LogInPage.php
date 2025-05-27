@@ -32,7 +32,7 @@ class LogInPage implements Node
 		;
 		$formAction = $exchange->getPath();
         $relocator  = $this->forForm??new RerouteToSibling('authenticate');
-        $relocator->relocate($formAction)
+        $relocator->reroute($formAction)
 		;
         $errorView    = $exchange->getSession()->getEncodableValue();
         $responseCode = $exchange->getSession()->resolveResponseCode()

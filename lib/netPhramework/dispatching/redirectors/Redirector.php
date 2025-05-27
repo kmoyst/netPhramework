@@ -23,7 +23,7 @@ readonly class Redirector
 	 */
 	public function dispatch(Redirectable $redirectable):void
 	{
-		$this->relocator->relocate($redirectable->getPath());
+		$this->relocator->reroute($redirectable->getPath());
 		$redirectable->getParameters()->merge($this->parameters ?? []);
 		$redirectable->setResponseCode($this->code);
 	}
