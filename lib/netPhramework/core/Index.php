@@ -20,7 +20,7 @@ class Index extends Page
 		foreach($this->components as $name => $component)
 		{
 			$desc = Utils::kebabToSpace($name);
-			//if($component instanceof Composite)
+			//if($component instanceof CompositeTrait)
 			//	$name .= '/';
 			$links[$name] = $desc;
 		}

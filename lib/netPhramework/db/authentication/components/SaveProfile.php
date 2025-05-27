@@ -5,7 +5,7 @@ namespace netPhramework\db\authentication\components;
 use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\db\authentication\EnrolledUserField;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;
@@ -20,7 +20,7 @@ use netPhramework\exceptions\InvalidSession;
 
 class SaveProfile implements Node
 {
-	use Leaf;
+	use LeafTrait;
 
 	public function __construct(
 		private readonly RecordFinder $userRecords,

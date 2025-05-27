@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\dispatching\redirectors\RedirectToChild;
 use netPhramework\exceptions\InvalidUri;
 
-trait Composite
+trait CompositeTrait
 {
 	/**
 	 * @param Exchange $exchange
@@ -15,5 +15,25 @@ trait Composite
 	public function handleExchange(Exchange $exchange): void
 	{
 		$exchange->redirect(new RedirectToChild('',$exchange->getParameters()));
+	}
+
+	/**
+	 * Check if node is a composite
+	 *
+	 * @return bool
+	 */
+	public function isComposite():bool
+	{
+		return true;
+	}
+
+	/**
+	 * Test if node is a Leaf
+	 *
+	 * @return bool
+	 */
+	public function isLeaf():bool
+	{
+		return false;
 	}
 }

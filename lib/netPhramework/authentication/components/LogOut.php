@@ -5,14 +5,14 @@ namespace netPhramework\authentication\components;
 use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\dispatching\redirectors\RedirectToRoot;
 use netPhramework\exceptions\InvalidSession;
 
 class LogOut implements Node
 {
-	use Leaf;
+	use LeafTrait;
 
 	public function __construct(
 		private readonly ?Redirector $dispatcher = null,

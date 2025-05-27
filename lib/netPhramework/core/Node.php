@@ -26,4 +26,18 @@ interface Node
 	 * @return string
 	 */
 	public function getName():string;
+
+	/**
+	 * Check if node is a composite
+	 *
+	 * @return bool
+	 */
+	public function isComposite():bool;
+
+	/**
+	 * Test if node is a Leaf
+	 *
+	 * @return bool
+	 */
+	public function isLeaf():bool;
 }

@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\components;
 
 use netPhramework\core\Node;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\db\authentication\EnrolledUserField;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;
@@ -18,7 +18,7 @@ use netPhramework\rendering\View;
 
 class EditProfile implements Node
 {
-	use Leaf;
+	use LeafTrait;
 
 	public function __construct(
 		private readonly RecordFinder $userRecords,

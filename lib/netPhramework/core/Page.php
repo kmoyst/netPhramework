@@ -7,7 +7,7 @@ use netPhramework\rendering\View;
 
 class Page implements Node
 {
-	use Leaf;
+	use LeafTrait;
 
     protected View $view;
     protected string $templateName;

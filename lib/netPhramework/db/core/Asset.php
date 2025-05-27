@@ -3,11 +3,11 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Node;
-use netPhramework\core\Composite;
+use netPhramework\core\CompositeTrait;
 
 class Asset implements Node
 {
-	use Composite;
+	use CompositeTrait;
 
 	public function __construct(
 		private readonly RecordSet        $recordSet,

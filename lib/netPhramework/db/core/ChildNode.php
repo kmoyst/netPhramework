@@ -3,13 +3,13 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Node;
-use netPhramework\core\Composite;
+use netPhramework\core\CompositeTrait;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Operator;
 
 class ChildNode extends RecordNode
 {
-	use Composite;
+	use CompositeTrait;
 
 	private Asset $child;
 	private string $parentIdField;

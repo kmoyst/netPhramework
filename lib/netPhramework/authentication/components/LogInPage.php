@@ -6,14 +6,14 @@ use netPhramework\authentication\LogInManager;
 use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\dispatching\rerouters\RerouteToSibling;
 use netPhramework\dispatching\rerouters\Rerouter;
 use netPhramework\rendering\View;
 
 class LogInPage implements Node
 {
-	use Leaf;
+	use LeafTrait;
 
     public function __construct(
 		string $name = 'log-in',

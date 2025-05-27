@@ -4,5 +4,5 @@ namespace netPhramework\core;
 
 interface Composable
 {
-	public function add(Node $component):self;
+	public function add(Node $node):self;
 }

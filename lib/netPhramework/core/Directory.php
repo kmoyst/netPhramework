@@ -6,7 +6,7 @@ use netPhramework\exceptions\ComponentNotFound;
 
 final class Directory implements Node, Composable
 {
-	use Composite;
+	use CompositeTrait;
 
 	private NodeSet $children;
     private string|Index $index;
@@ -16,9 +16,9 @@ final class Directory implements Node, Composable
 		$this->children = new NodeSet();
 	}
 
-	public function add(Node $component):self
+	public function add(Node $node):self
 	{
-		$this->children->add($component);
+		$this->children->add($node);
 		return $this;
 	}
 

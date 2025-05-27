@@ -3,11 +3,11 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Node;
-use netPhramework\core\Composite;
+use netPhramework\core\CompositeTrait;
 
 class RecordNodeComposite implements Node
 {
-	use Composite;
+	use CompositeTrait;
 
 	private Record $record;
 	private RecordNodeSet $nodeSet;
