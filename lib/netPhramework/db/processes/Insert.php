@@ -5,7 +5,6 @@ namespace netPhramework\db\processes;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\core\RecordProcess;
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -19,22 +18,21 @@ class Insert extends RecordSetProcess
         private readonly ?Redirector    $dispatcher = null,
 		?string                         $name = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
     /**
      * @param Exchange $exchange
-     * @param RecordSet $recordSet
      * @return void
      * @throws Exception
      * @throws FieldAbsent
      * @throws MappingException
      */
-	public function handleExchange(
-        Exchange $exchange, RecordSet $recordSet): void
+	public function handleExchange(Exchange $exchange): void
 	{
         ($this->saveProcess ??
             new Save($this->dispatcher ?? new RedirectToParent('')))
-			    ->handleExchange($exchange, $recordSet->newRecord());
+				->setRecord($this->recordSet->newRecord())
+			    ->handleExchange($exchange);
 	}
 }

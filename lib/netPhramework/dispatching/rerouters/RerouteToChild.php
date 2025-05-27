@@ -6,7 +6,7 @@ use netPhramework\dispatching\Reroutable;
 
 readonly class RerouteToChild extends Rerouter
 {
-	public function relocate(Reroutable $path): void
+	public function reroute(Reroutable $path): void
 	{
 		$path->append($this->subPath);
 	}

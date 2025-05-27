@@ -4,7 +4,6 @@ namespace netPhramework\db\processes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -25,21 +24,21 @@ class Browse extends RecordSetProcess
 		?string $name = null,
 		private readonly ?ColumnMapper   $columnMapper = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
 	/**
 	 * @param Exchange $exchange
-	 * @param RecordSet $recordSet
 	 * @return void
 	 * @throws MappingException
 	 * @throws FieldAbsent
 	 * @throws ValueInaccessible
 	 * @throws Exception
 	 */
-	public function handleExchange(
-		Exchange $exchange, RecordSet $recordSet): void
+	public function handleExchange(Exchange $exchange): void
 	{
+		$recordSet = $this->recordSet
+		;
 		$filterContext = new FilterContext()
 			->setRecordSet($recordSet)
 			->setVariables($exchange->getParameters())
@@ -77,7 +76,7 @@ class Browse extends RecordSetProcess
 			->add('headers', 		$columnSet->getHeaders())
 			->add('rows', 			$rowSetBuilder->getRowSet())
 			->add('callbackInput', 	$callbackInput)
-			->add('actionPrefix', 	$recordSet->getName())
+			->add('actionPrefix', 	$exchange->getPath()->pop())
 		;
 		$addButtonForm = new View('add-button-form');
 		$addButtonForm->getVariables()->add('callbackInput', $callbackInput)

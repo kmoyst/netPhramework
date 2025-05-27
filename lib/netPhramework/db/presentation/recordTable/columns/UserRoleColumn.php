@@ -4,7 +4,7 @@ namespace netPhramework\db\presentation\recordTable\columns;
 
 use netPhramework\authentication\UserRole;
 use netPhramework\db\authentication\EnrolledUserField;
-use netPhramework\db\core\Record;
+use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordTable\Column;
 use netPhramework\db\presentation\recordTable\ColumnHeader;
 use netPhramework\rendering\Encodable;
@@ -14,6 +14,11 @@ class UserRoleColumn implements Column
 	public function getName(): string
 	{
 		return 'role';
+	}
+
+	public function getFilterableValue(Record $record): string
+	{
+		return $this->getSortableValue($record);
 	}
 
 	public function getHeader(): ColumnHeader

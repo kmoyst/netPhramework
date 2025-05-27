@@ -10,17 +10,17 @@ class AdminConfiguration extends Configuration
 {
 	public function __construct(protected readonly RecordMapper $mapper) {}
 
-	public function configurePassiveNode(Directory $directory): void
+	public function configurePassiveNode(Directory $root): void
 	{
-		$directory->allowIndex();
-		new PassiveAssetAssembler($directory, $this->mapper)
+		$root->allowIndex();
+		new PassiveAssetComposer($this->mapper, $root)
 			->addAllAssetsWithDefaults()
 		;
 	}
 
-	public function configureActiveNode(Directory $directory): void
+	public function configureActiveNode(Directory $root): void
 	{
-		new ActiveAssetAssembler($directory, $this->mapper)
+		new ActiveAssetComposer($this->mapper, $root)
 			->addAllAssetsWithDefaults()
 		;
 	}

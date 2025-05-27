@@ -2,30 +2,56 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Component;
-use netPhramework\core\Composite;
+use netPhramework\core\CompositeTrait;
+use netPhramework\core\Node;
+use netPhramework\db\mapping\RecordSet;
 
-final class Asset extends Composite
+class Asset implements Node
 {
-	public function __construct(
-		private readonly RecordSet           $recordSet,
-		private readonly RecordSetProcessSet $processSet,
-		private readonly RecordProcessSet    $recordProcessSet) {}
+	use CompositeTrait;
 
-	public function getChild(string $name): Component
-    {
-        if (is_numeric($name))
-            return new RecordActionComposite(
-                $this->recordProcessSet,
-                $this->recordSet->getRecord($name));
-        else
-            return new RecordSetAction(
-                $this->recordSet,
-                $this->processSet->getProcess($name));
-    }
+	private RecordSet $recordSet;
+	private RecordChildSet $recordNodeSet;
+	private RecordSetProcessSet $recordSetProcessSet;
 
-    public function getName(): string
-    {
-        return $this->recordSet->getName();
-    }
+	/**
+	 * @param RecordSet $recordSet
+	 * @param RecordChildSet $recordNodeSet
+	 * @param RecordSetProcessSet $recordSetProcessSet
+	 */
+	public function __construct(RecordSet           $recordSet,
+								RecordChildSet      $recordNodeSet,
+								RecordSetProcessSet $recordSetProcessSet)
+	{
+		$this->recordSet = $recordSet;
+		$this->recordNodeSet = $recordNodeSet;
+		$this->recordSetProcessSet = $recordSetProcessSet;
+	}
+
+	public function getRecordSet(): RecordSet
+	{
+		return $this->recordSet;
+	}
+
+	public function getChild(string $name): Node
+	{
+		if(is_numeric($name))
+		{
+			return new RecordComposite()
+				->setRecord($this->recordSet->getRecord($name))
+				->setNodeSet($this->recordNodeSet)
+				;
+		}
+		else
+		{
+			return $this->recordSetProcessSet->get($name)
+				->setRecordSet($this->recordSet)
+				;
+		}
+	}
+
+	public function getName(): string
+	{
+		return $this->recordSet->getName();
+	}
 }

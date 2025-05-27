@@ -3,9 +3,9 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use Iterator;
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
+use netPhramework\db\mapping\RecordSet;
 
 class RowSet implements Iterator
 {

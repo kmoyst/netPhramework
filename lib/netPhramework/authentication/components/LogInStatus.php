@@ -2,13 +2,16 @@
 
 namespace netPhramework\authentication\components;
 
+use netPhramework\core\Node;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 
-class LogInStatus extends Leaf
+class LogInStatus implements Node
 {
+	use LeafTrait;
+
 	/**
 	 * @param Exchange $exchange
 	 * @return void

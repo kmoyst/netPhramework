@@ -3,7 +3,6 @@
 namespace netPhramework\db\processes;
 
 use netPhramework\core\Exchange;
-use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
@@ -16,14 +15,14 @@ class Edit extends RecordProcess
 		private readonly ?RecordFormStrategy $formStrategy = null,
 		?string $name = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
-	public function handleExchange(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange): void
 	{
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet = new RecordFormBuilder($strategy)
-			->setRecord($record)
+			->setRecord($this->record)
 			->addRecordInputs()
 			->getInputSet()->addCustom($exchange->callbackFormInput())
 		;

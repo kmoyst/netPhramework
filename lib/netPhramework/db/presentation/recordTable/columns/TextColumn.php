@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordTable\columns;
 
 use netPhramework\common\Utils;
-use netPhramework\db\core\Record;
+use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordTable\Column;
 use netPhramework\db\presentation\recordTable\ColumnHeader;
 use netPhramework\rendering\Encodable;
@@ -30,6 +30,11 @@ class TextColumn implements Column
 	{
 		$this->width = $width;
 		return $this;
+	}
+
+	public function getFilterableValue(Record $record): string
+	{
+		return $this->getSortableValue($record);
 	}
 
 	public function getSortableValue(Record $record): string

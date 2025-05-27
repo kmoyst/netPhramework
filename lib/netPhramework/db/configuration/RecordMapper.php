@@ -3,7 +3,7 @@
 namespace netPhramework\db\configuration;
 
 use netPhramework\db\abstraction\Database;
-use netPhramework\db\core\RecordSet;
+use netPhramework\db\mapping\RecordSet;
 
 readonly class RecordMapper implements RecordAccess
 {
@@ -26,14 +26,9 @@ readonly class RecordMapper implements RecordAccess
 		return new RecordSet($name, $schema, $table);
 	}
 
-	public function oneToManyFor(
-		string $parentName,
-		string $childName,
-		string $linkFieldName):OneToMany
+	public function oneToManyFor(string $name, string $linkField):OneToMany
 	{
-		$parentRs = $this->recordsFor($parentName);
-		$childRs  = $this->recordsFor($childName);
-		return new OneToMany($parentRs, $childRs, $linkFieldName);
+		return new OneToMany($linkField, $this->recordsFor($name));
 	}
 
     public function listAllRecordSets():array

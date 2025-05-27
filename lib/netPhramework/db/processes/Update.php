@@ -4,7 +4,6 @@ namespace netPhramework\db\processes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -18,21 +17,21 @@ class Update extends RecordProcess
 		private readonly ?Redirector    $dispatcher = null,
 		?string                         $name = null)
 	{
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
     /**
      * @param Exchange $exchange
-     * @param Record $record
      * @return void
      * @throws FieldAbsent
      * @throws MappingException
      * @throws Exception
      */
-	public function handleExchange(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange): void
 	{
         ($this->saveProcess ??
 			new Save($this->dispatcher ?? new RedirectToParent('')))
-			    ->handleExchange($exchange, $record);
+				->setRecord($this->record)
+			    ->handleExchange($exchange);
     }
 }

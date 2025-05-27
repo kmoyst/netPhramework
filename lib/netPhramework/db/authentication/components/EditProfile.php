@@ -2,8 +2,9 @@
 
 namespace netPhramework\db\authentication\components;
 
+use netPhramework\core\Node;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\db\authentication\EnrolledUserField;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;
@@ -15,11 +16,16 @@ use netPhramework\exceptions\InvalidSession;
 use netPhramework\presentation\FormInput\InputSet;
 use netPhramework\rendering\View;
 
-class EditProfile extends Leaf
+class EditProfile implements Node
 {
+	use LeafTrait;
+
 	public function __construct(
 		private readonly RecordFinder $userRecords,
-		string $name = 'edit-profile') { parent::__construct($name); }
+		string $name = 'edit-profile')
+	{
+		$this->name = $name;
+	}
 
 	/**
 	 * @param Exchange $exchange

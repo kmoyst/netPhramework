@@ -2,18 +2,26 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
-use netPhramework\db\core\Record;
+use netPhramework\db\mapping\RecordSet;
+use netPhramework\db\mapping\Record;
 
 class OneToMany
 {
-	public function __construct(
-		private readonly RecordSet $parentRecords,
-		private readonly RecordSet $childRecords,
-		private readonly string $linkFieldName) {}
+	private string $linkField;
+	private RecordSet $recordSet;
+
+	/**
+	 * @param string $linkField
+	 * @param RecordSet $recordSet
+	 */
+	public function __construct(string $linkField, RecordSet $recordSet)
+	{
+		$this->linkField = $linkField;
+		$this->recordSet = $recordSet;
+	}
 
 	/**
 	 * @param Record $record
@@ -23,10 +31,13 @@ class OneToMany
 	 */
 	public function getChildren(Record $record):RecordSet
 	{
-		$field 	   = $this->childRecords->getField($this->linkFieldName);
-		$linkId    = $record->getId();
-		$condition = new Condition()->setField($field)->setValue($linkId);
-		$this->childRecords->reset()->addCondition($condition);
-		return $this->childRecords;
+		$childRecords = $this->recordSet;
+		$field = $childRecords->getField($this->linkField);
+		$condition = new Condition()
+			->setField($field)
+			->setValue($record->getId())
+		;
+		$childRecords->reset()->addCondition($condition);
+		return $this->recordSet;
 	}
 }

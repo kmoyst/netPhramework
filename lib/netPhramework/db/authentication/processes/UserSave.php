@@ -5,7 +5,6 @@ namespace netPhramework\db\authentication\processes;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\EnrolledUser;
-use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
@@ -27,16 +26,15 @@ class UserSave extends Save
 
 	/**
 	 * @param Exchange $exchange
-	 * @param Record $record
 	 * @return void
 	 * @throws FieldAbsent
 	 * @throws Exception
 	 * @throws MappingException
 	 */
-	public function handleExchange(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange): void
 	{
 		$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
-		$enrolledUser->setRecord($record);
+		$enrolledUser->setRecord($this->record);
 		try {
             $enrolledUser->parseAndSet($exchange->getParameters());
             $enrolledUser->save();

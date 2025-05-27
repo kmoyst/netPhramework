@@ -2,9 +2,10 @@
 
 namespace netPhramework\db\authentication\components;
 
+use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\db\authentication\EnrolledUserField;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;
@@ -17,11 +18,16 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\dispatching\redirectors\RedirectToSibling;
 use netPhramework\exceptions\InvalidSession;
 
-class SaveProfile extends Leaf
+class SaveProfile implements Node
 {
+	use LeafTrait;
+
 	public function __construct(
 		private readonly RecordFinder $userRecords,
-		string $name = 'save-profile') { parent::__construct($name); }
+		string $name = 'save-profile')
+	{
+		$this->name = $name;
+	}
 
     /**
      * @param Exchange $exchange

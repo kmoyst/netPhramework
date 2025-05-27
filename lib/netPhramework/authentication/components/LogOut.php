@@ -2,18 +2,24 @@
 
 namespace netPhramework\authentication\components;
 
+use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\dispatching\redirectors\RedirectToRoot;
 use netPhramework\exceptions\InvalidSession;
 
-class LogOut extends Leaf
+class LogOut implements Node
 {
+	use LeafTrait;
+
 	public function __construct(
 		private readonly ?Redirector $dispatcher = null,
-		?string                      $name = null) { parent::__construct($name); }
+		?string $name = null)
+	{
+		$this->name = $name;
+	}
 
 	/**
 	 * @param Exchange $exchange

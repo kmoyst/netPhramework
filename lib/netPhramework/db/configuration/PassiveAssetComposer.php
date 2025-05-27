@@ -2,7 +2,8 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\core\Exception;
+use netPhramework\db\core\ChildAsset;
+use netPhramework\db\exceptions\ConfigurationException;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
@@ -10,7 +11,7 @@ use netPhramework\db\processes\Add;
 use netPhramework\db\processes\Browse;
 use netPhramework\db\processes\Edit;
 
-class PassiveAssetAssembler extends AssetAssembler
+class PassiveAssetComposer extends AssetComposer
 {
     /**
      * This is a potent method, only meant to be used during initial
@@ -19,11 +20,11 @@ class PassiveAssetAssembler extends AssetAssembler
      * them to the Directory.
      *
      * @return self
-     * @throws Exception
+	 * @throws ConfigurationException
      */
     public function addAllAssetsWithDefaults():self
     {
-        foreach($this->recordMapper->listAllRecordSets() as $name)
+        foreach($this->mapper->listAllRecordSets() as $name)
         {
             $this->defaults()->commit($name);
         }
@@ -38,12 +39,21 @@ class PassiveAssetAssembler extends AssetAssembler
 			->browse();
 	}
 
+	public function childWithDefaults(string $name, string $linkField):self
+	{
+		$composer   = new self($this->mapper);
+		$childAsset = $composer->defaults()->get($name);
+		$childNode  = new ChildAsset($childAsset, $linkField);
+		$this->node($childNode);
+		return $this;
+	}
+
 	public function browse(
 		?ColumnStrategy $columnSetStrategy = null,
 		string          $processName = '',
 		?ColumnMapper   $columnMapper = null): self
 	{
-		$this->process(new Browse(
+		$this->node(new Browse(
 			$columnSetStrategy, $processName, $columnMapper));
 		return $this;
 	}
@@ -52,7 +62,7 @@ class PassiveAssetAssembler extends AssetAssembler
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'edit'): self
 	{
-		$this->process(new Edit($formStrategy, $processName));
+		$this->node(new Edit($formStrategy, $processName));
 		return $this;
 	}
 
@@ -67,7 +77,7 @@ class PassiveAssetAssembler extends AssetAssembler
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'add'): self
 	{
-		$this->process(new Add($formStrategy, $processName));
+		$this->node(new Add($formStrategy, $processName));
 		return $this;
 	}
 }

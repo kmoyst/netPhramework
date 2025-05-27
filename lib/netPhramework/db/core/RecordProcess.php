@@ -2,10 +2,9 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Exchange;
+use netPhramework\core\LeafTrait;
 
-abstract class RecordProcess extends Process
+abstract class RecordProcess extends RecordChild
 {
-	abstract public function handleExchange(
-		Exchange $exchange, Record $record):void;
+	use LeafTrait;
 }

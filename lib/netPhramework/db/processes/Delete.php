@@ -4,7 +4,6 @@ namespace netPhramework\db\processes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\dispatching\redirectors\Redirector;
@@ -18,19 +17,18 @@ class Delete extends RecordProcess
                                 ?string     $name = null)
 	{
         $this->dispatcher = $this->dispatcher ?? new RedirectToParent('');
-		parent::__construct($name);
+		$this->name = $name;
 	}
 
     /**
      * @param Exchange $exchange
-     * @param Record $record
      * @return void
      * @throws MappingException
      * @throws Exception
      */
-	public function handleExchange(Exchange $exchange, Record $record): void
+	public function handleExchange(Exchange $exchange): void
 	{
-		$record->drop();
+		$this->record->drop();
 		$exchange->redirect($this->dispatcher);
 	}
 }

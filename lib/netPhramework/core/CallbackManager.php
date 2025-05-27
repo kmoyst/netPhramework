@@ -8,6 +8,7 @@ use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\MutablePath;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\UriAdapter;
+use netPhramework\exceptions\InvalidUri;
 
 /**
  * A central manager for callbacks usually used by SocketExchange.
@@ -71,9 +72,9 @@ readonly class CallbackManager
 	 * Location's parameters (referenced by callbackKey). Null otherwise.
 	 *
 	 * @return RedirectToRoot|null - dispatcher to callback, null if absent
-	 * @throws Exception
+	 * @throws InvalidUri
 	 */
-	public function callbackDispatcher():?RedirectToRoot
+	public function callbackRedirector():?RedirectToRoot
 	{
 		if(!($callbackUri = $this->fromParameters())) return null;
 		$adapter = new UriAdapter($callbackUri);

@@ -13,5 +13,5 @@ readonly abstract class Rerouter
 	 * @param Reroutable $path
 	 * @return void
 	 */
-    abstract public function relocate(Reroutable $path):void;
+    abstract public function reroute(Reroutable $path):void;
 }

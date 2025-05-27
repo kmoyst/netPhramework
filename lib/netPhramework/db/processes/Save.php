@@ -4,7 +4,6 @@ namespace netPhramework\db\processes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
@@ -21,19 +20,19 @@ class Save extends RecordProcess
         ?string     $name = null)
     {
         $this->onSuccess = $onSuccess ?? new RedirectToParent('');
-        parent::__construct($name);
+        $this->name = $name;
     }
 
     /**
      * @param Exchange $exchange
-     * @param Record $record
      * @return void
      * @throws FieldAbsent
      * @throws MappingException
      * @throws Exception
      */
-	public function handleExchange(Exchange $exchange, Record $record):void
+	public function handleExchange(Exchange $exchange):void
 	{
+		$record = $this->record;
 		try {
 			foreach($exchange->getParameters() as $k => $v)
 				if($record->getCellSet()->has($k))

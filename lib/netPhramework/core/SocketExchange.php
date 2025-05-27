@@ -33,12 +33,12 @@ class SocketExchange implements Exchange
     private Wrapper $wrapper;
 	private Response $response;
 
-	/** @inheritDoc */
+	/** @inheritdoc  */
 	public function redirect(Redirector $fallback):Variables
 	{
 		$redirection = new Redirection(clone $this->path);
-		$callback = $this->callbackManager->callbackDispatcher();
-		($callback ?? $fallback)->dispatch($redirection);
+		$callback = $this->callbackManager->callbackRedirector();
+		($callback ?? $fallback)->redirect($redirection);
 		$this->response = $redirection;
 		return $redirection->getParameters();
 	}

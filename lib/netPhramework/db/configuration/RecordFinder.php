@@ -2,12 +2,12 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\db\core\Record;
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
+use netPhramework\db\mapping\Record;
+use netPhramework\db\mapping\RecordSet;
 
 readonly class RecordFinder
 {

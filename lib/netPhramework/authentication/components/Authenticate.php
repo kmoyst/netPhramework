@@ -4,22 +4,25 @@ namespace netPhramework\authentication\components;
 
 use netPhramework\authentication\Authenticator;
 use netPhramework\authentication\LogInManager;
+use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafTrait;
 use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\dispatching\redirectors\RedirectToSibling as ToSibling;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 
-class Authenticate extends Leaf
+class Authenticate implements Node
 {
+	use LeafTrait;
+
 	public function __construct(
 		private readonly Authenticator $authenticator,
 		private readonly ?Redirector   $onSuccess = null,
         private readonly ?Redirector   $onFailure = null)
 	{
-		parent::__construct('authenticate');
+		$this->name = 'authenticate';
 	}
 
     /**

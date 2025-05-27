@@ -6,9 +6,9 @@ use netPhramework\common\Utils;
 
 class Index extends Page
 {
-	private ComponentSet $components;
+	private NodeSet $components;
 
-	public function setComponents(ComponentSet $components): self
+	public function setComponents(NodeSet $components): self
 	{
 		$this->components = $components;
 		return $this;
@@ -20,8 +20,8 @@ class Index extends Page
 		foreach($this->components as $name => $component)
 		{
 			$desc = Utils::kebabToSpace($name);
-			if($component instanceof Composite)
-				$name .= '/';
+			//if($component instanceof CompositeTrait)
+			//	$name .= '/';
 			$links[$name] = $desc;
 		}
 		ksort($links);

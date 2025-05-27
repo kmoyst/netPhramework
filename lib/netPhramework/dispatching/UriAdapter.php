@@ -3,7 +3,7 @@
 namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
-use netPhramework\core\Exception;
+use netPhramework\exceptions\InvalidUri;
 
 /**
  * Adapts string Uri to MutablePath and Variables
@@ -26,14 +26,14 @@ readonly class UriAdapter
 
 	/**
 	 * @return MutablePath
-	 * @throws Exception
+	 * @throws InvalidUri
 	 */
 	public function getPath():MutablePath
     {
         $path = new MutablePath();
         $pattern = '|^/([^?]*)|';
         if(!preg_match($pattern, $this->uri, $matches))
-			throw new Exception("Invalid Uri: $this->uri");
+			throw new InvalidUri("Invalid Uri: $this->uri");
 		$this->traverseArray($path, explode('/', $matches[1]));
         return $path;
     }

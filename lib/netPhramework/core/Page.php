@@ -5,8 +5,10 @@ namespace netPhramework\core;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class Page extends Leaf
+class Page implements Node
 {
+	use LeafTrait;
+
     protected View $view;
     protected string $templateName;
 
@@ -15,8 +17,8 @@ class Page extends Leaf
 		?string $name = null,
         ?string $title = null)
 	{
-		parent::__construct($name);
         $this->view = new View($templateName, $title);
+		$this->name = $name;
 	}
 
 	public function handleExchange(Exchange $exchange): void

@@ -4,28 +4,27 @@ namespace netPhramework\bootstrap;
 
 use netPhramework\core\Directory;
 use netPhramework\core\Page;
-use netPhramework\rendering\Template;
 use netPhramework\rendering\WrapperConfiguration;
 
 class Configuration
 {
 	/**
-	 * @param Directory $directory
+	 * @param Directory $root
 	 * @return void
 	 * @throws \Exception
 	 */
-    public function configurePassiveNode(Directory $directory):void
+    public function configurePassiveNode(Directory $root):void
 	{
-		$directory->leaf(new Page(
+		$root->add(new Page(
 			'getting-started','','Welcome to netPhramework'));
 	}
 
 	/**
-	 * @param Directory $directory
+	 * @param Directory $root
 	 * @return void
 	 * @throws \Exception
 	 */
-	public function configureActiveNode(Directory $directory):void {}
+	public function configureActiveNode(Directory $root):void {}
 
 	/**
 	 * @param WrapperConfiguration $wrapper

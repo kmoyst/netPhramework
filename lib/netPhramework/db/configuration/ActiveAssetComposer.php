@@ -2,14 +2,15 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\core\Exception;
+use netPhramework\db\core\ChildAsset;
 use netPhramework\db\core\RecordProcess;
+use netPhramework\db\exceptions\ConfigurationException;
 use netPhramework\db\processes\Delete;
 use netPhramework\db\processes\Insert;
 use netPhramework\db\processes\Update;
 use netPhramework\dispatching\redirectors\Redirector;
 
-class ActiveAssetAssembler extends AssetAssembler
+class ActiveAssetComposer extends AssetComposer
 {
     /**
      * This is a potent method, only meant to be used during initial
@@ -18,11 +19,11 @@ class ActiveAssetAssembler extends AssetAssembler
      * them to the Directory.
      *
      * @return self
-     * @throws Exception
+	 * @throws ConfigurationException
      */
     public function addAllAssetsWithDefaults():self
     {
-        foreach($this->recordMapper->listAllRecordSets() as $name)
+        foreach($this->mapper->listAllRecordSets() as $name)
             $this->defaults()->commit($name);
         return $this;
     }
@@ -36,12 +37,21 @@ class ActiveAssetAssembler extends AssetAssembler
 			;
 	}
 
+	public function childWithDefaults(string $name, string $linkField):self
+	{
+		$composer   = new self($this->mapper);
+		$childAsset = $composer->defaults()->get($name);
+		$childNode  = new ChildAsset($childAsset, $linkField);
+		$this->node($childNode);
+		return $this;
+	}
+
 	public function insert(
 		?RecordProcess $saveProcess = null,
 		?Redirector    $onSuccess = null,
 		?string        $processName = 'insert'): self
 	{
-		$this->process(new Insert($saveProcess, $onSuccess, $processName));
+		$this->node(new Insert($saveProcess, $onSuccess, $processName));
 		return $this;
 	}
 
@@ -50,7 +60,7 @@ class ActiveAssetAssembler extends AssetAssembler
 		?Redirector    $onSuccess = null,
 		?string        $processName = 'update'): self
 	{
-		$this->process(new Update($saveProcess, $onSuccess, $processName));
+		$this->node(new Update($saveProcess, $onSuccess, $processName));
 		return $this;
 	}
 
@@ -68,7 +78,7 @@ class ActiveAssetAssembler extends AssetAssembler
 		string      $processName = 'delete'
 	): self
 	{
-		$this->process(new Delete($onSuccess, $processName));
+		$this->node(new Delete($onSuccess, $processName));
 		return $this;
 	}
 }
