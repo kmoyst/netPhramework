@@ -13,21 +13,39 @@ use netPhramework\db\core\RecordSetProcessSet;
 class AssetComposer
 {
 	protected RecordSetProcessSet $recordSetNodeSet;
-	protected RecordChildSet $recordNodeSet;
+	protected RecordChildSet $recordChildSet;
 	protected RecordMapper $mapper;
-	protected Directory $directory;
+	protected DirectoryAdapter $directoryAdapter;
+	protected AssetCompositeAdapter $activeAdapter;
 
 	public function __construct(RecordMapper $mapper, Directory $directory)
 	{
-		$this->mapper = $mapper;
-		$this->directory = $directory;
-		$this->reset();
+		$this->directoryAdapter = new DirectoryAdapter($directory);
+		$this->mapper 			= $mapper;
+		$this->newAssembly();
 	}
 
-	protected function reset():void
+	public function setDirectory(Directory $directory):self
 	{
+		$this->directoryAdapter = new DirectoryAdapter($directory);
+		$this->activeAdapter 	= $this->directoryAdapter;
+		return $this;
+	}
+
+	protected function newAssembly():void
+	{
+		$this->activeAdapter 	= $this->directoryAdapter;
 		$this->recordSetNodeSet = new RecordSetProcessSet();
-		$this->recordNodeSet  	= new RecordChildSet();
+		$this->recordChildSet  	= new RecordChildSet();
+	}
+
+	public function childAsset(string $linkField):self
+	{
+		$this->activeAdapter = new RecordChildSetAdapter()
+				->setAssetLinkField($linkField)
+				->setChildSet($this->recordChildSet)
+			;
+		return $this;
 	}
 
 	public function strategy(NodeStrategy $strategy):self
@@ -39,7 +57,7 @@ class AssetComposer
 	public function node(Node $node):self
 	{
 		if($node instanceof RecordChild)
-			$this->recordNodeSet->add($node);
+			$this->recordChildSet->add($node);
 		elseif($node instanceof RecordSetProcess)
 			$this->recordSetNodeSet->add($node);
 		return $this;
@@ -47,12 +65,12 @@ class AssetComposer
 
 	public function commit(string $assetName): self
 	{
-		$this->directory->add(new Asset(
+		$this->activeAdapter->addAsset(new Asset(
 			$this->mapper->recordsFor($assetName),
-			$this->recordNodeSet,
+			$this->recordChildSet,
 			$this->recordSetNodeSet
 		));
-		$this->reset();
+		$this->newAssembly();
 		return $this;
 	}
 }
