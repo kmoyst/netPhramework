@@ -15,6 +15,8 @@ use netPhramework\db\presentation\recordTable\FilterContext;
 use netPhramework\db\presentation\recordTable\PaginatorDirector;
 use netPhramework\db\presentation\recordTable\RowSetBuilder;
 use netPhramework\db\presentation\recordTable\SelectFilterDirector;
+use netPhramework\dispatching\rerouters\RerouteToParent;
+use netPhramework\dispatching\rerouters\RerouteToSibling;
 use netPhramework\rendering\View;
 
 class Browse extends RecordSetProcess
