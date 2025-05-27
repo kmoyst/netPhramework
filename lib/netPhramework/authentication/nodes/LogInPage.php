@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\authentication\components;
+namespace netPhramework\authentication\nodes;
 
 use netPhramework\authentication\LogInManager;
 use netPhramework\core\Node;

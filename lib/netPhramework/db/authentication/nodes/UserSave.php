@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\processes;
+namespace netPhramework\db\authentication\nodes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
@@ -9,7 +9,7 @@ use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\processes\Save;
+use netPhramework\db\nodes\Save;
 use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\dispatching\redirectors\RedirectToSibling;
 use netPhramework\exceptions\InvalidPassword;

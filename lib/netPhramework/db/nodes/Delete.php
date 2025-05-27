@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\processes;
+namespace netPhramework\db\nodes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;

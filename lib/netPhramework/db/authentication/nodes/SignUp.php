@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\processes;
+namespace netPhramework\db\authentication\nodes;
 
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\EnrolledUser;

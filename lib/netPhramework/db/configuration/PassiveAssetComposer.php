@@ -7,9 +7,9 @@ use netPhramework\db\exceptions\ConfigurationException;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
-use netPhramework\db\processes\Add;
-use netPhramework\db\processes\Browse;
-use netPhramework\db\processes\Edit;
+use netPhramework\db\nodes\Add;
+use netPhramework\db\nodes\Browse;
+use netPhramework\db\nodes\Edit;
 
 class PassiveAssetComposer extends AssetComposer
 {

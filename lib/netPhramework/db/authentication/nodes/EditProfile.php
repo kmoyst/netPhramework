@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\db\authentication\components;
+namespace netPhramework\db\authentication\nodes;
 
-use netPhramework\core\Node;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
+use netPhramework\core\Node;
 use netPhramework\db\authentication\EnrolledUserField;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;
@@ -13,15 +13,16 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\presentation\FormInput\InputSet;
 use netPhramework\rendering\View;
 
-class ViewProfile implements Node
+class EditProfile implements Node
 {
 	use LeafTrait;
 
 	public function __construct(
 		private readonly RecordFinder $userRecords,
-		string $name = 'view-profile')
+		string $name = 'edit-profile')
 	{
 		$this->name = $name;
 	}
@@ -37,20 +38,18 @@ class ViewProfile implements Node
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user 	= $exchange->getSession()->getUser();
-		$record = $this->userRecords
+		$user 	 = $exchange->getSession()->getUser();
+		$record  = $this->userRecords
 			->findUniqueRecord(
 				EnrolledUserField::USERNAME->value,
 				$user->getUsername());
-		$profile = new UserProfile()->setRecord($record);
-		$callbackInput = $exchange->callbackFormInput();
-		$exchange->ok(new View('view-profile')
-			->add('firstName', $profile->getFirstName())
-			->add('lastName', $profile->getLastName())
-			->add('username', $profile->getUsername())
-			->add('role', $profile->getRole()->friendlyName())
-			->add('emailAddress', $profile->getEmailAddress())
-			->add('callbackInput', $callbackInput)
+		$inputs  = new InputSet();
+		$profile = new UserProfile();
+		$profile->setRecord($record)->addInputs($inputs);
+		$exchange->ok(new View('edit-profile')
+			->add('inputs', $inputs)
+			->add('userDescription', $user->getUsername())
+			->add('role',$user->getRole()->friendlyName())
 		);
 	}
 }

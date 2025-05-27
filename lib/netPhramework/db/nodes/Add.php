@@ -1,34 +1,35 @@
 <?php
 
-namespace netPhramework\db\processes;
+namespace netPhramework\db\nodes;
 
 use netPhramework\core\Exchange;
-use netPhramework\db\core\RecordProcess;
+use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
 use netPhramework\rendering\View;
 
-class Edit extends RecordProcess
+class Add extends RecordSetProcess
 {
 	public function __construct(
-		private readonly ?RecordFormStrategy $formStrategy = null,
+		protected readonly ?RecordFormStrategy $formStrategy = null,
 		?string $name = null)
 	{
 		$this->name = $name;
 	}
 
 	public function handleExchange(Exchange $exchange): void
-	{
+    {
+
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet = new RecordFormBuilder($strategy)
-			->setRecord($this->record)
+			->setRecord($this->recordSet->newRecord())
 			->addRecordInputs()
 			->getInputSet()->addCustom($exchange->callbackFormInput())
 		;
 		$view = new View('edit');
 		$view->getVariables()->add('inputs', $inputSet);
-		$view->getVariables()->add('action', 'update');
-		$exchange->ok($view->setTitle("Edit Record"));
+		$view->getVariables()->add('action', 'insert');
+		$exchange->ok($view);
 	}
 }

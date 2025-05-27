@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\db\authentication\components;
+namespace netPhramework\db\authentication\nodes;
 
-use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
+use netPhramework\core\Node;
 use netPhramework\db\authentication\EnrolledUserField;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;

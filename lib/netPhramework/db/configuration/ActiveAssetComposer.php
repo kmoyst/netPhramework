@@ -5,9 +5,9 @@ namespace netPhramework\db\configuration;
 use netPhramework\db\core\ChildAsset;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\ConfigurationException;
-use netPhramework\db\processes\Delete;
-use netPhramework\db\processes\Insert;
-use netPhramework\db\processes\Update;
+use netPhramework\db\nodes\Delete;
+use netPhramework\db\nodes\Insert;
+use netPhramework\db\nodes\Update;
 use netPhramework\dispatching\redirectors\Redirector;
 
 class ActiveAssetComposer extends AssetComposer
