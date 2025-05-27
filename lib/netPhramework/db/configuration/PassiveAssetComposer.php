@@ -2,6 +2,8 @@
 
 namespace netPhramework\db\configuration;
 
+use netPhramework\db\core\ChildAsset;
+use netPhramework\db\exceptions\ConfigurationException;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
@@ -18,6 +20,7 @@ class PassiveAssetComposer extends AssetComposer
      * them to the Directory.
      *
      * @return self
+	 * @throws ConfigurationException
      */
     public function addAllAssetsWithDefaults():self
     {
@@ -34,6 +37,15 @@ class PassiveAssetComposer extends AssetComposer
 			->add()
 			->edit()
 			->browse();
+	}
+
+	public function childWithDefaults(string $name, string $linkField):self
+	{
+		$composer   = new self($this->mapper);
+		$childAsset = $composer->defaults()->get($name);
+		$childNode  = new ChildAsset($childAsset, $linkField);
+		$this->node($childNode);
+		return $this;
 	}
 
 	public function browse(

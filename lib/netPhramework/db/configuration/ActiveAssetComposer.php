@@ -2,7 +2,9 @@
 
 namespace netPhramework\db\configuration;
 
+use netPhramework\db\core\ChildAsset;
 use netPhramework\db\core\RecordProcess;
+use netPhramework\db\exceptions\ConfigurationException;
 use netPhramework\db\processes\Delete;
 use netPhramework\db\processes\Insert;
 use netPhramework\db\processes\Update;
@@ -17,6 +19,7 @@ class ActiveAssetComposer extends AssetComposer
      * them to the Directory.
      *
      * @return self
+	 * @throws ConfigurationException
      */
     public function addAllAssetsWithDefaults():self
     {
@@ -32,6 +35,15 @@ class ActiveAssetComposer extends AssetComposer
 			->update()
 			->delete()
 			;
+	}
+
+	public function childWithDefaults(string $name, string $linkField):self
+	{
+		$composer   = new self($this->mapper);
+		$childAsset = $composer->defaults()->get($name);
+		$childNode  = new ChildAsset($childAsset, $linkField);
+		$this->node($childNode);
+		return $this;
 	}
 
 	public function insert(

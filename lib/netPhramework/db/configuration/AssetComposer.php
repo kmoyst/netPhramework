@@ -5,46 +5,44 @@ namespace netPhramework\db\configuration;
 use netPhramework\core\Directory;
 use netPhramework\core\Node;
 use netPhramework\db\core\Asset;
+use netPhramework\db\core\ChildAsset;
 use netPhramework\db\core\RecordChild;
 use netPhramework\db\core\RecordChildSet;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\core\RecordSetProcessSet;
+use netPhramework\db\exceptions\ConfigurationException;
 
 class AssetComposer
 {
 	protected RecordSetProcessSet $recordSetNodeSet;
 	protected RecordChildSet $recordChildSet;
 	protected RecordMapper $mapper;
-	protected DirectoryAdapter $directoryAdapter;
-	protected AssetCompositeAdapter $activeAdapter;
+	protected ?Directory $directory;
 
-	public function __construct(RecordMapper $mapper, Directory $directory)
+	public function __construct(RecordMapper $mapper,
+								?Directory $directory = null)
 	{
-		$this->directoryAdapter = new DirectoryAdapter($directory);
-		$this->mapper 			= $mapper;
+		$this->mapper = $mapper;
+		$this->directory = $directory;
 		$this->newAssembly();
-	}
-
-	public function setDirectory(Directory $directory):self
-	{
-		$this->directoryAdapter = new DirectoryAdapter($directory);
-		$this->activeAdapter 	= $this->directoryAdapter;
-		return $this;
 	}
 
 	protected function newAssembly():void
 	{
-		$this->activeAdapter 	= $this->directoryAdapter;
 		$this->recordSetNodeSet = new RecordSetProcessSet();
 		$this->recordChildSet  	= new RecordChildSet();
 	}
 
-	public function childAsset(string $linkField):self
+	public function setDirectory(?Directory $directory): self
 	{
-		$this->activeAdapter = new RecordChildSetAdapter()
-				->setAssetLinkField($linkField)
-				->setChildSet($this->recordChildSet)
-			;
+		$this->directory = $directory;
+		return $this;
+	}
+
+	public function childAsset(AssetStrategy $strategy, string $linkField):self
+	{
+		$child = $strategy->create($this->mapper);
+		$this->node(new ChildAsset($child, $linkField));
 		return $this;
 	}
 
@@ -63,14 +61,26 @@ class AssetComposer
 		return $this;
 	}
 
-	public function commit(string $assetName): self
+	public function get(string $assetName): Asset
 	{
-		$this->activeAdapter->addAsset(new Asset(
+		$asset = new Asset(
 			$this->mapper->recordsFor($assetName),
 			$this->recordChildSet,
-			$this->recordSetNodeSet
-		));
+			$this->recordSetNodeSet);
 		$this->newAssembly();
+		return $asset;
+	}
+
+	/**
+	 * @param string $assetName
+	 * @return $this
+	 * @throws ConfigurationException
+	 */
+	public function commit(string $assetName): self
+	{
+		if($this->directory === null)
+			throw new ConfigurationException("No directory for commit");
+		$this->directory->add($this->get($assetName));
 		return $this;
 	}
 }
