@@ -10,10 +10,10 @@ class RecordComposite implements Node
 {
 	use CompositeTrait;
 
-	private RecordNodeSet $nodeSet;
+	private RecordChildSet $nodeSet;
 	private Record $record;
 
-	public function setNodeSet(RecordNodeSet $nodeSet): self
+	public function setNodeSet(RecordChildSet $nodeSet): self
 	{
 		$this->nodeSet = $nodeSet;
 		return $this;

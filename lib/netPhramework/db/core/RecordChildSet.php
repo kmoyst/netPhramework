@@ -4,11 +4,11 @@ namespace netPhramework\db\core;
 
 use netPhramework\exceptions\NotFound;
 
-class RecordSetNodeSet
+class RecordChildSet
 {
 	private array $nodes = [];
 
-	public function add(RecordSetNode $node):self
+	public function add(RecordChild $node):self
 	{
 		$this->nodes[$node->getName()] = $node;
 		return $this;
@@ -16,10 +16,10 @@ class RecordSetNodeSet
 
 	/**
 	 * @param string $name
-	 * @return RecordSetNode
+	 * @return RecordChild
 	 * @throws NotFound
 	 */
-	public function get(string $name):RecordSetNode
+	public function get(string $name):RecordChild
 	{
 		if(!isset($this->nodes[$name]))
 			throw new NotFound("Not Found: $name");

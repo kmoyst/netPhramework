@@ -11,17 +11,17 @@ class Asset implements Node
 	use CompositeTrait;
 
 	private RecordSet $recordSet;
-	private RecordNodeSet $recordNodeSet;
-	private RecordSetNodeSet $recordSetProcessSet;
+	private RecordChildSet $recordNodeSet;
+	private RecordSetProcessSet $recordSetProcessSet;
 
 	/**
 	 * @param RecordSet $recordSet
-	 * @param RecordNodeSet $recordNodeSet
-	 * @param RecordSetNodeSet $recordSetProcessSet
+	 * @param RecordChildSet $recordNodeSet
+	 * @param RecordSetProcessSet $recordSetProcessSet
 	 */
-	public function __construct(RecordSet        $recordSet,
-								RecordNodeSet    $recordNodeSet,
-								RecordSetNodeSet $recordSetProcessSet)
+	public function __construct(RecordSet           $recordSet,
+								RecordChildSet      $recordNodeSet,
+								RecordSetProcessSet $recordSetProcessSet)
 	{
 		$this->recordSet = $recordSet;
 		$this->recordNodeSet = $recordNodeSet;
