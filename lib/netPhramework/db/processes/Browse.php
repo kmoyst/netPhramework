@@ -76,7 +76,7 @@ class Browse extends RecordSetProcess
 			->add('headers', 		$columnSet->getHeaders())
 			->add('rows', 			$rowSetBuilder->getRowSet())
 			->add('callbackInput', 	$callbackInput)
-			->add('actionPrefix', 	$recordSet->getName())
+			->add('actionPrefix', 	'')
 		;
 		$addButtonForm = new View('add-button-form');
 		$addButtonForm->getVariables()->add('callbackInput', $callbackInput)
