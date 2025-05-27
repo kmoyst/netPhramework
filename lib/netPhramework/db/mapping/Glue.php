@@ -11,7 +11,7 @@ enum Glue:int
 	case AND = 1;
 	case OR = 2;
 
-	public function check(array $one, array $two)
+	public function check(array $one, array $two):array
 	{
 		if($this === self::AND)
 			return array_intersect($one, $two);

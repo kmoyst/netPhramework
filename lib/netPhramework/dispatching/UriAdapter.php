@@ -3,9 +3,7 @@
 namespace netPhramework\dispatching;
 
 use netPhramework\common\Variables;
-use netPhramework\core\Exception;
 use netPhramework\exceptions\InvalidUri;
-use netPhramework\exceptions\InvalidUsername;
 
 /**
  * Adapts string Uri to MutablePath and Variables

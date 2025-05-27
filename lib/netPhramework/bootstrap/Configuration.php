@@ -4,7 +4,6 @@ namespace netPhramework\bootstrap;
 
 use netPhramework\core\Directory;
 use netPhramework\core\Page;
-use netPhramework\rendering\Template;
 use netPhramework\rendering\WrapperConfiguration;
 
 class Configuration

@@ -5,7 +5,6 @@ namespace netPhramework\db\authentication\processes;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\EnrolledUser;
-use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;

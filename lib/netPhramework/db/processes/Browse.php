@@ -4,7 +4,6 @@ namespace netPhramework\db\processes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -30,7 +29,6 @@ class Browse extends RecordSetProcess
 
 	/**
 	 * @param Exchange $exchange
-	 * @param RecordSet $recordSet
 	 * @return void
 	 * @throws MappingException
 	 * @throws FieldAbsent

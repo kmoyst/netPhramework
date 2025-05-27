@@ -2,7 +2,6 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use http\Exception\RuntimeException;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\presentation\FormInput\Input;
 use netPhramework\rendering\View;
