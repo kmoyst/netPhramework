@@ -36,7 +36,7 @@ class Asset implements Node
 	{
 		if(is_numeric($name))
 		{
-			return new RecordNodeComposite()
+			return new RecordComposite()
 				->setRecord($this->recordSet->getRecord($name))
 				->setNodeSet($this->recordNodeSet)
 				;

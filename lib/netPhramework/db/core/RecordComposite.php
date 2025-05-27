@@ -5,7 +5,7 @@ namespace netPhramework\db\core;
 use netPhramework\core\CompositeTrait;
 use netPhramework\core\Node;
 
-class RecordNodeComposite implements Node
+class RecordComposite implements Node
 {
 	use CompositeTrait;
 
