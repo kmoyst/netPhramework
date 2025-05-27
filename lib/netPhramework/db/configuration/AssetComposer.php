@@ -2,18 +2,19 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\db\core\Asset;
-use netPhramework\db\core\AssetNode;
-use netPhramework\db\core\RecordChild;
-use netPhramework\db\core\RecordNodeSet;
-use netPhramework\db\core\RecordSetNodeSet;
 use netPhramework\core\Directory;
+use netPhramework\core\Node;
+use netPhramework\db\core\Asset;
+use netPhramework\db\core\RecordChild;
+use netPhramework\db\core\RecordNode;
+use netPhramework\db\core\RecordNodeSet;
+use netPhramework\db\core\RecordSetNode;
+use netPhramework\db\core\RecordSetNodeSet;
 
 class AssetComposer
 {
 	protected RecordSetNodeSet $recordSetNodeSet;
 	protected RecordNodeSet $recordNodeSet;
-	protected AssetNodeManager $nodeManager;
 	protected RecordMapper $mapper;
 	protected ?CompositeAdapter $adapter;
 
@@ -66,19 +67,20 @@ class AssetComposer
 	{
 		$this->recordSetNodeSet = new RecordSetNodeSet();
 		$this->recordNodeSet  	= new RecordNodeSet();
-		$this->nodeManager   	= new AssetNodeManager(
-			$this->recordSetNodeSet, $this->recordNodeSet);
 	}
 
-	public function strategy(AssetNodeStrategy $strategy):self
+	public function strategy(NodeStrategy $strategy):self
 	{
 		$this->node($strategy->createNode($this->mapper));
 		return $this;
 	}
 
-	public function node(AssetNode $node):self
+	public function node(Node $node):self
 	{
-		$node->enlist($this->nodeManager);
+		if($node instanceof RecordNode)
+			$this->recordNodeSet->add($node);
+		elseif($node instanceof RecordSetNode)
+			$this->recordSetNodeSet->add($node);
 		return $this;
 	}
 

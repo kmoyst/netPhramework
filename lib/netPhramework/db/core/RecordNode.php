@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\db\configuration\AssetNodeManager;
+use netPhramework\core\Node;
 
-abstract class RecordNode implements AssetNode
+abstract class RecordNode implements Node
 {
 	protected Record $record;
 
@@ -12,10 +12,5 @@ abstract class RecordNode implements AssetNode
 	{
 		$this->record = $record;
 		return $this;
-	}
-
-	public function enlist(AssetNodeManager $manager): void
-	{
-		$manager->addRecordNode($this);
 	}
 }
