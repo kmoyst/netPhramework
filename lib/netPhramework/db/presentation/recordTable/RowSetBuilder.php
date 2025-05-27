@@ -2,7 +2,6 @@
 
 namespace netPhramework\db\presentation\recordTable;
 use netPhramework\core\Exception;
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\ColumnAbsent;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -10,6 +9,7 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
+use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\mapping\SortDirection;
 
 class RowSetBuilder

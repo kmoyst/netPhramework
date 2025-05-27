@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\core;
+namespace netPhramework\db\mapping;
 use Countable;
 use Iterator;
 use netPhramework\db\abstraction\Schema;
@@ -8,10 +8,6 @@ use netPhramework\db\abstraction\Table;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
-use netPhramework\db\mapping\Condition;
-use netPhramework\db\mapping\Criteria;
-use netPhramework\db\mapping\FieldSet;
-use netPhramework\db\mapping\Field;
 
 final class RecordSet implements Iterator, Countable
 {

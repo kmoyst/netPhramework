@@ -3,6 +3,7 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Node;
+use netPhramework\db\mapping\Record;
 
 abstract class RecordNode implements Node
 {

@@ -4,6 +4,7 @@ namespace netPhramework\db\core;
 
 use netPhramework\core\CompositeTrait;
 use netPhramework\core\Node;
+use netPhramework\db\mapping\Record;
 
 class RecordComposite implements Node
 {

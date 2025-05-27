@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordTable\columns;
 
 use netPhramework\common\Utils;
-use netPhramework\db\core\Record;
+use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordTable\Column;
 use netPhramework\db\presentation\recordTable\ColumnHeader;
 use netPhramework\rendering\Encodable;

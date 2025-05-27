@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\presentation\recordTable\columns;
 
-use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\mapping\Record;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\ImmutableView;
 

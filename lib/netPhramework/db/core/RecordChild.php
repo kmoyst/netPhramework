@@ -7,11 +7,13 @@ use netPhramework\core\Node;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
+use netPhramework\db\mapping\Record;
+use netPhramework\db\mapping\RecordSet;
 
 /**
  * Wrapper for Asset that includes parent information
  */
-class RecordChild extends RecordNode implements OneToMany
+class RecordChild extends RecordNode
 {
 	use CompositeTrait;
 

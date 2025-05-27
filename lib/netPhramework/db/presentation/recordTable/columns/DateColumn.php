@@ -4,7 +4,7 @@ namespace netPhramework\db\presentation\recordTable\columns;
 
 use DateMalformedStringException;
 use DateTime;
-use netPhramework\db\core\Record;
+use netPhramework\db\mapping\Record;
 
 class DateColumn extends TextColumn
 {

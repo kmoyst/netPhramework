@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\common\Variables;
-use netPhramework\db\core\RecordSet;
+use netPhramework\db\mapping\RecordSet;
 
 class FilterContext implements FilterFormContext
 {

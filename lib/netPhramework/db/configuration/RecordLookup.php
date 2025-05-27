@@ -2,11 +2,11 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
+use netPhramework\db\mapping\RecordSet;
 
 class RecordLookup
 {

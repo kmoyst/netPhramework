@@ -3,7 +3,7 @@
 namespace netPhramework\db\configuration;
 
 use netPhramework\db\abstraction\Database;
-use netPhramework\db\core\RecordSet;
+use netPhramework\db\mapping\RecordSet;
 
 readonly class RecordMapper implements RecordAccess
 {

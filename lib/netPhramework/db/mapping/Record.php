@@ -1,16 +1,12 @@
 <?php
 
-namespace netPhramework\db\core;
+namespace netPhramework\db\mapping;
 
 use netPhramework\db\abstraction\Schema;
 use netPhramework\db\abstraction\Table;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\mapping\Cell;
-use netPhramework\db\mapping\CellSet;
-use netPhramework\db\mapping\Condition;
-use netPhramework\db\mapping\FieldSet;
 
 final class Record
 {
