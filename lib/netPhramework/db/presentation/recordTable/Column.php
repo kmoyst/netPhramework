@@ -13,6 +13,15 @@ interface Column
 	public function getName():string;
 	public function getHeader():ColumnHeader;
 
+	/**
+	 * @param Record $record
+	 * @return string
+	 * @throws ValueInaccessible
+	 * @throws FieldAbsent
+	 * @throws Exception
+	 */
+	public function getFilterableValue(Record $record):string;
+
     /**
      * @param Record $record
      * @return string

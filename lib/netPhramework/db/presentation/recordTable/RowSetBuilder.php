@@ -71,7 +71,7 @@ class RowSetBuilder
 			foreach($allIds as $id)
 			{
 				$record 	 = $this->recordSet->getRecord($id);
-				$recordValue = $column->getSortableValue($record);
+				$recordValue = $column->getFilterableValue($record);
 				if(!$operator->check($recordValue, $value))
 					unset($currentConditionIds[$id]);
 			}

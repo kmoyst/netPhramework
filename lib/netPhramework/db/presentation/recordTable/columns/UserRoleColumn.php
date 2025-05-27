@@ -16,6 +16,11 @@ class UserRoleColumn implements Column
 		return 'role';
 	}
 
+	public function getFilterableValue(Record $record): string
+	{
+		return $this->getSortableValue($record);
+	}
+
 	public function getHeader(): ColumnHeader
 	{
 		return new ColumnHeader('role', 'Role', 200);

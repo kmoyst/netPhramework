@@ -32,6 +32,11 @@ class TextColumn implements Column
 		return $this;
 	}
 
+	public function getFilterableValue(Record $record): string
+	{
+		return $this->getSortableValue($record);
+	}
+
 	public function getSortableValue(Record $record): string
 	{
 		return $record->getValue($this->name) ?? '';
