@@ -21,7 +21,7 @@ readonly class Redirector
 	 * @param Redirectable $redirectable
 	 * @return void
 	 */
-	public function dispatch(Redirectable $redirectable):void
+	public function redirect(Redirectable $redirectable):void
 	{
 		$this->relocator->reroute($redirectable->getPath());
 		$redirectable->getParameters()->merge($this->parameters ?? []);

@@ -74,7 +74,7 @@ readonly class CallbackManager
 	 * @return RedirectToRoot|null - dispatcher to callback, null if absent
 	 * @throws InvalidUri
 	 */
-	public function callbackDispatcher():?RedirectToRoot
+	public function callbackRedirector():?RedirectToRoot
 	{
 		if(!($callbackUri = $this->fromParameters())) return null;
 		$adapter = new UriAdapter($callbackUri);

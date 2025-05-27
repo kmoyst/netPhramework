@@ -37,8 +37,8 @@ class SocketExchange implements Exchange
 	public function redirect(Redirector $fallback):Variables
 	{
 		$redirection = new Redirection(clone $this->path);
-		$callback = $this->callbackManager->callbackDispatcher();
-		($callback ?? $fallback)->dispatch($redirection);
+		$callback = $this->callbackManager->callbackRedirector();
+		($callback ?? $fallback)->redirect($redirection);
 		$this->response = $redirection;
 		return $redirection->getParameters();
 	}
