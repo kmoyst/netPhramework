@@ -5,25 +5,13 @@ namespace netPhramework\presentation\FormInput;
 use DateMalformedStringException;
 use DateTime;
 use netPhramework\common\Utils;
+use netPhramework\common\Variables;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\rendering\Encodable;
 
-class DateInput extends Input
+class DateInput extends TextInput
 {
 	protected string $templateName = 'form/date-input';
-	private string $value;
-
-	public function getVariables(): iterable
-	{
-		parent::getVariables();
-		$v = $this->variables;
-		$v->add('name', $this->name);
-		$v->add('label', Utils::kebabToSpace($this->name));
-		$v->add('id', $this->name);
-		$v->add('value', $this->value);
-		return $v;
-	}
-
 
 	/**
 	 * @param Encodable|string|null $value

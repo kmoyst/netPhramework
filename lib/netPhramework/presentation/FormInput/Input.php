@@ -40,9 +40,11 @@ abstract class Input extends Viewable implements ConfigurableViewable
 		return $this;
 	}
 
-	public function getVariables():iterable
+	public function getVariables():Variables
 	{
-		return $this->variables;
+		return $this->variables
+			->add('name', $this->name)
+			;
 	}
 
 	abstract public function setValue(Encodable|string|null $value):self;

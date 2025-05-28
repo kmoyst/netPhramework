@@ -2,6 +2,7 @@
 
 namespace netPhramework\presentation\FormInput;
 
+use netPhramework\common\Variables;
 use netPhramework\rendering\Encodable;
 
 class SelectInput extends Input
@@ -34,11 +35,9 @@ class SelectInput extends Input
 		return $this;
 	}
 
-	public function getVariables(): iterable
+	public function getVariables(): Variables
 	{
-		parent::getVariables();
 		return $this->variables
-			->add('name', $this->name)
 			->add('options', $this->options)
 			->add('id', $this->id ?? $this->name)
 			->add('selectedValue', $this->value ?? '')

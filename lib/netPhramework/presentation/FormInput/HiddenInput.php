@@ -2,6 +2,7 @@
 
 namespace netPhramework\presentation\FormInput;
 
+use netPhramework\common\Variables;
 use netPhramework\dispatching\Location;
 use netPhramework\rendering\Encodable;
 
@@ -23,9 +24,8 @@ class HiddenInput extends Input
 		return $this;
 	}
 
-	public function getVariables(): iterable
+	public function getVariables(): Variables
 	{
-		parent::getVariables();
 		return $this->variables
 			->add('name', $this->name)
 			->add('value', $this->value ?? '')

@@ -3,22 +3,15 @@
 namespace netPhramework\presentation\FormInput;
 
 use netPhramework\common\Utils;
+use netPhramework\common\Variables;
 
 class SelectInputWithLabel extends SelectInput
 {
 	protected string $templateName = 'select-input-with-label';
-	protected string $label;
 
-	public function setLabel(string $label): self
+	public function getVariables(): Variables
 	{
-		$this->label = $label;
-		return $this;
-	}
-
-	public function getVariables(): iterable
-	{
-		parent::getVariables();
-		return $this->variables
+		return parent::getVariables()
 			->add('label', $this->label ?? Utils::kebabToSpace($this->name));
 	}
 }

@@ -8,4 +8,5 @@ interface InputSetBuilder
 	public function textInput(string $name):TextInput;
 	public function passwordInput(string $name):PasswordInput;
 	public function selectInput(string $name, iterable $options):SelectInput;
+	public function checkboxInput(string $name):CheckboxInput;
 }
