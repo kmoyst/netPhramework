@@ -45,8 +45,10 @@ class FilterContext implements FilterFormContext
 	{
 		if(empty($this->conditionSet)) return [];
 		$conditionSet = $this->conditionSet;
-		if(empty($conditionSet[count($conditionSet)-1]
-		[FilterKey::CONDITION_FIELD->value])) array_pop($conditionSet);
+		$lastCondition = $conditionSet[count($conditionSet)-1];
+		if(empty($lastCondition[FilterKey::CONDITION_FIELD->value]) ||
+			empty($lastCondition[FilterKey::CONDITION_VALUE->value]))
+				array_pop($conditionSet);
 		return $conditionSet;
 	}
 
