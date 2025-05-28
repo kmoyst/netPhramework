@@ -14,7 +14,7 @@ use netPhramework\db\mapping\SortDirection;
 use netPhramework\dispatching\MutablePath;
 use netPhramework\presentation\FormInput\Input;
 
-class RowSetBuilder
+class RecordFilterer
 {
 	private RecordSet $recordSet;
 	private ColumnSet $columnSet;
@@ -47,7 +47,7 @@ class RowSetBuilder
 	 * @throws MappingException
 	 * @throws RecordNotFound
 	 */
-	public function filter():RowSetBuilder
+	private function filter():RecordFilterer
 	{
 		$rsIds  = $this->recordSet->getIds();
 		$allIds = array_combine($rsIds, $rsIds);
@@ -101,7 +101,7 @@ class RowSetBuilder
 	 * @throws ValueInaccessible
 	 * @throws Exception
 	 */
-	public function sort():RowSetBuilder
+	private function sort():RecordFilterer
 	{
 		$args = [];
 		$ids  = $this->filteredIds;
@@ -132,14 +132,16 @@ class RowSetBuilder
 		return $this;
 	}
 
-	public function getRowSet(
-		Input $callbackInput, MutablePath $assetPath):RowSet
+	/**
+	 * @return array
+	 * @throws Exception
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 * @throws RecordNotFound
+	 * @throws ValueInaccessible
+	 */
+	public function getIds():array
 	{
-		return new RowSet(
-			$this->recordSet,
-			$this->columnSet,
-			$callbackInput,
-			$assetPath,
-			$this->sortedIds);
+		return $this->filter()->sort()->sortedIds;
 	}
 }

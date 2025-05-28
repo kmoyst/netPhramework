@@ -8,10 +8,9 @@ use netPhramework\db\mapping\RecordSet;
 class FilterContext implements FilterFormContext
 {
 	private RecordSet $recordSet;
-	private Variables $variables;
 	private array $conditionSet;
 	private array $sortArray;
-	private ?int $limit;
+	private ?int $limit = null;
 	private int $offset = 0;
 	private int $count;
 
@@ -21,15 +20,8 @@ class FilterContext implements FilterFormContext
 		return $this;
 	}
 
-	public function setVariables(Variables $variables): self
+	public function parse(Variables $vars):self
 	{
-		$this->variables = $variables;
-		return $this;
-	}
-
-	public function parse():self
-	{
-		$vars = $this->variables;
 		$limit = $vars->getOrNull(FilterKey::LIMIT->value);
 		$offset = $vars->getOrNull(FilterKey::OFFSET->value) ?? 0;
 		$sortArray = $vars->getOrNull(FilterKey::SORT_ARRAY->value) ?? [];
@@ -70,6 +62,11 @@ class FilterContext implements FilterFormContext
 	public function getLimit(): ?int
 	{
 		return $this->limit;
+	}
+
+	public function hasLimit():bool
+	{
+		return $this->limit !== null;
 	}
 
 	public function getOffset(): int

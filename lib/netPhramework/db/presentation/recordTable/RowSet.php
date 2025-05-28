@@ -13,14 +13,41 @@ class RowSet implements Iterator
 {
 	private array $rows = [];
 	private int $pointer = 0;
+	private RecordSet $recordSet;
+	private ColumnSet $columnSet;
+	private Input $callbackInput;
+	private MutablePath $assetPath;
+	private array $orderedIds;
 
-	public function __construct(
-		private readonly RecordSet $recordSet,
-		private readonly ColumnSet $columnSet,
-		private readonly Input $callbackInput,
-		private readonly MutablePath $assetPath,
-		private readonly array $orderedIds
-	) {}
+	public function setRecordSet(RecordSet $recordSet): self
+	{
+		$this->recordSet = $recordSet;
+		return $this;
+	}
+
+	public function setColumnSet(ColumnSet $columnSet): self
+	{
+		$this->columnSet = $columnSet;
+		return $this;
+	}
+
+	public function setCallbackInput(Input $callbackInput): self
+	{
+		$this->callbackInput = $callbackInput;
+		return $this;
+	}
+
+	public function setAssetPath(MutablePath $assetPath): self
+	{
+		$this->assetPath = $assetPath;
+		return $this;
+	}
+
+	public function setOrderedIds(array $orderedIds): self
+	{
+		$this->orderedIds = $orderedIds;
+		return $this;
+	}
 
 	/**
 	 * @return Row

@@ -20,15 +20,24 @@ class Edit extends RecordProcess
 
 	public function handleExchange(Exchange $exchange): void
 	{
+		$view = new View('edit')
+			->setTitle("Edit Record")
+			->add('editForm', $this->createEditForm($exchange))
+		;
+		$exchange->ok($view);
+	}
+
+	private function createEditForm(Exchange $exchange):View
+	{
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet = new RecordFormBuilder($strategy)
 			->setRecord($this->record)
 			->addRecordInputs()
 			->getInputSet()->addCustom($exchange->callbackFormInput())
 		;
-		$view = new View('edit');
-		$view->getVariables()->add('inputs', $inputSet);
-		$view->getVariables()->add('action', 'update');
-		$exchange->ok($view->setTitle("Edit Record"));
+		return new View('edit-form')
+			->add('inputs', $inputSet)
+			->add('action', 'update')
+		;
 	}
 }

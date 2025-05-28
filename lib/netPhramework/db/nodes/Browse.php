@@ -9,12 +9,9 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
-use netPhramework\db\presentation\recordTable\ColumnSetBuilder;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\presentation\recordTable\FilterContext;
-use netPhramework\db\presentation\recordTable\PaginatorDirector;
-use netPhramework\db\presentation\recordTable\RowSetBuilder;
-use netPhramework\db\presentation\recordTable\SelectFilterDirector;
+use netPhramework\db\presentation\recordTable\RecordTable;
 use netPhramework\rendering\View;
 
 class Browse extends RecordSetProcess
@@ -37,62 +34,27 @@ class Browse extends RecordSetProcess
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$recordSet = $this->recordSet
+		$filterContext = new FilterContext()->parse($exchange->getParameters())
 		;
-		$filterContext = new FilterContext()
-			->setRecordSet($recordSet)
-			->setVariables($exchange->getParameters())
-			->parse()
+		$recordTable   = new RecordTable()
+			->setAssetPath($exchange->getPath()->pop())
+			->setRecordSet($this->recordSet)
+			->setCallbackInput($exchange->callbackFormInput(true))
+			->setFeedback($exchange->getSession()->getEncodableValue())
+			->setColumnMapper($this->columnMapper)
+			->setColumnStrategy($this->columnStrategy)
+			->applyFilter($filterContext)
+			->buildColumnSet()
+			->buildRowSet()
+			->buildAddButtonView()
+			->includeFilterSelector()
+			->includePaginator()
 		;
-		$columnSet = new ColumnSetBuilder()
-			->setMapper($this->columnMapper ?? new ColumnMapper())
-			->setStrategy($this->columnStrategy)
-			->setFieldSet($recordSet->getFieldSet())
-			->getColumnSet()
-		;
-		$rowSetBuilder = new RowSetBuilder()
-			->setRecordSet($recordSet)
-			->setColumnSet($columnSet)
-			->setContext($filterContext)
-			->filter()
-			->sort()
-		;
-		$filterSelectView   = new SelectFilterDirector()
-			->configure($columnSet->getNames())
-			->buildSelectFilterForm($filterContext)
-			->getView()
-		;
-		$paginatorView =
-			$filterContext->getLimit() === null ? '' :
-				new PaginatorDirector()
-			->configure($filterContext)
-			->buildPreviousForm()
-			->buildNextForm()
-			->getView()
-		;
-		$callbackInput = $exchange->callbackFormInput()
-		;
-		$assetPath = $exchange->getPath()->pop();
-		$rowSet    = $rowSetBuilder->getRowSet($callbackInput, $assetPath)
-		;
-		$recordTable = new View('record-table')
-			->add('headers', $columnSet->getHeaders())
-			->add('rows', 	 $rowSet)
-		;
-		$addButtonForm = new View('add-button-form')
-			->add('action', $exchange->getPath()->pop()->append('add'))
-			->add('callbackInput', $callbackInput)
-		;
-        $errorView    = $exchange->getSession()->getEncodableValue() ?? '';
-        $responseCode = $exchange->getSession()->resolveResponseCode()
-        ;
-		$exchange->display(new View('browse'), $responseCode)
+		$view = new View('browse')
 			->setTitle('Browse Records')
-			->add('filterSelectView', 	$filterSelectView)
-			->add('paginator', 			$paginatorView)
-			->add('addButtonForm', 		$addButtonForm)
-			->add('recordTable', 		$recordTable)
-			->add('errorView',          $errorView)
+			->add('recordTable', $recordTable)
 		;
+		$exchange->display(
+			$view, $exchange->getSession()->resolveResponseCode());
 	}
 }
