@@ -34,7 +34,8 @@ class Browse extends RecordSetProcess
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$filterContext = new FilterContext()->parse($exchange->getParameters())
+		$filterContext = new FilterContext()
+			->parse($exchange->getParameters())
 		;
 		$recordTable   = new RecordTable()
 			->setAssetPath($exchange->getPath()->pop())

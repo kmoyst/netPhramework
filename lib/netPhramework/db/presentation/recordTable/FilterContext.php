@@ -3,22 +3,14 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\common\Variables;
-use netPhramework\db\mapping\RecordSet;
 
 class FilterContext implements FilterFormContext
 {
-	private RecordSet $recordSet;
 	private array $conditionSet;
 	private array $sortArray;
 	private ?int $limit = null;
 	private int $offset = 0;
 	private int $count;
-
-	public function setRecordSet(RecordSet $recordSet): self
-	{
-		$this->recordSet = $recordSet;
-		return $this;
-	}
 
 	public function parse(Variables $vars):self
 	{
