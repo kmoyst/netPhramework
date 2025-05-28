@@ -2,47 +2,34 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use Iterator;
-use netPhramework\core\Exception;
-use netPhramework\db\exceptions\FieldAbsent;
-use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\Record;
-use netPhramework\rendering\Encodable;
+use netPhramework\dispatching\MutablePath;
+use netPhramework\presentation\FormInput\Input;
+use netPhramework\rendering\Viewable;
 
-readonly class Row implements Iterator
+class Row extends Viewable
 {
 	public function __construct(
-		private ColumnSet $columnSet,
-		private Record $record) {}
+		private readonly ColumnSet $columnSet,
+		private readonly Record $record,
+		private readonly Input $callbackInput,
+		private readonly MutablePath $assetPath
+	) {}
 
-    /**
-     * @return string|Encodable
-     * @throws FieldAbsent
-     * @throws ValueInaccessible
-     * @throws Exception
-     */
-	public function current(): string|Encodable
+	public function getTemplateName(): string
 	{
-		return $this->columnSet->current()->getEncodableValue($this->record);
+		return 'record-table-row';
 	}
 
-	public function next(): void
+	public function getVariables(): iterable
 	{
-		$this->columnSet->next();
-	}
-
-	public function key(): string
-	{
-		return $this->columnSet->key();
-	}
-
-	public function valid(): bool
-	{
-		return $this->columnSet->valid();
-	}
-
-	public function rewind(): void
-	{
-		$this->columnSet->rewind();
+		$this->assetPath->append($this->record->getId());
+		return [
+			'cellSet' => new RecordTableCellSet($this->columnSet,$this->record),
+			'callbackInput' => $this->callbackInput,
+			'id' => $this->record->getId(),
+			'editPath' =>   (clone $this->assetPath)->append('edit'),
+			'deletePath' => (clone $this->assetPath)->append('delete')
+		];
 	}
 }

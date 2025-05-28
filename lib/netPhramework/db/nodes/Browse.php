@@ -72,11 +72,12 @@ class Browse extends RecordSetProcess
 		;
 		$callbackInput = $exchange->callbackFormInput()
 		;
+		$assetPath = $exchange->getPath()->pop();
+		$rowSet    = $rowSetBuilder->getRowSet($callbackInput, $assetPath)
+		;
 		$recordTable = new View('record-table')
-			->add('headers', 		$columnSet->getHeaders())
-			->add('rows', 			$rowSetBuilder->getRowSet())
-			->add('callbackInput', 	$callbackInput)
-			->add('actionPrefix', 	$exchange->getPath()->pop())
+			->add('headers', $columnSet->getHeaders())
+			->add('rows', 	 $rowSet)
 		;
 		$addButtonForm = new View('add-button-form');
 		$addButtonForm->getVariables()->add('callbackInput', $callbackInput)

@@ -11,6 +11,8 @@ use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\mapping\SortDirection;
+use netPhramework\dispatching\MutablePath;
+use netPhramework\presentation\FormInput\Input;
 
 class RowSetBuilder
 {
@@ -130,8 +132,14 @@ class RowSetBuilder
 		return $this;
 	}
 
-	public function getRowSet():RowSet
+	public function getRowSet(
+		Input $callbackInput, MutablePath $assetPath):RowSet
 	{
-		return new RowSet($this->recordSet, $this->columnSet, $this->sortedIds);
+		return new RowSet(
+			$this->recordSet,
+			$this->columnSet,
+			$this->sortedIds,
+			$callbackInput,
+			$assetPath);
 	}
 }

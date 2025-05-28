@@ -13,7 +13,6 @@ use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnSetBuilder;
 use netPhramework\db\presentation\recordTable\RowSet;
-use netPhramework\dispatching\rerouters\RerouteToSibling;
 use netPhramework\rendering\View;
 
 class EditParent extends RecordProcess
@@ -41,7 +40,6 @@ class EditParent extends RecordProcess
 			->getInputSet()->addCustom($exchange->callbackFormInput())
 		;
 		$children  = $this->oneToMany->getChildren($this->record);
-		$childName = $children->getName();
 		$columnSet = new ColumnSetBuilder()
 			->setFieldSet($children->getFieldSet())
 			->setMapper(new ColumnMapper())
@@ -49,16 +47,15 @@ class EditParent extends RecordProcess
 		;
 		$headers = $columnSet->getHeaders()
 		;
+		$childAssetPath  = $exchange->getPath()->pop()->append('appointments');
 		$callbackInput   = $exchange->callbackFormInput(true);
 		$sortedIds  	 = $children->getIds(); // not sorted this time
-		$rowSet 		 = new RowSet($children, $columnSet, $sortedIds);
-		$actionPrefix	 = $exchange->getPath();
-		new RerouteToSibling($childName)->reroute($actionPrefix);
+		$rowSet 		 = new RowSet($children,
+			$columnSet, $sortedIds, $callbackInput, $childAssetPath)
+		;
 		$recordTableView = new View('record-table')
 			->add('headers', 		$headers)
 			->add('rows', 			$rowSet)
-			->add('callbackInput', 	$callbackInput)
-			->add('actionPrefix', 	$actionPrefix)
 		;
 		$view = new View('edit-parent')
 			->add('childRecordTable', $recordTableView)

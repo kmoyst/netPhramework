@@ -6,6 +6,8 @@ use Iterator;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\mapping\RecordSet;
+use netPhramework\dispatching\MutablePath;
+use netPhramework\presentation\FormInput\Input;
 
 class RowSet implements Iterator
 {
@@ -15,7 +17,9 @@ class RowSet implements Iterator
 	public function __construct(
 		private readonly RecordSet $recordSet,
 		private readonly ColumnSet $columnSet,
-		private readonly array $recordIds
+		private readonly array $recordIds,
+		private readonly Input $callbackInput,
+		private readonly MutablePath $assetPath
 	) {}
 
 	/**
@@ -39,7 +43,9 @@ class RowSet implements Iterator
 	{
 		if(isset($this->rows[$id])) return;
 		$record = $this->recordSet->getRecord($id);
-		$this->rows[$id] = new Row($this->columnSet, $record);
+		$this->rows[$id] = new Row(
+			$this->columnSet, $record, $this->callbackInput,
+			clone $this->assetPath);
 	}
 
 	public function next(): void
