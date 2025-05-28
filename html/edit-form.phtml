@@ -1,10 +1,25 @@
 <form name="edit" action="<?=$action?>"
 	  method="post" class="recordEdit"
 	  enctype="application/x-www-form-urlencoded">
-	<ul class="inputSet">
-		<? foreach($inputs as $input) echo "<li>$input</li>"; ?>
-	</ul>
-	<ul class="editFormButtons">
-		<li><input type="submit" name="submit" value="Save"/></li>
-	</ul>
+	<table class="inputSet">
+		<tr>
+			<td>
+				<ul>
+		<? foreach($inputs as $i => $input) {
+			if($i > 0 && $i % 5 === 0) echo "</ul></td><td><ul>";
+			echo "<li>$input</li>";
+		}
+		?>
+				</ul>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="<?=ceil(count($inputs)/5)?>">
+			<ul class="editFormButtons">
+				<li><input type="submit" name="submit" value="Save"/></li>
+				<li><a class="button" href="<?=$callbackLink?>">Cancel</a></li>
+			</ul>
+			</td>
+		</tr>
+	</table>
 </form>

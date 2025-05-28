@@ -38,6 +38,7 @@ class Edit extends RecordProcess
 		return new View('edit-form')
 			->add('inputs', $inputSet)
 			->add('action', 'update')
-		;
+			->add('callbackLink', $exchange->callbackLink())
+			;
 	}
 }

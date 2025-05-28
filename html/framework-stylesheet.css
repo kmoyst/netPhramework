@@ -23,6 +23,10 @@ table.recordList
     margin-right: auto;
     table-layout: fixed;
     width:0;
+    border: 1px solid #333;
+}
+table.recordList tr.odd
+{
 }
 table.recordList tr.even
 {
@@ -240,4 +244,59 @@ div.filterForm select, div.filterForm input
 div.addButton
 {
     margin-bottom: 10px;
+}
+table.inputSet
+{
+    background-color: #202020;
+    border: 1px solid #666;
+    padding: 30px;
+    margin: 10px auto 30px;
+}
+table.inputSet td
+{
+    text-align: center;
+    vertical-align: top;
+}
+table.inputSet ul li
+{
+    margin-bottom:10px;
+}
+ul.editFormButtons
+{
+    display: block;
+}
+ul.editFormButtons li
+{
+    display: inline-block;
+    margin: 30px 10px 0px 10px;
+}
+a.button {
+    display: inline-block;
+    margin: 0;
+    padding-right: 3px;
+    padding-left: 3px;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px; /* Adjust as needed */
+
+    /* Example 'button' colors - adjust to match your theme */
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+    text-decoration: none; /* Remove link underline */
+}
+a.button:hover,
+a.button:focus {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+    text-decoration: none;
 }

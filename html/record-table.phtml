@@ -2,18 +2,4 @@
 <?= $paginator ?>
 <?= $addButton ?>
 <?= $feedback ?>
-<table class="recordList">
-	<thead>
-	<tr class="odd">
-		<? foreach ($headers as $header) echo $header; ?>
-		<th style="width:120px; text-align: center">
-
-		</th>
-	</tr>
-	</thead>
-	<tbody>
-	<? $odd = false; $i=1; foreach ($rows as $row) { ?>
-		<tr class="<?= $odd ? 'odd' : 'even' ?>"><?=$row?></tr>
-		<? $odd = !$odd; } ?>
-    </tbody>
-</table>
+<?= $recordList ?>

@@ -154,13 +154,16 @@ class RecordTable extends Viewable
 
 	public function getVariables(): iterable
 	{
-		return new Variables()
+		$list = $this->rowSet->count() === 0 ?'':new View('record-table-list')
 			->add('headers',   $this->columnSet->getHeaders())
 			->add('rows', 	   $this->rowSet)
+			;
+		return new Variables()
 			->add('addButton', $this->addbuttonView)
 			->add('feedback',  $this->feedback ?? '')
 			->add('paginator', $this->paginator ?? '')
 			->add('filterSelector', $this->filterSelector ?? '')
+			->add('recordList', $list)
 			;
 	}
 }

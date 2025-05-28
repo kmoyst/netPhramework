@@ -8,8 +8,8 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\dispatching\MutablePath;
 use netPhramework\presentation\FormInput\Input;
-
-class RowSet implements Iterator
+use Countable;
+class RowSet implements Iterator, Countable
 {
 	private array $rows = [];
 	private int $pointer = 0;
@@ -73,6 +73,11 @@ class RowSet implements Iterator
 		$this->rows[$id] = new Row(
 			$this->columnSet, $record, $this->callbackInput,
 			clone $this->assetPath);
+	}
+
+	public function count(): int
+	{
+		return isset($this->orderedIds) ? count($this->orderedIds) : 0;
 	}
 
 	public function next(): void
