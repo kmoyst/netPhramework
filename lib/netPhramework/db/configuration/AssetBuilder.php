@@ -12,7 +12,7 @@ use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\core\RecordSetProcessSet;
 use netPhramework\db\exceptions\ConfigurationException;
 
-class AssetComposer
+class AssetBuilder
 {
 	protected RecordSetProcessSet $recordSetNodeSet;
 	protected RecordChildSet $recordChildSet;

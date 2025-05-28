@@ -13,14 +13,14 @@ class AdminConfiguration extends Configuration
 	public function configurePassiveNode(Directory $root): void
 	{
 		$root->allowIndex();
-		new PassiveAssetComposer($this->mapper, $root)
+		new PassiveAssetBuilder($this->mapper, $root)
 			->addAllAssetsWithDefaults()
 		;
 	}
 
 	public function configureActiveNode(Directory $root): void
 	{
-		new ActiveAssetComposer($this->mapper, $root)
+		new ActiveAssetBuilder($this->mapper, $root)
 			->addAllAssetsWithDefaults()
 		;
 	}

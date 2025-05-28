@@ -11,7 +11,7 @@ use netPhramework\db\nodes\Add;
 use netPhramework\db\nodes\Browse;
 use netPhramework\db\nodes\Edit;
 
-class PassiveAssetComposer extends AssetComposer
+class PassiveAssetBuilder extends AssetBuilder
 {
     /**
      * This is a potent method, only meant to be used during initial
