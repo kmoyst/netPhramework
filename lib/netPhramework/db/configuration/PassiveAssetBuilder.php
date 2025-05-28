@@ -4,6 +4,7 @@ namespace netPhramework\db\configuration;
 
 use netPhramework\db\core\ChildAsset;
 use netPhramework\db\exceptions\ConfigurationException;
+use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
@@ -42,7 +43,12 @@ class PassiveAssetBuilder extends AssetBuilder
 	public function childWithDefaults(string $name, string $linkField):self
 	{
 		$composer   = new self($this->mapper);
-		$childAsset = $composer->defaults()->get($name);
+		$childAsset = $composer
+			->add(new ChildRecordFormStrategy($linkField))
+			->edit(new ChildRecordFormStrategy($linkField))
+			->browse()
+			->get($name)
+		;
 		$childNode  = new ChildAsset($childAsset, $linkField);
 		$this->node($childNode);
 		return $this;
