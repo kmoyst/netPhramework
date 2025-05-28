@@ -33,7 +33,7 @@ class Schema implements \netPhramework\db\abstraction\Schema
 	 */
 	private function cache():void
 	{
-		if(isset($this->idKey)) return;
+		if(isset($this->primary)) return;
 		$mapper = new FieldMapper();
 		$mapper->map(new FieldQuery($this->tableName,$this->adapter));
 		$this->primary = $mapper->getPrimary();
