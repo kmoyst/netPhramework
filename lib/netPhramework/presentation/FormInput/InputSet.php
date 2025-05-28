@@ -46,6 +46,13 @@ class InputSet implements Iterator, InputSetBuilder
 		return $input;
 	}
 
+	public function selectInput(string $name, iterable $options):SelectInput
+	{
+		$input = new SelectInput($name, $options);
+		$this->inputs[] = $input;
+		return $input;
+	}
+
 	public function addCustom(Input $input):InputSet
 	{
 		$this->inputs[] = $input;
