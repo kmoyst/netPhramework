@@ -247,7 +247,7 @@ div.addButton
 }
 table.inputSet
 {
-    background-color: #202020;
+    background-color: rgba(40,40,40,0.5);
     border: 1px solid #666;
     padding: 30px;
     margin: 10px auto 30px;
