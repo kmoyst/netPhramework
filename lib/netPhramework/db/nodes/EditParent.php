@@ -22,8 +22,8 @@ class EditParent extends RecordProcess
 {
 	public function __construct(
 		private readonly OneToMany  $oneToMany,
-		?RecordFormStrategy         $formStrategy = null,
-		?string                     $name = 'edit')
+		private readonly ?RecordFormStrategy $formStrategy = null,
+		?string $name = 'edit')
 	{
 		$this->name = $name;
 	}
