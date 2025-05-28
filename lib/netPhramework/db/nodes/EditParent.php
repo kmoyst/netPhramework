@@ -55,8 +55,14 @@ class EditParent extends RecordProcess
 		;
 		$rowSet 		 = new RowSet(
 			$children, $columnSet, $callbackInput,
-			$childAssetPath, $children->getIds())
+			(clone $childAssetPath), $children->getIds())
 		;
+
+		$addButtonForm = new View('add-button-form')
+			->add('action', (clone $childAssetPath)->append('add'))
+			->add('callbackInput', $callbackInput)
+		;
+
 		$recordTableView = new View('record-table')
 			->add('headers', 		$headers)
 			->add('rows', 			$rowSet)
@@ -65,6 +71,7 @@ class EditParent extends RecordProcess
 			->add('childRecordTable', $recordTableView)
 			->add('inputs', 		  $inputSet)
 			->add('action', 		  'update')
+			->add('addButtonForm',		$addButtonForm)
 		;
 		$exchange->ok($view->setTitle("Edit Record"));
 	}

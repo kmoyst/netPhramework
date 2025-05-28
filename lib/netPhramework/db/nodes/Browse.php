@@ -79,8 +79,9 @@ class Browse extends RecordSetProcess
 			->add('headers', $columnSet->getHeaders())
 			->add('rows', 	 $rowSet)
 		;
-		$addButtonForm = new View('add-button-form');
-		$addButtonForm->getVariables()->add('callbackInput', $callbackInput)
+		$addButtonForm = new View('add-button-form')
+			->add('action', $exchange->getPath()->pop()->append('add'))
+			->add('callbackInput', $callbackInput)
 		;
         $errorView    = $exchange->getSession()->getEncodableValue() ?? '';
         $responseCode = $exchange->getSession()->resolveResponseCode()
