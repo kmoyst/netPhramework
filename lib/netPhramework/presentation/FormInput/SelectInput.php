@@ -37,7 +37,7 @@ class SelectInput extends Input
 
 	public function getVariables(): Variables
 	{
-		return $this->variables
+		return parent::getVariables()
 			->add('options', $this->options)
 			->add('id', $this->id ?? $this->name)
 			->add('selectedValue', $this->value ?? '')
