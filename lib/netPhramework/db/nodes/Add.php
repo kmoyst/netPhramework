@@ -25,7 +25,7 @@ class Add extends RecordSetProcess
 		$editForm = $this->createEditForm(
 			$exchange->callbackFormInput(),
 			$this->recordSet->newRecord(),
-			'insert')
+			'insert', $exchange->callbackLink())
 		;
 		$view = new View('edit')
 			->setTitle("Add Record")
@@ -35,7 +35,8 @@ class Add extends RecordSetProcess
 	}
 
 	private function createEditForm(
-		Input $callback, Record $record, string $action):View
+		Input $callback, Record $record,
+		string $action, string $callbackLink):View
 	{
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet = new RecordFormBuilder($strategy)
@@ -46,6 +47,7 @@ class Add extends RecordSetProcess
 		return new View('edit-form')
 			->add('inputs', $inputSet)
 			->add('action', $action)
+			->add('callbackLink', $callbackLink)
 			;
 	}
 }
