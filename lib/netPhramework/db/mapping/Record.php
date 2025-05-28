@@ -149,16 +149,22 @@ final class Record
 
 	/**
 	 * Make sure there's an array of data to build a CellSet
-	 * If data wasn't handed in when instantiated, this is assumed new.
-	 * Id would be null as well.
+	 * Fill any field that doesn't already exist in the array with null
 	 *
 	 * @return void
 	 * @throws MappingException
 	 */
 	private function ensureData():void
 	{
-		if($this->data !== null) return;
-		$this->data = array_fill_keys($this->getFieldNames(), null);
+		if($this->data === null)
+		{
+			$this->data = [];
+		}
+		foreach($this->getFieldSet() as $name => $field)
+		{
+			if(isset($this->data[$name])) continue;
+			else $this->data[$name] = null;
+		}
 	}
 
 	/**

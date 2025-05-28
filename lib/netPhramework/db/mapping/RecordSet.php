@@ -58,9 +58,24 @@ final class RecordSet implements Iterator, Countable
 		return $this->records[$id];
 	}
 
+	/**
+	 * Creates a new Record
+	 * If there are any "EQUAL" conditions, ensures that the Record meets that
+	 * Condition. Useful for child records.
+	 *
+	 * @return Record
+	 */
 	public function newRecord():Record
     {
-        return $this->createRecord();
+		$rowData = [];
+		foreach($this->criteria as $condition)
+		{
+			if($condition->getOperator() !== Operator::EQUAL) continue;
+			$rowData[$condition->getField()->getName()]
+				= $condition->getValue();
+
+		}
+        return $this->createRecord($rowData);
     }
 
 	/**
