@@ -6,22 +6,21 @@ use netPhramework\common\Utils;
 
 class Index extends Page
 {
-	private NodeSet $components;
+	private NodeSet $nodes;
 
-	public function setComponents(NodeSet $components): self
+	public function setComponents(NodeSet $nodes): self
 	{
-		$this->components = $components;
+		$this->nodes = $nodes;
 		return $this;
 	}
 
 	public function handleExchange(Exchange $exchange): void
 	{
 		$links = [];
-		foreach($this->components as $name => $component)
+		foreach($this->nodes as $name => $node)
 		{
 			$desc = Utils::kebabToSpace($name);
-			//if($component instanceof CompositeTrait)
-			//	$name .= '/';
+			if($node->isComposite()) $name .= '/';
 			$links[$name] = $desc;
 		}
 		ksort($links);
