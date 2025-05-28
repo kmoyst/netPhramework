@@ -47,8 +47,12 @@ class EditParent extends RecordProcess
 		;
 		$headers = $columnSet->getHeaders()
 		;
-		$callbackInput   = $exchange->callbackFormInput(true);
-		$childAssetPath  = $exchange->getPath()->pop()->append('appointments');
+		$callbackInput   = $exchange->callbackFormInput(true)
+		;
+		$childAssetPath  = $exchange->getPath()
+			->pop()
+			->append($children->getName())
+		;
 		$rowSet 		 = new RowSet(
 			$children, $columnSet, $callbackInput,
 			$childAssetPath, $children->getIds())
