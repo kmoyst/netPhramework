@@ -19,6 +19,12 @@ readonly class RecordMapper implements RecordAccess
 		return new RecordFinder($this->recordsFor($name));
 	}
 
+	public function optionsFor(
+		string $name, RecordDescriber $describer): RecordOptions
+	{
+		return new RecordOptions($this->recordsFor($name), $describer);
+	}
+
 	public function recordsFor(string $name):RecordSet
 	{
 		$schema = $this->database->getSchema($name);
