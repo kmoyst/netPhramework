@@ -47,11 +47,11 @@ class EditParent extends RecordProcess
 		;
 		$headers = $columnSet->getHeaders()
 		;
-		$childAssetPath  = $exchange->getPath()->pop()->append('appointments');
 		$callbackInput   = $exchange->callbackFormInput(true);
-		$sortedIds  	 = $children->getIds(); // not sorted this time
-		$rowSet 		 = new RowSet($children,
-			$columnSet, $sortedIds, $callbackInput, $childAssetPath)
+		$childAssetPath  = $exchange->getPath()->pop()->append('appointments');
+		$rowSet 		 = new RowSet(
+			$children, $columnSet, $callbackInput,
+			$childAssetPath, $children->getIds())
 		;
 		$recordTableView = new View('record-table')
 			->add('headers', 		$headers)

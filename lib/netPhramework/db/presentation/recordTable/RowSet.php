@@ -17,9 +17,9 @@ class RowSet implements Iterator
 	public function __construct(
 		private readonly RecordSet $recordSet,
 		private readonly ColumnSet $columnSet,
-		private readonly array $recordIds,
 		private readonly Input $callbackInput,
-		private readonly MutablePath $assetPath
+		private readonly MutablePath $assetPath,
+		private readonly array $orderedIds
 	) {}
 
 	/**
@@ -29,8 +29,8 @@ class RowSet implements Iterator
 	 */
 	public function current(): Row
 	{
-		$this->ensureRow($this->recordIds[$this->pointer]);
-		return $this->rows[$this->recordIds[$this->pointer]];
+		$this->ensureRow($this->orderedIds[$this->pointer]);
+		return $this->rows[$this->orderedIds[$this->pointer]];
 	}
 
 	/**
@@ -55,12 +55,12 @@ class RowSet implements Iterator
 
 	public function key(): int
 	{
-		return $this->recordIds[$this->pointer];
+		return $this->orderedIds[$this->pointer];
 	}
 
 	public function valid(): bool
 	{
-		return $this->pointer < count($this->recordIds);
+		return $this->pointer < count($this->orderedIds);
 	}
 
 	public function rewind(): void

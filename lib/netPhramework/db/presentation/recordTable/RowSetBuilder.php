@@ -138,8 +138,8 @@ class RowSetBuilder
 		return new RowSet(
 			$this->recordSet,
 			$this->columnSet,
-			$this->sortedIds,
 			$callbackInput,
-			$assetPath);
+			$assetPath,
+			$this->sortedIds);
 	}
 }
