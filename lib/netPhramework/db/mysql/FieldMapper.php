@@ -53,6 +53,8 @@ class FieldMapper
 			$column->setMaxLength($m[1]);
 		} elseif(preg_match('|^text$|',$sqlType)) {
 			$column->setType(FieldType::PARAGRAPH);
+		} elseif (preg_match('/^(boolean)|(tinyint\(1\))/',$sqlType)) {
+			$column->setType(FieldType::BOOLEAN);
 		} elseif(preg_match('|(int)|',$sqlType)) {
 			$column->setType(FieldType::INTEGER);
 		} elseif(preg_match('/^(float)|(decimal)/',$sqlType)) {
@@ -62,8 +64,6 @@ class FieldMapper
 			$column->addValidator(new DateValidator());
 		} elseif(preg_match('|^time|',$sqlType)) {
 			$column->setType(FieldType::TIME);
-		} elseif (preg_match('|^boolean|',$sqlType)) {
-			$column->setType(FieldType::BOOLEAN);
 		} else {
 			$column->setType(FieldType::STRING);
 		}

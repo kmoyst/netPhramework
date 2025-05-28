@@ -19,6 +19,7 @@ readonly class Adapter implements \netPhramework\db\mysql\Adapter
 	{
 		try {
 			$mySql = $query->getMySql();
+			//echo "$mySql<br/>";
 			$statement = $this->connection->getLink()->prepare($mySql);
 			$dataSet = $query->getDataSet();
 			if ($dataSet !== null && count($dataSet) > 0)

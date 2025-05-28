@@ -23,8 +23,11 @@ class DataItemMapper
 	public function mapItem(DataItem $item):void
 	{
 		$value = $item->getValue();
-		$this->bindings->addQueryValue(
-			$value === '' || $value === null ? null : $value);
+		if($value === '' || $value === null)
+		{
+			$this->bindings->addQueryValue(null);
+			$valueSet = true;
+		} else $valueSet = false;
 		switch($item->getField()->getType())
 		{
 			case FieldType::STRING:
@@ -32,13 +35,23 @@ class DataItemMapper
 			case FieldType::DATE:
 			case FieldType::TIME:
 				$this->bindings->addType('s');
+				if(!$valueSet)
+					$this->bindings->addQueryValue($value);
 				break;
 			case FieldType::BOOLEAN:
 			case FieldType::INTEGER:
 				$this->bindings->addType('i');
+				if($valueSet) break;
+				if(!is_numeric($value))
+					throw new MysqlException("Invalid value. Non numeric");
+				$this->bindings->addQueryValue((int)$value);
 				break;
 			case FieldType::FLOAT:
 				$this->bindings->addType('d');
+				if($valueSet) break;
+				if(!is_numeric($value))
+					throw new MysqlException("Invalid value. Non numeric");
+				$this->bindings->addQueryValue((float)$value);
 				break;
 			default:
 				throw new MysqlException("Field type note mapped");
