@@ -268,7 +268,7 @@ ul.editFormButtons
 ul.editFormButtons li
 {
     display: inline-block;
-    margin: 30px 10px 0px 10px;
+    margin: 30px 10px 0 10px;
 }
 a.button {
     display: inline-block;
@@ -284,14 +284,11 @@ a.button {
     cursor: pointer;
     user-select: none;
     background-image: none;
-    border: 1px solid transparent;
-    border-radius: 4px; /* Adjust as needed */
-
-    /* Example 'button' colors - adjust to match your theme */
+    border: 1px solid #ccc;
+    border-radius: 4px;
     color: #333;
     background-color: #fff;
-    border-color: #ccc;
-    text-decoration: none; /* Remove link underline */
+    text-decoration: none;
 }
 a.button:hover,
 a.button:focus {
