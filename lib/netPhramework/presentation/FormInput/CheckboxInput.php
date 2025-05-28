@@ -42,7 +42,6 @@ class CheckboxInput extends Input
 	public function getVariables(): Variables
 	{
 		return parent::getVariables()
-			->add('value', $this->value ?? 0)
 			->add('checked', empty($this->value) ? '' : 'checked')
 			->add('label', $this->label ?? Utils::kebabToSpace($this->name))
 			->add('id', $this->name)
