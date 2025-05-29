@@ -24,6 +24,7 @@ table.recordList
     table-layout: fixed;
     width:0;
     border: 1px solid #333;
+    margin-bottom: 50px;
 }
 table.recordList tr.odd
 {
@@ -304,4 +305,10 @@ div.fileInputDialogue
 input.file
 {
     margin: 10px 0 10px 0;
+}
+label
+{
+    display: block;
+    margin-bottom: 8px;
+    margin-top:16px;
 }
