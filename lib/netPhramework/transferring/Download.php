@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\transfers;
+namespace netPhramework\transferring;
 
 use netPhramework\core\Responder;
 use netPhramework\core\Response;

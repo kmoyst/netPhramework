@@ -11,8 +11,8 @@ use netPhramework\exceptions\InvalidUri;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
-use netPhramework\transfers\File;
-use netPhramework\transfers\UploadManager;
+use netPhramework\transferring\File;
+use netPhramework\transferring\UploadManager;
 
 /**
  * The central mediator for the Request-Response cycle

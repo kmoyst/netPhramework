@@ -3,7 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\transfers\Download;
+use netPhramework\transferring\Download;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\MutablePath;
@@ -14,8 +14,8 @@ use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Presentation;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Wrapper;
-use netPhramework\transfers\File;
-use netPhramework\transfers\UploadManager;
+use netPhramework\transferring\File;
+use netPhramework\transferring\UploadManager;
 
 class SocketExchange implements Exchange
 {

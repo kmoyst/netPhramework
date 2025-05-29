@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
-use netPhramework\transfers\File;
+use netPhramework\transferring\File;
 
 readonly class Responder
 {
