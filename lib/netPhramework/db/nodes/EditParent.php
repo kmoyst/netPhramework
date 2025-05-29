@@ -85,24 +85,20 @@ class EditParent extends RecordProcess
 	{
 		$recordSet = $this->oneToMany->getChildren($this->record);
 		$assetPath = $exchange->getPath()->pop()->append($recordSet->getName());
+		//$context   = new FilterContext()->parse($exchange->getParameters());
 		$table	   = new RecordTable()
 			->setAssetPath($assetPath)
 			->setRecordSet($recordSet)
 			->setCallbackInput($exchange->callbackFormInput(true))
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->setColumnStrategy($this->childColumnStrategy)
+		//	->applyFilter($context)
 			->buildColumnSet()
-			;
-		if($this->includeFilterinChildTable)
-		{
-			$context = new FilterContext()->parse($exchange->getParameters());
-			$table
-				->applyFilter($context)
-				->includeFilterSelector()
-			;
-		}
-		return $table
 			->buildRowSet()
-			->buildAddButtonView();
+			->buildAddButtonView()
+//			->includeFilterSelector()
+//			->includePaginator()
+			;
+		return $table;
 	}
 }
