@@ -13,6 +13,7 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
+use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\presentation\recordTable\RecordTable;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
@@ -23,6 +24,7 @@ class EditParent extends RecordProcess
 	public function __construct(
 		private readonly OneToMany  $oneToMany,
 		private readonly ?RecordFormStrategy $formStrategy = null,
+		private readonly ?ColumnStrategy $childColumnStrategy = null,
 		?string $name = 'edit')
 	{
 		$this->name = $name;
@@ -86,6 +88,7 @@ class EditParent extends RecordProcess
 			->setRecordSet($recordSet)
 			->setCallbackInput($exchange->callbackFormInput(true))
 			->setFeedback($exchange->getSession()->getEncodableValue())
+			->setColumnStrategy($this->childColumnStrategy)
 			->buildColumnSet()
 			->buildRowSet()
 			->buildAddButtonView()
