@@ -14,7 +14,7 @@ use netPhramework\db\exceptions\ConfigurationException;
 
 class AssetBuilder
 {
-	protected ?RecordSetProcessSet $recordSetNodeSet;
+	protected ?RecordSetProcessSet $recordSetProcessSet;
 	protected ?RecordChildSet $recordChildSet;
 	protected RecordMapper $mapper;
 	protected ?Directory $directory;
@@ -51,7 +51,7 @@ class AssetBuilder
 		if($node instanceof RecordChild)
 			$this->recordChildSet->add($node);
 		elseif($node instanceof RecordSetProcess)
-			$this->recordSetNodeSet->add($node);
+			$this->recordSetProcessSet->add($node);
 		return $this;
 	}
 
@@ -60,7 +60,7 @@ class AssetBuilder
 		$asset = new Asset(
 			$this->mapper->recordsFor($assetName),
 			$this->recordChildSet,
-			$this->recordSetNodeSet);
+			$this->recordSetProcessSet);
 		$this->reset();
 		return $asset;
 	}
@@ -81,7 +81,7 @@ class AssetBuilder
 
 	protected function reset(): void
 	{
-		$this->recordSetNodeSet = null;
-		$this->recordChildSet = null;
+		$this->recordSetProcessSet = new RecordSetProcessSet();
+		$this->recordChildSet = new RecordChildSet();
 	}
 }
