@@ -207,6 +207,7 @@ div.loginForm form input, div.signUp form input, div.editProfile form input
 }
 div.errorMessage
 {
+    color: #fff;
     text-align: center;
     margin-top: 10px;
     padding-top: 10px;
@@ -214,6 +215,7 @@ div.errorMessage
     margin-bottom: 10px;
     background-color: rgba(80,0,0,0.3);
     font-size:medium;
+    border:1px solid #333;
 }
 
 div.filterForm table
