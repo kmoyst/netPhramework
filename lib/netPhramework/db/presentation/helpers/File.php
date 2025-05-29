@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\models;
+namespace netPhramework\db\presentation\helpers;
 
 use netPhramework\db\mapping\Record;
 
