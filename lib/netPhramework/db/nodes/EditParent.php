@@ -14,7 +14,7 @@ use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
-use netPhramework\db\presentation\recordTable\FilterContext;
+//use netPhramework\db\presentation\recordTable\FilterContext;
 use netPhramework\db\presentation\recordTable\RecordTable;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
