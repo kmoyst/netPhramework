@@ -3,10 +3,10 @@
 namespace netPhramework\rendering;
 
 use netPhramework\common\FileFinder;
-use netPhramework\dispatching\Location;
-use netPhramework\dispatching\Path;
-use netPhramework\dispatching\UriFromLocation;
-use netPhramework\dispatching\UriFromPath;
+use netPhramework\locating\Location;
+use netPhramework\locating\Path;
+use netPhramework\locating\UriFromLocation;
+use netPhramework\locating\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
 
 readonly class Encoder

@@ -3,7 +3,7 @@
 namespace netPhramework\presentation\FormInput;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\Location;
+use netPhramework\locating\Location;
 use netPhramework\rendering\Encodable;
 
 class HiddenInput extends Input

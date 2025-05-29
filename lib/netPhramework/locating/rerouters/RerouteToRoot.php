@@ -1,8 +1,8 @@
 <?php
 
-namespace netPhramework\dispatching\rerouters;
+namespace netPhramework\locating\rerouters;
 
-use netPhramework\dispatching\Reroutable;
+use netPhramework\locating\Reroutable;
 
 readonly class RerouteToRoot extends Rerouter
 {

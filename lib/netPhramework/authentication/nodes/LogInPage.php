@@ -7,8 +7,8 @@ use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
-use netPhramework\dispatching\rerouters\RerouteToSibling;
-use netPhramework\dispatching\rerouters\Rerouter;
+use netPhramework\locating\rerouters\RerouteToSibling;
+use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\rendering\View;
 
 class LogInPage implements Node

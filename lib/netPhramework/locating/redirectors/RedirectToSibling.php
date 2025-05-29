@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\dispatching\redirectors;
+namespace netPhramework\locating\redirectors;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\MutablePath;
-use netPhramework\dispatching\rerouters\RerouteToSibling;
+use netPhramework\locating\MutablePath;
+use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\responding\ResponseCode;
 
 readonly class RedirectToSibling extends Redirector

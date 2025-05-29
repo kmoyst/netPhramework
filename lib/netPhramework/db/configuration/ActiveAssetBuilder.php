@@ -8,7 +8,7 @@ use netPhramework\db\exceptions\ConfigurationException;
 use netPhramework\db\nodes\Delete;
 use netPhramework\db\nodes\Insert;
 use netPhramework\db\nodes\Update;
-use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\locating\redirectors\Redirector;
 
 class ActiveAssetBuilder extends AssetBuilder
 {

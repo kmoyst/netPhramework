@@ -6,7 +6,7 @@ use Iterator;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\mapping\RecordSet;
-use netPhramework\dispatching\MutablePath;
+use netPhramework\locating\MutablePath;
 use netPhramework\presentation\FormInput\Input;
 use Countable;
 class RowSet implements Iterator, Countable

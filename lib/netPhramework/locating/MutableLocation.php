@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\dispatching;
+namespace netPhramework\locating;
 
 use netPhramework\common\Variables;
 

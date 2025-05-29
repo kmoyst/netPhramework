@@ -4,10 +4,10 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\db\transferring\File;
-use netPhramework\dispatching\Location;
-use netPhramework\dispatching\MutableLocation;
-use netPhramework\dispatching\MutablePath;
-use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\locating\Location;
+use netPhramework\locating\MutableLocation;
+use netPhramework\locating\MutablePath;
+use netPhramework\locating\redirectors\Redirector;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;

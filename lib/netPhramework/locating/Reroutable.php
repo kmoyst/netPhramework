@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\dispatching;
+namespace netPhramework\locating;
 
 /**
  * ReloctablePath can be modified, but not read (the inverse of Path)

@@ -7,8 +7,8 @@ use netPhramework\core\Exchange;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\dispatching\redirectors\Redirector;
-use netPhramework\dispatching\redirectors\RedirectToParent;
+use netPhramework\locating\redirectors\Redirector;
+use netPhramework\locating\redirectors\RedirectToParent;
 
 class Update extends RecordProcess
 {

@@ -1,19 +1,19 @@
 <?php
 
-namespace netPhramework\dispatching\redirectors;
+namespace netPhramework\locating\redirectors;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\MutablePath;
-use netPhramework\dispatching\rerouters\RerouteToRoot;
+use netPhramework\locating\MutablePath;
+use netPhramework\locating\rerouters\RerouteToChild;
 use netPhramework\responding\ResponseCode;
 
-readonly class RedirectToRoot extends Redirector
+readonly class RedirectToChild extends Redirector
 {
 	public function __construct(MutablePath|string $subPath = '',
 								?Variables         $parameters = null,
 								ResponseCode       $code = ResponseCode::SEE_OTHER)
 	{
-		parent::__construct(new RerouteToRoot($subPath), $parameters, $code);
+		parent::__construct(new RerouteToChild($subPath), $parameters, $code);
 	}
 
 }

@@ -3,7 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\MutablePath;
+use netPhramework\locating\MutablePath;
 use netPhramework\responding\Response;
 
 readonly class Request

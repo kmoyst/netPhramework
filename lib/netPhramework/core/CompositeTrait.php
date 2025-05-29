@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-use netPhramework\dispatching\redirectors\RedirectToChild;
+use netPhramework\locating\redirectors\RedirectToChild;
 use netPhramework\exceptions\InvalidUri;
 
 trait CompositeTrait

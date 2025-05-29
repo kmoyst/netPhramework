@@ -15,7 +15,7 @@ use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
-use netPhramework\dispatching\redirectors\RedirectToSibling;
+use netPhramework\locating\redirectors\RedirectToSibling;
 use netPhramework\exceptions\InvalidSession;
 
 class SaveProfile implements Node

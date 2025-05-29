@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\dispatching;
+namespace netPhramework\locating;
 
 /**
  * A fully readable and modifiable MutablePath

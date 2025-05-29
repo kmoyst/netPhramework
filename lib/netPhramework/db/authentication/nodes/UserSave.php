@@ -10,8 +10,8 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\nodes\Save;
-use netPhramework\dispatching\redirectors\Redirector;
-use netPhramework\dispatching\redirectors\RedirectToSibling;
+use netPhramework\locating\redirectors\Redirector;
+use netPhramework\locating\redirectors\RedirectToSibling;
 use netPhramework\exceptions\InvalidPassword;
 
 class UserSave extends Save

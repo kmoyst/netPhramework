@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-use netPhramework\dispatching\Path;
+use netPhramework\locating\Path;
 use netPhramework\exceptions\ComponentNotFound;
 
 class Navigator

@@ -2,8 +2,8 @@
 
 namespace netPhramework\responding;
 
-use netPhramework\dispatching\MutableLocation;
-use netPhramework\dispatching\Redirectable;
+use netPhramework\locating\MutableLocation;
+use netPhramework\locating\Redirectable;
 
 class Redirection extends MutableLocation implements Redirectable, Response
 {

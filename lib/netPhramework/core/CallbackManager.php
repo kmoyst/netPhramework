@@ -3,11 +3,11 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\redirectors\RedirectToRoot;
-use netPhramework\dispatching\MutableLocation;
-use netPhramework\dispatching\MutablePath;
-use netPhramework\dispatching\Location;
-use netPhramework\dispatching\UriAdapter;
+use netPhramework\locating\redirectors\RedirectToRoot;
+use netPhramework\locating\MutableLocation;
+use netPhramework\locating\MutablePath;
+use netPhramework\locating\Location;
+use netPhramework\locating\UriAdapter;
 use netPhramework\exceptions\InvalidUri;
 
 /**

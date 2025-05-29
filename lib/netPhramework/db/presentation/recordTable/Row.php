@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\db\mapping\Record;
-use netPhramework\dispatching\MutablePath;
+use netPhramework\locating\MutablePath;
 use netPhramework\presentation\FormInput\Input;
 use netPhramework\rendering\Viewable;
 

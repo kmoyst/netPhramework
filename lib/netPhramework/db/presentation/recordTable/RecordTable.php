@@ -8,7 +8,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\RecordSet;
-use netPhramework\dispatching\MutablePath;
+use netPhramework\locating\MutablePath;
 use netPhramework\presentation\FormInput\Input;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;

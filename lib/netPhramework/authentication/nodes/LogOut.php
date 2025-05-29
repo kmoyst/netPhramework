@@ -6,8 +6,8 @@ use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
-use netPhramework\dispatching\redirectors\Redirector;
-use netPhramework\dispatching\redirectors\RedirectToRoot;
+use netPhramework\locating\redirectors\Redirector;
+use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\exceptions\InvalidSession;
 
 class LogOut implements Node

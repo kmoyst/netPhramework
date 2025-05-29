@@ -1,9 +1,9 @@
 <?php
 
-namespace netPhramework\dispatching\rerouters;
+namespace netPhramework\locating\rerouters;
 
-use netPhramework\dispatching\MutablePath;
-use netPhramework\dispatching\Reroutable;
+use netPhramework\locating\MutablePath;
+use netPhramework\locating\Reroutable;
 
 readonly abstract class Rerouter
 {

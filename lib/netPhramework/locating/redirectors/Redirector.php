@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\dispatching\redirectors;
+namespace netPhramework\locating\redirectors;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\Redirectable;
-use netPhramework\dispatching\rerouters\Rerouter;
+use netPhramework\locating\Redirectable;
+use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\responding\ResponseCode;
 
 /**

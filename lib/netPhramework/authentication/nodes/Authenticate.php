@@ -8,8 +8,8 @@ use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
-use netPhramework\dispatching\redirectors\Redirector;
-use netPhramework\dispatching\redirectors\RedirectToSibling as ToSibling;
+use netPhramework\locating\redirectors\Redirector;
+use netPhramework\locating\redirectors\RedirectToSibling as ToSibling;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 
