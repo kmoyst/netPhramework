@@ -24,15 +24,18 @@ readonly class Responder
 
 	public function transfer(File $file, ResponseCode $code): void
 	{
-		$fn = $file->getFileName();
 		$ft = $file->getFileType();
+		$fn = $file->getFileName();
 		$sp = $file->getStoredPath();
 		http_response_code($code->value);
 		header("Content-Type: $ft");
-		header("'Content-Disposition: attachment; filename=\"$fn\"'");
+		header("Content-Disposition: attachment; filename=\"$fn\"");
 		header("Content-Length: " . filesize($sp));
-		$buffer = fopen($sp, "r");
-		fpassthru($buffer);
-		fclose($buffer);
+	//	$buffer = fopen($sp, "rb");
+	//	fpassthru($buffer);
+	//	fclose($buffer);
+		ob_end_clean();
+		flush();
+		readfile($sp);
 	}
 }
