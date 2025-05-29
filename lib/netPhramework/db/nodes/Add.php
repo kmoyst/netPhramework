@@ -8,7 +8,7 @@ use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
-use netPhramework\presentation\FormInput\Input;
+use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
 
 class Add extends RecordSetProcess

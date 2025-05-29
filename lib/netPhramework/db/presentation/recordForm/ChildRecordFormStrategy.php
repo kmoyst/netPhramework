@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordForm;
 
 use netPhramework\db\mapping\Cell;
-use netPhramework\presentation\FormInput\InputSetBuilder;
+use netPhramework\presentation\InputSetBuilder;
 
 readonly class ChildRecordFormStrategy extends RecordFormStrategyBasic
 {

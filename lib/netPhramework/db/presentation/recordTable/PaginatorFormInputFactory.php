@@ -2,8 +2,8 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\presentation\FormInput\HiddenInput;
-use netPhramework\presentation\FormInput\Input;
+use netPhramework\presentation\HiddenInput;
+use netPhramework\presentation\Input;
 
 class PaginatorFormInputFactory implements FilterFormInputFactory
 {

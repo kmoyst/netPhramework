@@ -10,7 +10,7 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Record;
-use netPhramework\presentation\FormInput\InputSet;
+use netPhramework\presentation\InputSet;
 
 class UserProfile
 {

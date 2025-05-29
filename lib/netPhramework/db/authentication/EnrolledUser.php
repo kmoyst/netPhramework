@@ -12,9 +12,9 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Record;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidPassword;
-use netPhramework\presentation\FormInput\Input;
-use netPhramework\presentation\FormInput\PasswordInput;
-use netPhramework\presentation\FormInput\TextInput;
+use netPhramework\presentation\Input;
+use netPhramework\presentation\PasswordInput;
+use netPhramework\presentation\TextInput;
 
 class EnrolledUser implements User
 {

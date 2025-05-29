@@ -8,7 +8,7 @@ use netPhramework\locating\Location;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
-use netPhramework\presentation\FormInput\HiddenInput;
+use netPhramework\presentation\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Wrapper;

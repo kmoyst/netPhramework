@@ -4,7 +4,7 @@ namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\db\mapping\Record;
 use netPhramework\locating\MutablePath;
-use netPhramework\presentation\FormInput\Input;
+use netPhramework\presentation\Input;
 use netPhramework\rendering\Viewable;
 
 class Row extends Viewable

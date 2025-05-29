@@ -6,10 +6,10 @@ use netPhramework\common\Utils;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
-use netPhramework\presentation\FormInput\HiddenInput;
-use netPhramework\presentation\FormInput\Input;
-use netPhramework\presentation\FormInput\SelectInput;
-use netPhramework\presentation\FormInput\TextInput;
+use netPhramework\presentation\HiddenInput;
+use netPhramework\presentation\Input;
+use netPhramework\presentation\SelectInput;
+use netPhramework\presentation\TextInput;
 
 class SelectFilterFormInputFactory implements FilterFormInputFactory
 {

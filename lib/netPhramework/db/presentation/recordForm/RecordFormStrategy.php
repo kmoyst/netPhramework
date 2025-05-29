@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordForm;
 
 use netPhramework\db\mapping\Record;
-use netPhramework\presentation\FormInput\InputSet;
+use netPhramework\presentation\InputSet;
 
 interface RecordFormStrategy
 {

@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\presentation\FormInput\Input;
+use netPhramework\presentation\Input;
 use netPhramework\rendering\Viewable;
 
 class FilterFormCondition extends Viewable

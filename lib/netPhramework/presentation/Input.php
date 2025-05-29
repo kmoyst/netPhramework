@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\presentation\FormInput;
+namespace netPhramework\presentation;
 
 use netPhramework\common\Variables;
-use netPhramework\rendering\Encodable;
 use netPhramework\rendering\ConfigurableViewable;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Viewable;
 
 abstract class Input extends Viewable implements ConfigurableViewable

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\presentation\FormInput;
+namespace netPhramework\presentation;
 
 use Iterator;
 use netPhramework\common\Utils;

@@ -5,8 +5,8 @@ namespace netPhramework\db\presentation\recordForm;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Cell;
 use netPhramework\db\mapping\Record;
-use netPhramework\presentation\FormInput\InputSet;
-use netPhramework\presentation\FormInput\InputSetBuilder;
+use netPhramework\presentation\InputSet;
+use netPhramework\presentation\InputSetBuilder;
 
 readonly class RecordFormStrategyBasic implements RecordFormStrategy
 {

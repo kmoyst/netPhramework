@@ -3,9 +3,9 @@
 namespace netPhramework\authentication;
 
 use netPhramework\common\Variables;
-use netPhramework\presentation\FormInput\Input;
-use netPhramework\presentation\FormInput\PasswordInput;
-use netPhramework\presentation\FormInput\TextInput;
+use netPhramework\presentation\Input;
+use netPhramework\presentation\PasswordInput;
+use netPhramework\presentation\TextInput;
 
 /**
  * Among other things, this class tracks the login page input field names.

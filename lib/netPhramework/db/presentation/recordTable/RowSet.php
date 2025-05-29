@@ -2,13 +2,14 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
+use Countable;
 use Iterator;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\locating\MutablePath;
-use netPhramework\presentation\FormInput\Input;
-use Countable;
+use netPhramework\presentation\Input;
+
 class RowSet implements Iterator, Countable
 {
 	private array $rows = [];

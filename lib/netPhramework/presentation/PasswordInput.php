@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\presentation\FormInput;
+namespace netPhramework\presentation;
 
 
 use netPhramework\common\Variables;

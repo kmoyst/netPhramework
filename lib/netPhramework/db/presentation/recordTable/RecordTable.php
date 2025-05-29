@@ -9,7 +9,7 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\locating\MutablePath;
-use netPhramework\presentation\FormInput\Input;
+use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
