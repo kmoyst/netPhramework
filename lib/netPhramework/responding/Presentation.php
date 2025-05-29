@@ -1,10 +1,8 @@
 <?php
 
-namespace netPhramework\rendering;
+namespace netPhramework\responding;
 
-use netPhramework\core\Responder;
-use netPhramework\core\Response;
-use netPhramework\core\ResponseCode;
+use netPhramework\rendering\Encodable;
 
 class Presentation implements Response
 {

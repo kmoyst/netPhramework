@@ -5,10 +5,10 @@ namespace netPhramework\bootstrap;
 use netPhramework\common\FileFinder;
 use netPhramework\core\RequestContext;
 use netPhramework\core\RequestInterpreter;
-use netPhramework\core\Responder;
 use netPhramework\core\Session;
 use netPhramework\core\UploadManager;
 use netPhramework\rendering\Encoder;
+use netPhramework\responding\Responder;
 
 class SiteContext implements RequestContext
 {

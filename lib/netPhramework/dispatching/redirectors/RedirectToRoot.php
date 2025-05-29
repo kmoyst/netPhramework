@@ -3,9 +3,9 @@
 namespace netPhramework\dispatching\redirectors;
 
 use netPhramework\common\Variables;
-use netPhramework\core\ResponseCode;
 use netPhramework\dispatching\MutablePath;
 use netPhramework\dispatching\rerouters\RerouteToRoot;
+use netPhramework\responding\ResponseCode;
 
 readonly class RedirectToRoot extends Redirector
 {

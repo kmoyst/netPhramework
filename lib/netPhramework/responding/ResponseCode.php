@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\responding;
 
 enum ResponseCode:int
 {

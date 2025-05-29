@@ -1,10 +1,9 @@
 <?php
 
-namespace netPhramework\dispatching;
+namespace netPhramework\responding;
 
-use netPhramework\core\Responder;
-use netPhramework\core\Response;
-use netPhramework\core\ResponseCode;
+use netPhramework\dispatching\MutableLocation;
+use netPhramework\dispatching\Redirectable;
 
 class Redirection extends MutableLocation implements Redirectable, Response
 {

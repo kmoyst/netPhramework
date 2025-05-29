@@ -5,6 +5,9 @@ namespace netPhramework\core;
 use netPhramework\bootstrap\Environment;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
+use netPhramework\responding\Responder;
+use netPhramework\responding\Response;
+use netPhramework\responding\ResponseCode;
 
 class Exception extends \Exception
 	implements Wrappable, Response

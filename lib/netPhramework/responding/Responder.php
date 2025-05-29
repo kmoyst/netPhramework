@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\responding;
 
 use netPhramework\db\transferring\File;
 use netPhramework\rendering\Encodable;

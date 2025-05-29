@@ -3,9 +3,9 @@
 namespace netPhramework\dispatching\redirectors;
 
 use netPhramework\common\Variables;
-use netPhramework\core\ResponseCode;
 use netPhramework\dispatching\Redirectable;
 use netPhramework\dispatching\rerouters\Rerouter;
+use netPhramework\responding\ResponseCode;
 
 /**
  * Relocates and dispatches. Used to prepare redirect Responses.
