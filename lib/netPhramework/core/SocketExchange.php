@@ -3,16 +3,19 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\transfers\Download;
+use netPhramework\dispatching\Location;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\MutablePath;
-use netPhramework\dispatching\Location;
 use netPhramework\dispatching\Redirection;
+use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\presentation\FormInput\HiddenInput;
+use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Presentation;
 use netPhramework\rendering\View;
-use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Wrapper;
+use netPhramework\transfers\File;
+use netPhramework\transfers\UploadManager;
 
 class SocketExchange implements Exchange
 {
@@ -30,6 +33,7 @@ class SocketExchange implements Exchange
 	private Variables $parameters;
 	private Session $session;
 	private CallbackManager $callbackManager;
+	private UploadManager $uploadManager;
     private Wrapper $wrapper;
 	private Response $response;
 
@@ -72,6 +76,11 @@ class SocketExchange implements Exchange
         }
 	}
 
+	public function transferFile(File $file):void
+	{
+		$this->response = new Download($file);
+	}
+
 	/** @inheritDoc */
 	public function callbackLink(bool $chain = false):string|Location
 	{
@@ -108,6 +117,12 @@ class SocketExchange implements Exchange
 	public function getSession(): Session
 	{
 		return $this->session;
+	}
+
+	/** @inheritdoc  */
+	public function getUploadManager(): UploadManager
+	{
+		return $this->uploadManager;
 	}
 
 	/**
@@ -153,6 +168,18 @@ class SocketExchange implements Exchange
 	public function setCallbackManager(CallbackManager $manager): self
 	{
 		$this->callbackManager = $manager;
+		return $this;
+	}
+
+	/**
+	 * Injector for Upload Manager
+	 *
+	 * @param UploadManager $uploadManager
+	 * @return $this
+	 */
+	public function setUploadManager(UploadManager $uploadManager): self
+	{
+		$this->uploadManager = $uploadManager;
 		return $this;
 	}
 

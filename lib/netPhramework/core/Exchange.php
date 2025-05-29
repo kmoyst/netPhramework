@@ -3,14 +3,16 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\dispatching\redirectors\Redirector;
+use netPhramework\dispatching\Location;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\MutablePath;
-use netPhramework\dispatching\Location;
+use netPhramework\dispatching\redirectors\Redirector;
 use netPhramework\exceptions\InvalidUri;
 use netPhramework\presentation\FormInput\HiddenInput;
-use netPhramework\rendering\View;
 use netPhramework\rendering\ConfigurableView;
+use netPhramework\rendering\View;
+use netPhramework\transfers\File;
+use netPhramework\transfers\UploadManager;
 
 /**
  * The central mediator for the Request-Response cycle
@@ -121,4 +123,18 @@ interface Exchange
 	 */
 	public function getSession():Session;
 
+	/**
+	 * Manager for uploaded files via form
+	 *
+	 * @return UploadManager
+	 */
+	public function getUploadManager():UploadManager;
+
+	/**
+	 * Respond with file transfer
+	 *
+	 * @param File $file
+	 * @return void
+	 */
+	public function transferFile(File $file):void;
 }

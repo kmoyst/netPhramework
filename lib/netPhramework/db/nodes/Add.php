@@ -45,6 +45,7 @@ class Add extends RecordSetProcess
 			->getInputSet()->addCustom($callback)
 		;
 		return new View('edit-form')
+			->add('hasFileInput', $inputSet->hasFileInput())
 			->add('inputs', $inputSet)
 			->add('action', $action)
 			->add('callbackLink', $callbackLink)

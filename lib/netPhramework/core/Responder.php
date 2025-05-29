@@ -4,6 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
+use netPhramework\transfers\File;
 
 readonly class Responder
 {
@@ -19,5 +20,16 @@ readonly class Responder
 	{
 		http_response_code($code->value);
 		header("Location: " . $content->encode($this->encoder));
+	}
+
+	public function transferFile(File $file, ResponseCode $code): void
+	{
+		http_response_code($code->value);
+		header('Content-Type: '.$file->getFileType());
+		header('Content-Disposition: attachment; filename="'.$file->getFileName().'"');
+		header("Content-Length: " . filesize($file->getStoredPath()));
+		$buffer = fopen($file->getStoredPath(), "r");
+		fpassthru($buffer);
+		fclose($buffer);
 	}
 }

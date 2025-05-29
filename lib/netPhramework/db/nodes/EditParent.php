@@ -60,6 +60,7 @@ class EditParent extends RecordProcess
 			->getInputSet()->addCustom($callbackInput)
 			;
 		return new View('edit-form')
+			->add('hasFileInput', $inputSet->hasFileInput())
 			->add('inputs', $inputSet)
 			->add('action', 'update')
 			->add('callbackLink', $exchange->callbackLink())

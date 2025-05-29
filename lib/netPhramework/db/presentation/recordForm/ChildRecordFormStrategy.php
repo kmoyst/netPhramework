@@ -11,7 +11,7 @@ readonly class ChildRecordFormStrategy extends RecordFormStrategyBasic
 	/**
 	 * @param string $linkField
 	 */
-	public function __construct(private readonly string $linkField)
+	public function __construct(private string $linkField)
 	{
 	}
 

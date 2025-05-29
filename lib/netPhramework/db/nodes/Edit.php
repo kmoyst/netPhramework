@@ -36,6 +36,7 @@ class Edit extends RecordProcess
 			->getInputSet()->addCustom($exchange->callbackFormInput())
 		;
 		return new View('edit-form')
+			->add('hasFileInput', $inputSet->hasFileInput())
 			->add('inputs', $inputSet)
 			->add('action', 'update')
 			->add('callbackLink', $exchange->callbackLink())

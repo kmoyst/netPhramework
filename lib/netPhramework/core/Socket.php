@@ -38,6 +38,7 @@ readonly class Socket
 				->setPath($path)
             	->setParameters($parameters)
 				->setSession($context->getSession())
+				->setUploadManager($context->getUploadManager())
 				->setWrapper($this->wrapper)
 				->setCallbackManager($callbackManager)
 			;

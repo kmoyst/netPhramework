@@ -11,6 +11,7 @@ class InputSet implements Iterator, InputSetBuilder
 {
 	private array $inputs = [];
 	private int $pointer = 0;
+	private bool $hasFileInput = false;
 
 	public function generateView(string $templateName): View
 	{
@@ -58,6 +59,19 @@ class InputSet implements Iterator, InputSetBuilder
 		$input = new CheckboxInput($name);
 		$this->inputs[] = $input;
 		return $input;
+	}
+
+	public function fileInput(string $name): FileInput
+	{
+		$input = new FileInput($name);
+		$this->inputs[] = $input;
+		$this->hasFileInput = true;
+		return $input;
+	}
+
+	public function hasFileInput(): bool
+	{
+		return $this->hasFileInput;
 	}
 
 	public function addCustom(Input $input):InputSet

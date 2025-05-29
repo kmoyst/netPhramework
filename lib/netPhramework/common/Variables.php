@@ -48,6 +48,12 @@ class Variables implements Iterator
 		return array_key_exists($key, $this->values);
 	}
 
+	public function remove(string $key):self
+	{
+		if($this->has($key)) unset($this->values[$key]);
+		return $this;
+	}
+
     public function merge(iterable $iterable, bool $overwrite = true):Variables
     {
         foreach ($iterable as $k => $v)

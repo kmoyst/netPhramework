@@ -47,7 +47,6 @@ class PassiveAssetBuilder extends AssetBuilder
 			->new($name)
 			->add(new ChildRecordFormStrategy($linkField))
 			->edit(new ChildRecordFormStrategy($linkField))
-			->browse()
 			->get()
 		;
 		$childNode  = new ChildAsset($childAsset, $linkField);

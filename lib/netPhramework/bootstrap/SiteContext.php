@@ -8,17 +8,23 @@ use netPhramework\core\RequestInterpreter;
 use netPhramework\core\Responder;
 use netPhramework\core\Session;
 use netPhramework\rendering\Encoder;
+use netPhramework\transfers\UploadManager;
 
 class SiteContext implements RequestContext
 {
 	protected readonly Environment $environment;
 	protected readonly Session $session;
+	protected readonly UploadManager $uploadManager;
 
     public function __construct(
-		?Environment $environment = null, ?Session $session = null)
+		?Environment $environment = null,
+		?Session $session = null,
+		?UploadManager $uploadManager = null
+	)
 	{
 		$this->environment = $environment ?? Environment::PRODUCTION;
         $this->session 	   = $session ?? new Session();
+		$this->uploadManager = $uploadManager ?? new UploadManager();
     }
 
 	public function getCallbackKey(): string
@@ -59,6 +65,11 @@ class SiteContext implements RequestContext
 	public function getSession():Session
 	{
 		return $this->session;
+	}
+
+	public function getUploadManager(): UploadManager
+	{
+		return $this->uploadManager;
 	}
 
 	public function getConfiguration():Configuration
