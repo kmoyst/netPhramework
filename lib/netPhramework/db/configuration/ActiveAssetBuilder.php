@@ -24,7 +24,7 @@ class ActiveAssetBuilder extends AssetBuilder
     public function addAllAssetsWithDefaults():self
     {
         foreach($this->mapper->listAllRecordSets() as $name)
-            $this->defaults()->commit($name);
+            $this->new($name)->defaults()->commit();
         return $this;
     }
 
@@ -40,7 +40,7 @@ class ActiveAssetBuilder extends AssetBuilder
 	public function childWithDefaults(string $name, string $linkField):self
 	{
 		$composer   = new self($this->mapper);
-		$childAsset = $composer->defaults()->get($name);
+		$childAsset = $composer->new($name)->defaults()->get();
 		$childNode  = new ChildAsset($childAsset, $linkField);
 		$this->node($childNode);
 		return $this;

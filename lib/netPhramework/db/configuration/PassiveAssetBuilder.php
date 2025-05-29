@@ -27,7 +27,7 @@ class PassiveAssetBuilder extends AssetBuilder
     {
         foreach($this->mapper->listAllRecordSets() as $name)
         {
-            $this->defaults()->commit($name);
+            $this->new($name)->defaults()->commit();
         }
         return $this;
     }
@@ -44,10 +44,11 @@ class PassiveAssetBuilder extends AssetBuilder
 	{
 		$composer   = new self($this->mapper);
 		$childAsset = $composer
+			->new($name)
 			->add(new ChildRecordFormStrategy($linkField))
 			->edit(new ChildRecordFormStrategy($linkField))
 			->browse()
-			->get($name)
+			->get()
 		;
 		$childNode  = new ChildAsset($childAsset, $linkField);
 		$this->node($childNode);

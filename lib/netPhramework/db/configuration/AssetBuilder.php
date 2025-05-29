@@ -14,8 +14,9 @@ use netPhramework\db\exceptions\ConfigurationException;
 
 class AssetBuilder
 {
-	protected RecordSetProcessSet $recordSetNodeSet;
-	protected RecordChildSet $recordChildSet;
+	protected ?Asset $asset;
+	protected ?RecordSetProcessSet $recordSetNodeSet;
+	protected ?RecordChildSet $recordChildSet;
 	protected RecordMapper $mapper;
 	protected ?Directory $directory;
 
@@ -24,13 +25,19 @@ class AssetBuilder
 	{
 		$this->mapper = $mapper;
 		$this->directory = $directory;
-		$this->newAssembly();
+		$this->reset();
+		//$this->newAssembly();
 	}
 
-	protected function newAssembly():void
+	public function new(string $name):self
 	{
 		$this->recordSetNodeSet = new RecordSetProcessSet();
 		$this->recordChildSet  	= new RecordChildSet();
+		$this->asset = new Asset(
+			$this->mapper->recordsFor($name),
+			$this->recordChildSet,
+			$this->recordSetNodeSet);
+		return $this;
 	}
 
 	public function setDirectory(?Directory $directory): self
@@ -61,26 +68,43 @@ class AssetBuilder
 		return $this;
 	}
 
-	public function get(string $assetName): Asset
+//	public function get(string $assetName): Asset
+	public function get(): Asset
 	{
-		$asset = new Asset(
-			$this->mapper->recordsFor($assetName),
-			$this->recordChildSet,
-			$this->recordSetNodeSet);
-		$this->newAssembly();
+//		$asset = new Asset(
+//			$this->mapper->recordsFor($assetName),
+//			$this->recordChildSet,
+//			$this->recordSetNodeSet);
+//		$this->newAssembly();
+//		return $asset;
+		$asset = $this->asset;
+		$this->reset();
 		return $asset;
 	}
 
 	/**
-	 * @param string $assetName
+//	 * @param string $assetName
 	 * @return $this
 	 * @throws ConfigurationException
 	 */
-	public function commit(string $assetName): self
+//	public function commit(string $assetName): self
+	public function commit(): self
 	{
 		if($this->directory === null)
 			throw new ConfigurationException("No directory for commit");
-		$this->directory->add($this->get($assetName));
+		if($this->asset === null)
+			throw new ConfigurationException("No asset initialized");
+		//$this->directory->add($this->get($assetName));
+		//return $this;
+		$this->directory->add($this->asset);
+		$this->reset();
 		return $this;
+	}
+
+	protected function reset(): void
+	{
+		$this->recordSetNodeSet = null;
+		$this->recordChildSet = null;
+		$this->asset = null;
 	}
 }
