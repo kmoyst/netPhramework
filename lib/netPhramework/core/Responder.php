@@ -2,9 +2,9 @@
 
 namespace netPhramework\core;
 
+use netPhramework\db\transferring\File;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
-use netPhramework\transferring\File;
 
 readonly class Responder
 {
@@ -22,7 +22,7 @@ readonly class Responder
 		header("Location: " . $content->encode($this->encoder));
 	}
 
-	public function transferFile(File $file, ResponseCode $code): void
+	public function transfer(File $file, ResponseCode $code): void
 	{
 		http_response_code($code->value);
 		header('Content-Type: '.$file->getFileType());

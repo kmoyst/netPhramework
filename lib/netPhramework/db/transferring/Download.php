@@ -1,12 +1,11 @@
 <?php
 
-namespace netPhramework\db\nodes;
+namespace netPhramework\db\transferring;
 
 use netPhramework\core\Exchange;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\transferring\File;
 
 class Download extends RecordProcess
 {

@@ -1,12 +1,10 @@
 <?php
 
-namespace netPhramework\transferring;
+namespace netPhramework\core;
 
-use netPhramework\core\Responder;
-use netPhramework\core\Response;
-use netPhramework\core\ResponseCode;
+use netPhramework\db\transferring\File;
 
-class Download implements Response
+class FileTransfer implements Response
 {
 	private File $file;
 	private ResponseCode $code;
@@ -20,6 +18,6 @@ class Download implements Response
 
 	public function deliver(Responder $responder): void
 	{
-		$responder->transferFile($this->file, $this->code);
+		$responder->transfer($this->file, $this->code);
 	}
 }

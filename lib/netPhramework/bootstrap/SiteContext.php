@@ -7,8 +7,8 @@ use netPhramework\core\RequestContext;
 use netPhramework\core\RequestInterpreter;
 use netPhramework\core\Responder;
 use netPhramework\core\Session;
+use netPhramework\core\UploadManager;
 use netPhramework\rendering\Encoder;
-use netPhramework\transferring\UploadManager;
 
 class SiteContext implements RequestContext
 {

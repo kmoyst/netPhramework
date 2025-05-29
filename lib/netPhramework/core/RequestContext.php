@@ -3,7 +3,6 @@
 namespace netPhramework\core;
 
 use netPhramework\bootstrap\Environment;
-use netPhramework\transferring\UploadManager;
 
 interface RequestContext
 {

@@ -3,6 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
+use netPhramework\db\transferring\File;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\MutablePath;
@@ -11,8 +12,6 @@ use netPhramework\exceptions\InvalidUri;
 use netPhramework\presentation\FormInput\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
-use netPhramework\transferring\File;
-use netPhramework\transferring\UploadManager;
 
 /**
  * The central mediator for the Request-Response cycle

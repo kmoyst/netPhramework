@@ -3,7 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\transferring\Download;
+use netPhramework\db\transferring\File;
 use netPhramework\dispatching\Location;
 use netPhramework\dispatching\MutableLocation;
 use netPhramework\dispatching\MutablePath;
@@ -14,8 +14,6 @@ use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Presentation;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Wrapper;
-use netPhramework\transferring\File;
-use netPhramework\transferring\UploadManager;
 
 class SocketExchange implements Exchange
 {
@@ -78,7 +76,7 @@ class SocketExchange implements Exchange
 
 	public function transferFile(File $file):void
 	{
-		$this->response = new Download($file);
+		$this->response = new FileTransfer($file);
 	}
 
 	/** @inheritDoc */

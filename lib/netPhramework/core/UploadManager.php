@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\transferring;
+namespace netPhramework\core;
 
 class UploadManager
 {

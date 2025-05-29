@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\transferring;
+namespace netPhramework\db\transferring;
 
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
