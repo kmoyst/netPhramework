@@ -98,6 +98,10 @@ ul.filterForm li
 {
     margin-bottom:3px;
 }
+div.filterForm
+{
+    margin-top:30px;
+}
 div.addButton
 {
     display: block;

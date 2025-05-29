@@ -1,3 +1,7 @@
 <label for="<?=$id?>"><?=$label?>:</label><br/>
+<? if($value) { ?>
+	<div class="fileInputDialogue">
+		<a class="button" href="download">Download</a>
+	</div>
+<?}?>
 <input class="file" id="<?=$id?>" type="<?=$type?>" name="<?=$name?>"/><br/>
-<div class="fileInputDialogue">Current File Attached: <?=$value ? 'YES' : 'NO' ?></div>
