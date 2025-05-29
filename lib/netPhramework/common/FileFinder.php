@@ -34,6 +34,6 @@ class FileFinder
 				$path = "$d/$filename.$e";
 				if(file_exists($path)) return $path;
 			}
-		throw new FileNotFound("File Not Found: $filename");
+		throw new FileNotFound("FileMapper Not Found: $filename");
 	}
 }

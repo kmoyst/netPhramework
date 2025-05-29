@@ -2,7 +2,6 @@
 
 namespace netPhramework\responding;
 
-use netPhramework\db\transferring\File;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
 

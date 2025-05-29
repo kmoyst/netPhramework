@@ -77,7 +77,7 @@ class Controller
 		if($this->environment?->inDevelopment())
 		{
 			printf(
-				"<pre>PHP Error [%d]: %s\nFile: %s\nLine: %s\n</pre>",
+				"<pre>PHP Error [%d]: %s\nFileMapper: %s\nLine: %s\n</pre>",
 				$errno,
 				htmlspecialchars($errstr, ENT_QUOTES, 'UTF-8'),
 				htmlspecialchars($errfile ?? 'N/A', ENT_QUOTES, 'UTF-8'),
@@ -87,7 +87,7 @@ class Controller
 		else
 		{
 			error_log(sprintf(
-				"Error - Type: %d, Message: %s, File: %s, Line: %d",
+				"Error - Type: %d, Message: %s, FileMapper: %s, Line: %d",
 				$errno,
 				$errstr,
 				$errfile,

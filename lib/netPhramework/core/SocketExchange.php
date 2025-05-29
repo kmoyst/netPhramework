@@ -3,7 +3,6 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\db\transferring\File;
 use netPhramework\locating\Location;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
@@ -12,6 +11,7 @@ use netPhramework\presentation\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Wrapper;
+use netPhramework\responding\File;
 use netPhramework\responding\FileTransfer;
 use netPhramework\responding\Presentation;
 use netPhramework\responding\Redirection;
