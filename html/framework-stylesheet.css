@@ -297,3 +297,11 @@ a.button:focus {
     border-color: #adadad;
     text-decoration: none;
 }
+div.fileInputDialogue
+{
+    margin:10px 0 10px 0;
+}
+input.file
+{
+    margin: 10px 0 10px 0;
+}
