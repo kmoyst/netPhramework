@@ -6,6 +6,12 @@ body, a
 {
     color: #ccc;
 }
+ul
+{
+    list-style: none;
+    padding-left: 0;
+    margin-left: 0;
+}
 form.recordEdit ul, ul.linkList
 {
     margin: 0;
@@ -129,10 +135,6 @@ ul.loginForm
     margin-left: 0;
     padding-left: 0;
 }
-ul.loginForm li
-{
-    margin-bottom: 10px;
-}
 div.loginForm
 {
     text-align: center;
@@ -200,6 +202,13 @@ div.loginForm, div.signUpLink, div.signUp, div.editProfile
 div.loginForm li, div.signUp li, div.editProfile li
 {
     padding-top: 10px;
+}
+
+div.loginForm ul, div.signUp ul, div.editProfile ul
+{
+    list-style: none;
+    margin-left: 0;
+    padding-left: 0;
 }
 div.loginForm form input, div.signUp form input, div.editProfile form input
 {
