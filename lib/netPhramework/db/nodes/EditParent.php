@@ -14,6 +14,7 @@ use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
+use netPhramework\db\presentation\recordTable\FilterContext;
 use netPhramework\db\presentation\recordTable\RecordTable;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
@@ -25,6 +26,7 @@ class EditParent extends RecordProcess
 		private readonly OneToMany  $oneToMany,
 		private readonly ?RecordFormStrategy $formStrategy = null,
 		private readonly ?ColumnStrategy $childColumnStrategy = null,
+		private readonly bool $includeFilterinChildTable = false,
 		?string $name = 'edit')
 	{
 		$this->name = $name;
@@ -83,15 +85,24 @@ class EditParent extends RecordProcess
 	{
 		$recordSet = $this->oneToMany->getChildren($this->record);
 		$assetPath = $exchange->getPath()->pop()->append($recordSet->getName());
-		return new RecordTable()
+		$table	   = new RecordTable()
 			->setAssetPath($assetPath)
 			->setRecordSet($recordSet)
 			->setCallbackInput($exchange->callbackFormInput(true))
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->setColumnStrategy($this->childColumnStrategy)
 			->buildColumnSet()
+			;
+		if($this->includeFilterinChildTable)
+		{
+			$context = new FilterContext()->parse($exchange->getParameters());
+			$table
+				->applyFilter($context)
+				->includeFilterSelector()
+			;
+		}
+		return $table
 			->buildRowSet()
-			->buildAddButtonView()
-		;
+			->buildAddButtonView();
 	}
 }
