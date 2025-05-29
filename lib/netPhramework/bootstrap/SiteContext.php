@@ -6,7 +6,7 @@ use netPhramework\common\FileFinder;
 use netPhramework\core\RequestContext;
 use netPhramework\core\RequestInterpreter;
 use netPhramework\core\Session;
-use netPhramework\core\UploadManager;
+use netPhramework\core\FileManager;
 use netPhramework\rendering\Encoder;
 use netPhramework\responding\Responder;
 
@@ -14,17 +14,17 @@ class SiteContext implements RequestContext
 {
 	protected readonly Environment $environment;
 	protected readonly Session $session;
-	protected readonly UploadManager $uploadManager;
+	protected readonly FileManager $fileManager;
 
     public function __construct(
 		?Environment $environment = null,
 		?Session $session = null,
-		?UploadManager $uploadManager = null
+		?FileManager $fileManager = null
 	)
 	{
 		$this->environment = $environment ?? Environment::PRODUCTION;
         $this->session 	   = $session ?? new Session();
-		$this->uploadManager = $uploadManager ?? new UploadManager();
+		$this->fileManager = $fileManager ?? new FileManager();
     }
 
 	public function getCallbackKey(): string
@@ -67,9 +67,9 @@ class SiteContext implements RequestContext
 		return $this->session;
 	}
 
-	public function getUploadManager(): UploadManager
+	public function getFileManager(): FileManager
 	{
-		return $this->uploadManager;
+		return $this->fileManager;
 	}
 
 	public function getConfiguration():Configuration

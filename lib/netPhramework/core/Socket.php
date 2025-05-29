@@ -39,7 +39,7 @@ readonly class Socket
 				->setPath($path)
             	->setParameters($parameters)
 				->setSession($context->getSession())
-				->setUploadManager($context->getUploadManager())
+				->setFileManager($context->getFileManager())
 				->setWrapper($this->wrapper)
 				->setCallbackManager($callbackManager)
 			;

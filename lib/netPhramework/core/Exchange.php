@@ -12,7 +12,6 @@ use netPhramework\presentation\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
 use netPhramework\responding\ResponseCode;
-use netPhramework\responding\File;
 
 /**
  * The central mediator for the Request-Response cycle
@@ -126,9 +125,9 @@ interface Exchange
 	/**
 	 * Manager for uploaded files via form
 	 *
-	 * @return UploadManager
+	 * @return FileManager
 	 */
-	public function getUploadManager():UploadManager;
+	public function getFileManager():FileManager;
 
 	/**
 	 * Respond with file transfer

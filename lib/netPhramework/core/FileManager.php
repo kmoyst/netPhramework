@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-class UploadManager
+class FileManager
 {
 	private array $uploadInfo;
 	private string $fieldName;
@@ -15,12 +15,6 @@ class UploadManager
 	public function hasFile():bool
 	{
 		return !empty($this->uploadInfo);
-	}
-
-	public function getFieldName():string
-	{
-		$this->fieldName = array_keys($this->uploadInfo)[0];
-		return $this->fieldName;
 	}
 
 	public function getFileName():string
@@ -67,6 +61,7 @@ class UploadManager
 
 	public function saveFile():string
 	{
+		$this->fieldName = array_keys($this->uploadInfo)[0];
 		preg_match('|^(.+)\.([^.]+)$|', $this->getFileName(), $m);
 		$newFileName = sha1($m[1]).'.'.$m[2];
 		$newFilePath = "../../uploads/$newFileName";

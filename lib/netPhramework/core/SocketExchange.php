@@ -11,7 +11,6 @@ use netPhramework\presentation\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Wrapper;
-use netPhramework\responding\File;
 use netPhramework\responding\FileTransfer;
 use netPhramework\responding\Presentation;
 use netPhramework\responding\Redirection;
@@ -34,7 +33,7 @@ class SocketExchange implements Exchange
 	private Variables $parameters;
 	private Session $session;
 	private CallbackManager $callbackManager;
-	private UploadManager $uploadManager;
+	private FileManager $fileManager;
     private Wrapper $wrapper;
 	private Response $response;
 
@@ -121,9 +120,9 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritdoc  */
-	public function getUploadManager(): UploadManager
+	public function getFileManager(): FileManager
 	{
-		return $this->uploadManager;
+		return $this->fileManager;
 	}
 
 	/**
@@ -175,12 +174,12 @@ class SocketExchange implements Exchange
 	/**
 	 * Injector for Upload Manager
 	 *
-	 * @param UploadManager $uploadManager
+	 * @param FileManager $fileManager
 	 * @return $this
 	 */
-	public function setUploadManager(UploadManager $uploadManager): self
+	public function setFileManager(FileManager $fileManager): self
 	{
-		$this->uploadManager = $uploadManager;
+		$this->fileManager = $fileManager;
 		return $this;
 	}
 

@@ -2,26 +2,28 @@
 
 namespace netPhramework\db\nodes;
 
-use netPhramework\common\Variables;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\mapping\Record;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToParent;
+use netPhramework\locating\redirectors\RedirectToSibling;
 
 class Save extends RecordProcess
 {
     protected Redirector $onSuccess;
+	protected Redirector $onFailure;
 
 	public function __construct(
         ?Redirector $onSuccess = null,
+		?Redirector $onFailues = null,
         ?string     $name = null)
     {
         $this->onSuccess = $onSuccess ?? new RedirectToParent('');
+		$this->onFailure = $onFailues ?? new RedirectToSibling('');
         $this->name = $name;
     }
 
@@ -35,42 +37,16 @@ class Save extends RecordProcess
 	public function handleExchange(Exchange $exchange):void
 	{
 		$record = $this->record;
-		$parameters = $exchange->getParameters();
-		$this->manageUpload($exchange, $parameters, $record);
 		try {
-			foreach($parameters as $k => $v)
-				if($record->getCellSet()->has($k))
+			foreach($exchange->getParameters() as $k => $v)
+				if($this->record->getCellSet()->has($k))
 				{
-					$record->getCell($k)->setValue($v);
+					$this->record->setValue($k, $v);
 				}
 			$record->save();
 			$exchange->redirect($this->onSuccess);
 		} catch (InvalidValue $e) {
-            $exchange->error($e, new RedirectToParent());
-		}
-	}
-
-	/**
-	 * @param Exchange $exchange
-	 * @param Variables $parameters
-	 * @param Record $record
-	 * @return void
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 */
-	private function manageUpload(
-		Exchange $exchange, Variables $parameters, Record $record):void
-	{
-		$um = $exchange->getUploadManager();
-		if($um->hasFile() && $record->getCellSet()->has($um->getFieldName()))
-		{
-			$storedFilePath = $um->saveFile();
-			$type = $um->getType();
-			$cellValue = "$storedFilePath $type";
-			$record->getCellSet()->getCell($um->getFieldName())
-				->setValue($cellValue);
-			$parameters->remove($um->getFieldName());
+            $exchange->error($e, $this->onFailure);
 		}
 	}
 }

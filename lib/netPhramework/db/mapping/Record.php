@@ -6,6 +6,7 @@ use netPhramework\db\abstraction\Schema;
 use netPhramework\db\abstraction\Table;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
+use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 
 final class Record
@@ -77,6 +78,20 @@ final class Record
 	public function getCell(string $name): Cell
 	{
 		return $this->getCellSet()->getCell($name);
+	}
+
+	/**
+	 * @param string $name
+	 * @param string|null $value
+	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 * @throws InvalidValue
+	 */
+	public function setValue(string $name, ?string $value):self
+	{
+		$this->getCell($name)->setValue($value);
+		return $this;
 	}
 
 	/**
