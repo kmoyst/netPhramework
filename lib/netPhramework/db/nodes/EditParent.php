@@ -26,7 +26,7 @@ class EditParent extends RecordProcess
 		private readonly OneToMany  $oneToMany,
 		private readonly ?RecordFormStrategy $formStrategy = null,
 		private readonly ?ColumnStrategy $childColumnStrategy = null,
-		private readonly bool $includeFilterinChildTable = false,
+		private readonly bool $includeFilteringChildTable = false,
 		?string $name = 'edit')
 	{
 		$this->name = $name;
