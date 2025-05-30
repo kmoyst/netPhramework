@@ -2,13 +2,35 @@
 
 namespace netPhramework\bootstrap;
 
-enum Environment:int
+use netPhramework\common\Variables;
+use netPhramework\core\Exception;
+
+class Environment
 {
-    case DEVELOPMENT = 50;
-    case PRODUCTION = 100;
+	private Variables $variables;
+
+	public function __construct()
+	{
+		$this->variables = new Variables()->merge($_SERVER);
+	}
+
+	public function getVariables():Variables
+	{
+		return $this->variables;
+	}
+
+	/**
+	 * @param string $varName
+	 * @return string
+	 * @throws Exception
+	 */
+	public function get(string $varName):string
+	{
+		return $this->variables->get($varName);
+	}
 
 	public function inDevelopment():bool
 	{
-		return $this === self::DEVELOPMENT;
+		return $this->variables->getOrNull('ERROR_LEVEL') === 'DEVELOPMENT';
 	}
 }
