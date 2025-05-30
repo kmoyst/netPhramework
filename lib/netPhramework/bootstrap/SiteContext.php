@@ -12,37 +12,37 @@ use netPhramework\responding\Responder;
 
 class SiteContext implements RequestContext
 {
-	protected readonly Environment $environment;
 	protected readonly Session $session;
 	protected readonly FileManager $fileManager;
+	protected readonly Environment $environment;
 
-    public function __construct(
+	public function __construct(
 		?Environment $environment = null,
-		?Session $session = null,
+		?Session     $session = null,
 		?FileManager $fileManager = null
 	)
 	{
-		$this->environment = $environment ?? Environment::PRODUCTION;
-        $this->session 	   = $session ?? new Session();
+		$this->environment = $environment ?? new Environment();
+		$this->session = $session ?? new Session();
 		$this->fileManager = $fileManager ?? new FileManager();
-    }
+	}
 
 	public function getCallbackKey(): string
 	{
 		return 'callback';
 	}
 
-	public function getRequestInterpreter():RequestInterpreter
+	public function getRequestInterpreter(): RequestInterpreter
 	{
 		return new RequestInterpreter();
 	}
 
-	public function getResponder(Encoder $encoder):Responder
+	public function getResponder(Encoder $encoder): Responder
 	{
 		return new Responder($encoder);
 	}
 
-	public function getEncoder():Encoder
+	public function getEncoder(): Encoder
 	{
 		return new Encoder($this->configureFileFinder(new FileFinder()));
 	}
@@ -51,10 +51,9 @@ class SiteContext implements RequestContext
 	{
 		return $fileFinder
 			->directory('../html')
-			->directory(__DIR__.'/../../../html')
+			->directory(__DIR__ . '/../../../html')
 			->extension('phtml')
-			->extension('css')
-			;
+			->extension('css');
 	}
 
 	public function getEnvironment(): Environment
@@ -62,7 +61,7 @@ class SiteContext implements RequestContext
 		return $this->environment;
 	}
 
-	public function getSession():Session
+	public function getSession(): Session
 	{
 		return $this->session;
 	}
@@ -72,7 +71,7 @@ class SiteContext implements RequestContext
 		return $this->fileManager;
 	}
 
-	public function getConfiguration():Configuration
+	public function getConfiguration(): Configuration
 	{
 		return new Configuration();
 	}
