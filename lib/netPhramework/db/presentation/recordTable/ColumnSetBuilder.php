@@ -10,18 +10,36 @@ class ColumnSetBuilder
 	private ?ColumnStrategy $strategy =  null;
 	private FieldSet $fieldSet;
 
+	/**
+	 * Dependency - Column Mapper
+	 *
+	 * @param ColumnMapper $mapper
+	 * @return $this
+	 */
 	public function setMapper(ColumnMapper $mapper): self
 	{
 		$this->mapper = $mapper;
 		return $this;
 	}
 
+	/**
+	 * Dependency - Column Strategy
+	 *
+	 * @param ColumnStrategy|null $strategy
+	 * @return $this
+	 */
 	public function setStrategy(?ColumnStrategy $strategy): self
 	{
 		$this->strategy = $strategy;
 		return $this;
 	}
 
+	/**
+	 * Dependency FieldSet
+	 *
+	 * @param FieldSet $fieldSet
+	 * @return $this
+	 */
 	public function setFieldSet(FieldSet $fieldSet): self
 	{
 		$this->fieldSet = $fieldSet;

@@ -38,7 +38,7 @@ class RowSet implements Iterator, Countable
 		return $this;
 	}
 
-	public function setAssetPath(MutablePath $assetPath): self
+	public function setCompositePath(MutablePath $assetPath): self
 	{
 		$this->assetPath = $assetPath;
 		return $this;

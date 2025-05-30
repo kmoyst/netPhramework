@@ -14,7 +14,7 @@ class SelectFilterDirector
 		$this->factory = new SelectFilterFormInputFactory();
 	}
 
-	public function configure(array $columnNames):self
+	public function setColumnNames(array $columnNames):self
 	{
 		$this->factory->setColumnNames($columnNames);
 		return $this;

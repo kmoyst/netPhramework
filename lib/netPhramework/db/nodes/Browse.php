@@ -7,11 +7,13 @@ use netPhramework\core\Exchange;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\presentation\recordTable\FilterContext;
-use netPhramework\db\presentation\recordTable\RecordTable;
+use netPhramework\db\presentation\recordTable\RecordTableBuilder;
+use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 
 class Browse extends RecordSetProcess
@@ -27,30 +29,33 @@ class Browse extends RecordSetProcess
 	/**
 	 * @param Exchange $exchange
 	 * @return void
-	 * @throws MappingException
-	 * @throws FieldAbsent
-	 * @throws ValueInaccessible
 	 * @throws Exception
+	 * @throws FieldAbsent
+	 * @throws InvalidSession
+	 * @throws MappingException
+	 * @throws ValueInaccessible
+	 * @throws RecordNotFound
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$filterContext = new FilterContext()
-			->parse($exchange->getParameters())
-		;
-		$recordTable   = new RecordTable()
-			->setAssetPath($exchange->getPath()->pop())
-			->setRecordSet($this->recordSet)
-			->setCallbackInput($exchange->callbackFormInput(true))
-			->setFeedback($exchange->getSession()->getEncodableValue())
+		$filterContext = new FilterContext()->parse($exchange->getParameters());
+		$recordTable   = new RecordTableBuilder()
+			->setCallbackInput($exchange->callbackFormInput())
 			->setColumnMapper($this->columnMapper)
 			->setColumnStrategy($this->columnStrategy)
-			->applyFilter($filterContext)
+			->setCompositePath($exchange->getPath()->pop())
+			->setFeedback($exchange->getSession()->getEncodableValue())
+			->setFilterContext($filterContext)
+			->setRecordSet($this->recordSet)
 			->buildColumnSet()
 			->buildRowSet()
-			->buildAddButtonView()
-			->includeFilterSelector()
-			->includePaginator()
-		;
+			->applyFilter()
+			->buildAddButton()
+			->buildSelectFilterForm()
+			->buildPaginator()
+			->buildRecordList()
+			->getRecordTable()
+			;
 		$view = new View('browse')
 			->setTitle('Browse Records')
 			->add('recordTable', $recordTable)

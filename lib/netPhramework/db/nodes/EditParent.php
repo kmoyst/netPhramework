@@ -13,9 +13,11 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
+use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 //use netPhramework\db\presentation\recordTable\FilterContext;
-use netPhramework\db\presentation\recordTable\RecordTable;
+use netPhramework\db\presentation\recordTable\RecordList;
+use netPhramework\db\presentation\recordTable\RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
@@ -27,6 +29,7 @@ class EditParent extends RecordProcess
 		private readonly ?RecordFormStrategy $formStrategy = null,
 		private readonly ?ColumnStrategy $childColumnStrategy = null,
 		private readonly bool $includeFilteringChildTable = false,
+		private readonly ?ColumnMapper $columnMapper = null,
 		?string $name = 'edit')
 	{
 		$this->name = $name;
@@ -35,12 +38,9 @@ class EditParent extends RecordProcess
 	/**
 	 * @param Exchange $exchange
 	 * @return void
-	 * @throws Exception
 	 * @throws FieldAbsent
 	 * @throws InvalidSession
 	 * @throws MappingException
-	 * @throws RecordNotFound
-	 * @throws ValueInaccessible
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
@@ -77,28 +77,23 @@ class EditParent extends RecordProcess
 	 * @throws FieldAbsent
 	 * @throws InvalidSession
 	 * @throws MappingException
-	 * @throws Exception
-	 * @throws RecordNotFound
-	 * @throws ValueInaccessible
 	 */
 	private function createChildTable(Exchange $exchange):Viewable
 	{
 		$recordSet = $this->oneToMany->getChildren($this->record);
-		$assetPath = $exchange->getPath()->pop()->append($recordSet->getName());
-		//$context   = new FilterContext()->parse($exchange->getParameters());
-		$table	   = new RecordTable()
-			->setAssetPath($assetPath)
+		$compPath  = $exchange->getPath()->pop()->append($recordSet->getName());
+		return new RecordTableBuilder()
 			->setRecordSet($recordSet)
 			->setCallbackInput($exchange->callbackFormInput(true))
-			->setFeedback($exchange->getSession()->getEncodableValue())
+			->setColumnMapper($this->columnMapper)
 			->setColumnStrategy($this->childColumnStrategy)
-		//	->applyFilter($context)
+			->setCompositePath($compPath)
+			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
 			->buildRowSet()
-			->buildAddButtonView()
-//			->includeFilterSelector()
-//			->includePaginator()
+			->buildAddButton()
+			->buildRecordList()
+			->getRecordTable()
 			;
-		return $table;
 	}
 }

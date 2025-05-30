@@ -25,7 +25,7 @@ class Row extends Viewable
 	{
 		$this->assetPath->append($this->record->getId());
 		return [
-			'cellSet' => new RecordTableCellSet($this->columnSet,$this->record),
+			'cellSet' => new RowCellSet($this->columnSet,$this->record),
 			'callbackInput' => $this->callbackInput,
 			'id' => $this->record->getId(),
 			'editPath' =>   (clone $this->assetPath)->append('edit'),

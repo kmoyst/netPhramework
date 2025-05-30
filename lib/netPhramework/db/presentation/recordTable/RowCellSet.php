@@ -8,7 +8,7 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\rendering\Encodable;
 use netPhramework\db\mapping\Record;
 use Iterator;
-class RecordTableCellSet implements Iterator
+class RowCellSet implements Iterator
 {
 	private ColumnSet $columnSet;
 	private Record $record;
