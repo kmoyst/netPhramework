@@ -29,6 +29,7 @@ class EditParent extends RecordProcess
 		private readonly OneToMany  $oneToMany,
 		private readonly ?RecordFormStrategy $formStrategy = null,
 		private readonly ?ColumnStrategy $childColumnStrategy = null,
+		private readonly int $childFilterThreshold = 5,
 		private readonly ?ColumnMapper $columnMapper = null,
 		?string $name = 'edit')
 	{
@@ -38,9 +39,12 @@ class EditParent extends RecordProcess
 	/**
 	 * @param Exchange $exchange
 	 * @return void
+	 * @throws Exception
 	 * @throws FieldAbsent
 	 * @throws InvalidSession
 	 * @throws MappingException
+	 * @throws RecordNotFound
+	 * @throws ValueInaccessible
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
@@ -96,7 +100,7 @@ class EditParent extends RecordProcess
 			->buildColumnSet()
 			->buildRowSet()
 			;
-		if($recordSet->count() > 10) {
+		if($recordSet->count() > $this->childFilterThreshold) {
 			$builder
 				->setCallbackInputForFilterForms($exchange->callbackFormInput())
 				->setFilterContext($filterContext)
