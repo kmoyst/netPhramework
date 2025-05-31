@@ -21,21 +21,38 @@ class RecordFilterer
 	private array $filteredIds;
 	private array $sortedIds;
 
+	/**
+	 * Dependency - Column Set
+	 *
+	 * @param ColumnSet $columnSet
+	 * @return $this
+	 */
+	public function setColumnSet(ColumnSet $columnSet): self
+	{
+		$this->columnSet = $columnSet;
+		return $this;
+	}
+
+	/**
+	 * Dependency - Record Set
+	 *
+	 * @param RecordSet $recordSet
+	 * @return $this
+	 */
 	public function setRecordSet(RecordSet $recordSet):self
 	{
 		$this->recordSet = $recordSet;
 		return $this;
 	}
 
+	/**
+	 * Dependency - Filter Context
+	 * @param FilterContext $context
+	 * @return $this
+	 */
 	public function setContext(FilterContext $context): self
 	{
 		$this->context = $context;
-		return $this;
-	}
-
-	public function setColumnSet(ColumnSet $columnSet): self
-	{
-		$this->columnSet = $columnSet;
 		return $this;
 	}
 

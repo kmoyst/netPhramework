@@ -14,7 +14,7 @@ class Delete extends RecordProcess
     protected Redirector $dispatcher;
 
 	public function __construct(?Redirector $dispatcher = null,
-                                ?string     $name = null)
+                                ?string     $name = 'delete')
 	{
         $this->dispatcher = $this->dispatcher ?? new RedirectToParent('');
 		$this->name = $name;

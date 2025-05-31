@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
+use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 
@@ -24,7 +25,8 @@ class PaginatorDirector
 		$this->factory 		= new PaginatorFormInputFactory();
 	}
 
-	public function configure(FilterFormContext $baseContext):self
+	public function configure(FilterFormContext $baseContext,
+							  ?Input $callbackInput):self
 	{
 		$this->context->setBaseContext($baseContext);
 		$this->calculator
@@ -36,7 +38,7 @@ class PaginatorDirector
 			$this->builder
 				->setContext($this->context)
 				->setFactory($this->factory)
-		);
+		)->setCallbackInput($callbackInput);
 		return $this;
 	}
 

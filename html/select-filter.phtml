@@ -24,6 +24,7 @@
                                     <tr>
                                         <td><?=$limitInput?></td>
                                         <td>
+											<?=$callbackInput?>
                                             <input type="submit" name="action" value="Filter"/>
                                         </td>
                                     </tr>
@@ -36,6 +37,7 @@
 			<td>
                <form name="resetForm" method="get">
 				   <?=$hiddenLimitInput?>
+				   <?=$callbackInput?>
 				   <input type="submit" name="action" value="Reset"/>
                </form>
 			</td>

@@ -33,6 +33,12 @@ class AssetBuilder
 		return $this;
 	}
 
+	public function setMapper(RecordMapper $mapper): self
+	{
+		$this->mapper = $mapper;
+		return $this;
+	}
+
 	public function childAsset(AssetStrategy $strategy, string $linkField):self
 	{
 		$child = $strategy->create($this->mapper);
