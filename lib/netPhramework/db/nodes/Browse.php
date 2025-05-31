@@ -40,7 +40,7 @@ class Browse extends RecordSetProcess
 	{
 		$filterContext = new FilterContext()->parse($exchange->getParameters());
 		$recordTable   = new RecordTableBuilder()
-			->setCallbackInput($exchange->callbackFormInput())
+			->setCallbackInputForRows($exchange->callbackFormInput())
 			->setColumnMapper($this->columnMapper)
 			->setColumnStrategy($this->columnStrategy)
 			->setCompositePath($exchange->getPath()->pop())

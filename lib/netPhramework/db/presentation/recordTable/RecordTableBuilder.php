@@ -15,7 +15,8 @@ use netPhramework\rendering\View;
 
 class RecordTableBuilder
 {
-	private Input $callbackInput;
+	private Input $callbackInputForRows;
+	private ?Input $callbackInputForFilterForms;
 	private ?ColumnMapper $columnMapper;
 	private ?ColumnStrategy $columnStrategy;
 	private RecordSet $recordSet;
@@ -64,11 +65,19 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	public function setCallbackInput(Input $callbackInput): self
+	public function setCallbackInputForRows(Input $callbackInputForRows): self
 	{
-		$this->callbackInput = $callbackInput;
+		$this->callbackInputForRows = $callbackInputForRows;
 		return $this;
 	}
+
+	public function setCallbackInputForFilterForms(
+		?Input $callbackInputForFilterForms): self
+	{
+		$this->callbackInputForFilterForms = $callbackInputForFilterForms;
+		return $this;
+	}
+
 
 	public function setFeedback(?Encodable $feedback):self
 	{
@@ -100,7 +109,7 @@ class RecordTableBuilder
 		$this->rowSet
 			->setOrderedIds($this->recordSet->getIds())
 			->setColumnSet($this->columnSet)
-			->setCallbackInput($this->callbackInput)
+			->setCallbackInput($this->callbackInputForRows)
 			->setCompositePath($this->compositePath)
 			->setRecordSet($this->recordSet)
 		;
@@ -129,7 +138,7 @@ class RecordTableBuilder
 	public function buildAddButton():self
 	{
 		$this->addButton = new AddButton()
-			->setCallbackInput($this->callbackInput)
+			->setCallbackInput($this->callbackInputForRows)
 			->setCompositePath(clone $this->compositePath)
 		;
 		return $this;
@@ -138,6 +147,7 @@ class RecordTableBuilder
 	public function buildSelectFilterForm():self
 	{
 		$this->selectFilterForm = new SelectFilterDirector()
+			->setCallbackInput($this->callbackInputForFilterForms ?? null)
 			->setColumnNames($this->columnSet->getNames())
 			->buildSelectFilterForm($this->filterContext)
 			->getView()
@@ -150,7 +160,8 @@ class RecordTableBuilder
 		if($this->filterContext->getLimit() !== null)
 		{
 			$this->paginator = new PaginatorDirector()
-				->configure($this->filterContext)
+				->configure($this->filterContext,
+					$this->callbackInputForFilterForms ?? null)
 				->buildPreviousForm()
 				->buildNextForm()
 				->getView()

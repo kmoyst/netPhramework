@@ -16,6 +16,7 @@ use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
 use netPhramework\db\presentation\recordTable\ColumnMapper;
 use netPhramework\db\presentation\recordTable\ColumnStrategy;
 //use netPhramework\db\presentation\recordTable\FilterContext;
+use netPhramework\db\presentation\recordTable\FilterContext;
 use netPhramework\db\presentation\recordTable\RecordList;
 use netPhramework\db\presentation\recordTable\RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
@@ -74,23 +75,38 @@ class EditParent extends RecordProcess
 	/**
 	 * @param Exchange $exchange
 	 * @return Viewable
+	 * @throws Exception
 	 * @throws FieldAbsent
 	 * @throws InvalidSession
 	 * @throws MappingException
+	 * @throws RecordNotFound
+	 * @throws ValueInaccessible
 	 */
 	private function createChildTable(Exchange $exchange):Viewable
 	{
 		$recordSet = $this->oneToMany->getChildren($this->record);
 		$compPath  = $exchange->getPath()->pop()->append($recordSet->getName());
-		return new RecordTableBuilder()
+		$filterContext = new FilterContext()->parse($exchange->getParameters());
+		$builder = new RecordTableBuilder()
 			->setRecordSet($recordSet)
-			->setCallbackInput($exchange->callbackFormInput(true))
+			->setCallbackInputForRows($exchange->callbackFormInput(true))
 			->setColumnMapper($this->columnMapper)
 			->setColumnStrategy($this->childColumnStrategy)
 			->setCompositePath($compPath)
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
 			->buildRowSet()
+			;
+		if($recordSet->count() > 10) {
+			$builder
+				->setCallbackInputForFilterForms($exchange->callbackFormInput())
+				->setFilterContext($filterContext)
+				->applyFilter()
+				->buildSelectFilterForm()
+				->buildPaginator()
+			;
+		}
+		return $builder
 			->buildAddButton()
 			->buildRecordList()
 			->getRecordTable()
