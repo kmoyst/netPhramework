@@ -20,6 +20,7 @@ class RecordFilterer
 
 	private array $filteredIds;
 	private array $sortedIds;
+	private array $paginatedIds;
 
 	/**
 	 * Dependency - Column Set
@@ -140,10 +141,15 @@ class RecordFilterer
 		}
 		$args[] = $ids;
 		array_multisort(...$args);
-		$sortedIds = array_pop($args);
+		$this->sortedIds = array_pop($args);
+		return $this;
+	}
+
+	public function paginate():self
+	{
 		$limit = $this->context->getLimit();
 		$offset = $this->context->getOffset();
-		$this->sortedIds = array_slice($sortedIds, $offset, $limit);
+		$this->paginatedIds = array_slice($this->sortedIds, $offset, $limit);
 		return $this;
 	}
 
@@ -157,6 +163,6 @@ class RecordFilterer
 	 */
 	public function getIds():array
 	{
-		return $this->filter()->sort()->sortedIds;
+		return $this->filter()->sort()->paginate()->paginatedIds;
 	}
 }
