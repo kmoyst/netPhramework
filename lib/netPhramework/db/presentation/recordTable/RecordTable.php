@@ -5,15 +5,19 @@ namespace netPhramework\db\presentation\recordTable;
 use netPhramework\common\Variables;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
-use netPhramework\rendering\Viewable;
 
-class RecordTable extends Viewable
+class RecordTable extends View
 {
 	private AddButton $addButton;
 	private RecordList $recordList;
 	private ?View $selectFilterForm;
 	private ?View $paginator;
 	private ?Encodable $feedback;
+
+	public function __construct(string $templateName = 'record-table')
+	{
+		parent::__construct($templateName);
+	}
 
 	public function setAddButton(AddButton $addButton): self
 	{
@@ -45,14 +49,9 @@ class RecordTable extends Viewable
 		return $this;
 	}
 
-	public function getTemplateName(): string
+	public function getVariables(): Variables
 	{
-		return 'record-table';
-	}
-
-	public function getVariables(): iterable
-	{
-		return new Variables()
+		return parent::getVariables()
 			->add('addButton', $this->addButton)
 			->add('filterSelector', $this->selectFilterForm ?? '')
 			->add('paginator', $this->paginator ?? '')

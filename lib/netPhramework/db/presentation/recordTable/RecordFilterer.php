@@ -88,7 +88,7 @@ class RecordFilterer
 			foreach($allIds as $id)
 			{
 				$record 	 = $this->recordSet->getRecord($id);
-				$recordValue = $column->getFilterableValue($record);
+				$recordValue = $column->getOperationalValue($record);
 				if(!$operator->check($recordValue, $value))
 					unset($currentConditionIds[$id]);
 			}

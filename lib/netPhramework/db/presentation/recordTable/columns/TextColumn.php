@@ -32,7 +32,7 @@ class TextColumn implements Column
 		return $this;
 	}
 
-	public function getFilterableValue(Record $record): string
+	public function getOperationalValue(Record $record): string
 	{
 		return $this->getSortableValue($record);
 	}

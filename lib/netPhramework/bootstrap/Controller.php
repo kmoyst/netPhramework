@@ -68,7 +68,7 @@ class Controller
 			echo "SERVER ERROR";
 			exit(1);
 		}
-		exit($error!==null&&$this->errorIsFatal($error['type'])?1:0);
+		exit($error !== null && $this->errorIsFatal($error['type']) ? 1 : 0);
 	}
 	public function handleError(
 		int $errno, string $errstr, ?string $errfile = null,

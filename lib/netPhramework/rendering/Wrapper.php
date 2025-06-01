@@ -48,7 +48,7 @@ class Wrapper extends Viewable implements WrapperConfiguration
 	/** @inheritdoc  */
 	public function addStyleSheet(string $templateName):self
 	{
-		array_push($this->styleSheets, new Template($templateName));
+		$this->styleSheets[] = new Template($templateName);
 		return $this;
 	}
 

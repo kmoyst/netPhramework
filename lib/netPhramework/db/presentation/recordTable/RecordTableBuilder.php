@@ -15,20 +15,18 @@ use netPhramework\rendering\View;
 
 class RecordTableBuilder
 {
-	private Input $callbackInputForRows;
-	private ?Input $callbackInputForFilterForms;
-	private ?ColumnMapper $columnMapper;
-	private ?ColumnStrategy $columnStrategy;
-	private RecordSet $recordSet;
-	private MutablePath $compositePath;
-	private FilterContext $filterContext;
-	private ColumnSet $columnSet;
-	private RowSet $rowSet;
-	private AddButton $addButton;
-	private View $selectFilterForm;
-	private View $paginator;
-	private ?Encodable $feedback;
-	private RecordList $recordList;
+	protected Input $callbackInputForRows;
+	protected ?Input $callbackInputForFilterForms;
+	protected RecordSet $recordSet;
+	protected MutablePath $compositePath;
+	protected FilterContext $filterContext;
+	protected ColumnSet $columnSet;
+	protected RowSet $rowSet;
+	protected AddButton $addButton;
+	protected View $selectFilterForm;
+	protected View $paginator;
+	protected ?Encodable $feedback;
+	protected RecordList $recordList;
 
 	public function __construct()
 	{
@@ -50,18 +48,6 @@ class RecordTableBuilder
 	public function setFilterContext(FilterContext $filterContext): self
 	{
 		$this->filterContext = $filterContext;
-		return $this;
-	}
-
-	public function setColumnMapper(?ColumnMapper $columnMapper): self
-	{
-		$this->columnMapper = $columnMapper;
-		return $this;
-	}
-
-	public function setColumnStrategy(?ColumnStrategy $columnStrategy): self
-	{
-		$this->columnStrategy = $columnStrategy;
 		return $this;
 	}
 
@@ -91,12 +77,11 @@ class RecordTableBuilder
 	 */
 	public function buildColumnSet():self
 	{
-		$this->columnSet = new ColumnSetBuilder()
-			->setMapper($this->columnMapper ?? new ColumnMapper())
-			->setStrategy($this->columnStrategy)
-			->setFieldSet($this->recordSet->getFieldSet())
-			->getColumnSet()
-		;
+		$columnSet 	  = new ColumnSet();
+		$columnMapper = new ColumnMapper();
+		foreach($this->recordSet->getFieldSet() as $field)
+			$columnSet->add($columnMapper->mapColumn($field));
+		$this->columnSet = $columnSet;
 		return $this;
 	}
 

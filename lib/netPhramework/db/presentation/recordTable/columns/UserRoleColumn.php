@@ -16,7 +16,7 @@ class UserRoleColumn implements Column
 		return 'role';
 	}
 
-	public function getFilterableValue(Record $record): string
+	public function getOperationalValue(Record $record): string
 	{
 		return $this->getSortableValue($record);
 	}

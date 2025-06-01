@@ -13,8 +13,6 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
-use netPhramework\db\presentation\recordTable\ColumnMapper;
-use netPhramework\db\presentation\recordTable\ColumnStrategy;
 use netPhramework\db\presentation\recordTable\FilterContext;
 use netPhramework\db\presentation\recordTable\RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
@@ -26,9 +24,8 @@ class EditParent extends RecordProcess
 	public function __construct(
 		private readonly OneToMany  $oneToMany,
 		private readonly ?RecordFormStrategy $formStrategy = null,
-		private readonly ?ColumnStrategy $childColumnStrategy = null,
+		private readonly ?RecordTableBuilder $recordTableBuilder = null,
 		private readonly int $childFilterThreshold = 5,
-		private readonly ?ColumnMapper $columnMapper = null,
 		?string $name = 'edit')
 	{
 		$this->name = $name;
@@ -88,11 +85,9 @@ class EditParent extends RecordProcess
 		$recordSet = $this->oneToMany->getChildren($this->record);
 		$compPath  = $exchange->getPath()->pop()->append($recordSet->getName());
 		$filterContext = new FilterContext()->parse($exchange->getParameters());
-		$builder = new RecordTableBuilder()
+		$builder = $this->recordTableBuilder ?? new RecordTableBuilder()
 			->setRecordSet($recordSet)
 			->setCallbackInputForRows($exchange->callbackFormInput(true))
-			->setColumnMapper($this->columnMapper)
-			->setColumnStrategy($this->childColumnStrategy)
 			->setCompositePath($compPath)
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
