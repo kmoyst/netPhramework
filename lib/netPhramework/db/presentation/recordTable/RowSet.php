@@ -44,8 +44,15 @@ class RowSet implements Iterator, Countable
 		return $this;
 	}
 
+	/**
+	 * This can be applied any time between iterations.
+	 *
+	 * @param array $orderedIds
+	 * @return $this
+	 */
 	public function setOrderedIds(array $orderedIds): self
 	{
+		// rows don't need to be reset. The ids determine the iteration pattern
 		$this->orderedIds = $orderedIds;
 		return $this;
 	}

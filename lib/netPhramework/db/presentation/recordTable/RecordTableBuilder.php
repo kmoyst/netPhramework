@@ -102,6 +102,9 @@ class RecordTableBuilder
 	}
 
 	/**
+	 * This can be called before or after buildRowSet. But until it's
+	 * called, rowSet will iterate through all Ids.
+	 *
 	 * @return $this
 	 * @throws Exception
 	 * @throws FieldAbsent

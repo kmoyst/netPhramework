@@ -85,7 +85,7 @@ class EditParent extends RecordProcess
 		$recordSet = $this->oneToMany->getChildren($this->record);
 		$compPath  = $exchange->getPath()->pop()->append($recordSet->getName());
 		$filterContext = new FilterContext()->parse($exchange->getParameters());
-		$builder = $this->recordTableBuilder ?? new RecordTableBuilder()
+		$builder = ($this->recordTableBuilder ?? new RecordTableBuilder())
 			->setRecordSet($recordSet)
 			->setCallbackInputForRows($exchange->callbackFormInput(true))
 			->setCompositePath($compPath)
