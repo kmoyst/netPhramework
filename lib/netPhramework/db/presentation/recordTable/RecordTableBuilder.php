@@ -92,7 +92,7 @@ class RecordTableBuilder
 	public function buildRowSet():self
 	{
 		$this->rowSet
-			->setOrderedIds($this->recordSet->getIds())
+			->setIdsToTraverse($this->recordSet->getIds())
 			->setColumnSet($this->columnSet)
 			->setCallbackInput($this->callbackInputForRows)
 			->setCompositePath($this->compositePath)
@@ -114,7 +114,7 @@ class RecordTableBuilder
 	 */
 	public function applyFilter():self
 	{
-		$this->rowSet->setOrderedIds(new RecordFilterer()
+		$this->rowSet->setIdsToTraverse(new RecordFilterer()
 			->setColumnSet($this->columnSet)
 			->setRecordSet($this->recordSet)
 			->setContext($this->filterContext)

@@ -18,7 +18,7 @@ class RowSet implements Iterator, Countable
 	private ColumnSet $columnSet;
 	private Input $callbackInput;
 	private MutablePath $assetPath;
-	private array $orderedIds;
+	private array $idsToTraverse;
 
 	public function setRecordSet(RecordSet $recordSet): self
 	{
@@ -44,16 +44,9 @@ class RowSet implements Iterator, Countable
 		return $this;
 	}
 
-	/**
-	 * This can be applied any time between iterations.
-	 *
-	 * @param array $orderedIds
-	 * @return $this
-	 */
-	public function setOrderedIds(array $orderedIds): self
+	public function setIdsToTraverse(array $idsToTraverse): self
 	{
-		// rows don't need to be reset. The ids determine the iteration pattern
-		$this->orderedIds = $orderedIds;
+		$this->idsToTraverse = $idsToTraverse;
 		return $this;
 	}
 
@@ -64,8 +57,8 @@ class RowSet implements Iterator, Countable
 	 */
 	public function current(): Row
 	{
-		$this->ensureRow($this->orderedIds[$this->pointer]);
-		return $this->rows[$this->orderedIds[$this->pointer]];
+		$this->ensureRow($this->idsToTraverse[$this->pointer]);
+		return $this->rows[$this->idsToTraverse[$this->pointer]];
 	}
 
 	/**
@@ -95,12 +88,12 @@ class RowSet implements Iterator, Countable
 
 	public function key(): int
 	{
-		return $this->orderedIds[$this->pointer];
+		return $this->idsToTraverse[$this->pointer];
 	}
 
 	public function valid(): bool
 	{
-		return $this->pointer < count($this->orderedIds);
+		return $this->pointer < count($this->idsToTraverse);
 	}
 
 	public function rewind(): void
