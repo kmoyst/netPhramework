@@ -120,7 +120,7 @@ class RecordFilterer
 	private function sort():RecordFilterer
 	{
 		$args = [];
-		$ids  = $this->filteredIds;
+		$ids  = $this->filteredIds ?? $this->recordSet->getIds();
 		foreach($this->context->getSortArray() as $vector)
 		{
 			$field = $vector[FilterKey::SORT_FIELD->value];
@@ -145,24 +145,27 @@ class RecordFilterer
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 * @throws MappingException
+	 */
 	public function paginate():self
 	{
 		$limit = $this->context->getLimit();
 		$offset = $this->context->getOffset();
-		$this->paginatedIds = array_slice($this->sortedIds, $offset, $limit);
+		$ids = $this->sortedIds ?? $this->filteredIds ??
+			$this->recordSet->getIds();
+		$this->paginatedIds = array_slice($ids, $offset, $limit);
 		return $this;
 	}
 
 	/**
 	 * @return array
-	 * @throws Exception
-	 * @throws FieldAbsent
 	 * @throws MappingException
-	 * @throws RecordNotFound
-	 * @throws ValueInaccessible
 	 */
 	public function getIds():array
 	{
-		return $this->filter()->sort()->paginate()->paginatedIds;
+		return $this->paginatedIds ?? $this->sortedIds ?? $this->filteredIds ??
+			$this->recordSet->getIds();
 	}
 }
