@@ -78,7 +78,7 @@ class RowSet implements Iterator, Countable
 
 	public function count(): int
 	{
-		return isset($this->orderedIds) ? count($this->orderedIds) : 0;
+		return isset($this->idsToTraverse) ? count($this->idsToTraverse) : 0;
 	}
 
 	public function next(): void
