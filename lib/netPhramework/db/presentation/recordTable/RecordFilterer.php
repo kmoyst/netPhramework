@@ -63,7 +63,7 @@ class RecordFilterer
 	 * @throws MappingException
 	 * @throws RecordNotFound
 	 */
-	private function filter():RecordFilterer
+	public function filter():RecordFilterer
 	{
 		$rsIds  = $this->recordSet->getIds();
 		$allIds = array_combine($rsIds, $rsIds);
@@ -117,7 +117,7 @@ class RecordFilterer
 	 * @throws ValueInaccessible
 	 * @throws Exception
 	 */
-	private function sort():RecordFilterer
+	public function sort():RecordFilterer
 	{
 		$args = [];
 		$ids  = $this->filteredIds ?? $this->recordSet->getIds();
