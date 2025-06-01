@@ -118,10 +118,11 @@ class RecordTableBuilder
 			->setColumnSet($this->columnSet)
 			->setRecordSet($this->recordSet)
 			->setContext($this->filterContext)
+			->initialize()
 			->filter()
 			->sort()
 			->paginate()
-			->getIds())
+			->getProcessedIds())
 		;
 		return $this;
 	}

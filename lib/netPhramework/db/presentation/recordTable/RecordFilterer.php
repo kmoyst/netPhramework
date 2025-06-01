@@ -18,6 +18,7 @@ class RecordFilterer
 	private ColumnSet $columnSet;
 	private FilterContext $context;
 
+	private array $recordSetIds;
 	private array $filteredIds;
 	private array $sortedIds;
 	private array $paginatedIds;
@@ -59,14 +60,23 @@ class RecordFilterer
 
 	/**
 	 * @return $this
+	 * @throws MappingException
+	 */
+	public function initialize():self
+	{
+		$this->recordSetIds = $this->recordSet->getIds();
+		return $this;
+	}
+
+	/**
+	 * @return $this
 	 * @throws Exception
 	 * @throws MappingException
 	 * @throws RecordNotFound
 	 */
 	public function filter():RecordFilterer
 	{
-		$rsIds  = $this->recordSet->getIds();
-		$allIds = array_combine($rsIds, $rsIds);
+		$allIds = array_combine($this->recordSetIds, $this->recordSetIds);
 		$glues  = []; // populated by glue at the beginning of condition
 		$ids    = []; // multidimensional array per condition
 		foreach($this->context->getConditionSet() as $i => $condition)
@@ -120,7 +130,7 @@ class RecordFilterer
 	public function sort():RecordFilterer
 	{
 		$args = [];
-		$ids  = $this->filteredIds ?? $this->recordSet->getIds();
+		$ids  = $this->filteredIds ?? $this->recordSetIds;
 		foreach($this->context->getSortArray() as $vector)
 		{
 			$field = $vector[FilterKey::SORT_FIELD->value];
@@ -145,27 +155,23 @@ class RecordFilterer
 		return $this;
 	}
 
-	/**
-	 * @return $this
-	 * @throws MappingException
-	 */
 	public function paginate():self
 	{
 		$limit = $this->context->getLimit();
 		$offset = $this->context->getOffset();
-		$ids = $this->sortedIds ?? $this->filteredIds ??
-			$this->recordSet->getIds();
+		$ids = $this->sortedIds ?? $this->filteredIds ?? $this->recordSetIds;
 		$this->paginatedIds = array_slice($ids, $offset, $limit);
 		return $this;
 	}
 
-	/**
-	 * @return array
-	 * @throws MappingException
-	 */
-	public function getIds():array
+	public function getUnpaginatedIds():array
+	{
+		return $this->sortedIds ?? $this->filteredIds ?? $this->recordSetIds;
+	}
+
+	public function getProcessedIds():array
 	{
 		return $this->paginatedIds ?? $this->sortedIds ?? $this->filteredIds ??
-			$this->recordSet->getIds();
+			$this->recordSetIds;
 	}
 }
