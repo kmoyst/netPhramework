@@ -48,7 +48,7 @@ class Browse extends RecordSetProcess
 			->setFilterContext($filterContext)
 			->buildColumnSet()
 			->buildRowFactory()
-			->applyFilter()
+			->applyRowFilter()
 			->buildAddButton()
 			->buildSelectFilterForm()
 			->buildPaginator()

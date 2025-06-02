@@ -15,30 +15,23 @@ use netPhramework\rendering\View;
 
 class RecordTableBuilder
 {
-	protected Input $callbackInputForRows;
-	protected ?Input $callbackInputForFilterForms;
 	protected RecordSet $recordSet;
 	protected MutablePath $compositePath;
+	protected Input $callbackInputForRows;
+	protected ?Input $callbackInputForFilterForms;
+	protected ?Encodable $feedback;
 	protected FilterContext $filterContext;
 	protected ColumnSet $columnSet;
+	protected RowFactory $rowFactory;
+	protected RowFilterer $filterer;
 	protected AddButton $addButton;
+	protected RecordList $recordList;
 	protected View $selectFilterForm;
 	protected View $paginator;
-	protected ?Encodable $feedback;
-	protected RecordList $recordList;
-	protected RowFactory $rowFactory;
-	protected RecordFilterer $filterer;
 
-	public function setCallbackInputForFilterForms(
-		?Input $callbackInputForFilterForms): self
+	public function setRecordSet(RecordSet $recordSet): self
 	{
-		$this->callbackInputForFilterForms = $callbackInputForFilterForms;
-		return $this;
-	}
-
-	public function setCallbackInputForRows(Input $callbackInputForRows): self
-	{
-		$this->callbackInputForRows = $callbackInputForRows;
+		$this->recordSet = $recordSet;
 		return $this;
 	}
 
@@ -48,15 +41,22 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	public function setFeedback(?Encodable $feedback): self
+	public function setCallbackInputForRows(Input $callbackInputForRows): self
 	{
-		$this->feedback = $feedback;
+		$this->callbackInputForRows = $callbackInputForRows;
 		return $this;
 	}
 
-	public function setRecordSet(RecordSet $recordSet): self
+	public function setCallbackInputForFilterForms(
+		?Input $callbackInputForFilterForms): self
 	{
-		$this->recordSet = $recordSet;
+		$this->callbackInputForFilterForms = $callbackInputForFilterForms;
+		return $this;
+	}
+
+	public function setFeedback(?Encodable $feedback): self
+	{
+		$this->feedback = $feedback;
 		return $this;
 	}
 
@@ -99,9 +99,9 @@ class RecordTableBuilder
 	 * @throws RecordNotFound
 	 * @throws ValueInaccessible
 	 */
-	public function applyFilter():self
+	public function applyRowFilter():self
 	{
-		$this->filterer = new RecordFilterer()
+		$this->filterer = new RowFilterer()
 			->setContext($this->filterContext)
 			->setFactory($this->rowFactory)
 			->setAllIds($this->recordSet->getIds())

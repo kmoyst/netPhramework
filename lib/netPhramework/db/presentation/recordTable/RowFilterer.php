@@ -10,7 +10,7 @@ use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
 
-class RecordFilterer
+class RowFilterer
 {
 	private RowFactory $factory;
 	private FilterContext $context;
@@ -49,7 +49,7 @@ class RecordFilterer
 	 * @throws MappingException
 	 * @throws RecordNotFound
 	 */
-	public function select():RecordFilterer
+	public function select():RowFilterer
 	{
 		$allIds = array_combine($this->allIds, $this->allIds);
 		$glues  = []; // populated by glue at the beginning of condition
@@ -98,7 +98,7 @@ class RecordFilterer
 	 * @throws ValueInaccessible
 	 * @throws Exception
 	 */
-	public function sort():RecordFilterer
+	public function sort():RowFilterer
 	{
 		$args = [];
 		$ids  = $this->filteredIds ?? $this->allIds;

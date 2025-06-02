@@ -97,7 +97,7 @@ class EditParent extends RecordProcess
 			$builder
 				->setCallbackInputForFilterForms($exchange->callbackFormInput())
 				->setFilterContext($filterContext)
-				->applyFilter()
+				->applyRowFilter()
 				->buildSelectFilterForm()
 				->buildPaginator()
 			;
