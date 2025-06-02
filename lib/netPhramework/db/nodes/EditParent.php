@@ -91,7 +91,7 @@ class EditParent extends RecordProcess
 			->setCompositePath($compPath)
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
-			->buildRowSet()
+			->buildRowFactory()
 			;
 		if($recordSet->count() > $this->childFilterThreshold) {
 			$builder

@@ -11,6 +11,7 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\FilterContext;
 use netPhramework\db\presentation\recordTable\RecordTableBuilder;
+use netPhramework\db\presentation\recordTable\RowFactory;
 use netPhramework\exceptions\InvalidSession;
 
 class Browse extends RecordSetProcess
@@ -43,10 +44,10 @@ class Browse extends RecordSetProcess
 			->setCallbackInputForRows($exchange->callbackFormInput())
 			->setCompositePath($exchange->getPath()->pop())
 			->setFeedback($exchange->getSession()->getEncodableValue())
-			->setFilterContext($filterContext)
 			->setRecordSet($this->recordSet)
+			->setFilterContext($filterContext)
 			->buildColumnSet()
-			->buildRowSet()
+			->buildRowFactory()
 			->applyFilter()
 			->buildAddButton()
 			->buildSelectFilterForm()

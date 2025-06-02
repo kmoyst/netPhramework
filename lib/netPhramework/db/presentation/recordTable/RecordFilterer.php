@@ -2,50 +2,23 @@
 
 namespace netPhramework\db\presentation\recordTable;
 use netPhramework\core\Exception;
-use netPhramework\db\exceptions\ColumnAbsent;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
-use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\mapping\SortDirection;
 
 class RecordFilterer
 {
-	private RecordSet $recordSet;
-	private ColumnSet $columnSet;
+	private RowFactory $factory;
 	private FilterContext $context;
 
-	private array $recordSetIds;
+	private array $allIds;
 	private array $filteredIds;
 	private array $sortedIds;
 	private array $paginatedIds;
-
-	/**
-	 * Dependency - Column Set
-	 *
-	 * @param ColumnSet $columnSet
-	 * @return $this
-	 */
-	public function setColumnSet(ColumnSet $columnSet): self
-	{
-		$this->columnSet = $columnSet;
-		return $this;
-	}
-
-	/**
-	 * Dependency - Record Set
-	 *
-	 * @param RecordSet $recordSet
-	 * @return $this
-	 */
-	public function setRecordSet(RecordSet $recordSet):self
-	{
-		$this->recordSet = $recordSet;
-		return $this;
-	}
 
 	/**
 	 * Dependency - Filter Context
@@ -58,13 +31,15 @@ class RecordFilterer
 		return $this;
 	}
 
-	/**
-	 * @return $this
-	 * @throws MappingException
-	 */
-	public function initialize():self
+	public function setFactory(RowFactory $factory): self
 	{
-		$this->recordSetIds = $this->recordSet->getIds();
+		$this->factory = $factory;
+		return $this;
+	}
+
+	public function setAllIds(array $allIds): self
+	{
+		$this->allIds = $allIds;
 		return $this;
 	}
 
@@ -74,9 +49,9 @@ class RecordFilterer
 	 * @throws MappingException
 	 * @throws RecordNotFound
 	 */
-	public function filter():RecordFilterer
+	public function select():RecordFilterer
 	{
-		$allIds = array_combine($this->recordSetIds, $this->recordSetIds);
+		$allIds = array_combine($this->allIds, $this->allIds);
 		$glues  = []; // populated by glue at the beginning of condition
 		$ids    = []; // multidimensional array per condition
 		foreach($this->context->getConditionSet() as $i => $condition)
@@ -90,16 +65,12 @@ class RecordFilterer
 				;
 			$field  = $condition[FilterKey::CONDITION_FIELD->value];
 			$value  = $condition[FilterKey::CONDITION_VALUE->value];
-			try {
-				$column = $this->columnSet->getColumn($field);
-			} catch (ColumnAbsent) {
-				break;
-			}
 			$currentConditionIds = $allIds;
 			foreach($allIds as $id)
 			{
-				$record 	 = $this->recordSet->getRecord($id);
-				$recordValue = $column->getOperationalValue($record);
+				$recordValue = $this->factory
+					->getRow($id)
+					->getOperationValue($field);
 				if(!$operator->check($recordValue, $value))
 					unset($currentConditionIds[$id]);
 			}
@@ -130,19 +101,18 @@ class RecordFilterer
 	public function sort():RecordFilterer
 	{
 		$args = [];
-		$ids  = $this->filteredIds ?? $this->recordSetIds;
+		$ids  = $this->filteredIds ?? $this->allIds;
 		foreach($this->context->getSortArray() as $vector)
 		{
 			$field = $vector[FilterKey::SORT_FIELD->value];
 			$direction = $vector[FilterKey::SORT_DIRECTION->value];
 			if(empty($field)) break;
 			$parsedDirection = SortDirection::tryFrom($direction);
-			$column = $this->columnSet->getColumn($field);
 			$values = [];
 			foreach($ids as $id)
 			{
-				$record = $this->recordSet->getRecord($id);
-				$values[] = $column->getSortableValue($record);
+				$row = $this->factory->getRow($id);
+				$values[] = $row->getSortableValue($field);
 			}
 			$args[] = $values;
 			$args[] = $parsedDirection ===
@@ -155,23 +125,39 @@ class RecordFilterer
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 * @throws MappingException
+	 */
 	public function paginate():self
 	{
 		$limit = $this->context->getLimit();
 		$offset = $this->context->getOffset();
-		$ids = $this->sortedIds ?? $this->filteredIds ?? $this->recordSetIds;
+		$ids = $this->sortedIds ?? $this->filteredIds ?? $this->allIds;
 		$this->paginatedIds = array_slice($ids, $offset, $limit);
 		return $this;
 	}
 
-	public function getUnpaginatedIds():array
+	public function getUnpaginatedRowSet():RowSet
 	{
-		return $this->sortedIds ?? $this->filteredIds ?? $this->recordSetIds;
+		return new RowSet()
+			->setFactory($this->factory)
+			->setTraversible(
+				$this->sortedIds ??
+				$this->filteredIds ??
+				$this->allIds)
+			;
 	}
 
-	public function getProcessedIds():array
+	public function getProcessedRowSet():RowSet
 	{
-		return $this->paginatedIds ?? $this->sortedIds ?? $this->filteredIds ??
-			$this->recordSetIds;
+		return new RowSet()
+			->setFactory($this->factory)
+			->setTraversible(
+				$this->paginatedIds ??
+				$this->sortedIds ??
+				$this->filteredIds ??
+				$this->allIds)
+			;
 	}
 }

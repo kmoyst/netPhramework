@@ -43,6 +43,22 @@ class Row extends Viewable
 			->getOperationalValue($this->record);
 	}
 
+	/**
+	 * @param string $columnName
+	 * @return string
+	 * @throws ColumnAbsent
+	 * @throws Exception
+	 * @throws FieldAbsent
+	 * @throws ValueInaccessible
+	 */
+	public function getSortableValue(string $columnName):string
+	{
+		return $this->columnSet
+			->getColumn($columnName)
+			->getSortableValue($this->record)
+			;
+	}
+
 	public function getVariables(): iterable
 	{
 		// append the id for both

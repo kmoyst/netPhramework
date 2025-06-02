@@ -1,52 +1,26 @@
 <?php
 
 namespace netPhramework\db\presentation\recordTable;
-
-use Countable;
 use Iterator;
+use Countable;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
-use netPhramework\db\mapping\RecordSet;
-use netPhramework\locating\MutablePath;
-use netPhramework\presentation\Input;
 
 class RowSet implements Iterator, Countable
 {
-	private array $rows = [];
+	private array $traversible;
 	private int $pointer = 0;
-	private RecordSet $recordSet;
-	private ColumnSet $columnSet;
-	private Input $callbackInput;
-	private MutablePath $assetPath;
-	private array $idsToTraverse;
+	private RowFactory $factory;
 
-	public function setRecordSet(RecordSet $recordSet): self
+	public function setTraversible(array $traversible): self
 	{
-		$this->recordSet = $recordSet;
+		$this->traversible = $traversible;
 		return $this;
 	}
 
-	public function setColumnSet(ColumnSet $columnSet): self
+	public function setFactory(RowFactory $factory): self
 	{
-		$this->columnSet = $columnSet;
-		return $this;
-	}
-
-	public function setCallbackInput(Input $callbackInput): self
-	{
-		$this->callbackInput = $callbackInput;
-		return $this;
-	}
-
-	public function setCompositePath(MutablePath $assetPath): self
-	{
-		$this->assetPath = $assetPath;
-		return $this;
-	}
-
-	public function setIdsToTraverse(array $idsToTraverse): self
-	{
-		$this->idsToTraverse = $idsToTraverse;
+		$this->factory = $factory;
 		return $this;
 	}
 
@@ -57,28 +31,7 @@ class RowSet implements Iterator, Countable
 	 */
 	public function current(): Row
 	{
-		$this->ensureRow($this->idsToTraverse[$this->pointer]);
-		return $this->rows[$this->idsToTraverse[$this->pointer]];
-	}
-
-	/**
-	 * @param string $id
-	 * @return void
-	 * @throws RecordNotFound
-	 * @throws MappingException
-	 */
-	private function ensureRow(string $id):void
-	{
-		if(isset($this->rows[$id])) return;
-		$record = $this->recordSet->getRecord($id);
-		$this->rows[$id] = new Row(
-			$this->columnSet, $record, $this->callbackInput,
-			clone $this->assetPath);
-	}
-
-	public function count(): int
-	{
-		return isset($this->idsToTraverse) ? count($this->idsToTraverse) : 0;
+		return $this->factory->getRow($this->traversible[$this->pointer]);
 	}
 
 	public function next(): void
@@ -86,18 +39,23 @@ class RowSet implements Iterator, Countable
 		++$this->pointer;
 	}
 
-	public function key(): int
+	public function key(): string
 	{
-		return $this->idsToTraverse[$this->pointer];
+		return $this->traversible[$this->pointer];
 	}
 
 	public function valid(): bool
 	{
-		return $this->pointer < count($this->idsToTraverse);
+		return $this->pointer < count($this->traversible);
 	}
 
 	public function rewind(): void
 	{
 		$this->pointer = 0;
+	}
+
+	public function count(): int
+	{
+		return count($this->traversible);
 	}
 }

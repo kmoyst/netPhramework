@@ -21,33 +21,18 @@ class RecordTableBuilder
 	protected MutablePath $compositePath;
 	protected FilterContext $filterContext;
 	protected ColumnSet $columnSet;
-	protected RowSet $rowSet;
 	protected AddButton $addButton;
 	protected View $selectFilterForm;
 	protected View $paginator;
 	protected ?Encodable $feedback;
 	protected RecordList $recordList;
+	protected RowFactory $rowFactory;
+	protected RecordFilterer $filterer;
 
-	public function __construct()
+	public function setCallbackInputForFilterForms(
+		?Input $callbackInputForFilterForms): self
 	{
-		$this->rowSet = new RowSet();
-	}
-
-	public function setRecordSet(RecordSet $recordSet): self
-	{
-		$this->recordSet = $recordSet;
-		return $this;
-	}
-
-	public function setCompositePath(MutablePath $compositePath): self
-	{
-		$this->compositePath = $compositePath;
-		return $this;
-	}
-
-	public function setFilterContext(FilterContext $filterContext): self
-	{
-		$this->filterContext = $filterContext;
+		$this->callbackInputForFilterForms = $callbackInputForFilterForms;
 		return $this;
 	}
 
@@ -57,17 +42,27 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	public function setCallbackInputForFilterForms(
-		?Input $callbackInputForFilterForms): self
+	public function setCompositePath(MutablePath $compositePath): self
 	{
-		$this->callbackInputForFilterForms = $callbackInputForFilterForms;
+		$this->compositePath = $compositePath;
 		return $this;
 	}
 
-
-	public function setFeedback(?Encodable $feedback):self
+	public function setFeedback(?Encodable $feedback): self
 	{
 		$this->feedback = $feedback;
+		return $this;
+	}
+
+	public function setRecordSet(RecordSet $recordSet): self
+	{
+		$this->recordSet = $recordSet;
+		return $this;
+	}
+
+	public function setFilterContext(FilterContext $filterContext): self
+	{
+		$this->filterContext = $filterContext;
 		return $this;
 	}
 
@@ -85,26 +80,18 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	/**
-	 * @return $this
-	 * @throws MappingException
-	 */
-	public function buildRowSet():self
+	public function buildRowFactory():self
 	{
-		$this->rowSet
-			->setIdsToTraverse($this->recordSet->getIds())
+		$this->rowFactory = new RowFactory()
 			->setColumnSet($this->columnSet)
-			->setCallbackInput($this->callbackInputForRows)
 			->setCompositePath($this->compositePath)
+			->setCallbackInput($this->callbackInputForRows)
 			->setRecordSet($this->recordSet)
 		;
 		return $this;
 	}
 
 	/**
-	 * This can be called before or after buildRowSet. But until it's
-	 * called, rowSet will iterate through all Ids.
-	 *
 	 * @return $this
 	 * @throws Exception
 	 * @throws FieldAbsent
@@ -114,15 +101,13 @@ class RecordTableBuilder
 	 */
 	public function applyFilter():self
 	{
-		$this->rowSet->setIdsToTraverse(new RecordFilterer()
-			->setColumnSet($this->columnSet)
-			->setRecordSet($this->recordSet)
+		$this->filterer = new RecordFilterer()
 			->setContext($this->filterContext)
-			->initialize()
-			->filter()
+			->setFactory($this->rowFactory)
+			->setAllIds($this->recordSet->getIds())
+			->select()
 			->sort()
 			->paginate()
-			->getProcessedIds())
 		;
 		return $this;
 	}
@@ -166,7 +151,7 @@ class RecordTableBuilder
 	{
 		$this->recordList = new RecordList()
 			->setColumnSet($this->columnSet)
-			->setRowSet($this->rowSet)
+			->setRowSet($this->filterer->getProcessedRowSet())
 		;
 		return $this;
 	}

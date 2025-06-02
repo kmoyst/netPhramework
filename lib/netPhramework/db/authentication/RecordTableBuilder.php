@@ -9,10 +9,7 @@ class RecordTableBuilder extends baseBuilder
 {
 	public function __construct(
 		private readonly string $usernameField =
-		EnrolledUserField::USERNAME->value)
-	{
-		parent::__construct();
-	}
+		EnrolledUserField::USERNAME->value) {}
 
 	public function buildColumnSet(): baseBuilder
 	{
