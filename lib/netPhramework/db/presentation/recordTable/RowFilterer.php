@@ -52,8 +52,8 @@ class RowFilterer
 	public function select():RowFilterer
 	{
 		$allIds = array_combine($this->allIds, $this->allIds);
-		$glues  = []; // populated by glue at the beginning of condition
-		$ids    = []; // multidimensional array per condition
+		$glues  = [];
+		$ids    = [];
 		foreach($this->context->getConditionSet() as $i => $condition)
 		{
 			$strOperator = $condition[FilterKey::CONDITION_OPERATOR->value];
@@ -71,7 +71,8 @@ class RowFilterer
 				$recordValue = $this->factory
 					->getRow($id)
 					->getOperationValue($field);
-				if(!$operator->check($recordValue, $value))
+				if(!$operator->check( // case insensitive
+					strtolower($recordValue), strtolower($value)))
 					unset($currentConditionIds[$id]);
 			}
 			$ids[$i]   = $currentConditionIds;
@@ -79,9 +80,9 @@ class RowFilterer
 		}
 		if(count($glues) > 0) {
 			array_shift($glues);
-			array_unshift($glues, Glue::AND); // AND first condition
+			array_unshift($glues, Glue::AND);
 		}
-		$filteredIds = $allIds; // "full universe" is true
+		$filteredIds = $allIds;
 		foreach($glues as $i => $glue)
 		{
 			$filteredIds = $glue->check($filteredIds, $ids[$i]);
