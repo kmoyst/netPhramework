@@ -157,7 +157,7 @@ class RecordTableBuilder
 			->setColumnSet($this->columnSet)
 			->setRowSet(
 				$this->filterer?->getProcessedRowSet() ?? new RowSet()
-				->setTraversible($this->recordSet->getIds())
+				->setCollation($this->recordSet->getIds())
 				->setFactory($this->rowFactory)
 			)
 		;

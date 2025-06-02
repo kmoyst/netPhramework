@@ -142,7 +142,7 @@ class RowFilterer
 	{
 		return new RowSet()
 			->setFactory($this->factory)
-			->setTraversible(
+			->setCollation(
 				$this->sortedIds ??
 				$this->filteredIds ??
 				$this->allIds)
@@ -153,7 +153,7 @@ class RowFilterer
 	{
 		return new RowSet()
 			->setFactory($this->factory)
-			->setTraversible(
+			->setCollation(
 				$this->paginatedIds ??
 				$this->sortedIds ??
 				$this->filteredIds ??

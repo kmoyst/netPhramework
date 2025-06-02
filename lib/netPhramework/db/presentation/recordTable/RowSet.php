@@ -8,13 +8,13 @@ use netPhramework\db\exceptions\RecordNotFound;
 
 class RowSet implements Iterator, Countable
 {
-	private array $traversible;
+	private array $collation;
 	private int $pointer = 0;
 	private RowFactory $factory;
 
-	public function setTraversible(array $traversible): self
+	public function setCollation(array $collation): self
 	{
-		$this->traversible = $traversible;
+		$this->collation = $collation;
 		return $this;
 	}
 
@@ -31,7 +31,7 @@ class RowSet implements Iterator, Countable
 	 */
 	public function current(): Row
 	{
-		return $this->factory->getRow($this->traversible[$this->pointer]);
+		return $this->factory->getRow($this->collation[$this->pointer]);
 	}
 
 	public function next(): void
@@ -41,12 +41,12 @@ class RowSet implements Iterator, Countable
 
 	public function key(): string
 	{
-		return $this->traversible[$this->pointer];
+		return $this->collation[$this->pointer];
 	}
 
 	public function valid(): bool
 	{
-		return $this->pointer < count($this->traversible);
+		return $this->pointer < count($this->collation);
 	}
 
 	public function rewind(): void
@@ -56,6 +56,6 @@ class RowSet implements Iterator, Countable
 
 	public function count(): int
 	{
-		return count($this->traversible);
+		return count($this->collation);
 	}
 }
