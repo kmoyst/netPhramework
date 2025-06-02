@@ -24,6 +24,11 @@ class RowSet implements Iterator, Countable
 		return $this;
 	}
 
+	public function getIds():array
+	{
+		return $this->traversible;
+	}
+
 	/**
 	 * @return Row
 	 * @throws MappingException

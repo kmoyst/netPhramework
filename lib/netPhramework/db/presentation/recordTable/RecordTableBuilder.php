@@ -112,6 +112,18 @@ class RecordTableBuilder
 		return $this;
 	}
 
+	public function sort():self
+	{
+		$rowSet = new RowSet()
+			->setFactory($this->rowFactory)
+			->setTraversible($this->recordSet->getIds());
+		new RowSorter()
+			->setRowSet($rowSet)
+			->setSortArray($this->filterContext->getSortArray())
+			->sort();
+		return $this;
+	}
+
 	public function buildAddButton():self
 	{
 		$this->addButton = new AddButton()
