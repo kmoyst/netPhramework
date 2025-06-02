@@ -9,7 +9,7 @@ use netPhramework\db\nodes\Browse;
 use netPhramework\db\nodes\Edit;
 use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
-use netPhramework\db\presentation\recordTable\Builder;
+use netPhramework\db\presentation\recordTable\views\Builder;
 
 class PassiveAssetBuilder extends AssetBuilder
 {

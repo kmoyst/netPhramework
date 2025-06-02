@@ -10,7 +10,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\query\Query;
-use netPhramework\db\presentation\recordTable\Builder as RecordTableBuilder;
+use netPhramework\db\presentation\recordTable\views\Builder as RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
 
 class Browse extends RecordSetProcess

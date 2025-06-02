@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable;
+namespace netPhramework\db\presentation\recordTable\views;
 
 use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -15,10 +15,7 @@ use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
 	rowSet\RowMapper,
 	rowSet\RowRegistry,
 	rowSet\RowSet,
-	selectForm\Director as selectFormDirector,
-	views\AddButton,
-	views\RecordList,
-	views\RecordTable};
+	selectForm\Director as selectFormDirector};
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;

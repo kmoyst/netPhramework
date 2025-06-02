@@ -3,7 +3,7 @@
 namespace netPhramework\db\authentication;
 use netPhramework\db\presentation\recordTable\{columnSet\columns\TextColumn,
 	columnSet\columns\UserRoleColumn,
-	Builder as baseBuilder};
+	views\Builder as baseBuilder};
 
 class RecordTableBuilder extends baseBuilder
 {
