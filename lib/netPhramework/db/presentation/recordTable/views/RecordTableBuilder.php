@@ -21,7 +21,7 @@ use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class Builder
+class RecordTableBuilder
 {
 	protected Query $query;
 	protected RecordSet $recordSet;

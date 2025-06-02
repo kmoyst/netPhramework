@@ -14,7 +14,7 @@ use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
 use netPhramework\db\presentation\recordTable\query\Query;
-use netPhramework\db\presentation\recordTable\views\Builder as RecordTableBuilder;
+use netPhramework\db\presentation\recordTable\views\RecordTableBuilder as RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
