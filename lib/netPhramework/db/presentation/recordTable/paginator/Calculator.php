@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable\paginator;
 
-class PaginatorCalculator
+class Calculator
 {
 	private int $limit;
 	private int $currentOffset;

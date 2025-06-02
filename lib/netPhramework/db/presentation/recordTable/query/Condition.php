@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\filterForm;
+namespace netPhramework\db\presentation\recordTable\query;
 
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Viewable;
 
-class FilterFormCondition extends Viewable
+class Condition extends Viewable
 {
 	private Input $fieldInput;
 	private Input $operatorInput;

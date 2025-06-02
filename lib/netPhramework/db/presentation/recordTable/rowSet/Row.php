@@ -6,7 +6,6 @@ use netPhramework\core\Exception;
 use netPhramework\db\exceptions\ColumnAbsent;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\db\mapping\CellSet;
 use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\locating\MutablePath;
@@ -65,7 +64,7 @@ class Row extends Viewable
 		// append the id for both
 		$this->assetPath->append($this->record->getId());
 		return [
-			'cellSet' => new RowCellSet($this->columnSet, $this->record),
+			'cellSet' => new CellSet($this->columnSet, $this->record),
 			'callbackInput' => $this->callbackInput,
 			'id' => $this->record->getId(),
 			'editPath' =>   (clone $this->assetPath)->append('edit'),

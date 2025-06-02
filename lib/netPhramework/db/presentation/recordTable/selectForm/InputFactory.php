@@ -1,32 +1,35 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\selectFilterForm;
+namespace netPhramework\db\presentation\recordTable\selectForm;
 
 use netPhramework\common\Utils;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
-use netPhramework\db\presentation\recordTable\configuration\FilterKey;
-use netPhramework\db\presentation\recordTable\filterForm\FilterFormInputConfigurator;
-use netPhramework\db\presentation\recordTable\filterForm\FilterFormInputFactory;
+use netPhramework\db\presentation\recordTable\form\
+{
+	InputConfigurator,
+	InputFactory as InputFactoryInterface
+};
+use netPhramework\db\presentation\recordTable\query\Key;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\Input;
 use netPhramework\presentation\SelectInput;
 use netPhramework\presentation\TextInput;
 
-class SelectFilterFormInputFactory implements FilterFormInputFactory
+class InputFactory implements InputFactoryInterface
 {
 	private array $columnNames;
-	private FilterFormInputConfigurator $sortInputConfigurator;
-	private FilterFormInputConfigurator $conditionInputConfigurator;
+	private InputConfigurator $sortInputConfigurator;
+	private InputConfigurator $conditionInputConfigurator;
 
 	public function __construct()
 	{
-		$this->sortInputConfigurator = new FilterFormInputConfigurator(
-			FilterKey::SORT_ARRAY->value, 'form/select-input-array'
+		$this->sortInputConfigurator = new InputConfigurator(
+			Key::SORT_ARRAY->value, 'form/select-input-array'
 		);
-		$this->conditionInputConfigurator = new FilterFormInputConfigurator(
-			FilterKey::CONDITION_SET->value
+		$this->conditionInputConfigurator = new InputConfigurator(
+			Key::CONDITION_SET->value
 		);
 	}
 
@@ -38,18 +41,18 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 
 	public function makeLimitInput(): Input
 	{
-		return new SelectInput(FilterKey::LIMIT->value, $this->limitOptions());
+		return new SelectInput(Key::LIMIT->value, $this->limitOptions());
 	}
 
 	public function makeOffsetInput(): Input
 	{
-		return new HiddenInput(FilterKey::OFFSET->value);
+		return new HiddenInput(Key::OFFSET->value);
 	}
 
 	public function makeSortFieldInput(int $index): Input
 	{
 		$input = new SelectInput(
-			FilterKey::SORT_FIELD->value,
+			Key::SORT_FIELD->value,
 			$this->sortFieldOptions());
 		$this->sortInputConfigurator
 			->setIndex($index)
@@ -61,7 +64,7 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 	public function makeSortDirectionInput(int $index): Input
 	{
 		$input = new SelectInput(
-			FilterKey::SORT_DIRECTION->value,
+			Key::SORT_DIRECTION->value,
 			SortDirection::toArray());
 		$this->sortInputConfigurator
 			->setIndex($index)
@@ -73,7 +76,7 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 	public function makeConditionFieldInput(int $index): Input
 	{
 		$input = new SelectInput(
-			FilterKey::CONDITION_FIELD->value,
+			Key::CONDITION_FIELD->value,
 			$this->conditionFieldOptions());
 		$this->conditionInputConfigurator
 			->setIndex($index)
@@ -85,7 +88,7 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 	public function makeConditionOperatorInput(int $index): Input
 	{
 		$input = new SelectInput(
-			FilterKey::CONDITION_OPERATOR->value,
+			Key::CONDITION_OPERATOR->value,
 			Operator::toArray());
 		$this->conditionInputConfigurator
 			->setIndex($index)
@@ -97,7 +100,7 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 	public function makeConditionValueInput(int $index): Input
 	{
 		$input = new TextInput(
-			FilterKey::CONDITION_VALUE->value);
+			Key::CONDITION_VALUE->value);
 		$this->conditionInputConfigurator
 			->setIndex($index)
 			->setTemplateName('form/text-input-array')
@@ -108,7 +111,7 @@ class SelectFilterFormInputFactory implements FilterFormInputFactory
 	public function makeConditionGlueInput(int $index): Input
 	{
 		$input = new SelectInput(
-			FilterKey::CONDITION_GLUE->value, Glue::toArray());
+			Key::CONDITION_GLUE->value, Glue::toArray());
 		$this->conditionInputConfigurator
 			->setIndex($index)
 			->setTemplateName('form/select-input-array')

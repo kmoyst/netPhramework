@@ -9,8 +9,8 @@ use netPhramework\db\exceptions\RecordNotFound;
 class RowSet implements Iterator, Countable
 {
 	private array $collation;
+	private RowRegistry $registry;
 	private int $pointer = 0;
-	private RowFactory $factory;
 
 	public function setCollation(array $collation): self
 	{
@@ -18,9 +18,9 @@ class RowSet implements Iterator, Countable
 		return $this;
 	}
 
-	public function setFactory(RowFactory $factory): self
+	public function setRegistry(RowRegistry $registry): self
 	{
-		$this->factory = $factory;
+		$this->registry = $registry;
 		return $this;
 	}
 
@@ -36,7 +36,7 @@ class RowSet implements Iterator, Countable
 	 */
 	public function current(): Row
 	{
-		return $this->factory->getRow($this->collation[$this->pointer]);
+		return $this->registry->getRow($this->collation[$this->pointer]);
 	}
 
 	public function next(): void

@@ -10,7 +10,7 @@ use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 
-class RowFactory implements Countable
+class RowRegistry implements Countable
 {
 	private array $rows = [];
 	private RecordSet $recordSet;

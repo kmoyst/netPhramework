@@ -1,8 +1,8 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\configuration;
+namespace netPhramework\db\presentation\recordTable\query;
 
-enum FilterKey:string
+enum Key:string
 {
 	case LIMIT = 'limit';
 	case OFFSET = 'offset';

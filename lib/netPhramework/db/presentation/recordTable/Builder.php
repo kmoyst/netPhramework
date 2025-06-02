@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\configuration;
+namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -8,36 +8,44 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\RecordSet;
-use netPhramework\db\presentation\recordTable\columnSet\ColumnMapper;
-use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
-use netPhramework\db\presentation\recordTable\paginator\PaginatorDirector;
-use netPhramework\db\presentation\recordTable\rowSet\RowFactory;
-use netPhramework\db\presentation\recordTable\rowSet\RowFilterer;
-use netPhramework\db\presentation\recordTable\rowSet\RowSet;
-use netPhramework\db\presentation\recordTable\selectFilterForm\SelectFilterDirector;
-use netPhramework\db\presentation\recordTable\views\AddButton;
-use netPhramework\db\presentation\recordTable\views\RecordList;
-use netPhramework\db\presentation\recordTable\views\RecordTable;
+use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
+	columnSet\ColumnSet,
+	paginator\Director as paginatorDirector,
+	query\Query,
+	rowSet\RowMapper,
+	rowSet\RowRegistry,
+	rowSet\RowSet,
+	selectForm\Director as selectFormDirector,
+	views\AddButton,
+	views\RecordList,
+	views\RecordTable};
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class RecordTableBuilder
+class Builder
 {
+	protected Query $query;
 	protected RecordSet $recordSet;
 	protected MutablePath $compositePath;
 	protected Input $callbackInputForRows;
-	protected ?Input $callbackInputForFilterForms;
-	protected ?Encodable $feedback;
-	protected FilterContext $filterContext;
 	protected ColumnSet $columnSet;
-	protected RowFactory $rowFactory;
-	protected ?RowFilterer $filterer = null;
+	protected RowRegistry $registry;
 	protected AddButton $addButton;
 	protected RecordList $recordList;
-	protected View $selectFilterForm;
-	protected View $paginator;
+
+	protected ?Input $callbackInputForFilterForms = null;
+	protected ?Encodable $feedback = null;
+	protected ?RowMapper $rowMapper = null;
+	protected ?View $selectForm = null;
+	protected ?View $paginator = null;
+
+	public function setQuery(Query $query): self
+	{
+		$this->query = $query;
+		return $this;
+	}
 
 	public function setRecordSet(RecordSet $recordSet): self
 	{
@@ -70,12 +78,6 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	public function setFilterContext(FilterContext $filterContext): self
-	{
-		$this->filterContext = $filterContext;
-		return $this;
-	}
-
 	/**
 	 * @return $this
 	 * @throws MappingException
@@ -90,9 +92,9 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	public function buildRowFactory():self
+	public function buildRowRegistry():self
 	{
-		$this->rowFactory = new RowFactory()
+		$this->registry = new RowRegistry()
 			->setColumnSet($this->columnSet)
 			->setCompositePath($this->compositePath)
 			->setCallbackInput($this->callbackInputForRows)
@@ -109,11 +111,11 @@ class RecordTableBuilder
 	 * @throws RecordNotFound
 	 * @throws ValueInaccessible
 	 */
-	public function applyRowFilter():self
+	public function mapRows():self
 	{
-		$this->filterer = new RowFilterer()
-			->setContext($this->filterContext)
-			->setFactory($this->rowFactory)
+		$this->rowMapper = new RowMapper()
+			->setQuery($this->query)
+			->setRegistry($this->registry)
 			->setAllIds($this->recordSet->getIds())
 			->select()
 			->sort()
@@ -133,10 +135,10 @@ class RecordTableBuilder
 
 	public function buildSelectFilterForm():self
 	{
-		$this->selectFilterForm = new SelectFilterDirector()
+		$this->selectForm = new selectFormDirector()
 			->setCallbackInput($this->callbackInputForFilterForms ?? null)
 			->setColumnNames($this->columnSet->getNames())
-			->buildSelectFilterForm($this->filterContext)
+			->buildSelectFilterForm($this->query)
 			->getView()
 		;
 		return $this;
@@ -144,10 +146,10 @@ class RecordTableBuilder
 
 	public function buildPaginator():self
 	{
-		if($this->filterContext->getLimit() !== null)
+		if($this->query->getLimit() !== null)
 		{
-			$this->paginator = new PaginatorDirector()
-				->configure($this->filterContext,
+			$this->paginator = new paginatorDirector()
+				->configure($this->query,
 					$this->callbackInputForFilterForms ?? null)
 				->buildPreviousForm()
 				->buildNextForm()
@@ -166,9 +168,9 @@ class RecordTableBuilder
 		$this->recordList = new RecordList()
 			->setColumnSet($this->columnSet)
 			->setRowSet(
-				$this->filterer?->getProcessedRowSet() ?? new RowSet()
+				$this->rowMapper?->getProcessedRowSet() ?? new RowSet()
 				->setCollation($this->recordSet->getIds())
-				->setFactory($this->rowFactory)
+				->setRegistry($this->registry)
 			)
 		;
 		return $this;
@@ -179,9 +181,9 @@ class RecordTableBuilder
 		return new RecordTable()
 			->setAddButton($this->addButton)
 			->setRecordList($this->recordList)
-			->setSelectFilterForm($this->selectFilterForm ?? null)
-			->setPaginator($this->paginator ?? null)
-			->setFeedback($this->feedback ?? null)
+			->setSelectFilterForm($this->selectForm)
+			->setPaginator($this->paginator)
+			->setFeedback($this->feedback)
 			;
 	}
 }

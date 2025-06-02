@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\filterForm;
+namespace netPhramework\db\presentation\recordTable\form;
 
 use netPhramework\rendering\ConfigurableViewable;
 use netPhramework\rendering\ViewableConfigurator;
 
-class FilterFormInputConfigurator implements ViewableConfigurator
+class InputConfigurator implements ViewableConfigurator
 {
 	private int $index;
 

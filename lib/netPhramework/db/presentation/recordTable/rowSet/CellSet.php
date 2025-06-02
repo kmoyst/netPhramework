@@ -10,7 +10,7 @@ use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\rendering\Encodable;
 
-class RowCellSet implements Iterator
+class CellSet implements Iterator
 {
 	private ColumnSet $columnSet;
 	private Record $record;

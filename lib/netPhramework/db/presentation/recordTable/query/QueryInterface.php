@@ -1,8 +1,8 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\filterForm;
+namespace netPhramework\db\presentation\recordTable\query;
 
-interface FilterFormContext
+interface QueryInterface
 {
 	public function getConditionSet():array;
 	public function getSortArray():array;

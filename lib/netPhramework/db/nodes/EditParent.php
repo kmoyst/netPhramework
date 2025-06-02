@@ -13,8 +13,8 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
-use netPhramework\db\presentation\recordTable\configuration\FilterContext;
-use netPhramework\db\presentation\recordTable\configuration\RecordTableBuilder;
+use netPhramework\db\presentation\recordTable\query\Query;
+use netPhramework\db\presentation\recordTable\Builder as RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
@@ -22,11 +22,11 @@ use netPhramework\rendering\Viewable;
 class EditParent extends RecordProcess
 {
 	public function __construct(
-		private readonly OneToMany  $oneToMany,
+		private readonly OneToMany           $oneToMany,
 		private readonly ?RecordFormStrategy $formStrategy = null,
 		private readonly ?RecordTableBuilder $recordTableBuilder = null,
-		private readonly int $childFilterThreshold = 5,
-		?string $name = 'edit')
+		private readonly int                 $childFilterThreshold = 5,
+		?string                              $name = 'edit')
 	{
 		$this->name = $name;
 	}
@@ -84,20 +84,20 @@ class EditParent extends RecordProcess
 	{
 		$recordSet = $this->oneToMany->getChildren($this->record);
 		$compPath  = $exchange->getPath()->pop()->append($recordSet->getName());
-		$filterContext = new FilterContext()->parse($exchange->getParameters());
+		$query = new Query()->parse($exchange->getParameters());
 		$builder = ($this->recordTableBuilder ?? new RecordTableBuilder())
 			->setRecordSet($recordSet)
-			->setCallbackInputForRows($exchange->callbackFormInput(true))
 			->setCompositePath($compPath)
+			->setCallbackInputForRows($exchange->callbackFormInput(true))
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
-			->buildRowFactory()
+			->buildRowRegistry()
 			;
 		if($recordSet->count() > $this->childFilterThreshold) {
 			$builder
+				->setQuery($query)
+				->mapRows()
 				->setCallbackInputForFilterForms($exchange->callbackFormInput())
-				->setFilterContext($filterContext)
-				->applyRowFilter()
 				->buildSelectFilterForm()
 				->buildPaginator()
 			;

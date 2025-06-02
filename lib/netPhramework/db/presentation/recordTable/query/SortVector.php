@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\filterForm;
+namespace netPhramework\db\presentation\recordTable\query;
 
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Viewable;
 
-class FilterFormSortVector extends Viewable
+class SortVector extends Viewable
 {
 	private Input $fieldInput;
 	private Input $directionInput;

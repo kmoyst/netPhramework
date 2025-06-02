@@ -9,33 +9,28 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
-use netPhramework\db\presentation\recordTable\configuration\FilterContext;
-use netPhramework\db\presentation\recordTable\configuration\FilterKey;
+use netPhramework\db\presentation\recordTable\query\Key;
+use netPhramework\db\presentation\recordTable\query\Query;
 
-class RowFilterer
+class RowMapper
 {
-	private RowFactory $factory;
-	private FilterContext $context;
+	private RowRegistry $registry;
+	private Query $query;
 
 	private array $allIds;
 	private array $filteredIds;
 	private array $sortedIds;
 	private array $paginatedIds;
 
-	/**
-	 * Dependency - Filter Context
-	 * @param FilterContext $context
-	 * @return $this
-	 */
-	public function setContext(FilterContext $context): self
+	public function setQuery(Query $query): self
 	{
-		$this->context = $context;
+		$this->query = $query;
 		return $this;
 	}
 
-	public function setFactory(RowFactory $factory): self
+	public function setRegistry(RowRegistry $registry): self
 	{
-		$this->factory = $factory;
+		$this->registry = $registry;
 		return $this;
 	}
 
@@ -51,26 +46,26 @@ class RowFilterer
 	 * @throws MappingException
 	 * @throws RecordNotFound
 	 */
-	public function select():RowFilterer
+	public function select():self
 	{
 		$allIds = array_combine($this->allIds, $this->allIds);
 		$glues  = [];
 		$ids    = [];
-		foreach($this->context->getConditionSet() as $i => $condition)
+		foreach($this->query->getConditionSet() as $i => $condition)
 		{
-			$strOperator = $condition[FilterKey::CONDITION_OPERATOR->value];
-			$strGlue 	 = $condition[FilterKey::CONDITION_GLUE->value] ?? '';
+			$strOperator = $condition[Key::CONDITION_OPERATOR->value];
+			$strGlue 	 = $condition[Key::CONDITION_GLUE->value] ?? '';
 			if(($operator = Operator::tryFrom($strOperator)) === null)
 				throw new Exception("Invalid Operator: $strOperator");
 			if($strGlue !== '' && ($glue = Glue::tryFrom($strGlue)) === null)
 				throw new Exception("Invalid Glue: $strGlue")
 				;
-			$field  = $condition[FilterKey::CONDITION_FIELD->value];
-			$value  = $condition[FilterKey::CONDITION_VALUE->value];
+			$field  = $condition[Key::CONDITION_FIELD->value];
+			$value  = $condition[Key::CONDITION_VALUE->value];
 			$currentConditionIds = $allIds;
 			foreach($allIds as $id)
 			{
-				$recordValue = $this->factory
+				$recordValue = $this->registry
 					->getRow($id)
 					->getOperationValue($field);
 				if(!$operator->check( // case insensitive
@@ -90,7 +85,7 @@ class RowFilterer
 			$filteredIds = $glue->check($filteredIds, $ids[$i]);
 		}
 		$this->filteredIds = $filteredIds;
-		$this->context->setCount(count($this->filteredIds));
+		$this->query->setCount(count($this->filteredIds));
 		return $this;
 	}
 
@@ -101,20 +96,20 @@ class RowFilterer
 	 * @throws ValueInaccessible
 	 * @throws Exception
 	 */
-	public function sort():RowFilterer
+	public function sort():self
 	{
 		$args = [];
 		$ids  = $this->filteredIds ?? $this->allIds;
-		foreach($this->context->getSortArray() as $vector)
+		foreach($this->query->getSortArray() as $vector)
 		{
-			$field = $vector[FilterKey::SORT_FIELD->value];
-			$direction = $vector[FilterKey::SORT_DIRECTION->value];
+			$field = $vector[Key::SORT_FIELD->value];
+			$direction = $vector[Key::SORT_DIRECTION->value];
 			if(empty($field)) break;
 			$parsedDirection = SortDirection::tryFrom($direction);
 			$values = [];
 			foreach($ids as $id)
 			{
-				$row = $this->factory->getRow($id);
+				$row = $this->registry->getRow($id);
 				$values[] = $row->getSortableValue($field);
 			}
 			$args[] = $values;
@@ -133,8 +128,8 @@ class RowFilterer
 	 */
 	public function paginate():self
 	{
-		$limit = $this->context->getLimit();
-		$offset = $this->context->getOffset();
+		$limit = $this->query->getLimit();
+		$offset = $this->query->getOffset();
 		$ids = $this->sortedIds ?? $this->filteredIds ?? $this->allIds;
 		$this->paginatedIds = array_slice($ids, $offset, $limit);
 		return $this;
@@ -143,7 +138,7 @@ class RowFilterer
 	public function getUnpaginatedRowSet():RowSet
 	{
 		return new RowSet()
-			->setFactory($this->factory)
+			->setRegistry($this->registry)
 			->setCollation(
 				$this->sortedIds ??
 				$this->filteredIds ??
@@ -154,7 +149,7 @@ class RowFilterer
 	public function getProcessedRowSet():RowSet
 	{
 		return new RowSet()
-			->setFactory($this->factory)
+			->setRegistry($this->registry)
 			->setCollation(
 				$this->paginatedIds ??
 				$this->sortedIds ??
