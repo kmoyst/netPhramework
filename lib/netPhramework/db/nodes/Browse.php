@@ -9,9 +9,8 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\db\presentation\recordTable\FilterContext;
-use netPhramework\db\presentation\recordTable\RecordTableBuilder;
-use netPhramework\db\presentation\recordTable\RowFactory;
+use netPhramework\db\presentation\recordTable\query\Query;
+use netPhramework\db\presentation\recordTable\Builder as RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
 
 class Browse extends RecordSetProcess
@@ -20,7 +19,7 @@ class Browse extends RecordSetProcess
 
 	public function __construct(
 		?RecordTableBuilder $recordTableBuilder = null,
-		?string $name = null)
+		?string  $name = null)
 	{
 		$this->recordTableBuilder =
 			$recordTableBuilder ?? new RecordTableBuilder();
@@ -39,22 +38,22 @@ class Browse extends RecordSetProcess
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$filterContext = new FilterContext()->parse($exchange->getParameters());
+		$query = new Query()->parse($exchange->getParameters());
 		$recordTable = $this->recordTableBuilder
-			->setCallbackInputForRows($exchange->callbackFormInput())
-			->setCompositePath($exchange->getPath()->pop())
-			->setFeedback($exchange->getSession()->getEncodableValue())
+			->setQuery($query)
 			->setRecordSet($this->recordSet)
-			->setFilterContext($filterContext)
+			->setCompositePath($exchange->getPath()->pop())
+			->setCallbackInputForRows($exchange->callbackFormInput())
+			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
-			->buildRowFactory()
-			->applyRowFilter()
-			->buildAddButton()
+			->buildRowRegistry()
+			->mapRows()
 			->buildSelectFilterForm()
 			->buildPaginator()
+			->buildAddButton()
 			->buildRecordList()
 			->getRecordTable()
-			->setTitle('Browse Records')
+				->setTitle('Browse Records')
 			;
 		;
 		$exchange->display(

@@ -4,12 +4,12 @@ namespace netPhramework\db\configuration;
 
 use netPhramework\db\core\ChildAsset;
 use netPhramework\db\exceptions\ConfigurationException;
-use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
-use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\nodes\Add;
 use netPhramework\db\nodes\Browse;
 use netPhramework\db\nodes\Edit;
-use netPhramework\db\presentation\recordTable\RecordTableBuilder;
+use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
+use netPhramework\db\presentation\recordForm\RecordFormStrategy;
+use netPhramework\db\presentation\recordTable\Builder;
 
 class PassiveAssetBuilder extends AssetBuilder
 {
@@ -53,8 +53,8 @@ class PassiveAssetBuilder extends AssetBuilder
 	}
 
 	public function browse(
-		?RecordTableBuilder $recordTableBuilder = null,
-		string $processName = ''): self
+		?Builder $recordTableBuilder = null,
+		string   $processName = ''): self
 	{
 		$this->node(new Browse($recordTableBuilder, $processName));
 		return $this;
