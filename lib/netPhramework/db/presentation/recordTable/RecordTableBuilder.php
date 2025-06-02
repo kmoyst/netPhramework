@@ -23,7 +23,7 @@ class RecordTableBuilder
 	protected FilterContext $filterContext;
 	protected ColumnSet $columnSet;
 	protected RowFactory $rowFactory;
-	protected RowFilterer $filterer;
+	protected ?RowFilterer $filterer = null;
 	protected AddButton $addButton;
 	protected RecordList $recordList;
 	protected View $selectFilterForm;
@@ -147,11 +147,19 @@ class RecordTableBuilder
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 * @throws MappingException
+	 */
 	public function buildRecordList():self
 	{
 		$this->recordList = new RecordList()
 			->setColumnSet($this->columnSet)
-			->setRowSet($this->filterer->getProcessedRowSet())
+			->setRowSet(
+				$this->filterer?->getProcessedRowSet() ?? new RowSet()
+				->setTraversible($this->recordSet->getIds())
+				->setFactory($this->rowFactory)
+			)
 		;
 		return $this;
 	}
