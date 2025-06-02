@@ -9,9 +9,8 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\db\presentation\recordTable\FilterContext;
-use netPhramework\db\presentation\recordTable\RecordTableBuilder;
-use netPhramework\db\presentation\recordTable\RowFactory;
+use netPhramework\db\presentation\recordTable\configuration\FilterContext;
+use netPhramework\db\presentation\recordTable\configuration\RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
 
 class Browse extends RecordSetProcess
