@@ -128,7 +128,6 @@ class RowFilterer
 
 	/**
 	 * @return $this
-	 * @throws MappingException
 	 */
 	public function paginate():self
 	{
