@@ -11,12 +11,13 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\query\Query;
 use netPhramework\db\presentation\recordTable\RecordTableBuilder;
+use netPhramework\db\presentation\recordTable\RecordTableStrategy;
 use netPhramework\exceptions\InvalidSession;
 
 class Browse extends RecordSetProcess
 {
 	public function __construct(
-		protected readonly ?RecordTableBuilder $recordTableBuilder = null,
+		protected readonly ?RecordTableStrategy $tableStrategy = null,
 		?string $name = null)
 	{
 		$this->name = $name;
@@ -35,7 +36,8 @@ class Browse extends RecordSetProcess
 	public function handleExchange(Exchange $exchange): void
 	{
 		$query = new Query()->parse($exchange->getParameters());
-		$recordTable = ($this->recordTableBuilder ?? new RecordTableBuilder())
+		$recordTable = new RecordTableBuilder()
+			->setStrategy($this->tableStrategy)
 			->setQuery($query)
 			->setRecordSet($this->recordSet)
 			->setCompositePath($exchange->getPath()->pop())
@@ -43,7 +45,7 @@ class Browse extends RecordSetProcess
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
 			->buildRowSetFactory()
-			->collateRowSet()
+			->collate()
 			->generateView()->setTitle('Browse Records')
 			;
 		;

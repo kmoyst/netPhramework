@@ -25,15 +25,16 @@ use netPhramework\rendering\View;
 
 class RecordTableBuilder
 {
-	protected RecordSet $recordSet;
-	protected MutablePath $compositePath;
-	protected Input $callbackInputForRows;
+	private RecordSet $recordSet;
+	private MutablePath $compositePath;
+	private Input $callbackInputForRows;
+	private Query $query;
+
+	private ?RecordTableStrategy $strategy;
+	private ?Input $callbackInputForFilterForms = null;
+	private ?Encodable $feedback = null;
+
 	protected ColumnSet $columnSet;
-	protected Query $query;
-
-	protected ?Input $callbackInputForFilterForms = null;
-	protected ?Encodable $feedback = null;
-
 	protected CollationMap $collationMap;
 	protected RowSetFactory $rowSetFactory;
 
@@ -43,11 +44,11 @@ class RecordTableBuilder
 	 */
 	public function buildColumnSet():self
 	{
-		$columnSet 	  = new ColumnSet();
+		$this->columnSet = new ColumnSet();
 		$columnMapper = new ColumnMapper();
 		foreach($this->recordSet->getFieldSet() as $field)
-			$columnSet->add($columnMapper->mapColumn($field));
-		$this->columnSet = $columnSet;
+			$this->columnSet->add($columnMapper->mapColumn($field));
+		$this->strategy?->configureColumnSet($this->columnSet);
 		return $this;
 	}
 
@@ -70,12 +71,13 @@ class RecordTableBuilder
 	 * @throws RecordNotFound
 	 * @throws ValueInaccessible
 	 */
-	public function collateRowSet():self
+	public function collate():self
 	{
-		$rowSet = $this->rowSetFactory->makeRowSet($this->recordSet->getIds());
 		$this->collationMap = new Collator()
-			->setRowSet($rowSet)
 			->setQuery($this->query)
+			->setRecordSet($this->recordSet)
+			->setColumnSet($this->columnSet)
+			->initialize()
 			->select()
 			->sort()
 			->paginate()
@@ -101,13 +103,16 @@ class RecordTableBuilder
 		$recordList = $viewFactory->recordList($columnSet, $rowSet);
 		$addButton  = $viewFactory->addButton($compositePath, $rowCallback)
 		;
-		return new View('record-table')
+		$view = new View('record-table')
 			->add('addButton', $addButton)
 			->add('recordList', $recordList)
 			->add('filterSelector', $selectForm ?? '')
 			->add('paginator', $paginator ?? '')
 			->add('feedback', $this->feedback ?? '')
 			;
+		$this->strategy?->configureView(
+			$view, $this->rowSetFactory, $this->collationMap);
+		return $view;
 	}
 
 	private function generateRecordListRowSet():RowSet
@@ -115,6 +120,12 @@ class RecordTableBuilder
 		$rowSetFactory = $this->rowSetFactory;
 		$rowIds		   = $this->collationMap->getPaginatedIds();
 		return $rowSetFactory->makeRowSet($rowIds);
+	}
+
+	public function setStrategy(?RecordTableStrategy $strategy): self
+	{
+		$this->strategy = $strategy;
+		return $this;
 	}
 
 	public function setRecordSet(RecordSet $recordSet): self
@@ -129,7 +140,8 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	public function setCallbackInputForRows(Input $callbackInputForRows): self
+	public function setCallbackInputForRows(
+		Input $callbackInputForRows): self
 	{
 		$this->callbackInputForRows = $callbackInputForRows;
 		return $this;

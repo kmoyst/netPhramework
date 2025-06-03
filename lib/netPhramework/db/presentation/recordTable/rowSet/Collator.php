@@ -8,15 +8,19 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
+use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\mapping\SortDirection;
+use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\db\presentation\recordTable\query\Key;
 use netPhramework\db\presentation\recordTable\query\Query;
 
 class Collator
 {
 	private Query $query;
-	private RowSet $rowSet;
+	private RecordSet $recordSet;
+	private ColumnSet $columnSet;
 
+	private array  $unfilteredIds;
 	private ?array $filteredIds = null;
 	private ?array $sortedIds = null;
 	private ?array $paginatedIds = null;
@@ -27,11 +31,28 @@ class Collator
 		return $this;
 	}
 
-	public function setRowSet(RowSet $rowSet): self
+	public function setRecordSet(RecordSet $recordSet): self
 	{
-		$this->rowSet = $rowSet;
+		$this->recordSet = $recordSet;
 		return $this;
 	}
+
+	public function setColumnSet(ColumnSet $columnSet): self
+	{
+		$this->columnSet = $columnSet;
+		return $this;
+	}
+
+	/**
+	 * @return $this
+	 * @throws MappingException
+	 */
+	public function initialize():self
+	{
+		$this->unfilteredIds = $this->recordSet->getIds();
+		return $this;
+	}
+
 
 	/**
 	 * @return $this
@@ -41,8 +62,7 @@ class Collator
 	 */
 	public function select():self
 	{
-		$unfilteredIds = $this->rowSet->getIds();
-		$allIds = array_combine($unfilteredIds, $unfilteredIds);
+		$allIds = array_combine($this->unfilteredIds, $this->unfilteredIds);
 		$glues  = [];
 		$ids    = [];
 		foreach($this->query->getConditionSet() as $i => $condition)
@@ -56,11 +76,12 @@ class Collator
 				;
 			$field  = $condition[Key::CONDITION_FIELD->value];
 			$value  = $condition[Key::CONDITION_VALUE->value];
+			$column = $this->columnSet->getColumn($field);
 			$currentConditionIds = $allIds;
 			foreach($allIds as $id)
 			{
-				$row = $this->rowSet->getRow($id);
-				$rowValue = $row->getOperableValue($field);
+				$record = $this->recordSet->getRecord($id);
+				$rowValue = $column->getOperableValue($record);
 				if(!$operator->check( // case insensitive
 					strtolower($rowValue), strtolower($value)))
 					unset($currentConditionIds[$id]);
@@ -91,7 +112,7 @@ class Collator
 	 */
 	public function sort():self
 	{
-		$ids  = $this->filteredIds ?? $this->rowSet->getIds();
+		$ids  = $this->filteredIds ?? $this->unfilteredIds;
 		$args = [];
 		foreach($this->query->getSortArray() as $vector)
 		{
@@ -99,11 +120,12 @@ class Collator
 			$direction = $vector[Key::SORT_DIRECTION->value];
 			if(empty($field)) break;
 			$parsedDirection = SortDirection::tryFrom($direction);
+			$column = $this->columnSet->getColumn($field);
 			$values = [];
 			foreach($ids as $id)
 			{
-				$row = $this->rowSet->getRow($id);
-				$values[] = $row->getSortableValue($field);
+				$record = $this->recordSet->getRecord($id);
+				$values[] = $column->getSortableValue($record);
 			}
 			$args[] = $values;
 			$args[] = $parsedDirection ===
@@ -124,7 +146,7 @@ class Collator
 		if($this->query->getLimit() === null) return $this;
 		$limit = $this->query->getLimit();
 		$offset = $this->query->getOffset();
-		$ids = $this->sortedIds??$this->filteredIds??$this->rowSet->getIds();
+		$ids = $this->sortedIds ?? $this->filteredIds ?? $this->unfilteredIds;
 		$this->paginatedIds = array_slice($ids, $offset, $limit);
 		return $this;
 	}
@@ -132,7 +154,7 @@ class Collator
 	public function getMap():CollationMap
 	{
 		return new CollationMap(
-			$this->rowSet->getIds(),
+			$this->unfilteredIds,
 			$this->filteredIds,
 			$this->sortedIds,
 			$this->paginatedIds);

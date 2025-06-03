@@ -1,25 +1,24 @@
 <?php
 
 namespace netPhramework\db\authentication;
-use netPhramework\db\presentation\recordTable\{
-	columns\TextColumn,
+use netPhramework\db\presentation\recordTable\{columns\TextColumn,
 	columns\UserRoleColumn,
-	RecordTableBuilder as baseBuilder};
+	columnSet\ColumnSet,
+	RecordTableStrategy as base};
 
-class RecordTableBuilder extends baseBuilder
+class RecordTableStrategy extends base
 {
 	public function __construct(
 		private readonly string $usernameField =
 		EnrolledUserField::USERNAME->value) {}
 
-	public function buildColumnSet(): baseBuilder
+	public function configureColumnSet(ColumnSet $columnSet): void
 	{
-		parent::buildColumnSet();
-		$this->columnSet
+		$columnSet
 			->remove('password')
 			->add(new TextColumn($this->usernameField))
 			->add(new UserRoleColumn())
-		;
-		return $this;
+			;
 	}
+
 }

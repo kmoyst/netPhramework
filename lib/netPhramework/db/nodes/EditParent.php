@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\nodes;
 
+use netPhramework\db\presentation\recordTable\RecordTableStrategy;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\configuration\OneToMany;
@@ -22,11 +23,11 @@ use netPhramework\rendering\Viewable;
 class EditParent extends RecordProcess
 {
 	public function __construct(
-		private readonly OneToMany           $oneToMany,
-		private readonly ?RecordFormStrategy $formStrategy = null,
-		private readonly ?RecordTableBuilder $recordTableBuilder = null,
-		private readonly int                 $childFilterThreshold = 5,
-		?string                              $name = 'edit')
+		private readonly OneToMany            $oneToMany,
+		private readonly ?RecordFormStrategy  $formStrategy = null,
+		private readonly ?RecordTableStrategy $tableStrategy = null,
+		private readonly int                  $childFilterThreshold = 5,
+		?string                               $name = 'edit')
 	{
 		$this->name = $name;
 	}
@@ -86,7 +87,8 @@ class EditParent extends RecordProcess
 		$compPath   = $exchange->getPath()->pop()->append($recordSet->getName());
 		$query 		= new Query()->parse($exchange->getParameters());
 		$count		= $recordSet->count();
-		return ($this->recordTableBuilder ?? new RecordTableBuilder())
+		return new RecordTableBuilder()
+			->setStrategy($this->tableStrategy)
 			->setQuery($query)
 			->setRecordSet($recordSet)
 			->setCompositePath($compPath)
@@ -95,7 +97,7 @@ class EditParent extends RecordProcess
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
 			->buildRowSetFactory()
-			->collateRowSet()
+			->collate()
 			->generateView($this->childFilterThreshold < $count)
 			;
 	}
