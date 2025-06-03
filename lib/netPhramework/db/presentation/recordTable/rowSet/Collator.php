@@ -12,7 +12,7 @@ use netPhramework\db\mapping\SortDirection;
 use netPhramework\db\presentation\recordTable\query\Key;
 use netPhramework\db\presentation\recordTable\query\Query;
 
-class CollationMapper
+class Collator
 {
 	private Query $query;
 	private RowSet $rowSet;

@@ -8,7 +8,7 @@ use netPhramework\db\presentation\recordTable\
 	columnSet\ColumnSet,
 	query\Query,
 	rowSet\CollationMap,
-	rowSet\CollationMapper,
+	rowSet\Collator,
 	rowSet\RowSet,
 	rowSet\RowSetFactory
 };
@@ -73,7 +73,7 @@ class RecordTableBuilder
 	public function collateRowSet():self
 	{
 		$rowSet = $this->rowSetFactory->makeRowSet($this->recordSet->getIds());
-		$this->collationMap = new CollationMapper()
+		$this->collationMap = new Collator()
 			->setRowSet($rowSet)
 			->setQuery($this->query)
 			->select()
