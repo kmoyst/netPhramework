@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\nodes;
 
-use netPhramework\db\presentation\recordTable\RecordTableStrategy;
+use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\configuration\OneToMany;
@@ -15,7 +15,8 @@ use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
 use netPhramework\db\presentation\recordTable\query\Query;
-use netPhramework\db\presentation\recordTable\RecordTableBuilder;
+use netPhramework\db\presentation\recordTable\ViewBuilder;
+use netPhramework\db\presentation\recordTable\ViewStrategy;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
@@ -25,7 +26,8 @@ class EditParent extends RecordProcess
 	public function __construct(
 		private readonly OneToMany            $oneToMany,
 		private readonly ?RecordFormStrategy  $formStrategy = null,
-		private readonly ?RecordTableStrategy $tableStrategy = null,
+		protected readonly ?ColumnSetStrategy $childColumnSetStrategy = null,
+		protected readonly ?ViewStrategy 	  $childViewStrategy = null,
 		private readonly int                  $childFilterThreshold = 5,
 		?string                               $name = 'edit')
 	{
@@ -87,18 +89,18 @@ class EditParent extends RecordProcess
 		$compPath   = $exchange->getPath()->pop()->append($recordSet->getName());
 		$query 		= new Query()->parse($exchange->getParameters());
 		$count		= $recordSet->count();
-		return new RecordTableBuilder()
-			->setStrategy($this->tableStrategy)
+		return new ViewBuilder()
 			->setQuery($query)
 			->setRecordSet($recordSet)
 			->setCompositePath($compPath)
 			->setCallbackInputForRows($exchange->callbackFormInput(true))
 			->setCallbackInputForFilterForms($exchange->callbackFormInput())
 			->setFeedback($exchange->getSession()->getEncodableValue())
-			->buildColumnSet()
+			->buildColumnSet($this->childColumnSetStrategy)
 			->buildRowSetFactory()
 			->collate()
-			->generateView($this->childFilterThreshold < $count)
+			->generateView(
+				$this->childViewStrategy, $this->childFilterThreshold < $count)
 			;
 	}
 }

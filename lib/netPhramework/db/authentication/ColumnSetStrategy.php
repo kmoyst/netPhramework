@@ -4,13 +4,13 @@ namespace netPhramework\db\authentication;
 use netPhramework\db\presentation\recordTable\{columns\TextColumn,
 	columns\UserRoleColumn,
 	columnSet\ColumnSet,
-	RecordTableStrategy as base};
+	columnSet\ColumnSetStrategy as StrategyInterface
+};
 
-class RecordTableStrategy extends base
+readonly class ColumnSetStrategy implements StrategyInterface
 {
 	public function __construct(
-		private readonly string $usernameField =
-		EnrolledUserField::USERNAME->value) {}
+		private string $usernameField = EnrolledUserField::USERNAME->value) {}
 
 	public function configureColumnSet(ColumnSet $columnSet): void
 	{
@@ -20,5 +20,4 @@ class RecordTableStrategy extends base
 			->add(new UserRoleColumn())
 			;
 	}
-
 }

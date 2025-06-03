@@ -2,16 +2,14 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\
-{
-	columnSet\ColumnMapper,
+use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
 	columnSet\ColumnSet,
+	columnSet\ColumnSetStrategy,
 	query\Query,
 	rowSet\CollationMap,
 	rowSet\Collator,
 	rowSet\RowSet,
-	rowSet\RowSetFactory
-};
+	rowSet\RowSetFactory};
 use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -23,14 +21,13 @@ use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class RecordTableBuilder
+class ViewBuilder
 {
 	private RecordSet $recordSet;
 	private MutablePath $compositePath;
 	private Input $callbackInputForRows;
 	private Query $query;
 
-	private ?RecordTableStrategy $strategy;
 	private ?Input $callbackInputForFilterForms = null;
 	private ?Encodable $feedback = null;
 
@@ -42,13 +39,13 @@ class RecordTableBuilder
 	 * @return $this
 	 * @throws MappingException
 	 */
-	public function buildColumnSet():self
+	public function buildColumnSet(?ColumnSetStrategy $strategy):self
 	{
 		$this->columnSet = new ColumnSet();
 		$columnMapper = new ColumnMapper();
 		foreach($this->recordSet->getFieldSet() as $field)
 			$this->columnSet->add($columnMapper->mapColumn($field));
-		$this->strategy?->configureColumnSet($this->columnSet);
+		$strategy?->configureColumnSet($this->columnSet);
 		return $this;
 	}
 
@@ -86,7 +83,8 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	public function generateView(bool $includeQueryInput = true):View
+	public function generateView(?ViewStrategy $strategy,
+								 bool $includeQueryInput = true):View
 	{
 		$columnSet 			= $this->columnSet;
 		$columnNames		= $columnSet->getNames();
@@ -111,8 +109,9 @@ class RecordTableBuilder
 			->add('paginator', $paginator ?? '')
 			->add('feedback', $this->feedback ?? '')
 			;
-		$this->strategy?->configureView(
+		$context = new ViewContext(
 			$view, $this->rowSetFactory, $this->collationMap);
+		$strategy?->configureView($context);
 		return $view;
 	}
 
@@ -121,12 +120,6 @@ class RecordTableBuilder
 		$rowSetFactory = $this->rowSetFactory;
 		$rowIds		   = $this->collationMap->getPaginatedIds();
 		return $rowSetFactory->makeRowSet($rowIds);
-	}
-
-	public function setStrategy(?RecordTableStrategy $strategy): self
-	{
-		$this->strategy = $strategy;
-		return $this;
 	}
 
 	public function setRecordSet(RecordSet $recordSet): self

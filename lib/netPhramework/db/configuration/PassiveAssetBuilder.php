@@ -9,7 +9,8 @@ use netPhramework\db\nodes\Browse;
 use netPhramework\db\nodes\Edit;
 use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
-use netPhramework\db\presentation\recordTable\RecordTableStrategy;
+use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
+use netPhramework\db\presentation\recordTable\ViewStrategy;
 
 class PassiveAssetBuilder extends AssetBuilder
 {
@@ -53,10 +54,12 @@ class PassiveAssetBuilder extends AssetBuilder
 	}
 
 	public function browse(
-		?RecordTableStrategy $recordTableConfigurator = null,
-		string               $processName = ''): self
+		?ColumnSetStrategy $columnSetStrategy = null,
+		?ViewStrategy $tableViewStrategy = null,
+		string $processName = ''): self
 	{
-		$this->node(new Browse($recordTableConfigurator, $processName));
+		$this->node(new Browse(
+			$columnSetStrategy, $tableViewStrategy, $processName));
 		return $this;
 	}
 
