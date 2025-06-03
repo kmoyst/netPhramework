@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\pagination;
+namespace netPhramework\db\presentation\recordTable\query;
 
 class Calculator
 {

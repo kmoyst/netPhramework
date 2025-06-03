@@ -1,17 +1,16 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\pagination\form;
+namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\form\Builder;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
 
-class Director
+class PaginationFormDirector
 {
-	private Builder $builder;
+	private FormBuilder $builder;
 	private ?Input $callbackInput;
 
-	public function setBuilder(Builder $builder): self
+	public function setBuilder(FormBuilder $builder): self
 	{
 		$this->builder = $builder;
 		return $this;

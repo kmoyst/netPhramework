@@ -10,19 +10,15 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\query\Query;
-use netPhramework\db\presentation\recordTable\views\RecordTableBuilder as RecordTableBuilder;
+use netPhramework\db\presentation\recordTable\RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
 
 class Browse extends RecordSetProcess
 {
-	protected RecordTableBuilder $recordTableBuilder;
-
 	public function __construct(
-		?RecordTableBuilder $recordTableBuilder = null,
-		?string  $name = null)
+		protected readonly ?RecordTableBuilder $recordTableBuilder = null,
+		?string $name = null)
 	{
-		$this->recordTableBuilder =
-			$recordTableBuilder ?? new RecordTableBuilder();
 		$this->name = $name;
 	}
 
@@ -39,22 +35,16 @@ class Browse extends RecordSetProcess
 	public function handleExchange(Exchange $exchange): void
 	{
 		$query = new Query()->parse($exchange->getParameters());
-		$recordTable = $this->recordTableBuilder
+		$recordTable = ($this->recordTableBuilder ?? new RecordTableBuilder())
+			->setQuery($query)
 			->setRecordSet($this->recordSet)
 			->setCompositePath($exchange->getPath()->pop())
 			->setCallbackInputForRows($exchange->callbackFormInput())
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
 			->buildRowSetFactory()
-			->mapRowSet()
-			->setQuery($query)
-			->applyQuery()
-			->buildSelectForm()
-			->buildPaginator()
-			->buildAddButton()
-			->buildRecordList()
-			->getRecordTable()
-				->setTitle('Browse Records')
+			->collateRowSet()
+			->generateView()->setTitle('Browse Records')
 			;
 		;
 		$exchange->display(

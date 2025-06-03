@@ -1,26 +1,22 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\pagination\form;
+namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\
-{
-	form\InputConfigurator,
-	form\InputFactory as InputFactoryInterface
-};
+use netPhramework\db\presentation\recordTable\{FormInputFactory as InputFactoryInterface};
 use netPhramework\db\presentation\recordTable\query\Key;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\Input;
 
-class InputFactory implements InputFactoryInterface
+class PaginationFormInputFactory implements InputFactoryInterface
 {
-	private InputConfigurator $sortInputConfigurator;
-	private InputConfigurator $conditionInputConfigurator;
+	private FormInputConfigurator $sortInputConfigurator;
+	private FormInputConfigurator $conditionInputConfigurator;
 
 	public function __construct()
 	{
-		$this->sortInputConfigurator = new InputConfigurator(
+		$this->sortInputConfigurator = new FormInputConfigurator(
 			Key::SORT_ARRAY->value, 'form/hidden-input-array');
-		$this->conditionInputConfigurator = new InputConfigurator(
+		$this->conditionInputConfigurator = new FormInputConfigurator(
 			Key::CONDITION_SET->value, 'form/hidden-input-array');
 	}
 

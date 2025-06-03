@@ -1,21 +1,20 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\selectForm;
+namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\query\QueryInterface;
-use netPhramework\db\presentation\recordTable\form\Builder;
+use netPhramework\db\presentation\recordTable\query\FormContext;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
 
-class Director
+class QueryFormDirector
 {
-	private InputFactory $factory;
+	private QueryFormInputFactory $factory;
 	private View $form;
 	private ?Input $callbackInput;
 
 	public function __construct()
 	{
-		$this->factory = new InputFactory();
+		$this->factory = new QueryFormInputFactory();
 	}
 
 	public function setColumnNames(array $columnNames):self
@@ -30,11 +29,11 @@ class Director
 		return $this;
 	}
 
-	public function buildSelectFilterForm(QueryInterface $query):self
+	public function buildSelectFilterForm(FormContext $context):self
 	{
-		$builder = new Builder()
+		$builder = new FormBuilder()
 			->setFactory($this->factory)
-			->setQuery($query)
+			->setContext($context)
 			->buildConditionInputs('select-filter-condition')
 			->buildSortInputs('select-filter-sort-vector')
 			->buildLimitInput()

@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable\query;
 
-interface QueryInterface
+interface FormContext
 {
 	public function getConditionSet():array;
 	public function getSortArray():array;

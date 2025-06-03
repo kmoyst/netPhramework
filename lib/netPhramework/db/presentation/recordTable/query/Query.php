@@ -4,7 +4,7 @@ namespace netPhramework\db\presentation\recordTable\query;
 
 use netPhramework\common\Variables;
 
-class Query implements QueryInterface
+class Query implements FormContext
 {
 	private array $conditionSet;
 	private array $sortArray;

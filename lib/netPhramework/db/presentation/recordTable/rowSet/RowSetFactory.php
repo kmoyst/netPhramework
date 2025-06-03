@@ -2,62 +2,65 @@
 
 namespace netPhramework\db\presentation\recordTable\rowSet;
 
-use netPhramework\core\Exception;
-use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
-use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\RecordSet;
-use netPhramework\db\presentation\recordTable\query\Query;
+use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
+use netPhramework\locating\MutablePath;
+use netPhramework\presentation\Input;
 
-class RowSetFactory
+class RowSetFactory implements RowRegistry
 {
-	private RowRegistry $registry;
-	private Collator $collator;
+	private array $rows = [];
+	private RecordSet $recordSet;
+	private ColumnSet $columnSet;
+	private Input $callbackInput;
+	private MutablePath $assetPath;
 
-	public function __construct(RowRegistry $registry)
+	public function setRecordSet(RecordSet $recordSet): self
 	{
-		$this->registry = $registry;
-	}
-
-	/**
-	 * @return $this
-	 * @throws MappingException
-	 */
-	public function initializeCollator(RecordSet $recordSet):self
-	{
-		$this->collator = new Collator()
-			->setRowSet($this->generateRowSet($recordSet->getIds()))
-			;
+		$this->recordSet = $recordSet;
 		return $this;
 	}
 
+	public function setColumnSet(ColumnSet $columnSet): self
+	{
+		$this->columnSet = $columnSet;
+		return $this;
+	}
+
+	public function setCallbackInput(Input $callbackInput): self
+	{
+		$this->callbackInput = $callbackInput;
+		return $this;
+	}
+
+	public function setCompositePath(MutablePath $assetPath): self
+	{
+		$this->assetPath = $assetPath;
+		return $this;
+	}
+
+	public function makeRowSet(array $collation):RowSet
+	{
+		return new RowSet($collation, $this);
+	}
+
 	/**
-	 * @param Query $query
-	 * @return $this
+	 * @param string $id
+	 * @return Row
 	 * @throws MappingException
-	 * @throws Exception
-	 * @throws FieldAbsent
 	 * @throws RecordNotFound
-	 * @throws ValueInaccessible
 	 */
-	public function collate(Query $query):self
+	public function getRow(string $id):Row
 	{
-		$this->collator->setQuery($query)
-			->select()
-			->sort()
-			->paginate()
-			;
-		return $this;
-	}
-
-	public function getMappedRowSet():RowSet
-	{
-		return $this->generateRowSet($this->collator->getMap()->getMapped());
-	}
-
-	public function generateRowSet(array $collation):RowSet
-	{
-		return new RowSet($collation, $this->registry);
+		if(!isset($this->rows[$id]))
+		{
+			$record = $this->recordSet->getRecord($id);
+			$this->rows[$id] = new Row(
+				$this->columnSet, $record, $this->callbackInput,
+				clone $this->assetPath);
+		}
+		return $this->rows[$id];
 	}
 }

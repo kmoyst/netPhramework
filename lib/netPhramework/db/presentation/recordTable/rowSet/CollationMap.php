@@ -15,26 +15,21 @@ readonly class CollationMap
 		return $this->unfilteredIds;
 	}
 
-	public function getFilteredIds(bool $fallback = false): ?array
+	public function getFilteredIds(bool $fallback = true): ?array
 	{
 		return $this->filteredIds ??
 			($fallback ? $this->getUnfilteredIds() : null);
 	}
 
-	public function getSortedIds(bool $fallback = false): ?array
+	public function getSortedIds(bool $fallback = true): ?array
 	{
 		return $this->sortedIds ??
 			($fallback ? $this->getFilteredIds($fallback) : null);
 	}
 
-	public function getPaginatedIds(bool $fallback = false): ?array
+	public function getPaginatedIds(bool $fallback = true): ?array
 	{
 		return $this->paginatedIds ??
 			($fallback ? $this->getSortedIds($fallback) : null);
-	}
-
-	public function getMapped(): array
-	{
-		return $this->getPaginatedIds(true);
 	}
 }

@@ -1,31 +1,31 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\form;
+namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\db\presentation\recordTable\query\Condition;
+use netPhramework\db\presentation\recordTable\query\FormContext;
 use netPhramework\db\presentation\recordTable\query\Key;
-use netPhramework\db\presentation\recordTable\query\QueryInterface;
 use netPhramework\db\presentation\recordTable\query\SortVector;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
 
-class Builder
+class FormBuilder
 {
-	private QueryInterface $query;
-	private InputFactory $factory;
+	private FormContext $context;
+	private FormInputFactory $factory;
 	private array $conditionViews = [];
 	private array $sortViews = [];
 	private Input $limitInput;
 	private Input $offsetInput;
 
-	public function setQuery(QueryInterface $query): self
+	public function setContext(FormContext $context): self
 	{
-		$this->query = $query;
+		$this->context = $context;
 		return $this;
 	}
 
-	public function setFactory(InputFactory $factory): self
+	public function setFactory(FormInputFactory $factory): self
 	{
 		$this->factory = $factory;
 		return $this;
@@ -34,7 +34,7 @@ class Builder
 	public function buildSortInputs(string $templateName):self
 	{
 		$i = 0;
-		foreach($this->query->getSortArray() as $vector)
+		foreach($this->context->getSortArray() as $vector)
 		{
 			$view = new SortVector($templateName);
 			if($vector[Key::SORT_FIELD->value] === '') break;
@@ -58,7 +58,7 @@ class Builder
 	public function buildLimitInput():self
 	{
 		$input = $this->factory->makeLimitInput();
-		$input->setValue($this->query->getLimit());
+		$input->setValue($this->context->getLimit());
 		$this->limitInput = $input;
 		return $this;
 	}
@@ -66,13 +66,13 @@ class Builder
 	public function getHiddenLimitInput():HiddenInput
 	{
 		return new HiddenInput(
-			Key::LIMIT->value, $this->query->getLimit());
+			Key::LIMIT->value, $this->context->getLimit());
 	}
 
 	public function buildOffsetInput():self
 	{
 		$input = $this->factory->makeOffsetInput();
-		$input->setValue($this->query->getOffset());
+		$input->setValue($this->context->getOffset());
 		$this->offsetInput = $input;
 		return $this;
 	}
@@ -80,7 +80,7 @@ class Builder
 	public function buildConditionInputs(string $templateName):self
 	{
 		$i = 0;
-		foreach($this->query->getConditionSet() as $condition)
+		foreach($this->context->getConditionSet() as $condition)
 		{
 			if(
 				$condition[Key::CONDITION_FIELD->value] == '' ||

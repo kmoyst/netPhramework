@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\form;
+namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\presentation\Input;
 
-interface InputFactory
+interface FormInputFactory
 {
 	public function makeLimitInput():Input;
 	public function makeOffsetInput():Input;

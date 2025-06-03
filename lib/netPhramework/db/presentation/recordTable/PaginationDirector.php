@@ -1,49 +1,45 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\pagination;
+namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\form\Builder;
-use netPhramework\db\presentation\recordTable\
-{
-	pagination\form\Director as formDirector,
-	pagination\form\InputFactory,
-	query\QueryInterface as baseQuery
-};
+use netPhramework\db\presentation\recordTable\{PaginationFormDirector as formDirector,
+	query\Calculator,
+	query\FormContext};
 use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 
-class Director
+class PaginationDirector
 {
-	private InputFactory $factory;
-	private Builder $builder;
+	private PaginationFormInputFactory $factory;
+	private FormBuilder $builder;
 	private formDirector $formDirector;
-	private Query $query;
+	private PaginationFormContext $context;
 	private Calculator $calculator;
 	private Viewable $prevForm;
 	private Viewable $nextForm;
 
 	public function __construct()
 	{
-		$this->builder		= new Builder();
+		$this->builder		= new FormBuilder();
 		$this->formDirector	= new formDirector();
-		$this->query 		= new Query();
+		$this->context 		= new PaginationFormContext();
 		$this->calculator  	= new Calculator();
-		$this->factory 		= new InputFactory();
+		$this->factory 		= new PaginationFormInputFactory();
 	}
 
-	public function configure(baseQuery $baseQuery,
+	public function configure(FormContext $baseContext,
 							  ?Input      $callbackInput):self
 	{
-		$this->query->setBaseQuery($baseQuery);
+		$this->context->setBaseContext($baseContext);
 		$this->calculator
-			->setLimit($baseQuery->getLimit())
-			->setCurrentOffset($baseQuery->getOffset())
-			->setTotalCount($baseQuery->getCount())
+			->setLimit($baseContext->getLimit())
+			->setCurrentOffset($baseContext->getOffset())
+			->setTotalCount($baseContext->getCount())
 		;
 		$this->formDirector->setBuilder(
 			$this->builder
-				->setQuery($this->query)
+				->setContext($this->context)
 				->setFactory($this->factory)
 		)->setCallbackInput($callbackInput);
 		return $this;
@@ -51,7 +47,7 @@ class Director
 
 	public function buildPreviousForm():self
 	{
-		$this->query->setOffset($this->calculator->previousOffset());
+		$this->context->setOffset($this->calculator->previousOffset());
 		$this->prevForm = $this->formDirector->createForm()
 			->add('buttonText', 'Previous')
 			->add('formName', 'previousPage')
@@ -61,7 +57,7 @@ class Director
 
 	public function buildNextForm():self
 	{
-		$this->query->setOffset($this->calculator->nextOffset());
+		$this->context->setOffset($this->calculator->nextOffset());
 		$this->nextForm = $this->formDirector->createForm()
 			->add('buttonText', 'Next')
 			->add('formName', 'nextPage')
@@ -74,7 +70,7 @@ class Director
 		return new View('paginator')
 			->add('firstRowNumber', $this->calculator->firstRowNumber())
 			->add('lastRowNumber', $this->calculator->lastRowNumber())
-			->add('rowCount', $this->query->getCount())
+			->add('rowCount', $this->context->getCount())
 			->add('pageNumber', $this->calculator->pageNumber())
 			->add('pageCount', $this->calculator->pageCount())
 			->add('prevForm', $this->prevForm)

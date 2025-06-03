@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\form;
+namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\rendering\ConfigurableViewable;
 use netPhramework\rendering\ViewableConfigurator;
 
-class InputConfigurator implements ViewableConfigurator
+class FormInputConfigurator implements ViewableConfigurator
 {
 	private int $index;
 

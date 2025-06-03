@@ -1,34 +1,30 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\selectForm;
+namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\common\Utils;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
-use netPhramework\db\presentation\recordTable\form\
-{
-	InputConfigurator,
-	InputFactory as InputFactoryInterface
-};
+use netPhramework\db\presentation\recordTable\{FormInputFactory as InputFactoryInterface};
 use netPhramework\db\presentation\recordTable\query\Key;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\Input;
 use netPhramework\presentation\SelectInput;
 use netPhramework\presentation\TextInput;
 
-class InputFactory implements InputFactoryInterface
+class QueryFormInputFactory implements InputFactoryInterface
 {
 	private array $columnNames;
-	private InputConfigurator $sortInputConfigurator;
-	private InputConfigurator $conditionInputConfigurator;
+	private FormInputConfigurator $sortInputConfigurator;
+	private FormInputConfigurator $conditionInputConfigurator;
 
 	public function __construct()
 	{
-		$this->sortInputConfigurator = new InputConfigurator(
+		$this->sortInputConfigurator = new FormInputConfigurator(
 			Key::SORT_ARRAY->value, 'form/select-input-array'
 		);
-		$this->conditionInputConfigurator = new InputConfigurator(
+		$this->conditionInputConfigurator = new FormInputConfigurator(
 			Key::CONDITION_SET->value
 		);
 	}

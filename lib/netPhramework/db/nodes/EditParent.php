@@ -14,7 +14,7 @@ use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
 use netPhramework\db\presentation\recordTable\query\Query;
-use netPhramework\db\presentation\recordTable\views\RecordTableBuilder as RecordTableBuilder;
+use netPhramework\db\presentation\recordTable\RecordTableBuilder;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
@@ -82,31 +82,21 @@ class EditParent extends RecordProcess
 	 */
 	private function createChildTable(Exchange $exchange):Viewable
 	{
-		$recordSet = $this->oneToMany->getChildren($this->record);
-		$compPath  = $exchange->getPath()->pop()->append($recordSet->getName());
-		$query = new Query()->parse($exchange->getParameters());
-		$builder = ($this->recordTableBuilder ?? new RecordTableBuilder())
+		$recordSet  = $this->oneToMany->getChildren($this->record);
+		$compPath   = $exchange->getPath()->pop()->append($recordSet->getName());
+		$query 		= new Query()->parse($exchange->getParameters());
+		$count		= $recordSet->count();
+		return ($this->recordTableBuilder ?? new RecordTableBuilder())
+			->setQuery($query)
 			->setRecordSet($recordSet)
 			->setCompositePath($compPath)
 			->setCallbackInputForRows($exchange->callbackFormInput(true))
+			->setCallbackInputForFilterForms($exchange->callbackFormInput())
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
 			->buildRowSetFactory()
-			->mapRowSet()
-			;
-		if($recordSet->count() > $this->childFilterThreshold) {
-			$builder
-				->setCallbackInputForFilterForms($exchange->callbackFormInput())
-				->setQuery($query)
-				->applyQuery()
-				->buildSelectForm()
-				->buildPaginator()
-			;
-		}
-		return $builder
-			->buildAddButton()
-			->buildRecordList()
-			->getRecordTable()
+			->collateRowSet()
+			->generateView($this->childFilterThreshold < $count)
 			;
 	}
 }
