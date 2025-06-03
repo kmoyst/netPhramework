@@ -1,53 +1,52 @@
 <?php
-
 namespace netPhramework\core;
 use Iterator;
 class NodeSet implements Iterator
 {
-    private array $components = [];
+    private array $nodes = [];
 
-	public function add(Node $component):void
+	public function add(Node $node):void
 	{
-		$this->components[$component->getName()] = $component;
+		$this->nodes[$node->getName()] = $node;
 	}
 
 	public function has(string $name):bool
 	{
-		return array_key_exists($name, $this->components);
+		return array_key_exists($name, $this->nodes);
 	}
 
 	public function get(string $name):Node
 	{
-		return $this->components[$name];
+		return $this->nodes[$name];
 	}
 
 	public function getNames():array
 	{
-		return array_keys($this->components);
+		return array_keys($this->nodes);
 	}
 
     public function current(): Node
     {
-        return current($this->components);
+        return current($this->nodes);
     }
 
     public function next(): void
     {
-        next($this->components);
+        next($this->nodes);
     }
 
     public function key(): string
     {
-        return key($this->components);
+        return key($this->nodes);
     }
 
     public function valid(): bool
     {
-        return key($this->components) !== null;
+        return key($this->nodes) !== null;
     }
 
     public function rewind(): void
     {
-        reset($this->components);
+        reset($this->nodes);
     }
 }
