@@ -1,8 +1,9 @@
 <?php
 
 namespace netPhramework\db\authentication;
-use netPhramework\db\presentation\recordTable\{columnSet\columns\TextColumn,
-	columnSet\columns\UserRoleColumn,
+use netPhramework\db\presentation\recordTable\{
+	columns\TextColumn,
+	columns\UserRoleColumn,
 	RecordTableBuilder as baseBuilder};
 
 class RecordTableBuilder extends baseBuilder

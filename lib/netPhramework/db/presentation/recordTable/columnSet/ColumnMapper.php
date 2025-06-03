@@ -4,8 +4,8 @@ namespace netPhramework\db\presentation\recordTable\columnSet;
 
 use netPhramework\db\mapping\Field;
 use netPhramework\db\mapping\FieldType;
-use netPhramework\db\presentation\recordTable\columnSet\columns\DateColumn;
-use netPhramework\db\presentation\recordTable\columnSet\columns\TextColumn;
+use netPhramework\db\presentation\recordTable\columns\DateColumn;
+use netPhramework\db\presentation\recordTable\columns\TextColumn;
 
 readonly class ColumnMapper
 {

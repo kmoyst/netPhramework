@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\columnSet\columns;
+namespace netPhramework\db\presentation\recordTable\columns;
 
 use DateMalformedStringException;
 use DateTime;

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\columnSet\columns;
+namespace netPhramework\db\presentation\recordTable\columns;
 
 use netPhramework\authentication\UserRole;
 use netPhramework\db\authentication\EnrolledUserField;
