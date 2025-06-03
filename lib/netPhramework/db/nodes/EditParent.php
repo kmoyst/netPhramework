@@ -85,10 +85,10 @@ class EditParent extends RecordProcess
 	 */
 	private function createChildTable(Exchange $exchange):Viewable
 	{
-		$recordSet  = $this->oneToMany->getChildren($this->record);
-		$compPath   = $exchange->getPath()->pop()->append($recordSet->getName());
-		$query 		= new Query()->parse($exchange->getParameters());
-		$count		= $recordSet->count();
+		$recordSet   = $this->oneToMany->getChildren($this->record);
+		$compPath    = $exchange->getPath()->pop()->append($recordSet->getName());
+		$query 		 = new Query()->parse($exchange->getParameters());
+		$includeForm = $recordSet->count() > $this->childFilterThreshold;
 		return new ViewBuilder()
 			->setQuery($query)
 			->setRecordSet($recordSet)
@@ -99,8 +99,7 @@ class EditParent extends RecordProcess
 			->buildColumnSet($this->childColumnSetStrategy)
 			->buildRowSetFactory()
 			->collate()
-			->generateView(
-				$this->childViewStrategy, $this->childFilterThreshold < $count)
+			->generateView($this->childViewStrategy, $includeForm)
 			;
 	}
 }
