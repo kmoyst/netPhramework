@@ -13,7 +13,7 @@ readonly class ViewFactory
 {
 	public function __construct(private Query $query) { }
 
-	public function selectForm(array $columnNames, ?Input $callbackInput):?View
+	public function getSelectForm(array $columnNames, ?Input $callbackInput):?View
 	{
 		return new QueryFormDirector()
 			->setCallbackInput($callbackInput)
@@ -23,7 +23,7 @@ readonly class ViewFactory
 		;
 	}
 
-	public function paginator(?Input $callbackInput):?View
+	public function getPaginator(?Input $callbackInput):?View
 	{
 		if($this->query->getLimit() !== null)
 		{
@@ -36,7 +36,7 @@ readonly class ViewFactory
 		} else return null;
 	}
 
-	public function addButton(
+	public function getAddButton(
 		MutablePath $compositePath, Input $callbackInput):View
 	{
 		return new View('add-button-form')
@@ -50,7 +50,7 @@ readonly class ViewFactory
 	 * @param RowSet $rowSet
 	 * @return View
 	 */
-	public function recordList(ColumnSet $columnSet, RowSet $rowSet):View
+	public function getRecordList(ColumnSet $columnSet, RowSet $rowSet):View
 	{
 		return new View('record-list')
 			->add('headers', $columnSet->getHeaders())

@@ -97,11 +97,12 @@ class RecordTableBuilder
 		$viewFactory 		= new ViewFactory($this->query);
 		if($includeQueryInput)
 		{
-			$paginator  = $viewFactory->paginator($formCallback);
-			$selectForm = $viewFactory->selectForm($columnNames, $formCallback);
+			$paginator  = $viewFactory->getPaginator($formCallback);
+			$selectForm = $viewFactory
+				->getSelectForm($columnNames, $formCallback);
 		}
-		$recordList = $viewFactory->recordList($columnSet, $rowSet);
-		$addButton  = $viewFactory->addButton($compositePath, $rowCallback)
+		$recordList = $viewFactory->getRecordList($columnSet, $rowSet);
+		$addButton  = $viewFactory->getAddButton($compositePath, $rowCallback)
 		;
 		$view = new View('record-table')
 			->add('addButton', $addButton)
