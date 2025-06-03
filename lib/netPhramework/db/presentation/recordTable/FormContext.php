@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\query;
+namespace netPhramework\db\presentation\recordTable;
 
 interface FormContext
 {

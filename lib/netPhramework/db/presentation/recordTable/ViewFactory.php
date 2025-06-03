@@ -25,7 +25,7 @@ readonly class ViewFactory
 
 	public function getPaginator(?Input $callbackInput):?View
 	{
-		if($this->query->getLimit() !== null)
+		if($this->query->hasLimit())
 		{
 			return new PaginationDirector()
 				->configure($this->query, $callbackInput)

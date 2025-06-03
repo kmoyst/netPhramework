@@ -3,6 +3,7 @@
 namespace netPhramework\db\presentation\recordTable\query;
 
 use netPhramework\common\Variables;
+use netPhramework\db\presentation\recordTable\FormContext;
 
 class Query implements FormContext
 {

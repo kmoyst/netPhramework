@@ -2,8 +2,6 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\query\FormContext;
-
 class PaginationFormContext implements FormContext
 {
 	private FormContext $baseContext;
