@@ -25,7 +25,7 @@ class Row extends Viewable
 
 	public function getTemplateName(): string
 	{
-		return 'record-table-row';
+		return 'record-row';
 	}
 
 	/**

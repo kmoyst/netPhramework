@@ -52,7 +52,7 @@ readonly class ViewFactory
 	 */
 	public function recordList(ColumnSet $columnSet, RowSet $rowSet):View
 	{
-		return new View('record-table-list')
+		return new View('record-list')
 			->add('headers', $columnSet->getHeaders())
 			->add('rows', 	 $rowSet)
 			;

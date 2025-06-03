@@ -2,19 +2,22 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
+use netPhramework\db\presentation\recordTable\
+{
+	columnSet\ColumnMapper,
+	columnSet\ColumnSet,
+	query\Query,
+	rowSet\CollationMap,
+	rowSet\CollationMapper,
+	rowSet\RowSet,
+	rowSet\RowSetFactory
+};
 use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\RecordSet;
-use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
-	columnSet\ColumnSet,
-	query\Query,
-	rowSet\CollationMap,
-	rowSet\CollationMapper,
-	rowSet\RowSet,
-	rowSet\RowSetFactory};
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
