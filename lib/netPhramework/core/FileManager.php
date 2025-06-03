@@ -7,9 +7,9 @@ class FileManager
 	private array $uploadInfo;
 	private string $fieldName;
 
-	public function __construct()
+	public function __construct(array $uploadInfo)
 	{
-		$this->uploadInfo = $_FILES;
+		$this->uploadInfo = $uploadInfo;
 	}
 
 	public function hasFile():bool
@@ -63,7 +63,7 @@ class FileManager
 	{
 		$this->fieldName = array_keys($this->uploadInfo)[0];
 		preg_match('|^(.+)\.([^.]+)$|', $this->getFileName(), $m);
-		$newFileName = sha1($m[1]).'.'.$m[2];
+		$newFileName = sha1($m[1]).uniqid().'.'.$m[2];
 		$newFilePath = "../../uploads/$newFileName";
 		move_uploaded_file($this->getTempPath(), $newFilePath);
 		return $newFilePath;

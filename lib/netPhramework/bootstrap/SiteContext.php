@@ -24,7 +24,7 @@ class SiteContext implements RequestContext
 	{
 		$this->environment = $environment ?? new Environment();
 		$this->session = $session ?? new Session();
-		$this->fileManager = $fileManager ?? new FileManager();
+		$this->fileManager = $fileManager ?? new FileManager($_FILES);
 	}
 
 	public function getCallbackKey(): string
