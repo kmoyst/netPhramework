@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\paginator;
+namespace netPhramework\db\presentation\recordTable\pagination;
 
 use netPhramework\db\presentation\recordTable\query\QueryInterface;
 

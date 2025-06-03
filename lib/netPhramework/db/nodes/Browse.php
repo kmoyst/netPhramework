@@ -40,15 +40,16 @@ class Browse extends RecordSetProcess
 	{
 		$query = new Query()->parse($exchange->getParameters());
 		$recordTable = $this->recordTableBuilder
-			->setQuery($query)
 			->setRecordSet($this->recordSet)
 			->setCompositePath($exchange->getPath()->pop())
 			->setCallbackInputForRows($exchange->callbackFormInput())
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
-			->buildRowRegistry()
-			->mapRows()
-			->buildSelectFilterForm()
+			->buildRowSetFactory()
+			->mapRowSet()
+			->setQuery($query)
+			->applyQuery()
+			->buildSelectForm()
 			->buildPaginator()
 			->buildAddButton()
 			->buildRecordList()

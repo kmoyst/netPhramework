@@ -20,7 +20,7 @@ interface Column
 	 * @throws FieldAbsent
 	 * @throws Exception
 	 */
-	public function getOperationalValue(Record $record):string;
+	public function getOperableValue(Record $record):string;
 
     /**
      * @param Record $record

@@ -36,11 +36,11 @@ class Row extends Viewable
 	 * @throws FieldAbsent
 	 * @throws ValueInaccessible
 	 */
-	public function getOperationValue(string $columnName):string
+	public function getOperableValue(string $columnName):string
 	{
 		return $this->columnSet
 			->getColumn($columnName)
-			->getOperationalValue($this->record);
+			->getOperableValue($this->record);
 	}
 
 	/**

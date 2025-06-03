@@ -1,12 +1,12 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\paginator;
+namespace netPhramework\db\presentation\recordTable\pagination;
 
 use netPhramework\db\presentation\recordTable\form\Builder;
 use netPhramework\db\presentation\recordTable\
 {
-	paginator\form\Director as formDirector,
-	paginator\form\InputFactory,
+	pagination\form\Director as formDirector,
+	pagination\form\InputFactory,
 	query\QueryInterface as baseQuery
 };
 use netPhramework\presentation\Input;

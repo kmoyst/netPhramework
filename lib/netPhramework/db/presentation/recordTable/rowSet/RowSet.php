@@ -8,25 +8,26 @@ use netPhramework\db\exceptions\RecordNotFound;
 
 class RowSet implements Iterator, Countable
 {
-	private array $collation;
-	private RowRegistry $registry;
 	private int $pointer = 0;
 
-	public function setCollation(array $collation): self
-	{
-		$this->collation = $collation;
-		return $this;
-	}
-
-	public function setRegistry(RowRegistry $registry): self
-	{
-		$this->registry = $registry;
-		return $this;
-	}
+	public function __construct(
+		private readonly array $collation,
+		private readonly RowRegistry $registry) {}
 
 	public function getIds():array
 	{
 		return $this->collation;
+	}
+
+	/**
+	 * @param string $id
+	 * @return Row
+	 * @throws MappingException
+	 * @throws RecordNotFound
+	 */
+	public function getRow(string $id):Row
+	{
+		return $this->registry->getRow($id);
 	}
 
 	/**

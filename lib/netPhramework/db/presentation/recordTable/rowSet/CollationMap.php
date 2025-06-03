@@ -1,0 +1,40 @@
+<?php
+
+namespace netPhramework\db\presentation\recordTable\rowSet;
+
+readonly class CollationMap
+{
+	public function __construct(
+		private array $unfilteredIds,
+		private ?array $filteredIds,
+		private ?array $sortedIds,
+		private ?array $paginatedIds) {}
+
+	public function getUnfilteredIds(): array
+	{
+		return $this->unfilteredIds;
+	}
+
+	public function getFilteredIds(bool $fallback = false): ?array
+	{
+		return $this->filteredIds ??
+			($fallback ? $this->getUnfilteredIds() : null);
+	}
+
+	public function getSortedIds(bool $fallback = false): ?array
+	{
+		return $this->sortedIds ??
+			($fallback ? $this->getFilteredIds($fallback) : null);
+	}
+
+	public function getPaginatedIds(bool $fallback = false): ?array
+	{
+		return $this->paginatedIds ??
+			($fallback ? $this->getSortedIds($fallback) : null);
+	}
+
+	public function getMapped(): array
+	{
+		return $this->getPaginatedIds(true);
+	}
+}

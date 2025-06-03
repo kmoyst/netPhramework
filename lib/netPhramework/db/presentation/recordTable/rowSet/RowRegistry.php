@@ -2,7 +2,6 @@
 
 namespace netPhramework\db\presentation\recordTable\rowSet;
 
-use Countable;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\mapping\RecordSet;
@@ -10,7 +9,7 @@ use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 
-class RowRegistry implements Countable
+class RowRegistry
 {
 	private array $rows = [];
 	private RecordSet $recordSet;
@@ -58,14 +57,5 @@ class RowRegistry implements Countable
 				clone $this->assetPath);
 		}
 		return $this->rows[$id];
-	}
-
-	/**
-	 * @return int
-	 * @throws MappingException
-	 */
-	public function count(): int
-	{
-		return $this->recordSet->count();
 	}
 }

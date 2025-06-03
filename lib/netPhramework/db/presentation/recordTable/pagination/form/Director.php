@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\paginator\form;
+namespace netPhramework\db\presentation\recordTable\pagination\form;
 
 use netPhramework\db\presentation\recordTable\form\Builder;
 use netPhramework\presentation\Input;

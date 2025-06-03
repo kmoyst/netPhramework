@@ -91,14 +91,15 @@ class EditParent extends RecordProcess
 			->setCallbackInputForRows($exchange->callbackFormInput(true))
 			->setFeedback($exchange->getSession()->getEncodableValue())
 			->buildColumnSet()
-			->buildRowRegistry()
+			->buildRowSetFactory()
+			->mapRowSet()
 			;
 		if($recordSet->count() > $this->childFilterThreshold) {
 			$builder
-				->setQuery($query)
-				->mapRows()
 				->setCallbackInputForFilterForms($exchange->callbackFormInput())
-				->buildSelectFilterForm()
+				->setQuery($query)
+				->applyQuery()
+				->buildSelectForm()
 				->buildPaginator()
 			;
 		}

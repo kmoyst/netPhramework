@@ -12,15 +12,14 @@ use netPhramework\db\mapping\SortDirection;
 use netPhramework\db\presentation\recordTable\query\Key;
 use netPhramework\db\presentation\recordTable\query\Query;
 
-class RowMapper
+class Collator
 {
-	private RowRegistry $registry;
 	private Query $query;
+	private RowSet $rowSet;
 
-	private array $allIds;
-	private array $filteredIds;
-	private array $sortedIds;
-	private array $paginatedIds;
+	private ?array $filteredIds = null;
+	private ?array $sortedIds = null;
+	private ?array $paginatedIds = null;
 
 	public function setQuery(Query $query): self
 	{
@@ -28,15 +27,9 @@ class RowMapper
 		return $this;
 	}
 
-	public function setRegistry(RowRegistry $registry): self
+	public function setRowSet(RowSet $rowSet): self
 	{
-		$this->registry = $registry;
-		return $this;
-	}
-
-	public function setAllIds(array $allIds): self
-	{
-		$this->allIds = $allIds;
+		$this->rowSet = $rowSet;
 		return $this;
 	}
 
@@ -48,7 +41,8 @@ class RowMapper
 	 */
 	public function select():self
 	{
-		$allIds = array_combine($this->allIds, $this->allIds);
+		$unfilteredIds = $this->rowSet->getIds();
+		$allIds = array_combine($unfilteredIds, $unfilteredIds);
 		$glues  = [];
 		$ids    = [];
 		foreach($this->query->getConditionSet() as $i => $condition)
@@ -65,11 +59,10 @@ class RowMapper
 			$currentConditionIds = $allIds;
 			foreach($allIds as $id)
 			{
-				$recordValue = $this->registry
-					->getRow($id)
-					->getOperationValue($field);
+				$row = $this->rowSet->getRow($id);
+				$rowValue = $row->getOperableValue($field);
 				if(!$operator->check( // case insensitive
-					strtolower($recordValue), strtolower($value)))
+					strtolower($rowValue), strtolower($value)))
 					unset($currentConditionIds[$id]);
 			}
 			$ids[$i]   = $currentConditionIds;
@@ -84,8 +77,8 @@ class RowMapper
 		{
 			$filteredIds = $glue->check($filteredIds, $ids[$i]);
 		}
-		$this->filteredIds = $filteredIds;
-		$this->query->setCount(count($this->filteredIds));
+		$this->filteredIds = array_keys($filteredIds);
+		$this->query->setCount(count($filteredIds));
 		return $this;
 	}
 
@@ -98,8 +91,8 @@ class RowMapper
 	 */
 	public function sort():self
 	{
+		$ids  = $this->filteredIds ?? $this->rowSet->getIds();
 		$args = [];
-		$ids  = $this->filteredIds ?? $this->allIds;
 		foreach($this->query->getSortArray() as $vector)
 		{
 			$field = $vector[Key::SORT_FIELD->value];
@@ -109,7 +102,7 @@ class RowMapper
 			$values = [];
 			foreach($ids as $id)
 			{
-				$row = $this->registry->getRow($id);
+				$row = $this->rowSet->getRow($id);
 				$values[] = $row->getSortableValue($field);
 			}
 			$args[] = $values;
@@ -128,33 +121,20 @@ class RowMapper
 	 */
 	public function paginate():self
 	{
+		if($this->query->getLimit() === null) return $this;
 		$limit = $this->query->getLimit();
 		$offset = $this->query->getOffset();
-		$ids = $this->sortedIds ?? $this->filteredIds ?? $this->allIds;
+		$ids = $this->sortedIds??$this->filteredIds??$this->rowSet->getIds();
 		$this->paginatedIds = array_slice($ids, $offset, $limit);
 		return $this;
 	}
 
-	public function getUnpaginatedRowSet():RowSet
+	public function getMap():CollationMap
 	{
-		return new RowSet()
-			->setRegistry($this->registry)
-			->setCollation(
-				$this->sortedIds ??
-				$this->filteredIds ??
-				$this->allIds)
-			;
-	}
-
-	public function getProcessedRowSet():RowSet
-	{
-		return new RowSet()
-			->setRegistry($this->registry)
-			->setCollation(
-				$this->paginatedIds ??
-				$this->sortedIds ??
-				$this->filteredIds ??
-				$this->allIds)
-			;
+		return new CollationMap(
+			$this->rowSet->getIds(),
+			$this->filteredIds,
+			$this->sortedIds,
+			$this->paginatedIds);
 	}
 }

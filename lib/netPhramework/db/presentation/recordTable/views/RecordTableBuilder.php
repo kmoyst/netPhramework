@@ -10,39 +10,26 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
 	columnSet\ColumnSet,
-	paginator\Director as paginatorDirector,
 	query\Query,
-	rowSet\RowMapper,
 	rowSet\RowRegistry,
-	rowSet\RowSet,
-	selectForm\Director as selectFormDirector};
+	rowSet\RowSetFactory};
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
-use netPhramework\rendering\View;
 
 class RecordTableBuilder
 {
-	protected Query $query;
 	protected RecordSet $recordSet;
 	protected MutablePath $compositePath;
 	protected Input $callbackInputForRows;
 	protected ColumnSet $columnSet;
-	protected RowRegistry $registry;
-	protected AddButton $addButton;
-	protected RecordList $recordList;
 
 	protected ?Input $callbackInputForFilterForms = null;
 	protected ?Encodable $feedback = null;
-	protected ?RowMapper $rowMapper = null;
-	protected ?View $selectForm = null;
-	protected ?View $paginator = null;
 
-	public function setQuery(Query $query): self
-	{
-		$this->query = $query;
-		return $this;
-	}
+	protected RowSetFactory $factory;
+	protected AddButton $addButton;
+	protected RecordList $recordList;
 
 	public function setRecordSet(RecordSet $recordSet): self
 	{
@@ -89,13 +76,20 @@ class RecordTableBuilder
 		return $this;
 	}
 
-	public function buildRowRegistry():self
+	/**
+	 * @return $this
+	 * @throws MappingException
+	 */
+	public function buildRowSetFactory():self
 	{
-		$this->registry = new RowRegistry()
+		$registry = new RowRegistry()
 			->setColumnSet($this->columnSet)
 			->setCompositePath($this->compositePath)
 			->setCallbackInput($this->callbackInputForRows)
 			->setRecordSet($this->recordSet)
+		;
+		$this->factory = new RowSetFactory($registry)
+			->initializeCollator($this->recordSet)
 		;
 		return $this;
 	}
@@ -108,15 +102,17 @@ class RecordTableBuilder
 	 * @throws RecordNotFound
 	 * @throws ValueInaccessible
 	 */
-	public function mapRows():self
+	public function applyQuery(Query $query):self
 	{
-		$this->rowMapper = new RowMapper()
-			->setQuery($this->query)
-			->setRegistry($this->registry)
-			->setAllIds($this->recordSet->getIds())
-			->select()
-			->sort()
-			->paginate()
+		$this->factory->collate($query);
+		return $this;
+	}
+
+	public function buildRecordList():self
+	{
+		$this->recordList = new RecordList()
+			->setColumnSet($this->columnSet)
+			->setRowSet($this->factory->getMappedRowSet())
 		;
 		return $this;
 	}
@@ -126,49 +122,6 @@ class RecordTableBuilder
 		$this->addButton = new AddButton()
 			->setCallbackInput($this->callbackInputForRows)
 			->setCompositePath(clone $this->compositePath)
-		;
-		return $this;
-	}
-
-	public function buildSelectFilterForm():self
-	{
-		$this->selectForm = new selectFormDirector()
-			->setCallbackInput($this->callbackInputForFilterForms ?? null)
-			->setColumnNames($this->columnSet->getNames())
-			->buildSelectFilterForm($this->query)
-			->getView()
-		;
-		return $this;
-	}
-
-	public function buildPaginator():self
-	{
-		if($this->query->getLimit() !== null)
-		{
-			$this->paginator = new paginatorDirector()
-				->configure($this->query,
-					$this->callbackInputForFilterForms ?? null)
-				->buildPreviousForm()
-				->buildNextForm()
-				->getView()
-			;
-		}
-		return $this;
-	}
-
-	/**
-	 * @return $this
-	 * @throws MappingException
-	 */
-	public function buildRecordList():self
-	{
-		$this->recordList = new RecordList()
-			->setColumnSet($this->columnSet)
-			->setRowSet(
-				$this->rowMapper?->getProcessedRowSet() ?? new RowSet()
-				->setCollation($this->recordSet->getIds())
-				->setRegistry($this->registry)
-			)
 		;
 		return $this;
 	}
