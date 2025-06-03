@@ -1,8 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\helpers;
-
-use netPhramework\db\mapping\Record;
+namespace netPhramework\db\mapping;
 
 abstract class File implements \netPhramework\core\File
 {

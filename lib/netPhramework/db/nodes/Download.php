@@ -4,7 +4,7 @@ namespace netPhramework\db\nodes;
 
 use netPhramework\core\Exchange;
 use netPhramework\db\core\RecordProcess;
-use netPhramework\db\presentation\helpers\File;
+use netPhramework\db\mapping\File;
 
 class Download extends RecordProcess
 {
