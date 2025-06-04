@@ -6,12 +6,12 @@ use netPhramework\db\mapping\Glue;
 
 class CollatorResult
 {
-	private array $idSet = [];
-	private array $glues = [];
+	private array $collations = [];
+	private array $glues      = [];
 
-	public function addIds(array $ids):self
+	public function addCollation(array $collation):self
 	{
-		$this->idSet[] = $ids;
+		$this->collations[] = $collation;
 		return $this;
 	}
 
@@ -21,9 +21,9 @@ class CollatorResult
 		return $this;
 	}
 
-	public function getIdSet(): array
+	public function getCollations(): array
 	{
-		return $this->idSet;
+		return $this->collations;
 	}
 
 	public function getGlues(): array
@@ -33,6 +33,6 @@ class CollatorResult
 
 	public function isEmpty():bool
 	{
-		return empty($this->idSet);
+		return empty($this->collations);
 	}
 }

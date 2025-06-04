@@ -61,16 +61,16 @@ class Collator
 	 */
 	public function select():self
 	{
-		$ids = $this->unfilteredIds;
+		$filtered  = $this->unfilteredIds;
 		if($result = $this->checkConditions())
 		{
-			$glues = $result->getGlues();
-			$idSet = $result->getIdSet();
-			$glues[0] = Glue::AND; // replace first glue (null) with AND
+			$collations = $result->getCollations();
+			$glues  	= $result->getGlues();
+			$glues[0]   = Glue::AND; // replace first glue (null) with AND
 			foreach($glues as $i => $glue)
-				$ids = $glue->check($ids, $idSet[$i]);
+				$filtered = $glue->check($filtered, $collations[$i]);
 		}
-		$this->filteredIds = $ids;
+		$this->filteredIds = $filtered;
 		$this->query->setCount(count($this->filteredIds));
 		return $this;
 	}
@@ -92,7 +92,7 @@ class Collator
 		{
 			$condition = new CollatorCondition($queryCondition);
 			if(!$condition->parse()) continue;
-			$result->addIds($this->checkCondition($condition));
+			$result->addCollation($this->checkCondition($condition));
 			$result->addGlue($condition->getGlue());
 		}
 		return $result->isEmpty() ? false : $result;
@@ -111,17 +111,17 @@ class Collator
 	 */
 	private function checkCondition(CollatorCondition $condition):array
 	{
-		$passed = [];
-		$column = $this->columnSet->getColumn($condition->getField());
+		$collation = [];
+		$column    = $this->columnSet->getColumn($condition->getField());
 		foreach($this->unfilteredIds as $id)
 		{
 			$operator = $condition->getOperator();
 			$record   = $this->recordSet->getRecord($id);
 			$rValue	  = strtolower($column->getOperableValue($record));
 			$cValue   = strtolower($condition->getValue());
-			if($operator->check($rValue, $cValue)) $passed[] = $id;
+			if($operator->check($rValue, $cValue)) $collation[] = $id;
 		}
-		return $passed;
+		return $collation;
 	}
 
 	/**
