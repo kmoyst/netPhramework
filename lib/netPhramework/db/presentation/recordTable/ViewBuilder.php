@@ -2,20 +2,20 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
-	columnSet\ColumnSet,
-	columnSet\ColumnSetStrategy,
-	query\Query,
-	rowSet\CollationMap,
-	rowSet\Collator,
-	rowSet\RowSet,
-	rowSet\RowSetFactory};
 use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\RecordSet;
+use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
+	columnSet\ColumnSet,
+	columnSet\ColumnSetStrategy,
+	collation\CollationMap,
+	collation\Collator,
+	collation\Query,
+	rowSet\RowSet,
+	rowSet\RowSetFactory};
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
@@ -41,8 +41,8 @@ class ViewBuilder
 	 */
 	public function buildColumnSet(?ColumnSetStrategy $strategy):self
 	{
+		$columnMapper    = new ColumnMapper();
 		$this->columnSet = new ColumnSet();
-		$columnMapper = new ColumnMapper();
 		foreach($this->recordSet->getFieldSet() as $field)
 			$this->columnSet->add($columnMapper->mapColumn($field));
 		$strategy?->configureColumnSet($this->columnSet);
@@ -86,13 +86,15 @@ class ViewBuilder
 	public function generateView(?ViewStrategy $strategy,
 								 bool $includeQueryInput = true):View
 	{
+		$viewFactory 		= new ViewFactory($this->query);
 		$columnSet 			= $this->columnSet;
 		$columnNames		= $columnSet->getNames();
 		$rowSet				= $this->generateRecordListRowSet();
+		$rowSetFactory		= $this->rowSetFactory;
 		$rowCallback 		= $this->callbackInputForRows;
 		$formCallback   	= $this->callbackInputForFilterForms;
 		$compositePath 		= clone $this->compositePath;
-		$viewFactory 		= new ViewFactory($this->query);
+		$collationMap		= $this->collationMap;
 		if($includeQueryInput)
 		{
 			$paginator  = $viewFactory->getPaginator($formCallback);
@@ -109,8 +111,7 @@ class ViewBuilder
 			->add('paginator', $paginator ?? '')
 			->add('feedback', $this->feedback ?? '')
 			;
-		$context = new ViewContext(
-			$view, $this->rowSetFactory, $this->collationMap);
+		$context = new ViewContext($view, $rowSetFactory, $collationMap);
 		$strategy?->configureView($context);
 		return $view;
 	}

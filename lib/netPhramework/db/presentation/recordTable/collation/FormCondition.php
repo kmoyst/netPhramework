@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\query;
+namespace netPhramework\db\presentation\recordTable\collation;
 
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Viewable;
 
-class Condition extends Viewable
+class FormCondition extends Viewable
 {
 	private Input $fieldInput;
 	private Input $operatorInput;

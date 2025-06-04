@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\query;
+namespace netPhramework\db\presentation\recordTable\collation;
 
 use netPhramework\common\Variables;
 use netPhramework\db\presentation\recordTable\FormContext;
@@ -15,10 +15,10 @@ class Query implements FormContext
 
 	public function parse(Variables $vars):self
 	{
-		$limit = $vars->getOrNull(Key::LIMIT->value);
-		$offset = $vars->getOrNull(Key::OFFSET->value) ?? 0;
-		$sortArray = $vars->getOrNull(Key::SORT_ARRAY->value) ?? [];
-		$conditions = $vars->getOrNull(Key::CONDITION_SET->value) ?? [];
+		$limit = $vars->getOrNull(QueryKey::LIMIT->value);
+		$offset = $vars->getOrNull(QueryKey::OFFSET->value) ?? 0;
+		$sortArray = $vars->getOrNull(QueryKey::SORT_ARRAY->value) ?? [];
+		$conditions = $vars->getOrNull(QueryKey::CONDITION_SET->value) ?? [];
 		$this->limit = is_numeric($limit) && $limit > 0 ? $limit : null;
 		$this->offset = $offset;
 		$this->sortArray = $sortArray;
@@ -31,8 +31,8 @@ class Query implements FormContext
 		if(empty($this->conditionSet)) return [];
 		$conditionSet = $this->conditionSet;
 		$lastCondition = $conditionSet[count($conditionSet)-1];
-		if(empty($lastCondition[Key::CONDITION_FIELD->value]) ||
-			empty($lastCondition[Key::CONDITION_VALUE->value]))
+		if(empty($lastCondition[QueryKey::CONDITION_FIELD->value]) ||
+			empty($lastCondition[QueryKey::CONDITION_VALUE->value]))
 				array_pop($conditionSet);
 		return $conditionSet;
 	}
@@ -42,7 +42,7 @@ class Query implements FormContext
 		if(empty($this->sortArray)) return [];
 		$sortArray = $this->sortArray;
 		if(empty($sortArray[count($sortArray)-1]
-		[Key::SORT_FIELD->value])) array_pop($sortArray);
+		[QueryKey::SORT_FIELD->value])) array_pop($sortArray);
 		return $sortArray;
 	}
 

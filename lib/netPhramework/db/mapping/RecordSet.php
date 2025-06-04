@@ -61,7 +61,7 @@ final class RecordSet implements Iterator, Countable
 	/**
 	 * Creates a new Record
 	 * If there are any "EQUAL" conditions, ensures that the Record meets that
-	 * Condition. Useful for child records.
+	 * FormCondition. Useful for child records.
 	 *
 	 * @return Record
 	 */

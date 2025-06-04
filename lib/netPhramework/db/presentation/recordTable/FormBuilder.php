@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\query\Condition;
-use netPhramework\db\presentation\recordTable\query\Key;
-use netPhramework\db\presentation\recordTable\query\SortVector;
+use netPhramework\db\presentation\recordTable\collation\FormCondition;
+use netPhramework\db\presentation\recordTable\collation\FormSortVector;
+use netPhramework\db\presentation\recordTable\collation\QueryKey;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
@@ -35,19 +35,19 @@ class FormBuilder
 		$i = 0;
 		foreach($this->context->getSortArray() as $vector)
 		{
-			$view = new SortVector($templateName);
-			if($vector[Key::SORT_FIELD->value] === '') break;
+			$view = new FormSortVector($templateName);
+			if($vector[QueryKey::SORT_FIELD->value] === '') break;
 			$view->setFieldInput($this->factory
 				->makeSortFieldInput($i)
-				->setValue($vector[Key::SORT_FIELD->value]));
+				->setValue($vector[QueryKey::SORT_FIELD->value]));
 			$view->setDirectionInput($this->factory
 				->makeSortDirectionInput($i)
-				->setValue($vector[Key::SORT_DIRECTION->value]))
+				->setValue($vector[QueryKey::SORT_DIRECTION->value]))
 			;
 			$this->sortViews[] = $view;
 			$i++;
 		}
-		$view = new SortVector($templateName);
+		$view = new FormSortVector($templateName);
 		$view->setFieldInput($this->factory->makeSortFieldInput($i));
 		$view->setDirectionInput($this->factory->makeSortDirectionInput($i));
 		$this->sortViews[] = $view;
@@ -65,7 +65,7 @@ class FormBuilder
 	public function getHiddenLimitInput():HiddenInput
 	{
 		return new HiddenInput(
-			Key::LIMIT->value, $this->context->getLimit());
+			QueryKey::LIMIT->value, $this->context->getLimit());
 	}
 
 	public function buildOffsetInput():self
@@ -82,32 +82,32 @@ class FormBuilder
 		foreach($this->context->getConditionSet() as $condition)
 		{
 			if(
-				$condition[Key::CONDITION_FIELD->value] == '' ||
-				$condition[Key::CONDITION_VALUE->value] == ''
+				$condition[QueryKey::CONDITION_FIELD->value] == '' ||
+				$condition[QueryKey::CONDITION_VALUE->value] == ''
 			)
 				continue;
-			$view = new Condition($templateName)
+			$view = new FormCondition($templateName)
 			;
 			$view->setGlueInput($this->factory
 				->makeConditionGlueInput($i)
-				->setValue($condition[Key::CONDITION_GLUE->value] ?? ''))
+				->setValue($condition[QueryKey::CONDITION_GLUE->value] ?? ''))
 			;
 			$view->setFieldInput($this->factory
 				->makeConditionFieldInput($i)
-				->setValue($condition[Key::CONDITION_FIELD->value]))
+				->setValue($condition[QueryKey::CONDITION_FIELD->value]))
 			;
 			$view->setOperatorInput($this->factory
 				->makeConditionOperatorInput($i)
-				->setValue($condition[Key::CONDITION_OPERATOR->value]))
+				->setValue($condition[QueryKey::CONDITION_OPERATOR->value]))
 			;
 			$view->setValueInput($this->factory
 				->makeConditionValueInput($i)
-				->setValue($condition[Key::CONDITION_VALUE->value]))
+				->setValue($condition[QueryKey::CONDITION_VALUE->value]))
 			;
 			$this->conditionViews[] = $view;
 			$i++;
 		}
-		$view = new Condition($templateName);
+		$view = new FormCondition($templateName);
 		$view->setGlueInput($this->factory->makeConditionGlueInput($i));
 		$view->setFieldInput($this->factory->makeConditionFieldInput($i));
 		$view->setOperatorInput($this->factory->makeConditionOperatorInput($i));

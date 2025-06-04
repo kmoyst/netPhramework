@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\db\presentation\recordTable\{PaginationFormDirector as formDirector,
-	query\Calculator};
+	collation\Calculator};
 use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;

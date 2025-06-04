@@ -7,7 +7,7 @@ use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
 use netPhramework\db\mapping\SortDirection;
 use netPhramework\db\presentation\recordTable\{FormInputFactory as InputFactoryInterface};
-use netPhramework\db\presentation\recordTable\query\Key;
+use netPhramework\db\presentation\recordTable\collation\QueryKey;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\Input;
 use netPhramework\presentation\SelectInput;
@@ -22,10 +22,10 @@ class QueryFormInputFactory implements InputFactoryInterface
 	public function __construct()
 	{
 		$this->sortInputConfigurator = new FormInputConfigurator(
-			Key::SORT_ARRAY->value, 'form/select-input-array'
+			QueryKey::SORT_ARRAY->value, 'form/select-input-array'
 		);
 		$this->conditionInputConfigurator = new FormInputConfigurator(
-			Key::CONDITION_SET->value
+			QueryKey::CONDITION_SET->value
 		);
 	}
 
@@ -37,18 +37,18 @@ class QueryFormInputFactory implements InputFactoryInterface
 
 	public function makeLimitInput(): Input
 	{
-		return new SelectInput(Key::LIMIT->value, $this->limitOptions());
+		return new SelectInput(QueryKey::LIMIT->value, $this->limitOptions());
 	}
 
 	public function makeOffsetInput(): Input
 	{
-		return new HiddenInput(Key::OFFSET->value);
+		return new HiddenInput(QueryKey::OFFSET->value);
 	}
 
 	public function makeSortFieldInput(int $index): Input
 	{
 		$input = new SelectInput(
-			Key::SORT_FIELD->value,
+			QueryKey::SORT_FIELD->value,
 			$this->sortFieldOptions());
 		$this->sortInputConfigurator
 			->setIndex($index)
@@ -60,7 +60,7 @@ class QueryFormInputFactory implements InputFactoryInterface
 	public function makeSortDirectionInput(int $index): Input
 	{
 		$input = new SelectInput(
-			Key::SORT_DIRECTION->value,
+			QueryKey::SORT_DIRECTION->value,
 			SortDirection::toArray());
 		$this->sortInputConfigurator
 			->setIndex($index)
@@ -72,7 +72,7 @@ class QueryFormInputFactory implements InputFactoryInterface
 	public function makeConditionFieldInput(int $index): Input
 	{
 		$input = new SelectInput(
-			Key::CONDITION_FIELD->value,
+			QueryKey::CONDITION_FIELD->value,
 			$this->conditionFieldOptions());
 		$this->conditionInputConfigurator
 			->setIndex($index)
@@ -84,7 +84,7 @@ class QueryFormInputFactory implements InputFactoryInterface
 	public function makeConditionOperatorInput(int $index): Input
 	{
 		$input = new SelectInput(
-			Key::CONDITION_OPERATOR->value,
+			QueryKey::CONDITION_OPERATOR->value,
 			Operator::toArray());
 		$this->conditionInputConfigurator
 			->setIndex($index)
@@ -96,7 +96,7 @@ class QueryFormInputFactory implements InputFactoryInterface
 	public function makeConditionValueInput(int $index): Input
 	{
 		$input = new TextInput(
-			Key::CONDITION_VALUE->value);
+			QueryKey::CONDITION_VALUE->value);
 		$this->conditionInputConfigurator
 			->setIndex($index)
 			->setTemplateName('form/text-input-array')
@@ -107,7 +107,7 @@ class QueryFormInputFactory implements InputFactoryInterface
 	public function makeConditionGlueInput(int $index): Input
 	{
 		$input = new SelectInput(
-			Key::CONDITION_GLUE->value, Glue::toArray());
+			QueryKey::CONDITION_GLUE->value, Glue::toArray());
 		$this->conditionInputConfigurator
 			->setIndex($index)
 			->setTemplateName('form/select-input-array')

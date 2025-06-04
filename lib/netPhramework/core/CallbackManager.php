@@ -28,7 +28,7 @@ readonly class CallbackManager
 		private Variables   $parameters) {}
 
 	/**
-	 * Key used for callback inputs and location parameters.
+	 * QueryKey used for callback inputs and location parameters.
 	 * Set by SiteContext.
 	 *
 	 * @return string

@@ -10,7 +10,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
-use netPhramework\db\presentation\recordTable\query\Query;
+use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\ViewBuilder;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
 use netPhramework\exceptions\InvalidSession;

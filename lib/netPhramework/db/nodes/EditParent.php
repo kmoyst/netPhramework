@@ -14,7 +14,7 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
-use netPhramework\db\presentation\recordTable\query\Query;
+use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\ViewBuilder;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
 use netPhramework\exceptions\InvalidSession;

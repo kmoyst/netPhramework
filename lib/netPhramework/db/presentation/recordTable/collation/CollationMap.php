@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\rowSet;
+namespace netPhramework\db\presentation\recordTable\collation;
 
 readonly class CollationMap
 {

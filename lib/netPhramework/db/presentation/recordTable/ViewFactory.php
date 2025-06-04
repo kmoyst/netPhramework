@@ -3,7 +3,7 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
-use netPhramework\db\presentation\recordTable\query\Query;
+use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\rowSet\RowSet;
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;

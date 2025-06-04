@@ -1,8 +1,8 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\query;
+namespace netPhramework\db\presentation\recordTable\collation;
 
-enum Key:string
+enum QueryKey:string
 {
 	case LIMIT = 'limit';
 	case OFFSET = 'offset';

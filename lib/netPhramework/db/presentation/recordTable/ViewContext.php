@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\rowSet\CollationMap;
+use netPhramework\db\presentation\recordTable\collation\CollationMap;
 use netPhramework\db\presentation\recordTable\rowSet\RowSetFactory;
 use netPhramework\rendering\View;
 

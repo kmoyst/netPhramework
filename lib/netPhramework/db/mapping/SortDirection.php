@@ -11,4 +11,8 @@ enum SortDirection:int
 	case ASCENDING  = 1;
 	case DESCENDING = 2;
 
+	public function toPhpValue():int
+	{
+		return $this === self::ASCENDING ? SORT_ASC : SORT_DESC;
+	}
 }
