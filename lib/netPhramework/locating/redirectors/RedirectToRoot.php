@@ -10,8 +10,8 @@ use netPhramework\responding\ResponseCode;
 readonly class RedirectToRoot extends Redirector
 {
 	public function __construct(MutablePath|string $subPath = '',
-								?Variables         $parameters = null,
-								ResponseCode       $code = ResponseCode::SEE_OTHER)
+				    			?Variables $parameters = null,
+								ResponseCode $code = ResponseCode::SEE_OTHER)
 	{
 		parent::__construct(new RerouteToRoot($subPath), $parameters, $code);
 	}
