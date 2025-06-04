@@ -13,19 +13,24 @@ class Asset implements Node
 	private RecordSet $recordSet;
 	private RecordChildSet $recordNodeSet;
 	private RecordSetProcessSet $recordSetProcessSet;
+	private string $nodeName;
 
 	/**
 	 * @param RecordSet $recordSet
 	 * @param RecordChildSet $recordNodeSet
 	 * @param RecordSetProcessSet $recordSetProcessSet
+	 * @param ?string $nodeName
 	 */
 	public function __construct(RecordSet           $recordSet,
 								RecordChildSet      $recordNodeSet,
-								RecordSetProcessSet $recordSetProcessSet)
+								RecordSetProcessSet $recordSetProcessSet,
+								?string $nodeName = null
+	)
 	{
 		$this->recordSet = $recordSet;
 		$this->recordNodeSet = $recordNodeSet;
 		$this->recordSetProcessSet = $recordSetProcessSet;
+		$this->nodeName = $nodeName ?? $recordSet->getName();
 	}
 
 	public function getRecordSet(): RecordSet
@@ -52,6 +57,6 @@ class Asset implements Node
 
 	public function getName(): string
 	{
-		return $this->recordSet->getName();
+		return $this->nodeName;
 	}
 }

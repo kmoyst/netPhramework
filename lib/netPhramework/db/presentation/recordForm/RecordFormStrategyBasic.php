@@ -4,6 +4,7 @@ namespace netPhramework\db\presentation\recordForm;
 
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Cell;
+use netPhramework\db\mapping\FieldType;
 use netPhramework\db\mapping\Record;
 use netPhramework\presentation\InputSet;
 use netPhramework\presentation\InputSetBuilder;
@@ -28,7 +29,9 @@ readonly class RecordFormStrategyBasic implements RecordFormStrategy
 		$name    = $cell->getName();
 		$value   = $cell->getValue();
 
-		if($name === 'password')
+		if($cell->getField()->getType() === FieldType::PARAGRAPH)
+			$builder->textareaInput($name)->setValue($value);
+		elseif($name === 'password')
 			$builder->passwordInput($name)->setValue('');
 		else
 			$builder->textInput($name)->setValue($value);

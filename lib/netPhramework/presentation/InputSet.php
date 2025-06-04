@@ -69,6 +69,13 @@ class InputSet implements Iterator, InputSetBuilder
 		return $input;
 	}
 
+	public function textareaInput(string $name): TextareaInput
+	{
+		$input = new TextareaInput($name);
+		$this->inputs[] = $input;
+		return $input;
+	}
+
 	public function hasFileInput(): bool
 	{
 		return $this->hasFileInput;

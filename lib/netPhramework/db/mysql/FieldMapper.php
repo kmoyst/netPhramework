@@ -51,7 +51,7 @@ class FieldMapper
 		if(preg_match("|^varchar\(([0-9]+)\)$|",$sqlType,$m)) {
 			$column->setType(FieldType::STRING);
 			$column->setMaxLength($m[1]);
-		} elseif(preg_match('|^text$|',$sqlType)) {
+		} elseif(preg_match('|text$|',$sqlType)) {
 			$column->setType(FieldType::PARAGRAPH);
 		} elseif (preg_match('/^(boolean)|(tinyint\(1\))/',$sqlType)) {
 			$column->setType(FieldType::BOOLEAN);

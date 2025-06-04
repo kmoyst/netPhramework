@@ -10,4 +10,5 @@ interface InputSetBuilder
 	public function selectInput(string $name, iterable $options):SelectInput;
 	public function checkboxInput(string $name):CheckboxInput;
 	public function fileInput(string $name):FileInput;
+	public function textareaInput(string $name): TextareaInput;
 }
