@@ -68,7 +68,10 @@ class Collator
 			$glues  	= $result->getGlues();
 			$glues[0]   = Glue::AND; // replace first glue (null) with AND
 			foreach($glues as $i => $glue)
-				$filtered = $glue->check($filtered, $collations[$i]);
+			{
+				$filtered = $glue //($glue ?: Glue::AND) // default to AND
+					->check($filtered, $collations[$i]);
+			}
 		}
 		$this->filteredIds = $filtered;
 		$this->query->setCount(count($this->filteredIds));
