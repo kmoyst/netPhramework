@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\db\presentation\recordTable\collation\FormCondition;
-use netPhramework\db\presentation\recordTable\collation\FormSortVector;
 use netPhramework\db\presentation\recordTable\collation\QueryKey;
+use netPhramework\db\presentation\recordTable\form\FormCondition;
+use netPhramework\db\presentation\recordTable\form\FormSortVector;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\View;

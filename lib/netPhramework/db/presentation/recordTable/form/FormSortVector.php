@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\presentation\recordTable\collation;
+namespace netPhramework\db\presentation\recordTable\form;
 
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Viewable;
