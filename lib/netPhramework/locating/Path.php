@@ -4,6 +4,7 @@ namespace netPhramework\locating;
 
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
+use Stringable;
 
 /**
  * Basic MutablePath interface. Can be read / traversed, but not modified.
@@ -11,7 +12,7 @@ use netPhramework\rendering\Encoder;
  */
 abstract class Path implements Encodable
 {
-	public function encode(Encoder $encoder): string
+	public function encode(Encoder $encoder): string|Stringable
 	{
 		return $encoder->encodePath($this);
 	}

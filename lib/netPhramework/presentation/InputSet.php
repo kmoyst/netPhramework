@@ -10,7 +10,6 @@ use netPhramework\rendering\View;
 class InputSet implements Iterator, InputSetBuilder
 {
 	private array $inputs = [];
-	private int $pointer = 0;
 	private bool $hasFileInput = false;
 
 	public function generateView(string $templateName): View
@@ -29,42 +28,42 @@ class InputSet implements Iterator, InputSetBuilder
 	public function hiddenInput(string $name):HiddenInput
 	{
 		$input = new HiddenInput($name);
-		$this->inputs[] = $input;
+		$this->inputs[$name] = $input;
 		return $input;
 	}
 
 	public function textInput(string $name):TextInput
 	{
 		$input = new TextInput($name);
-		$this->inputs[] = $input;
+		$this->inputs[$name] = $input;
 		return $input;
 	}
 
 	public function passwordInput(string $name):PasswordInput
 	{
 		$input = new PasswordInput($name);
-		$this->inputs[] = $input;
+		$this->inputs[$name] = $input;
 		return $input;
 	}
 
 	public function selectInput(string $name, iterable $options):SelectInput
 	{
 		$input = new SelectInput($name, $options);
-		$this->inputs[] = $input;
+		$this->inputs[$name] = $input;
 		return $input;
 	}
 
 	public function checkboxInput(string $name): CheckboxInput
 	{
 		$input = new CheckboxInput($name);
-		$this->inputs[] = $input;
+		$this->inputs[$name] = $input;
 		return $input;
 	}
 
 	public function fileInput(string $name): FileInput
 	{
 		$input = new FileInput($name);
-		$this->inputs[] = $input;
+		$this->inputs[$name] = $input;
 		$this->hasFileInput = true;
 		return $input;
 	}
@@ -72,7 +71,14 @@ class InputSet implements Iterator, InputSetBuilder
 	public function textareaInput(string $name): TextareaInput
 	{
 		$input = new TextareaInput($name);
-		$this->inputs[] = $input;
+		$this->inputs[$name] = $input;
+		return $input;
+	}
+
+	public function currencyInput(string $name): CurrencyInput
+	{
+		$input = new CurrencyInput($name);
+		$this->inputs[$name] = $input;
 		return $input;
 	}
 
@@ -83,32 +89,32 @@ class InputSet implements Iterator, InputSetBuilder
 
 	public function addCustom(Input $input):InputSet
 	{
-		$this->inputs[] = $input;
+		$this->inputs[$input->getName()] = $input;
 		return $this;
 	}
 
 	public function current(): Input
 	{
-		return $this->inputs[$this->pointer];
+		return current($this->inputs);
 	}
 
 	public function next(): void
 	{
-		++$this->pointer;
+		next($this->inputs);
 	}
 
-	public function key(): int
+	public function key(): string
 	{
-		return $this->pointer;
+		return key($this->inputs);
 	}
 
 	public function valid(): bool
 	{
-		return $this->pointer < sizeof($this->inputs);
+		return key($this->inputs) !== null;
 	}
 
 	public function rewind(): void
 	{
-		$this->pointer = 0;
+		reset($this->inputs);
 	}
 }

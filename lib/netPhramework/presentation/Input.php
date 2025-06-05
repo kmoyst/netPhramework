@@ -47,5 +47,10 @@ abstract class Input extends Viewable implements ConfigurableViewable
 			;
 	}
 
+	public function processSubmittedValue(string $value):string
+	{
+		return $value;
+	}
+
 	abstract public function setValue(Encodable|string|null $value):self;
 }

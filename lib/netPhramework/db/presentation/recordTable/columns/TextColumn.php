@@ -45,6 +45,6 @@ class TextColumn implements Column
 	/** @inheritDoc */
 	public function getEncodableValue(Record $record): Encodable|string
 	{
-		return $this->getSortableValue($record);
+		return $this->getOperableValue($record);
 	}
 }

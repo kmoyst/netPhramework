@@ -11,4 +11,5 @@ interface InputSetBuilder
 	public function checkboxInput(string $name):CheckboxInput;
 	public function fileInput(string $name):FileInput;
 	public function textareaInput(string $name): TextareaInput;
+	public function currencyInput(string $name): CurrencyInput;
 }

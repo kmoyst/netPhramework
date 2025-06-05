@@ -4,6 +4,8 @@ namespace netPhramework\db\nodes;
 
 use netPhramework\core\Exchange;
 use netPhramework\db\core\RecordProcess;
+use netPhramework\db\exceptions\FieldAbsent;
+use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
@@ -18,6 +20,12 @@ class Edit extends RecordProcess
 		$this->name = $name;
 	}
 
+	/**
+	 * @param Exchange $exchange
+	 * @return void
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
 	public function handleExchange(Exchange $exchange): void
 	{
 		$view = new View('edit')
@@ -27,6 +35,12 @@ class Edit extends RecordProcess
 		$exchange->ok($view);
 	}
 
+	/**
+	 * @param Exchange $exchange
+	 * @return View
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
 	private function createEditForm(Exchange $exchange):View
 	{
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();

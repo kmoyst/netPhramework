@@ -2,6 +2,8 @@
 
 namespace netPhramework\db\presentation\recordForm;
 
+use netPhramework\db\exceptions\FieldAbsent;
+use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Record;
 use netPhramework\presentation\InputSet;
 
@@ -21,9 +23,16 @@ class RecordFormBuilder
 		return $this;
 	}
 
+	/**
+	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
 	public function addRecordInputs():RecordFormBuilder
 	{
 		$this->strategy->addInputs($this->record, $this->inputs);
+		foreach($this->inputs as $input)
+			$input->setValue($this->record->getValue($input->getName()));
 		return $this;
 	}
 

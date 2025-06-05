@@ -4,6 +4,7 @@ namespace netPhramework\locating;
 
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
+use Stringable;
 
 /**
  * The most basic Location interface. Provides Path and iterable
@@ -12,7 +13,7 @@ use netPhramework\rendering\Encoder;
  */
 abstract class Location implements Encodable
 {
-	public function encode(Encoder $encoder):string
+	public function encode(Encoder $encoder):string|Stringable
 	{
 		return $encoder->encodeLocation($this);
 	}

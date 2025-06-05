@@ -23,7 +23,6 @@ readonly class FromCriteria implements Stringable
 			$o = Operator::fromMappingOperator($condition->getOperator());
 			$bits[] = "`$f` $o->value ?";
 		}
-		//$glue = $this->criteria->isOr() ? ' OR ' : ' AND ';
 		$glue = ' AND ';
 		return "WHERE ".implode($glue, $bits);
 	}

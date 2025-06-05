@@ -10,9 +10,9 @@
 		<tr>
 			<td>
 				<ul>
-		<? foreach($inputs as $i => $input) {
+		<? $i=0; foreach($inputs as $name => $input) {
 			if($i > 0 && $i % 5 === 0) echo "</ul></td><td><ul>";
-			echo "<li>$input</li>";
+			echo "<li>$input</li>"; $i++;
 		}
 		?>
 				</ul>

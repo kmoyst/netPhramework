@@ -26,14 +26,11 @@ readonly class RecordFormStrategyBasic implements RecordFormStrategy
 
 	protected function guessAndAdd(InputSetBuilder $builder, Cell $cell):void
 	{
-		$name    = $cell->getName();
-		$value   = $cell->getValue();
+		$name = $cell->getName();
 
 		if($cell->getField()->getType() === FieldType::PARAGRAPH)
-			$builder->textareaInput($name)->setValue($value);
-		elseif($name === 'password')
-			$builder->passwordInput($name)->setValue('');
+			$builder->textareaInput($name);
 		else
-			$builder->textInput($name)->setValue($value);
+			$builder->textInput($name);
 	}
 }

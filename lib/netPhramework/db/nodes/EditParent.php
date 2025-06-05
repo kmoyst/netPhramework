@@ -56,6 +56,12 @@ class EditParent extends RecordProcess
 		;
 	}
 
+	/**
+	 * @param Exchange $exchange
+	 * @return Viewable
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
 	private function createEditForm(Exchange $exchange):Viewable
 	{
 		$callbackInput = $exchange->callbackFormInput();

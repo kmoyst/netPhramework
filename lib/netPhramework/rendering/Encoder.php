@@ -8,6 +8,7 @@ use netPhramework\locating\Path;
 use netPhramework\locating\UriFromLocation;
 use netPhramework\locating\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
+use Stringable;
 
 readonly class Encoder
 {
@@ -18,14 +19,14 @@ readonly class Encoder
 		return htmlspecialchars($text);
 	}
 
-	public function encodeViewable(Viewable $viewable):Buffer|string
+	public function encodeViewable(Viewable $viewable):Stringable|string
     {
 		return $this->encodeTemplate(
 			$viewable->getTemplateName(), $viewable->getVariables());
 	}
 
 	public function encodeTemplate(
-		string $templateName, ?iterable $variables = []):Buffer|string
+		string $templateName, ?iterable $variables = []):Stringable|string
 	{
 		try {
 			$path = $this->findTemplatePath($templateName);
@@ -39,18 +40,18 @@ readonly class Encoder
 
 	/**
 	 * @param Location $location
-	 * @return string
+	 * @return string|Stringable
 	 */
-	public function encodeLocation(Location $location):string
+	public function encodeLocation(Location $location):Stringable|string
 	{
 		return new UriFromLocation($location);
 	}
 
 	/**
 	 * @param Path $path
-	 * @return string
+	 * @return string|Stringable
 	 */
-	public function encodePath(Path $path):string
+	public function encodePath(Path $path):Stringable|string
 	{
 		return new UriFromPath($path);
 	}
@@ -73,7 +74,7 @@ readonly class Encoder
     }
 
     private function encode(
-		Encodable|string|iterable|null $encodable):string|iterable
+		Encodable|string|iterable|null $encodable):Stringable|string|iterable
     {
 		if($encodable instanceof Encodable)
 			return $encodable->encode($this);
