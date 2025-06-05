@@ -15,21 +15,21 @@ class Asset implements Node
 	private RecordSet 			$recordSet;
 	private RecordChildSet 		$recordChildSet;
 	private RecordSetChildSet 	$recordSetChildSet;
-	private StringPredicate		$isRecordId;
+	private StringPredicate		$recordIdPredicate;
 
 
 	public function __construct(string            $name,
 								RecordSet         $recordSet,
 								RecordChildSet    $recordChildSet,
 								RecordSetChildSet $recordSetChildSet,
-								StringPredicate   $isRecordId
+								StringPredicate   $recordIdPredicate
 	)
 	{
 		$this->name 				= $name;
 		$this->recordSet 			= $recordSet;
 		$this->recordChildSet 		= $recordChildSet;
 		$this->recordSetChildSet 	= $recordSetChildSet;
-		$this->isRecordId			= $isRecordId;
+		$this->recordIdPredicate	= $recordIdPredicate;
 	}
 
 	public function getRecordSet(): RecordSet
@@ -39,7 +39,7 @@ class Asset implements Node
 
 	public function getChild(string $name): Node
 	{
-		if($this->isRecordId->test($name))
+		if($this->recordIdPredicate->test($name))
 		{
 			return new RecordComposite()
 				->setRecordSet($this->recordSet)

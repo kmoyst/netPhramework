@@ -4,7 +4,7 @@ namespace netPhramework\db\configuration;
 
 use netPhramework\common\StringPredicate;
 
-class isRecordId implements StringPredicate
+class RecordIdPredicate implements StringPredicate
 {
 	public function test(string $value): bool
 	{
