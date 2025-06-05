@@ -21,7 +21,7 @@ class ViewProfile implements Node
 
 	public function __construct(
 		private readonly RecordFinder $userRecords,
-		string $name = 'view-profile')
+		?string $name = 'view-profile')
 	{
 		$this->name = $name;
 	}

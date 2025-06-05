@@ -26,10 +26,10 @@ class EditParent extends RecordProcess
 	public function __construct(
 		private readonly ChildSelector        $childSelector,
 		private readonly ?RecordFormStrategy  $formStrategy = null,
-		protected readonly ?ColumnSetStrategy $childColumnSetStrategy = null,
-		protected readonly ?ViewStrategy      $childViewStrategy = null,
+		private readonly ?ColumnSetStrategy   $childColumnSetStrategy = null,
+		private readonly ?ViewStrategy        $childViewStrategy = null,
 		private readonly int                  $childFilterThreshold = 5,
-		?string                               $name = 'edit')
+		?string $name = 'edit')
 	{
 		$this->name = $name;
 	}

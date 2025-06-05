@@ -15,11 +15,7 @@ class LogOut implements Node
 	use LeafTrait;
 
 	public function __construct(
-		private readonly ?Redirector $dispatcher = null,
-		?string $name = null)
-	{
-		$this->name = $name;
-	}
+		private readonly ?Redirector $dispatcher = null) {}
 
 	/**
 	 * @param Exchange $exchange

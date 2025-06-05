@@ -24,7 +24,7 @@ class SaveProfile implements Node
 
 	public function __construct(
 		private readonly RecordFinder $userRecords,
-		string $name = 'save-profile')
+		?string $name = 'save-profile')
 	{
 		$this->name = $name;
 	}

@@ -17,8 +17,8 @@ use netPhramework\exceptions\InvalidPassword;
 class UserSave extends Save
 {
 	public function __construct(
-		?Redirector                    $onSuccess = null,
-		?string                        $name = null,
+		?Redirector $onSuccess = null,
+		?string $name = 'save',
 		private readonly ?EnrolledUser $enrolledUser = null)
 	{
 		parent::__construct($onSuccess, $name);

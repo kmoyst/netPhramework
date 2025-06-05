@@ -13,7 +13,7 @@ class Edit extends RecordProcess
 {
 	public function __construct(
 		private readonly ?RecordFormStrategy $formStrategy = null,
-		?string $name = null)
+		?string $name = 'edit')
 	{
 		$this->name = $name;
 	}

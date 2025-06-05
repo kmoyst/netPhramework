@@ -20,7 +20,7 @@ class Save extends RecordProcess
 	public function __construct(
         ?Redirector $onSuccess = null,
 		?Redirector $onFailues = null,
-        ?string     $name = null)
+        ?string     $name = 'save')
     {
         $this->onSuccess = $onSuccess ?? new RedirectToParent('');
 		$this->onFailure = $onFailues ?? new RedirectToSibling('');

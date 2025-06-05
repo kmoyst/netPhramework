@@ -8,7 +8,12 @@ use netPhramework\db\mapping\File;
 
 class Download extends RecordProcess
 {
-	public function __construct	(private readonly File $file) {}
+	public function __construct	(
+		private readonly File $file,
+		?string $name = 'download')
+	{
+		$this->name = $name;
+	}
 
 	/**
 	 * @param Exchange $exchange

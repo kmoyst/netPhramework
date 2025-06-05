@@ -78,8 +78,7 @@ class ActiveAssetBuilder extends AssetBuilder
 
 	public function delete(
 		?Redirector $onSuccess = null,
-		string      $processName = 'delete'
-	): self
+		string      $processName = 'delete'): self
 	{
 		$this->node(new Delete($onSuccess, $processName));
 		return $this;
