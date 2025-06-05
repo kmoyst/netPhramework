@@ -9,9 +9,10 @@ use netPhramework\responding\ResponseCode;
 
 readonly class RedirectToSibling extends Redirector
 {
-	public function __construct(MutablePath|string $subPath = '',
-								?Variables         $parameters = null,
-								ResponseCode       $code = ResponseCode::SEE_OTHER)
+	public function __construct(
+		MutablePath|string $subPath = '',
+		?Variables         $parameters = null,
+		ResponseCode       $code = ResponseCode::SEE_OTHER)
 	{
 		parent::__construct(new RerouteToSibling($subPath),$parameters,$code);
 	}
