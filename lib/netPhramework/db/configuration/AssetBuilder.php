@@ -73,7 +73,8 @@ class AssetBuilder
 			$assetName ?? $mappedName,
 			$this->mapper->recordsFor($mappedName),
 			$this->recordChildSet,
-			$this->recordSetChildSet);
+			$this->recordSetChildSet,
+			new isRecordId());
 		$this->reset();
 		return $asset;
 	}

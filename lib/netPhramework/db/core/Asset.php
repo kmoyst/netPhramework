@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\core;
 
+use netPhramework\common\StringEvaluator;
 use netPhramework\core\CompositeTrait;
 use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
@@ -14,24 +15,21 @@ class Asset implements Node
 	private RecordSet 			$recordSet;
 	private RecordChildSet 		$recordChildSet;
 	private RecordSetChildSet 	$recordSetChildSet;
+	private StringEvaluator		$isRecordId;
 
-	/**
-	 * @param string $name
-	 * @param RecordSet $recordSet
-	 * @param RecordChildSet $recordChildSet
-	 * @param RecordSetChildSet $recordSetChildSet
-	 */
+
 	public function __construct(string            $name,
 								RecordSet         $recordSet,
 								RecordChildSet    $recordChildSet,
 								RecordSetChildSet $recordSetChildSet,
-
+								StringEvaluator	  $isRecordId
 	)
 	{
 		$this->name 				= $name;
 		$this->recordSet 			= $recordSet;
 		$this->recordChildSet 		= $recordChildSet;
 		$this->recordSetChildSet 	= $recordSetChildSet;
+		$this->isRecordId			= $isRecordId;
 	}
 
 	public function getRecordSet(): RecordSet
@@ -41,7 +39,7 @@ class Asset implements Node
 
 	public function getChild(string $name): Node
 	{
-		if(is_numeric($name))
+		if($this->isRecordId->evaluate($name))
 		{
 			return new RecordComposite()
 				->setRecord($this->recordSet->getRecord($name))
