@@ -12,25 +12,25 @@ class Asset implements Node
 
 	private string 				$name;
 	private RecordSet 			$recordSet;
-	private RecordChildSet 		$recordNodeSet;
+	private RecordChildSet 		$recordChildSet;
 	private RecordSetChildSet 	$recordSetChildSet;
 
 	/**
 	 * @param string $name
 	 * @param RecordSet $recordSet
-	 * @param RecordChildSet $recordNodeSet
+	 * @param RecordChildSet $recordChildSet
 	 * @param RecordSetChildSet $recordSetChildSet
 	 */
 	public function __construct(string            $name,
 								RecordSet         $recordSet,
-								RecordChildSet    $recordNodeSet,
+								RecordChildSet    $recordChildSet,
 								RecordSetChildSet $recordSetChildSet,
 
 	)
 	{
 		$this->name 				= $name;
 		$this->recordSet 			= $recordSet;
-		$this->recordNodeSet 		= $recordNodeSet;
+		$this->recordChildSet 		= $recordChildSet;
 		$this->recordSetChildSet 	= $recordSetChildSet;
 	}
 
@@ -45,7 +45,7 @@ class Asset implements Node
 		{
 			return new RecordComposite()
 				->setRecord($this->recordSet->getRecord($name))
-				->setNodeSet($this->recordNodeSet)
+				->setNodeSet($this->recordChildSet)
 				;
 		}
 		else
