@@ -17,8 +17,7 @@ readonly class ChildRecordFormStrategy extends RecordFormStrategyBasic
 	{
 		if($cell->getName() == $this->linkField)
 		{
-			$builder->hiddenInput(
-				$cell->getName())->setValue($cell->getValue());
+			$builder->hiddenInput($cell->getName());
 			return;
 		}
 		parent::guessAndAdd($builder, $cell);
