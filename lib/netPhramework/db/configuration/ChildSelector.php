@@ -10,19 +10,23 @@ use netPhramework\db\mapping\Record;
 
 class ChildSelector
 {
-	private string $assetName;
+	private RecordSetFactory $factory;
+	private string $mappedName;
 	private string $linkField;
-	private RecordSet $recordSet;
+	private string $assetName;
 
 	public function __construct(
-		string $assetName,
+		RecordSetFactory $factory,
+		string $mappedName,
 		string $linkField,
-		RecordSet $recordSet)
+		?string $assetName = null)
 	{
-		$this->assetName = $assetName;
+		$this->factory = $factory;
+		$this->mappedName = $mappedName;
 		$this->linkField = $linkField;
-		$this->recordSet = $recordSet;
+		$this->assetName = $assetName ?? $mappedName;
 	}
+
 
 	/**
 	 * @param Record $record
@@ -32,14 +36,14 @@ class ChildSelector
 	 */
 	public function getChildren(Record $record):RecordSet
 	{
-		$childRecords = $this->recordSet;
-		$field = $childRecords->getField($this->linkField);
-		$condition = new Condition()
+		$childRecords = $this->factory->recordsFor($this->mappedName);
+		$field 		  = $childRecords->getField($this->linkField);
+		$condition 	  = new Condition()
 			->setField($field)
 			->setValue($record->getId())
 		;
 		$childRecords->reset()->addCondition($condition);
-		return $this->recordSet;
+		return $childRecords;
 	}
 
 	public function getAssetName(): string

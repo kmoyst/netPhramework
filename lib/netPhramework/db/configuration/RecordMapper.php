@@ -5,7 +5,7 @@ namespace netPhramework\db\configuration;
 use netPhramework\db\abstraction\Database;
 use netPhramework\db\mapping\RecordSet;
 
-readonly class RecordMapper implements RecordAccess
+readonly class RecordMapper implements RecordAccess, RecordSetFactory
 {
     public function __construct(private Database $database) {}
 
@@ -30,17 +30,6 @@ readonly class RecordMapper implements RecordAccess
 		$schema = $this->database->getSchema($name);
 		$table 	= $this->database->getTable($name);
 		return new RecordSet($schema, $table);
-	}
-
-	public function childSelectorFor(
-		string $mappedName,
-		string $linkField,
-		?string $assetName = null):ChildSelector
-	{
-		return new ChildSelector(
-			$assetName ?? $mappedName,
-			$linkField,
-			$this->recordsFor($mappedName));
 	}
 
     public function listAllRecordSets():array
