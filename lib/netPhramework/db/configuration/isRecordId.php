@@ -2,11 +2,11 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\common\StringEvaluator;
+use netPhramework\common\StringPredicate;
 
-class isRecordId implements StringEvaluator
+class isRecordId implements StringPredicate
 {
-	public function evaluate(string $value): bool
+	public function test(string $value): bool
 	{
 		return is_numeric($value);
 	}

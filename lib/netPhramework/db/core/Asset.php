@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\common\StringEvaluator;
+use netPhramework\common\StringPredicate;
 use netPhramework\core\CompositeTrait;
 use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
@@ -15,14 +15,14 @@ class Asset implements Node
 	private RecordSet 			$recordSet;
 	private RecordChildSet 		$recordChildSet;
 	private RecordSetChildSet 	$recordSetChildSet;
-	private StringEvaluator		$isRecordId;
+	private StringPredicate		$isRecordId;
 
 
 	public function __construct(string            $name,
 								RecordSet         $recordSet,
 								RecordChildSet    $recordChildSet,
 								RecordSetChildSet $recordSetChildSet,
-								StringEvaluator	  $isRecordId
+								StringPredicate   $isRecordId
 	)
 	{
 		$this->name 				= $name;
@@ -39,10 +39,11 @@ class Asset implements Node
 
 	public function getChild(string $name): Node
 	{
-		if($this->isRecordId->evaluate($name))
+		if($this->isRecordId->test($name))
 		{
 			return new RecordComposite()
-				->setRecord($this->recordSet->getRecord($name))
+				->setRecordSet($this->recordSet)
+				->setRecordId($name)
 				->setNodeSet($this->recordChildSet)
 				;
 		}
