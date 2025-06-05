@@ -8,17 +8,18 @@ use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\mapping\Record;
 
-class OneToMany
+class ChildSelector
 {
+	private string $assetName;
 	private string $linkField;
 	private RecordSet $recordSet;
 
-	/**
-	 * @param string $linkField
-	 * @param RecordSet $recordSet
-	 */
-	public function __construct(string $linkField, RecordSet $recordSet)
+	public function __construct(
+		string $assetName,
+		string $linkField,
+		RecordSet $recordSet)
 	{
+		$this->assetName = $assetName;
 		$this->linkField = $linkField;
 		$this->recordSet = $recordSet;
 	}
@@ -39,5 +40,10 @@ class OneToMany
 		;
 		$childRecords->reset()->addCondition($condition);
 		return $this->recordSet;
+	}
+
+	public function getAssetName(): string
+	{
+		return $this->assetName;
 	}
 }

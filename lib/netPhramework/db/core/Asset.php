@@ -16,21 +16,22 @@ class Asset implements Node
 	private RecordSetProcessSet $recordSetProcessSet;
 
 	/**
+	 * @param string $name
 	 * @param RecordSet $recordSet
 	 * @param RecordChildSet $recordNodeSet
 	 * @param RecordSetProcessSet $recordSetProcessSet
-	 * @param ?string $name
 	 */
-	public function __construct(RecordSet           $recordSet,
+	public function __construct(string $name,
+								RecordSet           $recordSet,
 								RecordChildSet      $recordNodeSet,
 								RecordSetProcessSet $recordSetProcessSet,
-								?string $name = null
+
 	)
 	{
-		$this->recordSet = $recordSet;
-		$this->recordNodeSet = $recordNodeSet;
-		$this->recordSetProcessSet = $recordSetProcessSet;
-		$this->name = $name ?? $recordSet->getName();
+		$this->name 				= $name;
+		$this->recordSet 			= $recordSet;
+		$this->recordNodeSet 		= $recordNodeSet;
+		$this->recordSetProcessSet 	= $recordSetProcessSet;
 	}
 
 	public function getRecordSet(): RecordSet

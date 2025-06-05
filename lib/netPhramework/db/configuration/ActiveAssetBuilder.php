@@ -37,10 +37,13 @@ class ActiveAssetBuilder extends AssetBuilder
 			;
 	}
 
-	public function childWithDefaults(string $name, string $linkField):self
+	public function childWithDefaults(
+		string $mappedName,
+		string $linkField,
+		?string $assetName = null):self
 	{
 		$composer   = new self($this->mapper);
-		$childAsset = $composer->defaults()->get($name);
+		$childAsset = $composer->defaults()->get($mappedName, $assetName);
 		$childNode  = new ChildAsset($childAsset, $linkField);
 		$this->node($childNode);
 		return $this;

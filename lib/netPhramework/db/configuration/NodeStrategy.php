@@ -6,5 +6,5 @@ use netPhramework\core\Node;
 
 interface NodeStrategy
 {
-	public function createNode(RecordAccess $access):Node;
+	public function create(RecordMapper $mapper):Node;
 }

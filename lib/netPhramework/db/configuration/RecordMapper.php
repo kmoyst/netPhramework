@@ -29,12 +29,18 @@ readonly class RecordMapper implements RecordAccess
 	{
 		$schema = $this->database->getSchema($name);
 		$table 	= $this->database->getTable($name);
-		return new RecordSet($name, $schema, $table);
+		return new RecordSet($schema, $table);
 	}
 
-	public function oneToManyFor(string $name, string $linkField):OneToMany
+	public function childSelectorFor(
+		string $mappedName,
+		string $linkField,
+		?string $assetName = null):ChildSelector
 	{
-		return new OneToMany($linkField, $this->recordsFor($name));
+		return new ChildSelector(
+			$assetName ?? $mappedName,
+			$linkField,
+			$this->recordsFor($mappedName));
 	}
 
     public function listAllRecordSets():array

@@ -48,7 +48,7 @@ class AssetBuilder
 
 	public function strategy(NodeStrategy $strategy):self
 	{
-		$this->node($strategy->createNode($this->mapper));
+		$this->node($strategy->create($this->mapper));
 		return $this;
 	}
 
@@ -70,10 +70,10 @@ class AssetBuilder
 		string $mappedName, ?string $assetName = null): Asset
 	{
 		$asset = new Asset(
+			$assetName ?? $mappedName,
 			$this->mapper->recordsFor($mappedName),
 			$this->recordChildSet,
-			$this->recordSetProcessSet,
-			$assetName);
+			$this->recordSetProcessSet);
 		$this->reset();
 		return $asset;
 	}

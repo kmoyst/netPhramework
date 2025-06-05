@@ -49,7 +49,6 @@ class Browse extends RecordSetProcess
 			->collate()
 			->generateView($this->tableViewStrategy)->setTitle('Browse Records')
 			;
-		;
 		$exchange->display(
 			$recordTableView, $exchange->getSession()->resolveResponseCode());
 	}

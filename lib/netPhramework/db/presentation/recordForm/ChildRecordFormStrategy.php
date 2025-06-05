@@ -7,13 +7,10 @@ use netPhramework\presentation\InputSetBuilder;
 
 readonly class ChildRecordFormStrategy extends RecordFormStrategyBasic
 {
-
 	/**
 	 * @param string $linkField
 	 */
-	public function __construct(private string $linkField)
-	{
-	}
+	public function __construct(private string $linkField) {}
 
 
 	protected function guessAndAdd(InputSetBuilder $builder, Cell $cell): void

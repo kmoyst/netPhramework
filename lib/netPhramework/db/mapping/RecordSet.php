@@ -16,18 +16,11 @@ final class RecordSet implements Iterator, Countable
 	private Criteria $criteria;
 
 	public function __construct(
-		private readonly string $name,
 		private readonly Schema $schema,
-		private readonly Table  $table
-	)
+		private readonly Table  $table)
 	{
 		$this->criteria = new Criteria();
 	}
-
-    public function getName():string
-    {
-        return $this->name;
-    }
 
 	/**
 	 * @return string

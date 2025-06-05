@@ -5,7 +5,7 @@ namespace netPhramework\db\nodes;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\configuration\OneToMany;
+use netPhramework\db\configuration\ChildSelector;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -24,10 +24,10 @@ use netPhramework\rendering\Viewable;
 class EditParent extends RecordProcess
 {
 	public function __construct(
-		private readonly OneToMany            $oneToMany,
+		private readonly ChildSelector        $childSelector,
 		private readonly ?RecordFormStrategy  $formStrategy = null,
 		protected readonly ?ColumnSetStrategy $childColumnSetStrategy = null,
-		protected readonly ?ViewStrategy	  $childViewStrategy = null,
+		protected readonly ?ViewStrategy      $childViewStrategy = null,
 		private readonly int                  $childFilterThreshold = 5,
 		?string                               $name = 'edit')
 	{
@@ -85,8 +85,9 @@ class EditParent extends RecordProcess
 	 */
 	private function createChildTable(Exchange $exchange):Viewable
 	{
-		$recordSet   = $this->oneToMany->getChildren($this->record);
-		$compPath    = $exchange->getPath()->pop()->append($recordSet->getName());
+		$assetName	 = $this->childSelector->getAssetName();
+		$recordSet   = $this->childSelector->getChildren($this->record);
+		$compPath    = $exchange->getPath()->pop()->append($assetName);
 		$query 		 = new Query()->parse($exchange->getParameters());
 		$includeForm = $recordSet->count() > $this->childFilterThreshold;
 		return new ViewBuilder()

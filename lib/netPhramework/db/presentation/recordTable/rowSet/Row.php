@@ -14,8 +14,6 @@ use netPhramework\rendering\Viewable;
 
 class Row extends Viewable
 {
-	private CellSet $cellSet;
-
 	public function __construct(
 		private readonly ColumnSet $columnSet,
 		private readonly Record $record,
