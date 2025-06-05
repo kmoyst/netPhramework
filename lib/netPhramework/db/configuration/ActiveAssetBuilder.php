@@ -24,16 +24,16 @@ class ActiveAssetBuilder extends AssetBuilder
     public function addAllAssetsWithDefaults():self
     {
         foreach($this->mapper->listAllRecordSets() as $name)
-            $this->defaults()->commit($name);
+            $this->includeDefaults()->commit($name);
         return $this;
     }
 
-	public function defaults(): self
+	public function includeDefaults(): self
 	{
 		return $this
-			->insert()
-			->update()
-			->delete()
+			->includeInsert()
+			->includeUpdate()
+			->includeDelete()
 			;
 	}
 
@@ -43,44 +43,44 @@ class ActiveAssetBuilder extends AssetBuilder
 		?string $assetName = null):self
 	{
 		$composer   = new self($this->mapper);
-		$childAsset = $composer->defaults()->get($mappedName, $assetName);
+		$childAsset = $composer->includeDefaults()->get($mappedName,$assetName);
 		$childNode  = new ChildAsset($childAsset, $linkField);
-		$this->node($childNode);
+		$this->addNode($childNode);
 		return $this;
 	}
 
-	public function insert(
+	public function includeInsert(
 		?RecordProcess $saveProcess = null,
 		?Redirector    $onSuccess = null,
 		?string        $processName = 'insert'): self
 	{
-		$this->node(new Insert($saveProcess, $onSuccess, $processName));
+		$this->addNode(new Insert($saveProcess, $onSuccess, $processName));
 		return $this;
 	}
 
-	public function update(
+	public function includeUpdate(
 		?RecordProcess $saveProcess = null,
 		?Redirector    $onSuccess = null,
 		?string        $processName = 'update'): self
 	{
-		$this->node(new Update($saveProcess, $onSuccess, $processName));
+		$this->addNode(new Update($saveProcess, $onSuccess, $processName));
 		return $this;
 	}
 
-	public function insertAndUpdate(
+	public function includeInsertAndUpdate(
 		?RecordProcess $saveProcess = null,
 		?Redirector    $onSuccess = null): self
 	{
-		$this->insert($saveProcess, $onSuccess);
-		$this->update($saveProcess, $onSuccess);
+		$this->includeInsert($saveProcess, $onSuccess);
+		$this->includeUpdate($saveProcess, $onSuccess);
 		return $this;
 	}
 
-	public function delete(
+	public function includeDelete(
 		?Redirector $onSuccess = null,
 		string      $processName = 'delete'): self
 	{
-		$this->node(new Delete($onSuccess, $processName));
+		$this->addNode(new Delete($onSuccess, $processName));
 		return $this;
 	}
 }

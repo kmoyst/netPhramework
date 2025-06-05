@@ -27,17 +27,17 @@ class PassiveAssetBuilder extends AssetBuilder
     {
         foreach($this->mapper->listAllRecordSets() as $name)
         {
-            $this->defaults()->commit($name);
+            $this->includeDefaults()->commit($name);
         }
         return $this;
     }
 
-	public function defaults(): self
+	public function includeDefaults(): self
 	{
 		return $this
-			->add()
-			->edit()
-			->browse();
+			->includeAdd()
+			->includeEdit()
+			->includeBrowse();
 	}
 
 	public function childWithDefaults(
@@ -47,30 +47,30 @@ class PassiveAssetBuilder extends AssetBuilder
 	{
 		$builder = new self($this->mapper);
 		$childAsset = $builder
-			->add(new ChildRecordFormStrategy($linkField))
-			->edit(new ChildRecordFormStrategy($linkField))
+			->includeAdd(new ChildRecordFormStrategy($linkField))
+			->includeEdit(new ChildRecordFormStrategy($linkField))
 			->get($mappedName, $assetName)
 		;
 		$childNode = new ChildAsset($childAsset, $linkField);
-		$this->node($childNode);
+		$this->addNode($childNode);
 		return $this;
 	}
 
-	public function browse(
+	public function includeBrowse(
 		?ColumnSetStrategy $columnSetStrategy = null,
 		?ViewStrategy $tableViewStrategy = null,
 		string $processName = ''): self
 	{
-		$this->node(new Browse(
+		$this->addNode(new Browse(
 			$columnSetStrategy, $tableViewStrategy, $processName));
 		return $this;
 	}
 
-	public function edit(
+	public function includeEdit(
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'edit'): self
 	{
-		$this->node(new Edit($formStrategy, $processName));
+		$this->addNode(new Edit($formStrategy, $processName));
 		return $this;
 	}
 
@@ -81,11 +81,11 @@ class PassiveAssetBuilder extends AssetBuilder
 	 * @param string $processName
 	 * @return $this
 	 */
-	public function add(
+	public function includeAdd(
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'add'): self
 	{
-		$this->node(new Add($formStrategy, $processName));
+		$this->addNode(new Add($formStrategy, $processName));
 		return $this;
 	}
 }
