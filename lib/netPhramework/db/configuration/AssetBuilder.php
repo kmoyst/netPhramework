@@ -62,34 +62,34 @@ class AssetBuilder
 	}
 
 	/**
-	 * @param string $assetName
-	 * @param string|null $nodeName
+	 * @param string $mappedName
+	 * @param string|null $assetName
 	 * @return Asset
 	 */
 	public function get(
-		string $assetName, ?string $nodeName = null): Asset
+		string $mappedName, ?string $assetName = null): Asset
 	{
 		$asset = new Asset(
-			$this->mapper->recordsFor($assetName),
+			$this->mapper->recordsFor($mappedName),
 			$this->recordChildSet,
 			$this->recordSetProcessSet,
-			$nodeName);
+			$assetName);
 		$this->reset();
 		return $asset;
 	}
 
 	/**
-	 * @param string $assetName
-	 * @param string|null $nodeName
+	 * @param string $mappedName
+	 * @param string|null $assetName
 	 * @return $this
 	 * @throws ConfigurationException
 	 */
 	public function commit(
-		string $assetName, ?string $nodeName = null): self
+		string $mappedName, ?string $assetName = null): self
 	{
 		if($this->directory === null)
 			throw new ConfigurationException("No directory for commit");
-		$this->directory->add($this->get($assetName, $nodeName));
+		$this->directory->add($this->get($mappedName, $assetName));
 		$this->reset();
 		return $this;
 	}

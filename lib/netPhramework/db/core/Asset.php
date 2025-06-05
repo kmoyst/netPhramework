@@ -10,27 +10,27 @@ class Asset implements Node
 {
 	use CompositeTrait;
 
+	private string $name;
 	private RecordSet $recordSet;
 	private RecordChildSet $recordNodeSet;
 	private RecordSetProcessSet $recordSetProcessSet;
-	private string $nodeName;
 
 	/**
 	 * @param RecordSet $recordSet
 	 * @param RecordChildSet $recordNodeSet
 	 * @param RecordSetProcessSet $recordSetProcessSet
-	 * @param ?string $nodeName
+	 * @param ?string $name
 	 */
 	public function __construct(RecordSet           $recordSet,
 								RecordChildSet      $recordNodeSet,
 								RecordSetProcessSet $recordSetProcessSet,
-								?string $nodeName = null
+								?string $name = null
 	)
 	{
 		$this->recordSet = $recordSet;
 		$this->recordNodeSet = $recordNodeSet;
 		$this->recordSetProcessSet = $recordSetProcessSet;
-		$this->nodeName = $nodeName ?? $recordSet->getName();
+		$this->name = $name ?? $recordSet->getName();
 	}
 
 	public function getRecordSet(): RecordSet
@@ -57,6 +57,6 @@ class Asset implements Node
 
 	public function getName(): string
 	{
-		return $this->nodeName;
+		return $this->name;
 	}
 }
