@@ -21,7 +21,7 @@ class UserSave extends Save
 		?string $name = 'save',
 		private readonly ?EnrolledUser $enrolledUser = null)
 	{
-		parent::__construct($onSuccess, $name);
+		parent::__construct($onSuccess, null, $name);
 	}
 
 	/**
