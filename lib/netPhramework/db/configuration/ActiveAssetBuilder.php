@@ -69,7 +69,7 @@ class ActiveAssetBuilder extends AssetBuilder
 
 	public function includeInsertAndUpdate(
 		?RecordProcess $saveProcess = null,
-		?Redirector    $onSuccess = null): self
+		?Redirector $onSuccess = null): self
 	{
 		$this->includeInsert($saveProcess, $onSuccess);
 		$this->includeUpdate($saveProcess, $onSuccess);
