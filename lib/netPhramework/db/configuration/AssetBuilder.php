@@ -8,13 +8,13 @@ use netPhramework\db\core\Asset;
 use netPhramework\db\core\ChildAsset;
 use netPhramework\db\core\RecordChild;
 use netPhramework\db\core\RecordChildSet;
-use netPhramework\db\core\RecordSetProcess;
-use netPhramework\db\core\RecordSetProcessSet;
+use netPhramework\db\core\RecordSetChild;
+use netPhramework\db\core\RecordSetChildSet;
 use netPhramework\db\exceptions\ConfigurationException;
 
 class AssetBuilder
 {
-	protected ?RecordSetProcessSet $recordSetProcessSet;
+	protected ?RecordSetChildSet $recordSetChildSet;
 	protected ?RecordChildSet $recordChildSet;
 	protected RecordMapper $mapper;
 	protected ?Directory $directory;
@@ -56,8 +56,8 @@ class AssetBuilder
 	{
 		if($node instanceof RecordChild)
 			$this->recordChildSet->add($node);
-		elseif($node instanceof RecordSetProcess)
-			$this->recordSetProcessSet->add($node);
+		elseif($node instanceof RecordSetChild)
+			$this->recordSetChildSet->add($node);
 		return $this;
 	}
 
@@ -73,7 +73,7 @@ class AssetBuilder
 			$assetName ?? $mappedName,
 			$this->mapper->recordsFor($mappedName),
 			$this->recordChildSet,
-			$this->recordSetProcessSet);
+			$this->recordSetChildSet);
 		$this->reset();
 		return $asset;
 	}
@@ -96,7 +96,7 @@ class AssetBuilder
 
 	protected function reset(): void
 	{
-		$this->recordSetProcessSet = new RecordSetProcessSet();
+		$this->recordSetChildSet = new RecordSetChildSet();
 		$this->recordChildSet = new RecordChildSet();
 	}
 }
