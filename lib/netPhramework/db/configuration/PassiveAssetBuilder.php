@@ -74,13 +74,6 @@ class PassiveAssetBuilder extends AssetBuilder
 		return $this;
 	}
 
-	/**
-	 * Add an Add Record process
-	 *
-	 * @param RecordFormStrategy|null $formStrategy
-	 * @param string $processName
-	 * @return $this
-	 */
 	public function includeAdd(
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'add'): self
