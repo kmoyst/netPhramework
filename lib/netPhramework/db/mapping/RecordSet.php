@@ -15,9 +15,8 @@ final class RecordSet implements Iterator, Countable
     private array $records = [];
 	private Criteria $criteria;
 
-	public function __construct(
-		private readonly Schema $schema,
-		private readonly Table  $table)
+	public function __construct(private readonly Schema $schema,
+								private readonly Table  $table)
 	{
 		$this->criteria = new Criteria();
 	}
