@@ -45,7 +45,7 @@ class ActiveAssetBuilder extends AssetBuilder
 		$composer   = new self($this->mapper);
 		$childAsset = $composer->includeDefaults()->get($mappedName,$assetName);
 		$childNode  = new ChildAsset($childAsset, $linkField);
-		$this->addNode($childNode);
+		$this->add($childNode);
 		return $this;
 	}
 
@@ -54,7 +54,7 @@ class ActiveAssetBuilder extends AssetBuilder
 		?Redirector    $onSuccess = null,
 		?string        $processName = 'insert'): self
 	{
-		$this->addNode(new Insert($saveProcess, $onSuccess, $processName));
+		$this->add(new Insert($saveProcess, $onSuccess, $processName));
 		return $this;
 	}
 
@@ -63,7 +63,7 @@ class ActiveAssetBuilder extends AssetBuilder
 		?Redirector    $onSuccess = null,
 		?string        $processName = 'update'): self
 	{
-		$this->addNode(new Update($saveProcess, $onSuccess, $processName));
+		$this->add(new Update($saveProcess, $onSuccess, $processName));
 		return $this;
 	}
 
@@ -80,7 +80,7 @@ class ActiveAssetBuilder extends AssetBuilder
 		?Redirector $onSuccess = null,
 		string      $processName = 'delete'): self
 	{
-		$this->addNode(new Delete($onSuccess, $processName));
+		$this->add(new Delete($onSuccess, $processName));
 		return $this;
 	}
 }

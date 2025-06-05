@@ -52,7 +52,7 @@ class PassiveAssetBuilder extends AssetBuilder
 			->get($mappedName, $assetName)
 		;
 		$childNode = new ChildAsset($childAsset, $linkField);
-		$this->addNode($childNode);
+		$this->add($childNode);
 		return $this;
 	}
 
@@ -61,7 +61,7 @@ class PassiveAssetBuilder extends AssetBuilder
 		?ViewStrategy $tableViewStrategy = null,
 		string $processName = ''): self
 	{
-		$this->addNode(new Browse(
+		$this->add(new Browse(
 			$columnSetStrategy, $tableViewStrategy, $processName));
 		return $this;
 	}
@@ -70,7 +70,7 @@ class PassiveAssetBuilder extends AssetBuilder
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'edit'): self
 	{
-		$this->addNode(new Edit($formStrategy, $processName));
+		$this->add(new Edit($formStrategy, $processName));
 		return $this;
 	}
 
@@ -85,7 +85,7 @@ class PassiveAssetBuilder extends AssetBuilder
 		?RecordFormStrategy $formStrategy = null,
 		string $processName = 'add'): self
 	{
-		$this->addNode(new Add($formStrategy, $processName));
+		$this->add(new Add($formStrategy, $processName));
 		return $this;
 	}
 }

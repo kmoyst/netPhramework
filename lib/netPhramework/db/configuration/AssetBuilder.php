@@ -39,21 +39,21 @@ class AssetBuilder
 		return $this;
 	}
 
-	public function addChildAsset(
+	public function childAsset(
 		AssetStrategy $strategy, string $linkField):self
 	{
 		$child = $strategy->create($this->mapper);
-		$this->addNode(new ChildAsset($child, $linkField));
+		$this->add(new ChildAsset($child, $linkField));
 		return $this;
 	}
 
-	public function addWithStrategy(NodeStrategy $strategy):self
+	public function strategy(NodeStrategy $strategy):self
 	{
-		$this->addNode($strategy->create($this->mapper));
+		$this->add($strategy->create($this->mapper));
 		return $this;
 	}
 
-	public function addNode(Node $node):self
+	public function add(Node $node):self
 	{
 		if($node instanceof RecordChild)
 			$this->recordChildSet->add($node);
