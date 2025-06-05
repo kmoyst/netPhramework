@@ -7,7 +7,7 @@ use netPhramework\locating\MutablePath;
 use netPhramework\locating\rerouters\RerouteToRoot;
 use netPhramework\responding\ResponseCode;
 
-readonly class RedirectToRoot extends Redirector
+class RedirectToRoot extends Redirector
 {
 	public function __construct(
 		MutablePath|string $subPath = '',

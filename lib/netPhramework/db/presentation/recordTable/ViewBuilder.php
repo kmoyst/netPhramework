@@ -84,7 +84,7 @@ class ViewBuilder
 	}
 
 	public function generateView(?ViewStrategy $strategy,
-								 bool $includeQueryInput = true):View
+								 bool $includeQueryForm = true):View
 	{
 		$viewFactory 		= new ViewFactory($this->query);
 		$columnSet 			= $this->columnSet;
@@ -95,7 +95,7 @@ class ViewBuilder
 		$formCallback   	= $this->callbackInputForFilterForms;
 		$compositePath 		= clone $this->compositePath;
 		$collationMap		= $this->collationMap;
-		if($includeQueryInput)
+		if($includeQueryForm)
 		{
 			$paginator  = $viewFactory->getPaginator($formCallback);
 			$selectForm = $viewFactory
