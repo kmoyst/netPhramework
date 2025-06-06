@@ -6,7 +6,8 @@ The core philosophy is centered around a hierarchical **Node-based routing syste
 
 ## Core Concepts
 
-* **Node-Based Routing:** Everything in a `netPhramework` application is a `Node` in a traversable tree. This includes static pages, data-driven views, and even actions like redirects. This provides a consistent and powerful way to structure an application's navigation and endpoints.
+* **Node-Based Routing:** Everything in a `netPhramework` application is a `Node` (component) in a tree (composite pattern). This includes static pages, data-driven views, and even actions like redirects. This provides a consistent and powerful way to structure an application's navigation and endpoints.
+* **Decoupled URI Interpretation:** The `RequestInterpeter` uses the `UriAdapter` to transform a uri such as `/patients/8/appointments/17/edit` to a linked list `Path` that is used to navigate through a composite tree to the requested `Node`.   
 * **Data-Driven Assets:** The framework excels at generating application features directly from your database schema. The `AssetBuilder` allows you to declaratively build complete CRUD (Create, Read, Update, Delete) interfaces and presentation views for your database tables with a fluent and intuitive API.
 * **Decoupled Architecture:** A key focus is the decoupling of the data layer from the presentation layer. For example, the `RecordSet` (which manages data fetching) is distinct from the `Asset` (which represents the feature in the application's node tree), allowing URL structures and application logic to be independent of database schema naming.
 * **Strategy-Based Customization:** Instead of being forced into rigid structures, many components, especially for UI generation, can be configured with `Strategy` objects. This allows for powerful customization (e.g., defining custom table columns, adding aggregate data like totals) without having to modify the core framework components, following the Open/Closed Principle.
