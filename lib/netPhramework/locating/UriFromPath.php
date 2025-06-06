@@ -4,9 +4,6 @@ namespace netPhramework\locating;
 
 use Stringable;
 
-/**
- * Converts a Path to uri string
- */
 readonly class UriFromPath implements Stringable
 {
 	public function __construct(private Path $path) {}

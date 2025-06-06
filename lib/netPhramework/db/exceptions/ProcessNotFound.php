@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\exceptions;
 
-use netPhramework\exceptions\ComponentNotFound;
+use netPhramework\exceptions\NodeNotFound;
 
-class ProcessNotFound extends ComponentNotFound
+class ProcessNotFound extends NodeNotFound
 {
 
 }

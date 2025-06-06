@@ -5,24 +5,9 @@ namespace netPhramework\locating;
 use netPhramework\common\Variables;
 use netPhramework\exceptions\InvalidUri;
 
-/**
- * Adapts string Uri to MutablePath and Variables
- */
 readonly class UriAdapter
 {
 	public function __construct(private string $uri) {}
-
-	public function getParameters():Variables
-	{
-		$vars = new Variables();
-		$pattern = '|\?(.+)$|';
-		if(preg_match($pattern, $this->uri, $matches))
-		{
-			parse_str($matches[1], $arr);
-			$vars->merge($arr);
-		}
-		return $vars;
-	}
 
 	/**
 	 * @return MutablePath
@@ -47,4 +32,16 @@ readonly class UriAdapter
             $this->traverseArray($path->getNext(), array_slice($names, 1));
         }
     }
+
+	public function getParameters():Variables
+	{
+		$vars = new Variables();
+		$pattern = '|\?(.+)$|';
+		if(preg_match($pattern, $this->uri, $matches))
+		{
+			parse_str($matches[1], $arr);
+			$vars->merge($arr);
+		}
+		return $vars;
+	}
 }

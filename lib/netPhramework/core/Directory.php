@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-use netPhramework\exceptions\ComponentNotFound;
+use netPhramework\exceptions\NodeNotFound;
 
 final class Directory implements Node
 {
@@ -33,7 +33,7 @@ final class Directory implements Node
 				->setComponents($this->children);
 		}
         else
-            throw new ComponentNotFound("Not Found: $name");
+            throw new NodeNotFound("Not Found: $name");
     }
 
 	public function getName(): string

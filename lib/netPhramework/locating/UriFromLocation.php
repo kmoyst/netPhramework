@@ -3,9 +3,6 @@
 namespace netPhramework\locating;
 use Stringable;
 
-/**
- * Converts and Location to a URI string
- */
 readonly class UriFromLocation implements Stringable
 {
     public function __construct(private Location $location) {}

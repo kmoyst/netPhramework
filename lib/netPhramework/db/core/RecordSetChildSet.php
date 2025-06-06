@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\exceptions\NotFound;
+use netPhramework\exceptions\NodeNotFound;
 
 class RecordSetChildSet
 {
@@ -17,12 +17,12 @@ class RecordSetChildSet
 	/**
 	 * @param string $name
 	 * @return RecordSetChild
-	 * @throws NotFound
+	 * @throws NodeNotFound
 	 */
 	public function get(string $name):RecordSetChild
 	{
 		if(!isset($this->nodes[$name]))
-			throw new NotFound("Not Found: $name");
+			throw new NodeNotFound("Not Found: $name");
 		return $this->nodes[$name];
 	}
 }

@@ -4,6 +4,8 @@ namespace netPhramework\db\core;
 
 use netPhramework\core\CompositeTrait;
 use netPhramework\core\Node;
+use netPhramework\db\exceptions\MappingException;
+use netPhramework\exceptions\NodeNotFound;
 
 class RecordComposite extends RecordSetChild
 {
@@ -24,6 +26,12 @@ class RecordComposite extends RecordSetChild
 		return $this;
 	}
 
+	/**
+	 * @param string $name
+	 * @return Node
+	 * @throws MappingException
+	 * @throws NodeNotFound
+	 */
 	public function getChild(string $name): Node
 	{
 		$node = $this->nodeSet->get($name);

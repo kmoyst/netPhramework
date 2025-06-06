@@ -16,24 +16,4 @@ trait CompositeTrait
 	{
 		$exchange->redirect(new RedirectToChild('',$exchange->getParameters()));
 	}
-
-	/**
-	 * Check if node is a composite
-	 *
-	 * @return bool
-	 */
-	public function isComposite():bool
-	{
-		return true;
-	}
-
-	/**
-	 * Test if node is a Leaf
-	 *
-	 * @return bool
-	 */
-	public function isLeaf():bool
-	{
-		return false;
-	}
 }
