@@ -39,7 +39,7 @@ trait LeafTrait
 
     public function getChild(string $name): never
     {
-        throw new ComponentNotFound("Not Found: $name");
+        throw new NodeNotFound("Not Found: $name");
     }
 
     public function getName(): string

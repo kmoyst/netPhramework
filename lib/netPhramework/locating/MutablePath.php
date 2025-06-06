@@ -2,10 +2,6 @@
 
 namespace netPhramework\locating;
 
-/**
- * A fully readable and modifiable MutablePath
- *
- */
 class MutablePath extends Path implements Reroutable
 {
 	private ?string $name = null;
