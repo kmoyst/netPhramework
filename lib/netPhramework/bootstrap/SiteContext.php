@@ -12,7 +12,7 @@ use netPhramework\responding\Responder;
 
 class SiteContext implements RequestContext
 {
-	protected readonly Session $session;
+	protected readonly Session 	   $session;
 	protected readonly FileManager $fileManager;
 	protected readonly Environment $environment;
 
@@ -22,9 +22,9 @@ class SiteContext implements RequestContext
 		?FileManager $fileManager = null
 	)
 	{
-		$this->environment = $environment ?? new Environment();
-		$this->session = $session ?? new Session();
-		$this->fileManager = $fileManager ?? new FileManager($_FILES);
+		$this->environment	= $environment 	?? new Environment();
+		$this->session 		= $session 		?? new Session();
+		$this->fileManager 	= $fileManager 	?? new FileManager($_FILES);
 	}
 
 	public function getCallbackKey(): string

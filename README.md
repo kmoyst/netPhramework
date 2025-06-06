@@ -64,4 +64,21 @@ The data table generation is a great example of the framework's design philosoph
 This pipeline ensures that each component has a single, well-defined responsibility, making the system powerful and maintainable.
 
 -----
+To get started, install netPhramework outside your web directory, then put two files in your web directory:
+```apacheconf
+# .htaccess
+Options +FollowSymLinks
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !\.
+RewriteRule ^.+$ /index.php [L]
 
+```
+```php
+// index.php
+require_once "/path/to/netPhramework/boostrap/Loader.php";
+use netPhramework\bootstrap\Controller;
+use netPhramework\bootstrap\SiteContext;
+new Controller()->run(new SiteContext());
+
+```
+This should get you the getting-started page with further instructions.
