@@ -28,8 +28,7 @@ readonly class RecordFinder
 		if(!$field->mustBeUnique())
 			throw new MappingException("Not unique field: $fieldName");
 		foreach($this->recordSet as $record)
-			if($record->getValue($fieldName) === $value)
-				return $record;
+			if($record->getValue($fieldName) === $value) return $record;
 		throw new RecordNotFound("Record not found with $fieldName = $value");
 	}
 }

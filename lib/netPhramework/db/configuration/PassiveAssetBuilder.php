@@ -45,7 +45,7 @@ class PassiveAssetBuilder extends AssetBuilder
 		string $linkField,
 		?string $assetName = null):self
 	{
-		$builder = new self($this->mapper);
+		$builder 	= new self($this->mapper);
 		$childAsset = $builder
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))

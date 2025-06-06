@@ -7,8 +7,7 @@ use netPhramework\db\exceptions\MysqlException;
 
 readonly class Result implements \netPhramework\db\mysql\Result
 {
-	public function __construct(
-		private mysqli_stmt $statement) {}
+	public function __construct(private mysqli_stmt $statement) {}
 
 	public function getAffectedRows():int
 	{

@@ -6,8 +6,7 @@ class ImmutableView extends Viewable
 {
 	public function __construct(
 		private readonly string $templateName,
-		private readonly iterable $variables
-	) {}
+		private readonly iterable $variables) {}
 
 	public function getTemplateName(): string
 	{

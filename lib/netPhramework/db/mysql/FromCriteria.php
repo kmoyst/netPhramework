@@ -20,7 +20,7 @@ readonly class FromCriteria implements Stringable
 		foreach($this->criteria as $condition)
 		{
 			$f = $condition->getField()->getName();
-			$o = Operator::fromMappingOperator($condition->getOperator());
+			$o = MysqlOperator::fromMappingOperator($condition->getOperator());
 			$bits[] = "`$f` $o->value ?";
 		}
 		$glue = ' AND ';

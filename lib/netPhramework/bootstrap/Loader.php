@@ -23,7 +23,6 @@ class Loader
 			require_once $fullPath;
 			return;
 		}
-		//exit("Class not found: $className");
 	}
 }
 $loader = new Loader();

@@ -74,28 +74,21 @@ readonly class UriAdapter
 {
     public function __construct(private string $uri) {}
  
-    /**
-     * @return MutablePath
-     * @throws InvalidUri
-     */
-     public function getPath():MutablePath
-     {
-        $path = new MutablePath();
-        $pattern = '|^/([^?]*)|';
-        if(!preg_match($pattern, $this->uri, $matches))
-			throw new InvalidUri("Invalid Uri: $this->uri");
-		$this->traverseArray($path, explode('/', $matches[1]));
+    public function getPath():MutablePath
+    {
+        if(!preg_match('|^/([^?]*)|', $this->uri, $matches))
+            throw new InvalidUri("Invalid Uri: $this->uri");
+        $names = explode('/', $matches[1]);
+        $path  = new MutablePath(array_shift($names));
+        $this->traverseArray($path, $names);
         return $path;
     }
 
     private function traverseArray(MutablePath $path, array $names):void
     {
-        $path->setName($names[0]);
-        if(sizeof($names) > 1)
-        {
-            $path->append('');
-            $this->traverseArray($path->getNext(), array_slice($names, 1));
-        }
+        if(count($names) === 0) return;
+        $path->append(array_shift($names));
+        $this->traverseArray($path->getNext(), $names);
     }
     
     public function getParameters():Variables
@@ -140,15 +133,15 @@ class Navigator
      }
 
     /**
-     * @param Node $component
+     * @param Node $node
      * @param Path|null $path
      * @return Node
      * @throws NodeNotFound
      */
-     private function traverse(Node $component, ?Path $path):Node
+     private function traverse(Node $node, ?Path $path):Node
      {
-        if($path === null) return $component;
-        $child = $component->getChild($path->getName());
+        if($path === null) return $node;
+        $child = $node->getChild($path->getName());
         return $this->traverse($child, $path->getNext());
      }
 }

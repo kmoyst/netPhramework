@@ -17,9 +17,9 @@ class SiteContext implements RequestContext
 	protected readonly Environment $environment;
 
 	public function __construct(
-		?Environment $environment = null,
-		?Session     $session = null,
-		?FileManager $fileManager = null
+		?Environment $environment 	= null,
+		?Session     $session 		= null,
+		?FileManager $fileManager 	= null
 	)
 	{
 		$this->environment	= $environment 	?? new Environment();
