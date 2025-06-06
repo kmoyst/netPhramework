@@ -25,7 +25,8 @@ readonly class Socket
 	 * @return Response
 	 * @throws \Exception
 	 */
-    public function processRequest(MutablePath    $path, Variables $parameters,
+    public function processRequest(MutablePath 	  $path,
+								   Variables 	  $parameters,
 								   RequestContext $context):Response
 	{
         try

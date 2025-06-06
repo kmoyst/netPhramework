@@ -4,8 +4,14 @@ namespace netPhramework\locating;
 
 class MutablePath extends Path implements Reroutable
 {
-	private ?string $name = null;
-	private ?MutablePath $next = null;
+	private ?string $name;
+	private ?MutablePath $next;
+
+	public function __construct(?string $name = null)
+	{
+		$this->name = $name;
+		$this->next = null;
+	}
 
 	public function setName(string $name): self
 	{

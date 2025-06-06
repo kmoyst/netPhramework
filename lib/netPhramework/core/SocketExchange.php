@@ -69,7 +69,7 @@ class SocketExchange implements Exchange
         try {
 			$this->redirect($fallback);
             $this->session->addErrorMessage(
-                rtrim($exception->getMessage(),": "));
+				rtrim($exception->getMessage(),": "));
             $this->session->addErrorCode($exception->getResponseCode());
         } catch (Exception) {
 			$this->response = $exception->setWrapper($this->wrapper);

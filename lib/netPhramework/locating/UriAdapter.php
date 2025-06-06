@@ -15,22 +15,19 @@ readonly class UriAdapter
 	 */
 	public function getPath():MutablePath
     {
-        $path = new MutablePath();
-        $pattern = '|^/([^?]*)|';
-        if(!preg_match($pattern, $this->uri, $matches))
+        if(!preg_match('|^/([^?]*)|', $this->uri, $matches))
 			throw new InvalidUri("Invalid Uri: $this->uri");
-		$this->traverseArray($path, explode('/', $matches[1]));
+		$names = explode('/', $matches[1]);
+		$path  = new MutablePath(array_shift($names));
+		$this->traverseArray($path, $names);
         return $path;
     }
 
     private function traverseArray(MutablePath $path, array $names):void
     {
-        $path->setName($names[0]);
-        if(sizeof($names) > 1)
-        {
-            $path->append('');
-            $this->traverseArray($path->getNext(), array_slice($names, 1));
-        }
+		if(count($names) === 0) return;
+		$path->append(array_shift($names));
+		$this->traverseArray($path->getNext(), $names);
     }
 
 	public function getParameters():Variables

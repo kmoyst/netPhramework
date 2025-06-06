@@ -272,7 +272,7 @@ RewriteRule ^.+$ /index.php [L]
 ```
 ```php
 // index.php
-require_once "/path/to/netPhramework/boostrap/Loader.php";
+require_once "/path/to/netPhramework/bootstrap/Loader.php";
 use netPhramework\bootstrap\Controller;
 use netPhramework\bootstrap\SiteContext;
 new Controller()->run(new SiteContext());

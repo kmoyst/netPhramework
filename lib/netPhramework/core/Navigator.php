@@ -32,15 +32,15 @@ class Navigator
 	}
 
 	/**
-	 * @param Node $component
+	 * @param Node $node
 	 * @param Path|null $path
 	 * @return Node
 	 * @throws NodeNotFound
 	 */
-    private function traverse(Node $component, ?Path $path):Node
+    private function traverse(Node $node, ?Path $path):Node
     {
-        if($path === null) return $component;
-        $child = $component->getChild($path->getName());
+        if($path === null) return $node;
+        $child = $node->getChild($path->getName());
         return $this->traverse($child, $path->getNext());
     }
 }

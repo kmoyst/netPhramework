@@ -31,9 +31,6 @@ readonly class Responder
 		header("Content-Type: $ft");
 		header("Content-Disposition: attachment; filename=\"$fn\"");
 		header("Content-Length: " . filesize($sp));
-	//	$buffer = fopen($sp, "rb");
-	//	fpassthru($buffer);
-	//	fclose($buffer);
 		ob_end_clean();
 		flush();
 		readfile($sp);
