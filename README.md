@@ -33,8 +33,8 @@ Building a complete, filterable, and paginated view of a database table can be d
 // In an application Configuration class...
 
 // 1. Define custom strategies for columns and final view tweaks
-$columnStrategy = new \clinic\patients\ColumnSetStrategy();
-$viewStrategy   = new \finance\taxClaims\TableViewStrategy(); // Example for adding totals
+$columnStrategy = new ColumnSetStrategy();
+$viewStrategy   = new TableViewStrategy(); // Example for adding totals
 
 // 2. Use the builder to configure the "patients" asset
 new PassiveAssetBuilder($this->mapper, $root)
@@ -47,7 +47,7 @@ new PassiveAssetBuilder($this->mapper, $root)
     ->includeEdit(new ChildRecordFormStrategy($linkField))
 
     // Finalize and add the asset to the root directory
-    ->commit('patients');
+    ->commit('my-asset');
 ```
 
 ## The `recordTable` Architecture
