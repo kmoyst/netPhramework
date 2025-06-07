@@ -11,9 +11,6 @@ use netPhramework\locating\Redirectable;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\responding\ResponseCode;
 
-/**
- * Relocates and dispatches. Used to prepare redirect Responses.
- */
 class Redirector implements Node
 {
 	use LeafTrait;
