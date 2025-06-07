@@ -29,7 +29,7 @@ class EditParent extends RecordProcess
 		private readonly ?ColumnSetStrategy   $childColumnSetStrategy = null,
 		private readonly ?ViewStrategy        $childViewStrategy = null,
 		private readonly int                  $childFilterThreshold = 5,
-		?string $name = 'edit')
+		string $name = 'edit')
 	{
 		$this->name = $name;
 	}

@@ -10,7 +10,7 @@ class Download extends RecordProcess
 {
 	public function __construct	(
 		private readonly File $file,
-		?string $name = 'download')
+		string $name = 'download')
 	{
 		$this->name = $name;
 	}

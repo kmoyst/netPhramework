@@ -6,7 +6,6 @@ use netPhramework\common\Variables;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
-use netPhramework\exceptions\InvalidUri;
 use netPhramework\locating\Redirectable;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\responding\ResponseCode;
@@ -31,11 +30,6 @@ class Redirector implements Node
 		$redirectable->setResponseCode($this->code);
 	}
 
-	/**
-	 * @param Exchange $exchange
-	 * @return void
-	 * @throws InvalidUri
-	 */
 	public function handleExchange(Exchange $exchange): void
 	{
 		$exchange->redirect($this);

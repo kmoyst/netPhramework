@@ -20,10 +20,7 @@ class Authenticate implements Node
 	public function __construct(
 		private readonly Authenticator $authenticator,
 		private readonly ?Redirector   $onSuccess = null,
-        private readonly ?Redirector   $onFailure = null)
-	{
-		$this->name = 'authenticate';
-	}
+        private readonly ?Redirector   $onFailure = null) {}
 
     /**
      * @param Exchange $exchange

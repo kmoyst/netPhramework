@@ -3,6 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
+use netPhramework\exceptions\PathException;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
@@ -73,6 +74,7 @@ readonly class CallbackManager
 	 *
 	 * @return RedirectToRoot|null - dispatcher to callback, null if absent
 	 * @throws InvalidUri
+	 * @throws PathException
 	 */
 	public function callbackRedirector():?RedirectToRoot
 	{

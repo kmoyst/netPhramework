@@ -20,7 +20,7 @@ class Browse extends RecordSetProcess
 	public function __construct(
 		protected readonly ?ColumnSetStrategy $columnSetStrategy = null,
 		protected readonly ?ViewStrategy $tableViewStrategy = null,
-		?string $name = '')
+		string $name = '')
 	{
 		$this->name = $name;
 	}

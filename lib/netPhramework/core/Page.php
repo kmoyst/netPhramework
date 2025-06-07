@@ -18,7 +18,7 @@ class Page implements Node
         ?string $title = null)
 	{
         $this->view = new View($templateName, $title);
-		$this->name = $name;
+		$this->name = $name ?? $templateName;
 	}
 
 	public function handleExchange(Exchange $exchange): void
@@ -28,7 +28,7 @@ class Page implements Node
 
 	public function getName(): string
 	{
-		return $this->name ?? $this->view->getTemplateName();
+		return $this->name;
 	}
 
     public function add(string $key, string|Encodable|iterable|null $value):self

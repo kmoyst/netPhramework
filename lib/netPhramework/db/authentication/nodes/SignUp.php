@@ -13,7 +13,7 @@ class SignUp extends RecordSetProcess
 	public function __construct(
 		private readonly ?EnrolledUser $enrolledUser = null,
 		private readonly string $actionLeaf = 'insert',
-		?string $name = 'sign-up')
+		string $name = 'sign-up')
 	{
 		$this->name = $name;
 	}

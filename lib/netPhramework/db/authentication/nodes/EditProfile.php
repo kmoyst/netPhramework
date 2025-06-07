@@ -22,7 +22,7 @@ class EditProfile implements Node
 
 	public function __construct(
 		private readonly RecordFinder $userRecords,
-		?string $name = 'edit-profile')
+		string $name = 'edit-profile')
 	{
 		$this->name = $name;
 	}

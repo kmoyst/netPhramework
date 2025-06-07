@@ -17,7 +17,7 @@ class Add extends RecordSetProcess
 {
 	public function __construct(
 		protected readonly ?RecordFormStrategy $formStrategy = null,
-		?string $name = 'add')
+		string $name = 'add')
 	{
 		$this->name = $name;
 	}

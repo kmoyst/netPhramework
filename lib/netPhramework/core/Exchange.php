@@ -3,7 +3,6 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\exceptions\InvalidUri;
 use netPhramework\locating\Location;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
@@ -41,8 +40,7 @@ interface Exchange
 	/**
 	 * @param Redirector $fallback
 	 * @return Variables
-	 * @throws InvalidUri
-	 */
+\	 */
 	public function redirect(Redirector $fallback):Variables;
 
 	/**

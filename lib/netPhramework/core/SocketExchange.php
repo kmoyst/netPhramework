@@ -3,6 +3,8 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
+use netPhramework\exceptions\InvalidUri;
+use netPhramework\exceptions\PathException;
 use netPhramework\locating\Location;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
@@ -37,7 +39,12 @@ class SocketExchange implements Exchange
     private Wrapper $wrapper;
 	private Response $response;
 
-	/** @inheritdoc  */
+	/**
+	 * @param Redirector $fallback
+	 * @return Variables
+	 * @throws InvalidUri
+	 * @throws PathException
+	 */
 	public function redirect(Redirector $fallback):Variables
 	{
 		$redirection = new Redirection(clone $this->path);

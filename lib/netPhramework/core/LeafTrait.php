@@ -7,7 +7,7 @@ use netPhramework\exceptions\NodeNotFound;
 
 trait LeafTrait
 {
-	protected ?string $name = null;
+	protected string $name;
 
 	public function getChild(string $name): never
 	{
