@@ -4,6 +4,7 @@ namespace netPhramework\locating;
 
 use netPhramework\common\Variables;
 use netPhramework\exceptions\InvalidUri;
+use netPhramework\exceptions\PathException;
 
 readonly class UriAdapter
 {
@@ -12,6 +13,7 @@ readonly class UriAdapter
 	/**
 	 * @return MutablePath
 	 * @throws InvalidUri
+	 * @throws PathException
 	 */
 	public function getPath():MutablePath
     {
@@ -23,10 +25,16 @@ readonly class UriAdapter
         return $path;
     }
 
+	/**
+	 * @param MutablePath $path
+	 * @param array $names
+	 * @return void
+	 * @throws PathException
+	 */
     private function traverseArray(MutablePath $path, array $names):void
     {
 		if(count($names) === 0) return;
-		$path->append(array_shift($names));
+		$path->setNext(array_shift($names));
 		$this->traverseArray($path->getNext(), $names);
     }
 

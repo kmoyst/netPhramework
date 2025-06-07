@@ -2,6 +2,8 @@
 
 namespace netPhramework\locating;
 
+use netPhramework\exceptions\PathException;
+
 class MutablePath extends Path implements Reroutable
 {
 	private ?string $name;
@@ -16,6 +18,19 @@ class MutablePath extends Path implements Reroutable
 	public function setName(string $name): self
 	{
 		$this->name = $name;
+		return $this;
+	}
+
+	/**
+	 * @param MutablePath|string|null $next
+	 * @return $this
+	 * @throws PathException
+	 */
+	public function setNext(MutablePath|string|null $next): self
+	{
+		if($this->name === null && $next !== null)
+			throw new PathException("Tried to set next on a Path w/o name");
+		$this->next = $this->parsePath($next);
 		return $this;
 	}
 
@@ -64,11 +79,12 @@ class MutablePath extends Path implements Reroutable
 		return $this;
 	}
 
-    private function parsePath(MutablePath|string $path):MutablePath
+    private function parsePath(MutablePath|string|null $path):?MutablePath
     {
         if(is_string($path))
-			$path = new MutablePath()->setName($path);
-        return $path;
+			return new MutablePath()->setName($path);
+		else
+			return $path;
     }
 
     public function __clone():void
