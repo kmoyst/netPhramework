@@ -41,8 +41,7 @@ readonly class UriAdapter
 	public function getParameters():Variables
 	{
 		$vars = new Variables();
-		$pattern = '|\?(.+)$|';
-		if(preg_match($pattern, $this->uri, $matches))
+		if(preg_match('|\?(.+)$|', $this->uri, $matches))
 		{
 			parse_str($matches[1], $arr);
 			$vars->merge($arr);
