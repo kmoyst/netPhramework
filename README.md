@@ -18,7 +18,7 @@ translated into a linked list to navigate to the edit leaf.
 
 namespace netPhramework\core;
 
-use netPhramework\exceptions\ComponentNotFound;
+use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exceptions\InvalidUri;
 
 interface Node
@@ -35,7 +35,7 @@ interface Node
 
 trait LeafTrait
 {
-    protected ?string $name = null;
+    protected string $name;
 
     public function getChild(string $name): never
     {
@@ -87,7 +87,7 @@ readonly class UriAdapter
     private function traverseArray(MutablePath $path, array $names):void
     {
         if(count($names) === 0) return;
-        $path->append(array_shift($names));
+        $path->setNext(array_shift($names));
         $this->traverseArray($path->getNext(), $names);
     }
     
