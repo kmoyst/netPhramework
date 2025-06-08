@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\configuration;
+namespace netPhramework\db\core;
 
 use netPhramework\common\StringPredicate;
 

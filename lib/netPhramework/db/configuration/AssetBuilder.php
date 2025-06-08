@@ -8,6 +8,7 @@ use netPhramework\db\core\Asset;
 use netPhramework\db\core\ChildAsset;
 use netPhramework\db\core\RecordChild;
 use netPhramework\db\core\RecordChildSet;
+use netPhramework\db\core\RecordIdPredicate;
 use netPhramework\db\core\RecordSetChild;
 use netPhramework\db\core\RecordSetChildSet;
 use netPhramework\db\exceptions\ConfigurationException;
