@@ -6,9 +6,9 @@ class Environment
 {
 	/**
 	 * @param string $varName
-	 * @return string
+	 * @return string|null
 	 */
-	public function get(string $varName):string
+	public function get(string $varName):?string
 	{
 		return filter_input(INPUT_SERVER, $varName);
 	}
