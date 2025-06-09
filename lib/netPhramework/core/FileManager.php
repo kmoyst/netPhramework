@@ -55,8 +55,8 @@ class FileManager
 
 	public function getFileExtension():string
 	{
-		preg_match('|^(.+)\.([^.]+)$|', $this->getFileName(), $m);
-		return $m[2];
+		preg_match('|^.+\.([^.]+)$|', $this->getFileName(), $m);
+		return $m[1];
 	}
 
 	public function saveFile():string

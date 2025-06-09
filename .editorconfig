@@ -2,8 +2,8 @@
 root = true
 
 [*]
-indent_style = space # or tab
-indent_size = 4      # if indent_style is space, this is number of spaces; if tab, this is tab width
+indent_style = space
+indent_size = 4
 end_of_line = lf
 charset = utf-8
 trim_trailing_whitespace = true

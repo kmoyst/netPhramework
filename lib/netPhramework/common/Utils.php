@@ -32,7 +32,6 @@ class Utils
 	public static function baseClassName(string|object $fullClass):string
 	{
 		$name = is_object($fullClass) ? get_class($fullClass) : $fullClass;
-		//return basename(str_replace('\\','/',$fullClassName));
 		return preg_replace('|^.*\\\\|', '', $name);
 	}
 }
