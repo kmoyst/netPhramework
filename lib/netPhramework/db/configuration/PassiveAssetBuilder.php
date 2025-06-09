@@ -81,4 +81,13 @@ class PassiveAssetBuilder extends AssetBuilder
 		$this->add(new Add($formStrategy, $processName));
 		return $this;
 	}
+
+	public function includeAddAndEdit(
+		?RecordFormStrategy $formStrategy = null): self
+	{
+		return $this
+			->includeAdd($formStrategy)
+			->includeEdit($formStrategy)
+			;
+	}
 }
