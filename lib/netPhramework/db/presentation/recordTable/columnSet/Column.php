@@ -14,6 +14,9 @@ interface Column
 	public function getHeader():ColumnHeader;
 
 	/**
+	 * This is the value that can be operated on and reflects what is seen
+	 * by the user
+	 *
 	 * @param Record $record
 	 * @return string
 	 * @throws ValueInaccessible
@@ -23,6 +26,9 @@ interface Column
 	public function getOperableValue(Record $record):string;
 
     /**
+	 * This is typically the rawest value - it most closely ressembles what
+	 * is stored in the Record.
+	 *
      * @param Record $record
      * @return string
      * @throws ValueInaccessible
@@ -32,6 +38,9 @@ interface Column
     public function getSortableValue(Record $record):string;
 
     /**
+	 * This is the displayed value. It usually wraps the operable value with
+	 * display logic as needed (e.g. adding a $ prefix for currency)
+	 *
      * @param Record $record
      * @return Encodable|string
      * @throws ValueInaccessible
