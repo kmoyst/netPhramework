@@ -19,12 +19,14 @@ class AssetBuilder
 	protected ?RecordChildSet $recordChildSet;
 	protected RecordMapper $mapper;
 	protected ?Directory $directory;
+	protected RecordIdPredicate $recordIdPredicate;
 
 	public function __construct(RecordMapper $mapper,
 								?Directory $directory = null)
 	{
 		$this->mapper 	 = $mapper;
 		$this->directory = $directory;
+		$this->recordIdPredicate = new RecordIdPredicate();
 		$this->reset();
 	}
 
@@ -76,7 +78,7 @@ class AssetBuilder
 			$this->mapper->recordsFor($mappedName),
 			$this->recordChildSet,
 			$this->recordSetChildSet,
-			new RecordIdPredicate());
+			$this->recordIdPredicate);
 		$this->reset();
 		return $asset;
 	}
