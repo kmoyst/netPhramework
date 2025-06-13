@@ -8,7 +8,7 @@ use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\Location;
-use netPhramework\locating\UriAdapter;
+use netPhramework\locating\LocationFromUri;
 use netPhramework\exceptions\InvalidUri;
 
 /**
@@ -79,9 +79,9 @@ readonly class CallbackManager
 	public function callbackRedirector():?RedirectToRoot
 	{
 		if(!($callbackUri = $this->fromParameters())) return null;
-		$adapter = new UriAdapter($callbackUri);
+		$location = new LocationFromUri($callbackUri);
 		return new RedirectToRoot(
-			$adapter->getPath(), $adapter->getParameters());
+			$location->getPath(), $location->getParameters());
 	}
 
 	/**

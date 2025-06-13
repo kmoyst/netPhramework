@@ -3,7 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\locating\UriAdapter;
+use netPhramework\locating\LocationFromUri;
 
 class RequestInterpreter
 {
@@ -32,7 +32,7 @@ class RequestInterpreter
 			$parameters = $this->requestInput->getPostParameters();
 		}
 		return new Request(
-			new UriAdapter($this->requestInput->getUri())->getPath(),
+			new LocationFromUri($this->requestInput->getUri())->getPath(),
 			new Variables()->merge($parameters),
 			$socket);
 	}
