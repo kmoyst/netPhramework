@@ -57,4 +57,10 @@ class LocationFromUri extends Location
 		}
 		return $this->parameters;
 	}
+
+	public function __clone():void
+	{
+		unset($this->path);
+		unset($this->parameters);
+	}
 }
