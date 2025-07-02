@@ -2,16 +2,13 @@
 
 namespace netPhramework\core;
 
-use netPhramework\common\Variables;
-use netPhramework\locating\MutablePath;
+use netPhramework\locating\MutableLocation;
 use netPhramework\responding\Response;
 
 readonly class Request
 {
-	public function __construct(
-		private MutablePath $path,
-		private Variables   $parameters,
-		private Socket      $socket) {}
+	public function __construct(private MutableLocation $location,
+								private Socket $socket) {}
 
 	/**
 	 * @param RequestContext $context
@@ -21,6 +18,6 @@ readonly class Request
 	public function process(RequestContext $context):Response
 	{
 		return $this->socket
-			->processRequest($this->path, $this->parameters, $context);
+			->processRequest($this->location, $context);
 	}
 }

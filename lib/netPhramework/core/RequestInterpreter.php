@@ -17,7 +17,6 @@ class RequestInterpreter
 	/**
 	 * @param Application $application
 	 * @return Request
-	 * @throws Exception
 	 */
 	public function establishRequest(Application $application):Request
 	{
@@ -31,9 +30,8 @@ class RequestInterpreter
 			$socket = $application->openActiveSocket();
 			$parameters = $this->requestInput->getPostParameters();
 		}
-		return new Request(
-			new LocationFromUri($this->requestInput->getUri())->getPath(),
-			new Variables()->merge($parameters),
-			$socket);
+		return new Request(new LocationFromUri(
+				$this->requestInput->getUri(),
+				new Variables()->merge($parameters)), $socket);
 	}
 }

@@ -2,8 +2,7 @@
 
 namespace netPhramework\core;
 
-use netPhramework\common\Variables;
-use netPhramework\locating\MutablePath;
+use netPhramework\locating\MutableLocation;
 use netPhramework\rendering\Wrapper;
 use netPhramework\responding\Response;
 
@@ -19,14 +18,11 @@ readonly class Socket
     }
 
 	/**
-	 * @param MutablePath $path
-	 * @param Variables $parameters
+	 * @param MutableLocation $location
 	 * @param RequestContext $context
 	 * @return Response
-	 * @throws \Exception
 	 */
-    public function processRequest(MutablePath 	  $path,
-								   Variables 	  $parameters,
+    public function processRequest(MutableLocation $location,
 								   RequestContext $context):Response
 	{
         try
@@ -34,11 +30,10 @@ readonly class Socket
             $exchange  		 = new SocketExchange();
 			$navigator 		 = new Navigator();
 			$callbackManager = new CallbackManager(
-				$context->getCallbackKey(), clone $path, clone $parameters)
+				$context->getCallbackKey(), clone $location)
 			;
 			$exchange
-				->setPath($path)
-            	->setParameters($parameters)
+				->setLocation($location)
 				->setSession($context->getSession())
 				->setFileManager($context->getFileManager())
 				->setWrapper($this->wrapper)
@@ -46,7 +41,7 @@ readonly class Socket
 			;
 			$navigator
 				->setRoot($this->root)
-				->setPath($path)
+				->setPath($location->getPath())
 				->navigate()
 				->handleExchange($exchange)
             ;

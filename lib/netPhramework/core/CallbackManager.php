@@ -2,11 +2,9 @@
 
 namespace netPhramework\core;
 
-use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\MutableLocation;
-use netPhramework\locating\MutablePath;
 use netPhramework\locating\Location;
 use netPhramework\locating\LocationFromUri;
 use netPhramework\exceptions\InvalidUri;
@@ -20,13 +18,11 @@ readonly class CallbackManager
 	 * Takes necessary context to function, usually from SocketExchange
 	 *
 	 * @param string $callbackKey
-	 * @param MutablePath $requestPath
-	 * @param Variables $parameters
+	 * @param MutableLocation $location
 	 */
 	public function __construct(
-		private string      $callbackKey,
-		private MutablePath $requestPath,
-		private Variables   $parameters) {}
+		private string $callbackKey,
+		private MutableLocation $location) {}
 
 	/**
 	 * QueryKey used for callback inputs and location parameters.
@@ -51,7 +47,7 @@ readonly class CallbackManager
 	 *
 	 * @return string|Location
 	 */
-	public function callbackLink(bool $chain):string|Location
+	public function callbackLink(bool $chain):string|MutableLocation
 	{
 		if($chain)
 		{
@@ -92,18 +88,17 @@ readonly class CallbackManager
 	 */
 	private function fromParameters():?string
 	{
-		return $this->parameters->getOrNull($this->callbackKey);
+		return $this->location->getParameters()->getOrNull($this->callbackKey);
 	}
 
 	/**
-	 * Generates a readable location based on the contained MutablePath / Parameters.
-	 * Cloned and immutable.
+	 * Generates a readable location based on the contained
+	 * MutablePath / Parameters.
 	 *
 	 * @return MutableLocation
 	 */
 	private function fromCurrentLocation():MutableLocation
 	{
-		return new MutableLocation(
-			clone $this->requestPath, clone $this->parameters);
+		return clone $this->location;
 	}
 }

@@ -21,18 +21,7 @@ use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {
-    /**
-     * The request Path. Protected from mutability through cloning.
-     *
-     * @var MutablePath
-     */
-	private MutablePath $path;
-    /**
-     * The request Parameters. Protected from mutability through cloning.
-     *
-     * @var Variables
-     */
-	private Variables $parameters;
+	private MutableLocation $location;
 	private Session $session;
 	private CallbackManager $callbackManager;
 	private FileManager $fileManager;
@@ -47,7 +36,7 @@ class SocketExchange implements Exchange
 	 */
 	public function redirect(Redirector $fallback):Variables
 	{
-		$redirection = new Redirection(clone $this->path);
+		$redirection = new Redirection(clone $this->location->getPath());
 		$callback = $this->callbackManager->callbackRedirector();
 		($callback ?? $fallback)->redirect($redirection);
 		$this->response = $redirection;
@@ -105,19 +94,19 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function getPath(): MutablePath
 	{
-		return clone $this->path;
+		return clone $this->location->getPath();
 	}
 
 	/** @inheritDoc */
 	public function getParameters(): Variables
 	{
-		return clone $this->parameters;
+		return clone $this->location->getParameters();
 	}
 
 	/** @inheritDoc */
 	public function getLocation(): MutableLocation
 	{
-		return new MutableLocation(clone $this->path, clone $this->parameters);
+		return clone $this->location;
 	}
 
 	/** @inheritDoc */
@@ -142,27 +131,9 @@ class SocketExchange implements Exchange
 		return $this->response;
 	}
 
-	/**
-	 * Sets the Request Path (usually by Socket)
-	 *
-	 * @param MutablePath $path
-	 * @return $this
-	 */
-	public function setPath(MutablePath $path): SocketExchange
+	public function setLocation(MutableLocation $location): self
 	{
-		$this->path = $path;
-		return $this;
-	}
-
-	/**
-	 * Sets the Request Parameters (usually by Socket)
-	 *
-	 * @param Variables $parameters
-	 * @return $this
-	 */
-	public function setParameters(Variables $parameters): SocketExchange
-	{
-		$this->parameters = $parameters;
+		$this->location = $location;
 		return $this;
 	}
 
