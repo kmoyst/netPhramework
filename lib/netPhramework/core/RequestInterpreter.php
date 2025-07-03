@@ -2,6 +2,7 @@
 
 namespace netPhramework\core;
 
+use netPhramework\locating\ConfigurableLocation;
 use netPhramework\locating\LocationFromUri;
 
 class RequestInterpreter
@@ -19,8 +20,18 @@ class RequestInterpreter
 	 */
 	public function establishRequest(Application $application):Request
 	{
-		$location = new LocationFromUri($this->input->getUri())
-		;
+		$location = new LocationFromUri($this->input->getUri());
+		return $this->createRequest($application, $location);
+	}
+
+	/**
+	 * @param Application $application
+	 * @param ConfigurableLocation $location
+	 * @return Request
+	 */
+	private function createRequest(
+		Application $application, ConfigurableLocation $location):Request
+	{
 		if($this->input->getPostParameters() === null)
 		{
 			$socket = $application->openPassiveSocket();

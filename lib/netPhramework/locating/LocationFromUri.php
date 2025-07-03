@@ -6,7 +6,7 @@ use netPhramework\common\Variables;
 use netPhramework\exceptions\InvalidUri;
 use netPhramework\exceptions\PathException;
 
-class LocationFromUri extends Location implements MutableLocation
+class LocationFromUri extends Location implements ConfigurableLocation
 {
 	private MutablePath $path;
 

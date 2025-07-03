@@ -16,7 +16,6 @@ use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
 	collation\Query,
 	rowSet\RowSet,
 	rowSet\RowSetFactory};
-use netPhramework\exceptions\PathException;
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
@@ -88,7 +87,6 @@ class ViewBuilder
 	 * @param ViewStrategy|null $strategy
 	 * @param bool $includeQueryForm
 	 * @return View
-	 * @throws PathException
 	 */
 	public function generateView(?ViewStrategy $strategy,
 								 bool $includeQueryForm = true):View
