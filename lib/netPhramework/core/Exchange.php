@@ -40,8 +40,16 @@ interface Exchange
 	/**
 	 * @param Redirector $fallback
 	 * @return Variables
-\	 */
+	 */
 	public function redirect(Redirector $fallback):Variables;
+
+	/**
+	 * Respond with file transfer
+	 *
+	 * @param File $file
+	 * @return void
+	 */
+	public function transferFile(File $file):void;
 
 	/**
      * Dispatches with an error code and message stored in Session for display
@@ -126,12 +134,4 @@ interface Exchange
 	 * @return FileManager
 	 */
 	public function getFileManager():FileManager;
-
-	/**
-	 * Respond with file transfer
-	 *
-	 * @param File $file
-	 * @return void
-	 */
-	public function transferFile(File $file):void;
 }

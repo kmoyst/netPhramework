@@ -57,6 +57,12 @@ class SocketExchange implements Exchange
 		return $view;
 	}
 
+	/** @inheritDoc  */
+	public function transferFile(File $file):void
+	{
+		$this->response = new FileTransfer($file);
+	}
+
 	/** @inheritDoc */
 	public function error(Exception $exception, Redirector $fallback): void
 	{
@@ -68,11 +74,6 @@ class SocketExchange implements Exchange
         } catch (Exception) {
 			$this->response = $exception->setWrapper($this->wrapper);
         }
-	}
-
-	public function transferFile(File $file):void
-	{
-		$this->response = new FileTransfer($file);
 	}
 
 	/** @inheritDoc */
