@@ -69,7 +69,9 @@ class LocationFromUri extends Location implements MutableLocation
 
 	public function __clone():void
 	{
-		unset($this->path);
-		unset($this->parameters);
+		if(isset($this->path))
+			$this->path = clone $this->path;
+		if(isset($this->parameters))
+			$this->parameters = clone $this->parameters;
 	}
 }
