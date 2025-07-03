@@ -7,7 +7,7 @@ use netPhramework\rendering\Encoder;
 use Stringable;
 
 /**
- * Basic MutablePath interface. Can be read / traversed, but not modified.
+ * Basic Path interface. Can be read / traversed, but not modified.
  *
  */
 abstract class Path implements Encodable

@@ -22,11 +22,11 @@ class MutablePath extends Path implements Reroutable
 	}
 
 	/**
-	 * @param MutablePath|string|null $next
+	 * @param Path|string|null $next
 	 * @return $this
 	 * @throws PathException
 	 */
-	public function setNext(MutablePath|string|null $next): self
+	public function setNext(Path|string|null $next): self
 	{
 		if($this->name === null && $next !== null)
 			throw new PathException("Tried to set next on a Path w/o name");
@@ -39,12 +39,17 @@ class MutablePath extends Path implements Reroutable
 		return $this->name;
 	}
 
-	public function getNext():?MutablePath
+	public function getNext():?self
 	{
 		return $this->next;
 	}
 
-	public function append(MutablePath|string $tail):MutablePath
+	/**
+	 * @param Path|string $tail
+	 * @return $this
+	 * @throws PathException
+	 */
+	public function append(Path|string $tail):self
 	{
 		if($this->name === null)
 		{
@@ -79,13 +84,37 @@ class MutablePath extends Path implements Reroutable
 		return $this;
 	}
 
-    private function parsePath(MutablePath|string|null $path):?MutablePath
+	/**
+	 * @param Path|string|null $path
+	 * @return self|null
+	 * @throws PathException
+	 */
+    private function parsePath(Path|string|null $path):?self
     {
         if(is_string($path))
-			return new MutablePath()->setName($path);
-		else
+			return new self()->setName($path);
+		elseif($path instanceof self || $path === null)
 			return $path;
+		else
+		{
+			$mutablePath = new self($path->getName());
+			$this->traverse($mutablePath, $path->getNext());
+			return $mutablePath;
+		}
     }
+
+	/**
+	 * @param self $mutablePath
+	 * @param Path|null $path
+	 * @return void
+	 * @throws PathException
+	 */
+	private function traverse(self $mutablePath, ?Path $path):void
+	{
+		if($path === null) return;
+		$mutablePath->setNext(new self($path->getName()));
+		$this->traverse($mutablePath->getNext(), $path->getNext());
+	}
 
     public function __clone():void
     {
