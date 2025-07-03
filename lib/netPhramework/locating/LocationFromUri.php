@@ -6,21 +6,12 @@ use netPhramework\common\Variables;
 use netPhramework\exceptions\InvalidUri;
 use netPhramework\exceptions\PathException;
 
-class LocationFromUri extends Location implements ConfigurableLocation
+class LocationFromUri extends Location implements MutableLocation
 {
 	private MutablePath $path;
+	private Variables $parameters;
 
-	public function __construct(
-		private readonly string $uri, private ?Variables $parameters = null) {}
-
-	public function setParameters(Variables|array|null $parameters): self
-	{
-		if(is_array($parameters))
-			$this->parameters = new Variables()->merge($parameters);
-		else
-			$this->parameters = $parameters;
-		return $this;
-	}
+	public function __construct(private readonly string $uri) {}
 
 	/**
 	 * @return MutablePath
