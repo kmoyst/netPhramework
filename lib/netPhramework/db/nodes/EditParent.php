@@ -93,7 +93,7 @@ class EditParent extends RecordProcess
 	{
 		$assetName	 	  = $this->childSelector->getAssetName();
 		$recordSet   	  = $this->childSelector->getChildren($this->record);
-		$compPath    	  = $exchange->getPath()->pop()->append($assetName);
+		$compPath    	  = $exchange->getPath()->pop()->appendName($assetName);
 		$query 		 	  = new Query()->parse($exchange->getParameters());
 		$includeQueryForm = $recordSet->count() > $this->childFilterThreshold;
 		return new ViewBuilder()

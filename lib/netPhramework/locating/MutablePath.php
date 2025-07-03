@@ -64,6 +64,17 @@ class MutablePath extends Path implements Reroutable
 		return $this;
 	}
 
+	public function appendName(string $name):self
+	{
+		if($this->name === null)
+			$this->name = $name;
+		elseif($this->next === null)
+			$this->next = new self($name);
+		else
+			$this->next->appendName($name);
+		return $this;
+	}
+
 	public function pop():self
 	{
 		if($this->name === null)

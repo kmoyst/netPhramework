@@ -6,10 +6,6 @@ use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
 use Stringable;
 
-/**
- * Basic Path interface. Can be read / traversed, but not modified.
- *
- */
 abstract class Path implements Encodable
 {
 	public function encode(Encoder $encoder): string|Stringable
