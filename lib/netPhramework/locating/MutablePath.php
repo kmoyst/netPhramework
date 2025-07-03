@@ -64,6 +64,12 @@ class MutablePath extends Path implements Reroutable
 		return $this;
 	}
 
+	/**
+	 * "Safer" method to append a name to the linked list
+	 *
+	 * @param string $name
+	 * @return $this
+	 */
 	public function appendName(string $name):self
 	{
 		if($this->name === null)

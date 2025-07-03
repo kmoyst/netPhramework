@@ -3,7 +3,6 @@
 namespace netPhramework\locating;
 
 use netPhramework\common\Variables;
-use netPhramework\exceptions\InvalidUri;
 use netPhramework\exceptions\PathException;
 
 class LocationFromUri extends Location implements MutableLocation
@@ -15,7 +14,6 @@ class LocationFromUri extends Location implements MutableLocation
 
 	/**
 	 * @return MutablePath
-	 * @throws InvalidUri
 	 * @throws PathException
 	 */
 	public function getPath():MutablePath
@@ -23,7 +21,7 @@ class LocationFromUri extends Location implements MutableLocation
 		if(!isset($this->path))
 		{
 			$this->path = new MutablePath();
-			$this->path->append(new PathFromUri($this->uri)->parse());
+			$this->path->append(new PathFromUri($this->uri));
 		}
         return $this->path;
     }
@@ -31,7 +29,7 @@ class LocationFromUri extends Location implements MutableLocation
 	public function getParameters():Variables
 	{
 		if(!isset($this->parameters))
-			$this->parameters = new VariablesFromUri($this->uri)->parse();
+			$this->parameters = new VariablesFromUri($this->uri)->get();
 		return $this->parameters;
 	}
 

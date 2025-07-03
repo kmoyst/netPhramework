@@ -6,7 +6,6 @@ use netPhramework\exceptions\PathException;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\LocationFromUri;
-use netPhramework\exceptions\InvalidUri;
 use netPhramework\rendering\Encodable;
 
 /**
@@ -69,7 +68,6 @@ readonly class CallbackManager
 	 * Location's parameters (referenced by callbackKey). Null otherwise.
 	 *
 	 * @return RedirectToRoot|null - dispatcher to callback, null if absent
-	 * @throws InvalidUri
 	 * @throws PathException
 	 */
 	public function callbackRedirector():?RedirectToRoot

@@ -31,16 +31,14 @@ class PathFromUri extends Path
 	}
 
 	/**
-	 * @return self
 	 * @throws InvalidUri
 	 */
-	public function parse():self
+	private function parse():void
 	{
-		if(isset($this->path)) return $this;
+		if(isset($this->path)) return;
 		if(!preg_match('|^/([^?]*)|', $this->uri, $matches))
 			throw new InvalidUri("Invalid Uri: $this->uri");
 		$names = explode('/', $matches[1]);
 		$this->path = new PathFromArray($names);
-		return $this;
 	}
 }

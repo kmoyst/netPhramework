@@ -8,7 +8,7 @@ readonly class VariablesFromUri
 {
 	public function __construct(private string $uri) {}
 
-	public function parse():Variables
+	public function get():Variables
 	{
 		$variables = new Variables();
 		if(preg_match('|\?(.+)$|', $this->uri, $matches))
