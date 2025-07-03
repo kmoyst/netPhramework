@@ -13,6 +13,15 @@ class LocationFromUri extends Location implements MutableLocation
 	public function __construct(
 		private readonly string $uri, private ?Variables $parameters = null) {}
 
+	public function setParameters(Variables|array|null $parameters): self
+	{
+		if(is_array($parameters))
+			$this->parameters = new Variables()->merge($parameters);
+		else
+			$this->parameters = $parameters;
+		return $this;
+	}
+
 	/**
 	 * @return MutablePath
 	 * @throws InvalidUri

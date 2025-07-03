@@ -7,11 +7,11 @@ use netPhramework\locating\LocationFromUri;
 
 class RequestInterpreter
 {
-	private RequestInput $requestInput;
+	private RequestInput $input;
 
-	public function __construct(?RequestInput $requestInput = null)
+	public function __construct(?RequestInput $input = null)
 	{
-		$this->requestInput = $requestInput ?? new RequestInput();
+		$this->input = $input ?? new RequestInput();
 	}
 
 	/**
@@ -20,18 +20,18 @@ class RequestInterpreter
 	 */
 	public function establishRequest(Application $application):Request
 	{
-		if($this->requestInput->getPostParameters() === null)
+		$location = new LocationFromUri($this->input->getUri())
+		;
+		if($this->input->getPostParameters() === null)
 		{
 			$socket = $application->openPassiveSocket();
-			$parameters = $this->requestInput->getQueryParameters() ?? [];
+			$location->setParameters($this->input->getQueryParameters() ?? []);
 		}
 		else
 		{
 			$socket = $application->openActiveSocket();
-			$parameters = $this->requestInput->getPostParameters();
+			$location->setParameters($this->input->getPostParameters());
 		}
-		return new Request(new LocationFromUri(
-				$this->requestInput->getUri(),
-				new Variables()->merge($parameters)), $socket);
+		return new Request($location, $socket);
 	}
 }
