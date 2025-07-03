@@ -8,6 +8,7 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
+use netPhramework\exceptions\PathException;
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
 use netPhramework\rendering\Viewable;
@@ -57,15 +58,18 @@ class Row extends Viewable
 			;
 	}
 
+	/**
+	 * @return iterable
+	 * @throws PathException
+	 */
 	public function getVariables(): iterable
 	{
-		// append the id for both
 		$this->assetPath->append($this->record->getId());
 		return [
 			'cellSet' => new CellSet($this->columnSet, $this->record),
 			'callbackInput' => $this->callbackInput,
 			'id' => $this->record->getId(),
-			'editPath' =>   (clone $this->assetPath)->append('edit'),
+			'editPath' => (clone $this->assetPath)->append('edit'),
 			'deletePath' => (clone $this->assetPath)->append('delete')
 		];
 	}

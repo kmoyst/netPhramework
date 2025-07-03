@@ -2,7 +2,6 @@
 
 namespace netPhramework\core;
 
-use netPhramework\common\Variables;
 use netPhramework\locating\LocationFromUri;
 
 class RequestInterpreter
