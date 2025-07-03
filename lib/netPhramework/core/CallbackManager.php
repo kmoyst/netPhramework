@@ -5,9 +5,9 @@ namespace netPhramework\core;
 use netPhramework\exceptions\PathException;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\MutableLocation;
-use netPhramework\locating\Location;
 use netPhramework\locating\LocationFromUri;
 use netPhramework\exceptions\InvalidUri;
+use netPhramework\rendering\Encodable;
 
 /**
  * A central manager for callbacks usually used by SocketExchange.
@@ -45,9 +45,9 @@ readonly class CallbackManager
 	 * allows that information to be preserved upon return to the current
 	 * location.
 	 *
-	 * @return string|Location
+	 * @return string|Encodable
 	 */
-	public function callbackLink(bool $chain):string|MutableLocation
+	public function callbackLink(bool $chain):string|Encodable
 	{
 		if($chain)
 		{
