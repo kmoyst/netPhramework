@@ -24,9 +24,8 @@ class RecordComposite extends RecordSetChild
 	 */
 	public function getChild(string $name): Node
 	{
-		$node = $this->nodeSet->get($name);
-		$node->setRecord($this->recordSet->getRecord($this->recordId));
-		return $node;
+		$record = $this->recordSet->getRecord($this->recordId);
+		return $this->nodeSet->get($name)->setRecord($record);
 	}
 
 	public function getName(): string
