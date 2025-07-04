@@ -6,30 +6,23 @@ use netPhramework\common\StringPredicate;
 use netPhramework\core\CompositeTrait;
 use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
+use netPhramework\exceptions\NodeNotFound;
 
-class Asset implements Node
+readonly class Asset implements Node
 {
 	use CompositeTrait;
 
-	private string 				$name;
-	private RecordSet 			$recordSet;
-	private RecordChildSet 		$recordChildSet;
-	private RecordSetChildSet 	$recordSetChildSet;
-	private StringPredicate		$recordIdPredicate;
+	public function __construct(
+		private string $name,
+		private RecordSet $recordSet,
+		private RecordChildSet $recordChildSet,
+		private RecordSetChildSet $recordSetChildSet,
+		private StringPredicate $recordIdPredicate
+	) {}
 
-
-	public function __construct(string            $name,
-								RecordSet         $recordSet,
-								RecordChildSet    $recordChildSet,
-								RecordSetChildSet $recordSetChildSet,
-								StringPredicate   $recordIdPredicate
-	)
+	public function getName(): string
 	{
-		$this->name 				= $name;
-		$this->recordSet 			= $recordSet;
-		$this->recordChildSet 		= $recordChildSet;
-		$this->recordSetChildSet 	= $recordSetChildSet;
-		$this->recordIdPredicate	= $recordIdPredicate;
+		return $this->name;
 	}
 
 	public function getRecordSet(): RecordSet
@@ -39,15 +32,19 @@ class Asset implements Node
 
 	public function getChild(string $name): Node
 	{
-		if($this->recordIdPredicate->test($name))
-			$recordSetChild = new RecordComposite($this->recordChildSet, $name);
-		else
-			$recordSetChild = $this->recordSetChildSet->get($name);
-		return $recordSetChild->setRecordSet($this->recordSet);
+		return $this->getRecordSetChild($name)->setRecordSet($this->recordSet);
 	}
 
-	public function getName(): string
+	/**
+	 * @param string $name
+	 * @return RecordSetChild
+	 * @throws NodeNotFound
+	 */
+	private function getRecordSetChild(string $name): RecordSetChild
 	{
-		return $this->name;
+		if($this->recordIdPredicate->test($name))
+			return new RecordComposite($this->recordChildSet, $name);
+		else
+			return $this->recordSetChildSet->get($name);
 	}
 }
