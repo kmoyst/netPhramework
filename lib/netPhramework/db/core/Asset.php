@@ -40,10 +40,10 @@ class Asset implements Node
 	public function getChild(string $name): Node
 	{
 		if($this->recordIdPredicate->test($name))
-			$child = new RecordComposite($this->recordChildSet, $name);
+			$recordSetChild = new RecordComposite($this->recordChildSet, $name);
 		else
-			$child = $this->recordSetChildSet->get($name);
-		return $child->setRecordSet($this->recordSet);
+			$recordSetChild = $this->recordSetChildSet->get($name);
+		return $recordSetChild->setRecordSet($this->recordSet);
 	}
 
 	public function getName(): string
