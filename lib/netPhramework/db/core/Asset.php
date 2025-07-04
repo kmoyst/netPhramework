@@ -32,7 +32,7 @@ readonly class Asset implements Node
 
 	public function getChild(string $name): Node
 	{
-		return $this->parseName($name)->setRecordSet($this->recordSet);
+		return $this->resolveChild($name)->setRecordSet($this->recordSet);
 	}
 
 	/**
@@ -40,7 +40,7 @@ readonly class Asset implements Node
 	 * @return RecordSetChild
 	 * @throws NodeNotFound
 	 */
-	private function parseName(string $name): RecordSetChild
+	private function resolveChild(string $name): RecordSetChild
 	{
 		if($this->recordIdPredicate->test($name))
 			return new RecordComposite($this->recordChildSet, $name);
