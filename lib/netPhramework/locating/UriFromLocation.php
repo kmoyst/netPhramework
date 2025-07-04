@@ -9,11 +9,10 @@ readonly class UriFromLocation implements Stringable
 
 	public function get():string
 	{
-		$q			= '?';
-		$path 		= new UriFromPath($this->location->getPath());
-        $params 	= iterator_to_array($this->location->getParameters());
-		$uriQuery 	= http_build_query($params);
-		return rtrim("$path$q$uriQuery",$q);
+		$glue  = '?';
+		$path  = new UriFromPath($this->location->getPath());
+		$query = new UriQueryFromIterable($this->location->getParameters());
+		return rtrim($path . $glue . $query, $glue);
 	}
 
 	public function __toString(): string

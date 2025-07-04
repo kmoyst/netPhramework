@@ -8,7 +8,9 @@ use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\Redirectable;
 
-class Redirection extends Location implements Redirectable, Response, MutableLocation
+class Redirection
+	extends Location
+	implements Redirectable, Response, MutableLocation
 {
 	private ResponseCode $code;
 	private Variables $parameters;

@@ -8,9 +8,6 @@ use netPhramework\responding\ResponseCode;
 interface Redirectable
 {
 	/**
-	 * To set Response to redirectable with explicit code.
-	 * Finalizes the dispatch based on current MutablePath and Parameters.
-	 *
 	 * @param ResponseCode $code
 	 * @return $this
 	 */
