@@ -32,12 +32,10 @@ class RequestInterpreter
 	private function createRequest(
 		Application $application, MutableLocation $location):Request
 	{
-		if($this->input->getPostParameters() !== null)
+		if(($postParameters = $this->input->getPostParameters()) !== null)
 		{
 			$socket = $application->openActiveSocket();
-			$location->getParameters()
-				->clear()
-				->merge($this->input->getPostParameters());
+			$location->getParameters()->clear()->merge($postParameters);
 		}
 		else
 		{
