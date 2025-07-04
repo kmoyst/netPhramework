@@ -11,20 +11,10 @@ class RecordComposite extends RecordSetChild
 {
 	use CompositeTrait;
 
-	private RecordChildSet $nodeSet;
-	private string $recordId;
-
-	public function setNodeSet(RecordChildSet $nodeSet): self
-	{
-		$this->nodeSet = $nodeSet;
-		return $this;
-	}
-
-	public function setRecordId(string $recordId): self
-	{
-		$this->recordId = $recordId;
-		return $this;
-	}
+	public function __construct(
+		private readonly RecordChildSet $nodeSet,
+		private readonly string $recordId
+	) {}
 
 	/**
 	 * @param string $name
