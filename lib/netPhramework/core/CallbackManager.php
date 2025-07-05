@@ -36,20 +36,12 @@ readonly class CallbackManager
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
 	 * @param MutableLocation $location
-	 * @param bool $chain - False only uses current location when
-	 * existing callback is not present. If no callback is present, it WILL
-	 * return the current Location. True interjects with current location
-	 * even when callback is present. It propagates the existing callback to
-	 * allows that information to be preserved upon return to the current
-	 * location.
-	 *
 	 * @return string|Encodable
 	 */
-	public function callbackLink(
-		MutableLocation $location, bool $chain):string|Encodable
+	public function callbackLink(MutableLocation $location):string|Encodable
 	{
 		$callback = $location->getParameters()->getOrNull($this->callbackKey);
-		return !$chain && $callback ? $callback : $location;
+		return $callback ?: $location;
 	}
 
 	/**

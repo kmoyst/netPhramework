@@ -3,14 +3,11 @@
 namespace netPhramework\responding;
 
 use netPhramework\common\Variables;
-use netPhramework\locating\Location;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\Redirectable;
 
-class Redirection
-	extends Location
-	implements Redirectable, Response, MutableLocation
+class Redirection extends MutableLocation implements Redirectable, Response
 {
 	private ResponseCode $code;
 	private Variables $parameters;

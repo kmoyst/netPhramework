@@ -4,12 +4,12 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
-use netPhramework\locating\Location;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Wrapper;
 use netPhramework\responding\FileTransfer;
@@ -34,11 +34,9 @@ class SocketExchange implements Exchange
 	 */
 	public function redirect(Redirector $fallback):Variables
 	{
-		$redirection = new Redirection(clone $this->location->getPath())
-		;
+		$redirection = new Redirection($this->getPath());
 		$callback    = $this->callbackManager
-			->callbackRedirector(clone $this->location->getParameters())
-		;
+			->callbackRedirector($this->getParameters());
 		($callback ?? $fallback)->redirect($redirection);
 		$this->response = $redirection;
 		return $redirection->getParameters();
@@ -80,10 +78,10 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function callbackLink(bool $chain = false):string|Location
+	public function callbackLink(bool $chain = false):string|Encodable
 	{
-		return $this->callbackManager
-			->callbackLink(clone $this->location, $chain);
+		if($chain) return clone $this->location;
+		return $this->callbackManager->callbackLink(clone $this->location);
 	}
 
 	/** @inheritDoc */
@@ -104,12 +102,6 @@ class SocketExchange implements Exchange
 	public function getParameters(): Variables
 	{
 		return clone $this->location->getParameters();
-	}
-
-	/** @inheritDoc */
-	public function getLocation(): MutableLocation
-	{
-		return clone $this->location;
 	}
 
 	/** @inheritDoc */

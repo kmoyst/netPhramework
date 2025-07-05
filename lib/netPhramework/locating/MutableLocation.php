@@ -3,10 +3,9 @@
 namespace netPhramework\locating;
 
 use netPhramework\common\Variables;
-use netPhramework\rendering\Encodable;
 
-interface MutableLocation extends Encodable
+abstract class MutableLocation extends Location
 {
-	public function getPath(): MutablePath;
-	public function getParameters(): Variables;
+	abstract public function getPath(): MutablePath;
+	abstract public function getParameters(): Variables;
 }

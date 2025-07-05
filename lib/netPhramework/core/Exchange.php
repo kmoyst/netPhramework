@@ -3,12 +3,12 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\locating\Location;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 use netPhramework\responding\ResponseCode;
 
@@ -77,13 +77,6 @@ interface Exchange
 	public function getParameters(): Variables;
 
 	/**
-	 * Returns a mutable copy of the originally requested Location
-	 *
-	 * @return MutableLocation
-	 */
-	public function getLocation(): MutableLocation;
-
-	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
      * If $chain is false (default) Returns any callback Location found
@@ -101,9 +94,9 @@ interface Exchange
 	 * location
      * first.
      *
-	 * @return string|Location
+	 * @return string|Encodable
 	 */
-	public function callbackLink(bool $chain = false):string|Location;
+	public function callbackLink(bool $chain = false):string|Encodable;
 
 	/**
 	 * A convenience method to generate a Hidden Form Input with callback link
