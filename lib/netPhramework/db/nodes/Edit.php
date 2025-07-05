@@ -9,6 +9,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
+use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\View;
 
 class Edit extends RecordProcess
@@ -47,11 +48,12 @@ class Edit extends RecordProcess
 		$inputSet = new RecordFormBuilder($strategy)
 			->setRecord($this->record)
 			->addRecordInputs()
-			->getInputSet()->addCustom($exchange->callbackFormInput())
+			->getInputSet()
 		;
 		return new View('edit-form')
 			->add('hasFileInput', $inputSet->hasFileInput())
 			->add('inputs', $inputSet)
+			->add('callbackInput', new CallbackInput($exchange))
 			->add('action', 'update')
 			->add('callbackLink', $exchange->callbackLink())
 			;

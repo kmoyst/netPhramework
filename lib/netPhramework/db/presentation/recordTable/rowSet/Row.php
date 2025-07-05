@@ -9,7 +9,7 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\locating\MutablePath;
-use netPhramework\presentation\Input;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Viewable;
 
 class Row extends Viewable
@@ -17,7 +17,7 @@ class Row extends Viewable
 	public function __construct(
 		private readonly ColumnSet $columnSet,
 		private readonly Record $record,
-		private readonly Input $callbackInput,
+		private readonly Encodable $callbackInput,
 		private readonly MutablePath $assetPath
 	) {}
 

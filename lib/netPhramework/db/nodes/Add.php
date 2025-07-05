@@ -10,7 +10,7 @@ use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
-use netPhramework\presentation\Input;
+use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\View;
 
 class Add extends RecordSetProcess
@@ -31,7 +31,7 @@ class Add extends RecordSetProcess
 	public function handleExchange(Exchange $exchange): void
     {
 		$editForm = $this->createEditForm(
-			$exchange->callbackFormInput(),
+			new CallbackInput($exchange),
 			$this->recordSet->newRecord(),
 			'insert', $exchange->callbackLink())
 		;
@@ -43,7 +43,7 @@ class Add extends RecordSetProcess
 	}
 
 	/**
-	 * @param Input $callback
+	 * @param CallbackInput $callbackInput
 	 * @param Record $record
 	 * @param string $action
 	 * @param string $callbackLink
@@ -52,18 +52,19 @@ class Add extends RecordSetProcess
 	 * @throws MappingException
 	 */
 	private function createEditForm(
-		Input $callback, Record $record,
+		CallbackInput $callbackInput, Record $record,
 		string $action, string $callbackLink):View
 	{
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet = new RecordFormBuilder($strategy)
 			->setRecord($record)
 			->addRecordInputs()
-			->getInputSet()->addCustom($callback)
+			->getInputSet()
 		;
 		return new View('edit-form')
 			->add('hasFileInput', $inputSet->hasFileInput())
 			->add('inputs', $inputSet)
+			->add('callbackInput', $callbackInput)
 			->add('action', $action)
 			->add('callbackLink', $callbackLink)
 			;

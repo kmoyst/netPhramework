@@ -7,8 +7,6 @@ use netPhramework\authentication\SessionUserAggregate;
 use netPhramework\authentication\SessionUserProvider;
 use netPhramework\authentication\User;
 use netPhramework\exceptions\InvalidSession;
-use netPhramework\rendering\Encodable;
-use netPhramework\rendering\ImmutableView;
 use netPhramework\responding\ResponseCode;
 
 class Session
@@ -80,22 +78,6 @@ class Session
             return $code;
         }
         else return ResponseCode::OK;
-    }
-
-    /**
-     * Convenience method to generate a basic error Viewable and clear
-     * the error data from the Session. Return null when no error exists.
-     *
-     * @return Encodable|null
-     * @throws InvalidSession
-     */
-    public function getEncodableValue():?Encodable
-    {
-        if($errorMessage = $this->getErrorMessageAndClear())
-        {
-            return new ImmutableView('error-message',['message'=>$errorMessage]);
-        }
-        else return null;
     }
 
 	/**

@@ -7,6 +7,7 @@ use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\rowSet\RowSet;
 use netPhramework\locating\MutablePath;
 use netPhramework\presentation\Input;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
 readonly class ViewFactory
@@ -38,11 +39,11 @@ readonly class ViewFactory
 
 	/**
 	 * @param MutablePath $compositePath
-	 * @param Input $callbackInput
+	 * @param Encodable $callbackInput
 	 * @return View
 	 */
 	public function getAddButton(
-		MutablePath $compositePath, Input $callbackInput):View
+		MutablePath $compositePath, Encodable $callbackInput):View
 	{
 		return new View('add-button-form')
 			->add('callbackInput', $callbackInput)

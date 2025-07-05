@@ -6,6 +6,7 @@ use netPhramework\core\Exchange;
 use netPhramework\db\authentication\EnrolledUser;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
 class SignUp extends RecordSetProcess
@@ -27,13 +28,13 @@ class SignUp extends RecordSetProcess
 	{
 		$user = $this->enrolledUser ?? new EnrolledUser();
 		$user->setRecord($this->recordSet->newRecord());
-        $errorView    = $exchange->getSession()->getEncodableValue();
+        $feedbackView = new FeedbackView($exchange);
         $responseCode = $exchange->getSession()->resolveResponseCode();
         $view = new View('sign-up')
 			->add('usernameInput', $user->getUsernameInput())
 			->add('passwordInput', $user->getPasswordInput())
 			->add('formAction', $this->actionLeaf)
-            ->add('errorView', $errorView ?? '')
+            ->add('errorView', $feedbackView)
         ;
 		$exchange->display($view, $responseCode);
 	}

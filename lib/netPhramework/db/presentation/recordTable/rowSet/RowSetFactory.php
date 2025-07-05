@@ -7,14 +7,14 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\locating\MutablePath;
-use netPhramework\presentation\Input;
+use netPhramework\rendering\Encodable;
 
 class RowSetFactory implements RowRegistry
 {
 	private array $rows = [];
 	private RecordSet $recordSet;
 	private ColumnSet $columnSet;
-	private Input $callbackInput;
+	private Encodable $callbackInput;
 	private MutablePath $assetPath;
 
 	public function setRecordSet(RecordSet $recordSet): self
@@ -29,7 +29,7 @@ class RowSetFactory implements RowRegistry
 		return $this;
 	}
 
-	public function setCallbackInput(Input $callbackInput): self
+	public function setCallbackInput(Encodable $callbackInput): self
 	{
 		$this->callbackInput = $callbackInput;
 		return $this;

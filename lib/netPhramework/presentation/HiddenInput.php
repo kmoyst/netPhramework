@@ -3,7 +3,6 @@
 namespace netPhramework\presentation;
 
 use netPhramework\common\Variables;
-use netPhramework\locating\Location;
 use netPhramework\rendering\Encodable;
 
 class HiddenInput extends Input
@@ -12,7 +11,7 @@ class HiddenInput extends Input
 
 	public function __construct(
 		string $name,
-		private string|Location|null $value = null
+		private string|Encodable|null $value = null
 	)
 	{
 		parent::__construct($name);

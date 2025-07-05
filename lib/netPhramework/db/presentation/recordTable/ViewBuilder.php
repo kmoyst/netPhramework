@@ -17,7 +17,6 @@ use netPhramework\db\presentation\recordTable\{columnSet\ColumnMapper,
 	rowSet\RowSet,
 	rowSet\RowSetFactory};
 use netPhramework\locating\MutablePath;
-use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
@@ -25,10 +24,10 @@ class ViewBuilder
 {
 	private RecordSet $recordSet;
 	private MutablePath $compositePath;
-	private Input $callbackInputForRows;
+	private Encodable $callbackInputForRows;
 	private Query $query;
 
-	private ?Input $callbackInputForFilterForms = null;
+	private ?Encodable $callbackInputForFilterForms = null;
 	private ?Encodable $feedback = null;
 
 	protected ColumnSet $columnSet;
@@ -141,14 +140,14 @@ class ViewBuilder
 	}
 
 	public function setCallbackInputForRows(
-		Input $callbackInputForRows): self
+		Encodable $callbackInputForRows): self
 	{
 		$this->callbackInputForRows = $callbackInputForRows;
 		return $this;
 	}
 
 	public function setCallbackInputForFilterForms(
-		?Input $callbackInputForFilterForms): self
+		?Encodable $callbackInputForFilterForms): self
 	{
 		$this->callbackInputForFilterForms = $callbackInputForFilterForms;
 		return $this;

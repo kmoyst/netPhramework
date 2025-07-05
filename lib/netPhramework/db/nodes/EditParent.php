@@ -18,6 +18,8 @@ use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\ViewBuilder;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\presentation\CallbackInput;
+use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 
@@ -46,9 +48,9 @@ class EditParent extends RecordProcess
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$view = new View('edit-parent')
-			->add('editForm',   $this->createEditForm($exchange))
-			->add('childTable',	$this->createChildTable($exchange))
+		$view   = new View('edit-parent')
+			->add('editForm',   $this->editForm($exchange))
+			->add('childTable',	$this->childTable($exchange))
 		;
 		$exchange->display(
 			$view->setTitle("Edit Record"),
@@ -62,19 +64,20 @@ class EditParent extends RecordProcess
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 */
-	private function createEditForm(Exchange $exchange):Viewable
+	private function editForm(Exchange $exchange):Viewable
 	{
-		$callbackInput = $exchange->callbackFormInput();
+		$callbackInput = new CallbackInput($exchange);
 		$strategy 	   = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet 	   = new RecordFormBuilder($strategy)
 			->setRecord($this->record)
 			->addRecordInputs()
-			->getInputSet()->addCustom($callbackInput)
+			->getInputSet()
 			;
 		return new View('edit-form')
 			->add('hasFileInput', $inputSet->hasFileInput())
 			->add('inputs', $inputSet)
 			->add('action', 'update')
+			->add('callbackInput', $callbackInput)
 			->add('callbackLink', $exchange->callbackLink())
 			;
 	}
@@ -89,7 +92,7 @@ class EditParent extends RecordProcess
 	 * @throws RecordNotFound
 	 * @throws ValueInaccessible
 	 */
-	private function createChildTable(Exchange $exchange):Viewable
+	private function childTable(Exchange $exchange):Viewable
 	{
 		$assetName	 	  = $this->childSelector->getAssetName();
 		$recordSet   	  = $this->childSelector->getChildren($this->record);
@@ -100,9 +103,9 @@ class EditParent extends RecordProcess
 			->setQuery($query)
 			->setRecordSet($recordSet)
 			->setCompositePath($compPath)
-			->setCallbackInputForRows($exchange->callbackFormInput(true))
-			->setCallbackInputForFilterForms($exchange->callbackFormInput())
-			->setFeedback($exchange->getSession()->getEncodableValue())
+			->setCallbackInputForRows(new CallbackInput($exchange, true))
+			->setCallbackInputForFilterForms(new CallbackInput($exchange))
+			->setFeedback(new FeedbackView($exchange))
 			->buildColumnSet($this->childColumnSetStrategy)
 			->buildRowSetFactory()
 			->collate()

@@ -7,7 +7,6 @@ use netPhramework\exceptions\PathException;
 use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
-use netPhramework\presentation\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
@@ -85,11 +84,9 @@ class SocketExchange implements Exchange
 	}
 
 	/** @inheritDoc */
-	public function callbackFormInput(bool $chain = false):HiddenInput
+	public function getCallbackKey(): string
 	{
-		return new HiddenInput(
-			$this->callbackManager->getCallbackKey(),
-			$this->callbackLink($chain));
+		return $this->callbackManager->getCallbackKey();
 	}
 
 	/** @inheritDoc */

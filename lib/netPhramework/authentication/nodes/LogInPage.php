@@ -9,6 +9,7 @@ use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\locating\rerouters\Rerouter;
+use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
 class LogInPage implements Node
@@ -34,14 +35,14 @@ class LogInPage implements Node
         $relocator  = $this->forForm??new RerouteToSibling('authenticate');
         $relocator->reroute($formAction)
 		;
-        $errorView    = $exchange->getSession()->getEncodableValue();
+        $feedbackView = new FeedbackView($exchange);
         $responseCode = $exchange->getSession()->resolveResponseCode()
 		;
 		$exchange->display($this->view??new View('log-in-page'), $responseCode)
             ->add('usernameInput', 	$manager->getUsernameInput())
             ->add('passwordInput', 	$manager->getPasswordInput())
             ->add('formAction', 	$formAction)
-            ->add('errorView', 		$errorView??'')
+            ->add('errorView', 		$feedbackView)
             ;
     }
 }

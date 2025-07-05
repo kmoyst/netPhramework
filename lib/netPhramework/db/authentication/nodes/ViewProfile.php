@@ -13,6 +13,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\View;
 
 class ViewProfile implements Node
@@ -43,7 +44,7 @@ class ViewProfile implements Node
 				EnrolledUserField::USERNAME->value,
 				$user->getUsername());
 		$profile = new UserProfile()->setRecord($record);
-		$callbackInput = $exchange->callbackFormInput();
+		$callbackInput = new CallbackInput($exchange);
 		$exchange->ok(new View('view-profile')
 			->add('firstName', $profile->getFirstName())
 			->add('lastName', $profile->getLastName())

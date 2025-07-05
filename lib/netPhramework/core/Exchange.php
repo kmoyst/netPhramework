@@ -3,10 +3,8 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Variables;
-use netPhramework\locating\MutableLocation;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
-use netPhramework\presentation\HiddenInput;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
@@ -99,22 +97,6 @@ interface Exchange
 	public function callbackLink(bool $chain = false):string|Encodable;
 
 	/**
-	 * A convenience method to generate a Hidden Form Input with callback link
-	 *
-	 * @param bool $chain - False (default) only uses current Location
-	 * when
-	 * existing callback is not present. If no callback is present, it WILL
-	 * return the current Location. True interjects with current
-	 * location
-	 * even when callback is present. It propagates the existing callback to
-	 * allow that information to be preserved upon return to the current
-	 * location.
-	 *
-	 * @return HiddenInput
-	 */
-	public function callbackFormInput(bool $chain = false):HiddenInput;
-
-	/**
 	 * Returns current Session
 	 *
 	 * @return Session
@@ -127,4 +109,11 @@ interface Exchange
 	 * @return FileManager
 	 */
 	public function getFileManager():FileManager;
+
+	/**
+	 * Returns Callback Key
+	 *
+	 * @return string
+	 */
+	public function getCallbackKey():string;
 }
