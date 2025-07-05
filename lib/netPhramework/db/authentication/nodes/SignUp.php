@@ -28,7 +28,7 @@ class SignUp extends RecordSetProcess
 	{
 		$user = $this->enrolledUser ?? new EnrolledUser();
 		$user->setRecord($this->recordSet->newRecord());
-        $feedbackView = new FeedbackView($exchange);
+        $feedbackView = new FeedbackView($exchange->getSession());
         $responseCode = $exchange->getSession()->resolveResponseCode();
         $view = new View('sign-up')
 			->add('usernameInput', $user->getUsernameInput())

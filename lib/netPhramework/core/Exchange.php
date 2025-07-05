@@ -6,7 +6,6 @@ use netPhramework\common\Variables;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\rendering\ConfigurableView;
-use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 use netPhramework\responding\ResponseCode;
 
@@ -14,7 +13,7 @@ use netPhramework\responding\ResponseCode;
  * The central mediator for the Request-Response cycle
  *
  */
-interface Exchange
+interface Exchange extends CallbackContext
 {
 	/**
 	 * Generate a standard displayable Response to be wrapped.
@@ -75,28 +74,6 @@ interface Exchange
 	public function getParameters(): Variables;
 
 	/**
-	 * Generates a callback link (usually to be added to a form in passive node)
-	 *
-     * If $chain is false (default) Returns any callback Location found
-	 * in the Exchange Parameters OR the current Location if none is
-	 * found.
-     *
-     * If $chain is true, it will insert the current Location as the
-	 * first in
-     * the callback chain and append any callback Location found in
-	 * the Exchange
-     * Parameters.
-	 *
-     * @param bool $chain - false: defer to existing callback, true: inject
-     * current location into callback chain to request a return to this
-	 * location
-     * first.
-     *
-	 * @return string|Encodable
-	 */
-	public function callbackLink(bool $chain = false):string|Encodable;
-
-	/**
 	 * Returns current Session
 	 *
 	 * @return Session
@@ -110,10 +87,4 @@ interface Exchange
 	 */
 	public function getFileManager():FileManager;
 
-	/**
-	 * Returns Callback Key
-	 *
-	 * @return string
-	 */
-	public function getCallbackKey():string;
 }

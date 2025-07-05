@@ -35,7 +35,7 @@ class LogInPage implements Node
         $relocator  = $this->forForm??new RerouteToSibling('authenticate');
         $relocator->reroute($formAction)
 		;
-        $feedbackView = new FeedbackView($exchange);
+        $feedbackView = new FeedbackView($exchange->getSession());
         $responseCode = $exchange->getSession()->resolveResponseCode()
 		;
 		$exchange->display($this->view??new View('log-in-page'), $responseCode)

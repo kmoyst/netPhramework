@@ -105,7 +105,7 @@ class EditParent extends RecordProcess
 			->setCompositePath($compPath)
 			->setCallbackInputForRows(new CallbackInput($exchange, true))
 			->setCallbackInputForFilterForms(new CallbackInput($exchange))
-			->setFeedback(new FeedbackView($exchange))
+			->setFeedback(new FeedbackView($exchange->getSession()))
 			->buildColumnSet($this->childColumnSetStrategy)
 			->buildRowSetFactory()
 			->collate()

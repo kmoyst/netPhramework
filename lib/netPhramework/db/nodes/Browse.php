@@ -45,7 +45,7 @@ class Browse extends RecordSetProcess
 			->setRecordSet($this->recordSet)
 			->setCompositePath($exchange->getPath()->pop())
 			->setCallbackInputForRows(new CallbackInput($exchange))
-			->setFeedback(new FeedbackView($exchange))
+			->setFeedback(new FeedbackView($exchange->getSession()))
 			->buildColumnSet($this->columnSetStrategy)
 			->buildRowSetFactory()
 			->collate()

@@ -4,13 +4,13 @@ namespace netPhramework\presentation;
 
 
 use netPhramework\common\Variables;
-use netPhramework\core\Exchange;
+use netPhramework\core\CallbackContext;
 use netPhramework\rendering\Viewable;
 
 class CallbackInput extends Viewable
 {
 	/**
-	 * @param Exchange $exchange
+	 * @param CallbackContext $context
 	 * @param bool $chain - False (default) only uses current Location
 	 *   when
 	 *   existing callback is not present. If no callback is present, it WILL
@@ -21,7 +21,7 @@ class CallbackInput extends Viewable
 	 *   location.
 	 */
 	public function __construct(
-		private readonly Exchange $exchange,
+		private readonly CallbackContext $context,
 		private readonly bool $chain = false) {}
 
 	public function getTemplateName(): string
@@ -32,8 +32,8 @@ class CallbackInput extends Viewable
 	public function getVariables(): iterable
 	{
 		return new Variables()
-			->add('name', $this->exchange->getCallbackKey())
-			->add('value', $this->exchange->callbackLink($this->chain))
+			->add('name', $this->context->getCallbackKey())
+			->add('value', $this->context->callbackLink($this->chain))
 			;
 	}
 }
