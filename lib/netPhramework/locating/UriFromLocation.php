@@ -5,7 +5,7 @@ use Stringable;
 
 readonly class UriFromLocation implements Stringable
 {
-    public function __construct(private Location $location) {}
+    public function __construct(private ReadableLocation $location) {}
 
 	public function get():string
 	{

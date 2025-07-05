@@ -3,7 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\locating\LocationFromUri;
-use netPhramework\locating\MutableLocation;
+use netPhramework\locating\Location;
 
 class RequestInterpreter
 {
@@ -26,11 +26,11 @@ class RequestInterpreter
 
 	/**
 	 * @param Application $application
-	 * @param MutableLocation $location
+	 * @param Location $location
 	 * @return Request
 	 */
 	private function createRequest(
-		Application $application, MutableLocation $location):Request
+		Application $application, Location $location):Request
 	{
 		if(($postParameters = $this->input->getPostParameters()) !== null)
 		{

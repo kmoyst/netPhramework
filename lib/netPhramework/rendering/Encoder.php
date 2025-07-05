@@ -3,7 +3,7 @@
 namespace netPhramework\rendering;
 
 use netPhramework\common\FileFinder;
-use netPhramework\locating\Location;
+use netPhramework\locating\ReadableLocation;
 use netPhramework\locating\Path;
 use netPhramework\locating\UriFromLocation;
 use netPhramework\locating\UriFromPath;
@@ -39,10 +39,10 @@ readonly class Encoder
 	}
 
 	/**
-	 * @param Location $location
+	 * @param ReadableLocation $location
 	 * @return string|Stringable
 	 */
-	public function encodeLocation(Location $location):Stringable|string
+	public function encodeLocation(ReadableLocation $location):Stringable|string
 	{
 		return new UriFromLocation($location);
 	}

@@ -5,7 +5,7 @@ namespace netPhramework\locating;
 use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
 
-class LocationFromUri extends MutableLocation
+class LocationFromUri extends Location
 {
 	private MutablePath $path;
 	private Variables $parameters;

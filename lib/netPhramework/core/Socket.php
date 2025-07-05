@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-use netPhramework\locating\MutableLocation;
+use netPhramework\locating\Location;
 use netPhramework\rendering\Wrapper;
 use netPhramework\responding\Response;
 
@@ -18,12 +18,12 @@ readonly class Socket
     }
 
 	/**
-	 * @param MutableLocation $location
+	 * @param Location $location
 	 * @param RequestContext $context
 	 * @return Response
 	 */
     public function processRequest(
-		MutableLocation $location, RequestContext $context):Response
+		Location $location, RequestContext $context):Response
 	{
         try
 		{

@@ -2,13 +2,13 @@
 
 namespace netPhramework\core;
 
-use netPhramework\locating\MutableLocation;
+use netPhramework\locating\Location;
 use netPhramework\responding\Response;
 
 readonly class Request
 {
-	public function __construct(private MutableLocation $location,
-								private Socket $socket) {}
+	public function __construct(private Location $location,
+								private Socket   $socket) {}
 
 	/**
 	 * @param RequestContext $context

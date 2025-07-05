@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
-use netPhramework\locating\MutableLocation;
+use netPhramework\locating\Location;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\rendering\ConfigurableView;
@@ -19,7 +19,7 @@ use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {
-	private MutableLocation $location;
+	private Location $location;
 	private Session $session;
 	private CallbackManager $callbackManager;
 	private FileManager $fileManager;
@@ -123,7 +123,7 @@ class SocketExchange implements Exchange
 		return $this->response;
 	}
 
-	public function setLocation(MutableLocation $location): self
+	public function setLocation(Location $location): self
 	{
 		$this->location = $location;
 		return $this;

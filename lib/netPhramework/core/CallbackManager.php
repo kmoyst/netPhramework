@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
 use netPhramework\locating\redirectors\RedirectToRoot;
-use netPhramework\locating\MutableLocation;
+use netPhramework\locating\Location;
 use netPhramework\locating\LocationFromUri;
 use netPhramework\rendering\Encodable;
 
@@ -35,10 +35,10 @@ readonly class CallbackManager
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
-	 * @param MutableLocation $location
+	 * @param Location $location
 	 * @return string|Encodable
 	 */
-	public function callbackLink(MutableLocation $location):string|Encodable
+	public function callbackLink(Location $location):string|Encodable
 	{
 		$callback = $location->getParameters()->getOrNull($this->callbackKey);
 		return $callback ?: $location;
