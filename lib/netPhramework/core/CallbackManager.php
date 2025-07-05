@@ -41,7 +41,7 @@ readonly class CallbackManager
 	public function callbackLink(Location $location):string|Encodable
 	{
 		$callback = $location->getParameters()->getOrNull($this->callbackKey);
-		return $callback ?: $location;
+		return $callback ?? $location;
 	}
 
 	/**
