@@ -8,6 +8,6 @@ interface RequestContext
 {
 	public function getSession():Session;
 	public function getEnvironment():Environment;
-	public function getCallbackKey():string;
+	public function getCallbackManager():CallbackManager;
 	public function getFileManager():FileManager;
 }

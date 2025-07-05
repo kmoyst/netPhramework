@@ -3,6 +3,7 @@
 namespace netPhramework\bootstrap;
 
 use netPhramework\common\FileFinder;
+use netPhramework\core\CallbackManager;
 use netPhramework\core\RequestContext;
 use netPhramework\core\RequestInterpreter;
 use netPhramework\core\Session;
@@ -27,9 +28,9 @@ class SiteContext implements RequestContext
 		$this->fileManager 	= $fileManager 	?? new FileManager($_FILES);
 	}
 
-	public function getCallbackKey(): string
+	public function getCallbackManager(): CallbackManager
 	{
-		return 'callback';
+		return new CallbackManager('callback');
 	}
 
 	public function getRequestInterpreter(): RequestInterpreter

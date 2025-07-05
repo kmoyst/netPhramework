@@ -2,6 +2,7 @@
 
 namespace netPhramework\core;
 
+use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\MutableLocation;
@@ -17,11 +18,8 @@ readonly class CallbackManager
 	 * Takes necessary context to function, usually from SocketExchange
 	 *
 	 * @param string $callbackKey
-	 * @param MutableLocation $location
 	 */
-	public function __construct(
-		private string $callbackKey,
-		private MutableLocation $location) {}
+	public function __construct(private string $callbackKey) {}
 
 	/**
 	 * QueryKey used for callback inputs and location parameters.
@@ -37,6 +35,7 @@ readonly class CallbackManager
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
+	 * @param MutableLocation $location
 	 * @param bool $chain - False only uses current location when
 	 * existing callback is not present. If no callback is present, it WILL
 	 * return the current Location. True interjects with current location
@@ -46,21 +45,11 @@ readonly class CallbackManager
 	 *
 	 * @return string|Encodable
 	 */
-	public function callbackLink(bool $chain):string|Encodable
+	public function callbackLink(
+		MutableLocation $location, bool $chain):string|Encodable
 	{
-		if($chain)
-		{
-			$location = $this->fromCurrentLocation();
-			if($caller = $this->fromParameters())
-				$location->getParameters()->add($this->callbackKey, $caller);
-			return $location;
-		}
-		else
-		{
-			return
-				$this->fromParameters() ??
-				$this->fromCurrentLocation();
-		}
+		$callback = $location->getParameters()->getOrNull($this->callbackKey);
+		return !$chain && $callback ? $callback : $location;
 	}
 
 	/**
@@ -70,33 +59,11 @@ readonly class CallbackManager
 	 * @return RedirectToRoot|null - dispatcher to callback, null if absent
 	 * @throws PathException
 	 */
-	public function callbackRedirector():?RedirectToRoot
+	public function callbackRedirector(Variables $parameters):?RedirectToRoot
 	{
-		if(!($callbackUri = $this->fromParameters())) return null;
-		$location = new LocationFromUri($callbackUri);
-		return new RedirectToRoot(
-			$location->getPath(), $location->getParameters());
-	}
-
-	/**
-	 * Private method. Retrieves callback from parameters. Returns null if
-	 * none exists.
-	 *
-	 * @return string|null
-	 */
-	private function fromParameters():?string
-	{
-		return $this->location->getParameters()->getOrNull($this->callbackKey);
-	}
-
-	/**
-	 * Generates a readable location based on the contained
-	 * MutablePath / Parameters.
-	 *
-	 * @return MutableLocation
-	 */
-	private function fromCurrentLocation():MutableLocation
-	{
-		return clone $this->location;
+		$callbackUri = $parameters->getOrNull($this->callbackKey);
+		if(!$callbackUri) return null;
+		$target = new LocationFromUri($callbackUri);
+		return new RedirectToRoot($target->getPath(), $target->getParameters());
 	}
 }

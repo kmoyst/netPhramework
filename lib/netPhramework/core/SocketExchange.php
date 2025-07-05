@@ -34,8 +34,11 @@ class SocketExchange implements Exchange
 	 */
 	public function redirect(Redirector $fallback):Variables
 	{
-		$redirection = new Redirection(clone $this->location->getPath());
-		$callback = $this->callbackManager->callbackRedirector();
+		$redirection = new Redirection(clone $this->location->getPath())
+		;
+		$callback    = $this->callbackManager
+			->callbackRedirector(clone $this->location->getParameters())
+		;
 		($callback ?? $fallback)->redirect($redirection);
 		$this->response = $redirection;
 		return $redirection->getParameters();
@@ -79,7 +82,8 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function callbackLink(bool $chain = false):string|Location
 	{
-		return $this->callbackManager->callbackLink($chain);
+		return $this->callbackManager
+			->callbackLink(clone $this->location, $chain);
 	}
 
 	/** @inheritDoc */

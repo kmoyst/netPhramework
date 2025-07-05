@@ -22,22 +22,19 @@ readonly class Socket
 	 * @param RequestContext $context
 	 * @return Response
 	 */
-    public function processRequest(MutableLocation $location,
-								   RequestContext $context):Response
+    public function processRequest(
+		MutableLocation $location, RequestContext $context):Response
 	{
         try
 		{
-            $exchange  		 = new SocketExchange();
-			$navigator 		 = new Navigator();
-			$callbackManager = new CallbackManager(
-				$context->getCallbackKey(), clone $location)
-			;
+            $exchange  = new SocketExchange();
+			$navigator = new Navigator();
 			$exchange
 				->setLocation($location)
 				->setSession($context->getSession())
 				->setFileManager($context->getFileManager())
 				->setWrapper($this->wrapper)
-				->setCallbackManager($callbackManager)
+				->setCallbackManager($context->getCallbackManager())
 			;
 			$navigator
 				->setRoot($this->root)

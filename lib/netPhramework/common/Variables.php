@@ -58,7 +58,7 @@ class Variables implements Iterator
     {
         foreach ($iterable as $k => $v)
             if($this->has($k) && !$overwrite) continue;
-			else $this->values[$k] = $v;
+			else $this->values[$k] = is_object($v) ? clone $v : $v;
         return $this;
     }
 
