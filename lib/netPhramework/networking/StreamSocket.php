@@ -23,10 +23,9 @@ class StreamSocket
 	}
 
 	/**
-	 * @return int|null
 	 * @throws StreamSocketException
 	 */
-	public function open():?int
+	public function open():self
 	{
 		// @ prefix suppresses PHP warning error
 		$socket = @stream_socket_client(
@@ -37,7 +36,7 @@ class StreamSocket
 		;
 		if(!$socket) throw new StreamSocketException($errorMessage);
 		$this->socket = $socket;
-		return $this->readResponseCode();
+		return $this;
 	}
 
 	public function close():self

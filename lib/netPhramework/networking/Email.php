@@ -44,7 +44,9 @@ class Email
 
 	/**
 	 * @return $this
+	 * @throws EmailException
 	 * @throws Exception
+	 * @throws StreamSocketException
 	 */
 	public function send():self
 	{
@@ -54,17 +56,17 @@ class Email
 		$textType = 'text/html';
 		$this->socket = new StreamSocket($this->smtpServer);
 		try {
-			SmtpResponseCode::SERVICE_READY->confirm($this->socket
-				->open());
-			SmtpResponseCode::OK->confirm($this->socket
+			$this->verify(SmtpResponseCode::SERVICE_READY,
+				$this->socket->open()->readResponseCode());
+			$this->verify(SmtpResponseCode::OK, $this->socket
 				->write("helo $this->sendingServer")->readResponseCode());
-			SmtpResponseCode::OK->confirm($this->socket
+			$this->verify(SmtpResponseCode::OK, $this->socket
 				->write("mail from: $this->sender")->readResponseCode());
-			SmtpResponseCode::OK->confirm($this->socket
+			$this->verify(SmtpResponseCode::OK, $this->socket
 				->write("rcpt to: $this->recipient")->readResponseCode());
-			SmtpResponseCode::START_MAIL_INPUT->confirm($this->socket
+			$this->verify(SmtpResponseCode::START_MAIL_INPUT, $this->socket
 				->write("data")->readResponseCode());
-			SmtpResponseCode::OK->confirm($this->socket
+			$this->verify(SmtpResponseCode::OK, $this->socket
 				->write("From: " . $this->resolveSenderName())
 				->write("To: " . $this->resolveRecipientName())
 				->write("Subject: $this->subject")
@@ -76,14 +78,15 @@ class Email
 				->write('')
 				->write($this->message ?? '')
 				->write('')
-				->write("--$boundary")
+				->write("--$boundary--")
 				->write('')
 				->write('.')
 				->readResponseCode());
-			SmtpResponseCode::GOODBYE->confirm($this->socket
+			$this->verify(SmtpResponseCode::GOODBYE, $this->socket
 				->write('quit')->readResponseCode());
-		} catch (SmtpResponseFailed $e) {
-			throw new EmailException("$e. " . $this->socket->getLastMessage());
+		} catch (SmtpException $e) {
+			$msg = $e->getMessage() . ', ' . $this->socket->getLastMessage();
+			throw new SmtpException(trim($msg,', '));
 		} finally {
 			$this->socket->close();
 		}
@@ -94,14 +97,12 @@ class Email
 	 * @param SmtpResponseCode $code
 	 * @param int|null $responseCode
 	 * @return void
-	 * @throws EmailException
+	 * @throws SmtpException
 	 */
-	private function confirm(SmtpResponseCode $code, ?int $responseCode):void
+	private function verify(SmtpResponseCode $code, ?int $responseCode):void
 	{
 		if(!$code->test($responseCode))
-		{
-			throw new EmailException($this->socket->getLastMessage());
-		}
+			throw new SmtpException("Expected $code->value");
 	}
 
 	public function setRecipient(string $recipient): self

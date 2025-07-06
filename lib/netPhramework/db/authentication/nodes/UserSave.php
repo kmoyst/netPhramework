@@ -50,7 +50,7 @@ class UserSave extends Save
 					->send()
 					;
 			} catch (\Exception $e) {
-				throw $e;
+				// do nothing, not crucial
 			}
 			$exchange->getSession()->login($enrolledUser);
             $exchange->redirect($this->onSuccess);
