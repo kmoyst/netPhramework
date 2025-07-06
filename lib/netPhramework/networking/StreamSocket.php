@@ -62,7 +62,7 @@ class StreamSocket
 		}
 	}
 
-	public function readResponseCode():?int
+	public function readCode():?int
 	{
 		$msg = fgets($this->socket, $this->maxLineLength);
 		if(preg_match('/^(\d{3})/', (string)$msg, $matches))
