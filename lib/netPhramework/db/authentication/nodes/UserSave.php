@@ -10,9 +10,10 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\nodes\Save;
+use netPhramework\exceptions\InvalidPassword;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToSibling;
-use netPhramework\exceptions\InvalidPassword;
+use netPhramework\networking\Email;
 
 class UserSave extends Save
 {
@@ -38,7 +39,20 @@ class UserSave extends Save
 		try {
             $enrolledUser->parseAndSet($exchange->getParameters());
             $enrolledUser->save();
-            $exchange->getSession()->login($enrolledUser);
+			try {
+				$signedUpName = $enrolledUser->getUsername();
+				$message = "A New User Has Signed Up: $signedUpName";
+				new Email()
+					->setRecipient('kurt@moyst.ca')
+					->setSender('kurt@moyst.ca')
+					->setSubject('New User Signed Up')
+					->setMessage($message)
+					->send()
+					;
+			} catch (\Exception $e) {
+				throw $e;
+			}
+			$exchange->getSession()->login($enrolledUser);
             $exchange->redirect($this->onSuccess);
         } catch (DuplicateEntryException) {
             $message = "User already exists: " . $enrolledUser->getUsername();

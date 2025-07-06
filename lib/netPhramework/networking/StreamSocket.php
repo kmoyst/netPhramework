@@ -1,8 +1,6 @@
 <?php
 
-namespace netPhramework\core;
-
-use netPhramework\exceptions\StreamSocketException;
+namespace netPhramework\networking;
 
 class StreamSocket
 {
@@ -10,7 +8,7 @@ class StreamSocket
 	 * @var resource
 	 */
 	private $socket;
-	private string $writeErrorMessage;
+	private string $lastMessage = '';
 
 	public function __construct(
 		private readonly string $address,
@@ -21,14 +19,14 @@ class StreamSocket
 
 	public function __destruct()
 	{
-		$this->close();
+		if(is_resource($this->socket)) $this->close();
 	}
 
 	/**
-	 * @return $this
+	 * @return int|null
 	 * @throws StreamSocketException
 	 */
-	public function open():self
+	public function open():?int
 	{
 		// @ prefix suppresses PHP warning error
 		$socket = @stream_socket_client(
@@ -39,7 +37,7 @@ class StreamSocket
 		;
 		if(!$socket) throw new StreamSocketException($errorMessage);
 		$this->socket = $socket;
-		return $this;
+		return $this->readResponseCode();
 	}
 
 	public function close():self
@@ -54,14 +52,31 @@ class StreamSocket
 		return $this;
 	}
 
-	public function confirm():bool
+	public function confirm(?int $specificCode = null):bool
 	{
 		$msg = fgets($this->socket, $this->maxLineLength);
-		if(preg_match('/^(2|3)/', $msg)) return true;
+		if(preg_match("/^(" . $specificCode ?? '2|3' . ")/", $msg)) return true;
 		else
 		{
-			$this->writeErrorMessage = $msg === false ? '' : trim($msg);
+			$this->lastMessage = $msg === false ? 'fgets fail' : trim($msg);
 			return false;
 		}
+	}
+
+	public function readResponseCode():?int
+	{
+		$msg = fgets($this->socket, $this->maxLineLength);
+		if(preg_match('/^(\d{3})/', (string)$msg, $matches))
+			return (int)$matches[1];
+		else
+		{
+			$this->lastMessage = 'fgets fail';
+			return null;
+		}
+	}
+
+	public function getLastMessage(): string
+	{
+		return $this->lastMessage;
 	}
 }

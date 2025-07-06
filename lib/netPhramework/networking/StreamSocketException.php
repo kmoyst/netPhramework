@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\exceptions;
+namespace netPhramework\networking;
 
 class StreamSocketException extends EmailException
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\exceptions;
+namespace netPhramework\networking;
 
 use netPhramework\core\Exception;
 
