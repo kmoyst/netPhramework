@@ -39,19 +39,6 @@ class UserSave extends Save
 		try {
             $enrolledUser->parseAndSet($exchange->getParameters());
             $enrolledUser->save();
-			try {
-				$signedUpName = $enrolledUser->getUsername();
-				$message = "A New User Has Signed Up: $signedUpName";
-				new Email()
-					->setRecipient('kurt@moyst.ca')
-					->setSender('kurt@moyst.ca')
-					->setSubject('New User Signed Up')
-					->setMessage($message)
-					->send()
-					;
-			} catch (\Exception $e) {
-				// do nothing, not crucial
-			}
 			$exchange->getSession()->login($enrolledUser);
             $exchange->redirect($this->onSuccess);
         } catch (DuplicateEntryException) {
