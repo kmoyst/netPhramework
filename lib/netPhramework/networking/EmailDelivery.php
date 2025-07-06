@@ -40,7 +40,7 @@ class EmailDelivery
 				->sendingFrom($this->sender)
 				->sendingTo($this->recipient)
 				->start()
-				->deliver($this)
+				->compose($this)
 				->send()
 				->bye();
 		} catch (SmtpException $e) {

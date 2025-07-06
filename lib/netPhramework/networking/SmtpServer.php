@@ -108,7 +108,7 @@ readonly class SmtpServer
 		return $this;
 	}
 
-	public function deliver(EmailDelivery $email):self
+	public function compose(EmailDelivery $email):self
 	{
 		$this->socket
 			->write("From: " . $email->resolveSenderName())
