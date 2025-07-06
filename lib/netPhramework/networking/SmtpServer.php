@@ -19,7 +19,7 @@ readonly class SmtpServer
 	 * @throws SmtpException
 	 * @throws StreamSocketException
 	 */
-	public function openConnection():self
+	public function connect():self
 	{
 		$this->verify(SmtpResponseCode::SERVICE_READY, $this->socket
 			->open()
@@ -102,7 +102,7 @@ readonly class SmtpServer
 		return $this;
 	}
 
-	public function closeConnection():self
+	public function disconnect():self
 	{
 		$this->socket->close();
 		return $this;

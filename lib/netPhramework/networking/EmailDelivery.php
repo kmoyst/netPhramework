@@ -35,7 +35,7 @@ class EmailDelivery
 		;
 		try {
 			$this->server
-				->openConnection()
+				->connect()
 				->hello()
 				->sendingFrom($this->sender)
 				->sendingTo($this->recipient)
@@ -47,7 +47,7 @@ class EmailDelivery
 			$msg = $e->getMessage() . ', ' . $this->server->getLastMessage();
 			throw new SmtpException(trim($msg,', '));
 		} finally {
-			$this->server->closeConnection();
+			$this->server->disconnect();
 		}
 		return $this;
 	}
