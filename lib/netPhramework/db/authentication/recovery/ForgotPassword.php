@@ -6,18 +6,22 @@ use netPhramework\core\Exchange;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\locating\ReroutedPath;
+use netPhramework\locating\rerouters\Rerouter;
+use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
 class ForgotPassword extends RecordSetProcess
 {
-	public function __construct(
-		private readonly UserManager $manager,
-		private readonly string $actionLeaf = 'send-reset-link',
-		string                  $name = 'forgot-password')
-	{
-		$this->name = $name;
-	}
+	protected string $name = 'forgot-password';
+
+	public function __construct
+	(
+	private readonly UserManager $manager,
+	private readonly Rerouter $toSendLink = new RerouteToSibling('send-link')
+	)
+	{}
 
 	/**
 	 * @param Exchange $exchange
@@ -26,13 +30,17 @@ class ForgotPassword extends RecordSetProcess
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$feedbackView = new FeedbackView($exchange->getSession());
-		$responseCode = $exchange->getSession()->resolveResponseCode();
-		$view = new View('forgot-password')
-			->add('usernameInputName', $this->manager->usernameFieldName)
-			->add('formAction', $this->actionLeaf)
-			->add('feedbackView', $feedbackView)
+		$formAction = new ReroutedPath($exchange->getPath(),$this->toSendLink);
+		$feedback 	= new FeedbackView($exchange->getSession())
 		;
+		$inputName  = $this->manager->fields->username
+		;
+		$view = new View('forgot-password')
+			->add('usernameInputName', $inputName)
+			->add('formAction', $formAction)
+			->add('feedbackView', $feedback)
+		;
+		$responseCode = $exchange->getSession()->resolveResponseCode();
 		$exchange->display($view, $responseCode);
 	}
 }

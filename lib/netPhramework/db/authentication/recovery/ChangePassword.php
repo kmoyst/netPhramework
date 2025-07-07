@@ -13,6 +13,7 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\NotFound;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
+use netPhramework\locating\ReroutedPath;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\presentation\HiddenInput;
@@ -21,18 +22,13 @@ use netPhramework\rendering\View;
 
 class ChangePassword extends RecordSetProcess
 {
-	private readonly Rerouter $formRouter;
-	private readonly Redirector $onNotFound;
-
-	public function __construct(
-		private readonly UserManager $manager,
-		?Rerouter $formRouter = null,
-		?Redirector $onNotFound = null
+	public function __construct
+	(
+	private readonly UserManager $manager,
+	private readonly Rerouter $toSave = new RerouteToSibling('save-password'),
+	private readonly Redirector $onNotFound = new RedirectToRoot('log-in')
 	)
-	{
-		$this->formRouter = $formRouter?? new RerouteToSibling('save-password');
-		$this->onNotFound = $onNotFound?? new RedirectToRoot('log-in');
-	}
+	{}
 
 	/**
 	 * @param Exchange $exchange
@@ -47,7 +43,7 @@ class ChangePassword extends RecordSetProcess
 	{
 		$manager		= $this->manager;
 		$parameters		= $exchange->getParameters();
-		$resetCodeField = $manager->resetCodeFieldName;
+		$resetCodeField = $manager->fields->resetCode;
 		$resetCode 		= $manager->parseForResetCode($parameters);
 		if(!$manager->findByResetCode($resetCode))
 		{
@@ -55,9 +51,8 @@ class ChangePassword extends RecordSetProcess
 			return;
 		}
 		$resetCodeInput = new HiddenInput($resetCodeField, $resetCode);
-		$passwordInput  = new PasswordInput($manager->passwordFieldName);
-		$formAction		= $exchange->getPath();
-		$this->formRouter->reroute($formAction);
+		$passwordInput  = new PasswordInput($manager->fields->password);
+		$formAction		= new ReroutedPath($exchange->getPath(), $this->toSave);
 		$view = new View('change-password')
 			->add('resetCodeInput', $resetCodeInput)
 			->add('passwordInput', $passwordInput)

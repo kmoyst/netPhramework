@@ -16,7 +16,7 @@ readonly class FeedbackView implements Encodable
 	public function encode(Encoder $encoder): Stringable|string
 	{
 		try {
-			$message = $this->session->getErrorMessageAndClear();
+			$message = $this->session->getFeedbackAndClear();
 			if($message === null) return '';
 			$view = new ImmutableView('error-message', ['message' => $message]);
 			return $encoder->encodeViewable($view);

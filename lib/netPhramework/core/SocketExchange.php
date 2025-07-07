@@ -71,9 +71,9 @@ class SocketExchange implements Exchange
 	{
         try {
 			$this->redirect($fallback);
-            $this->session->addErrorMessage(
+            $this->session->addFeedbackMessage(
 				rtrim($exception->getMessage(),": "));
-            $this->session->addErrorCode($exception->getResponseCode());
+            $this->session->setFeedbackCode($exception->getResponseCode());
         } catch (Exception) {
 			$this->response = $exception->setWrapper($this->wrapper);
         }

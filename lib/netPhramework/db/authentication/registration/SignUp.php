@@ -16,16 +16,14 @@ use netPhramework\rendering\View;
 
 class SignUp extends RecordSetProcess
 {
-	private readonly Rerouter $toSave;
+	protected string $name = 'sign-up';
 
-	public function __construct(
-		private readonly UserManager $userManager,
-		?Rerouter $toSave = null,
-		string    $name = 'sign-up')
-	{
-		$this->toSave = $toSave ?? new RerouteToSibling('insert');
-		$this->name = $name;
-	}
+	public function __construct
+	(
+	private readonly UserManager $userManager,
+	private readonly Rerouter $toSave = new RerouteToSibling('register')
+	)
+	{}
 
     /**
      * @param Exchange $exchange
@@ -38,8 +36,8 @@ class SignUp extends RecordSetProcess
 		;
 		$feedbackView  = new FeedbackView($exchange->getSession());
 		$formAction    = new ReroutedPath($exchange->getPath(), $this->toSave);
-		$usernameInput = new TextInput($user->getFields()->username);
-		$passwordInput = new PasswordInput($user->getFields()->password)
+		$usernameInput = new TextInput($user->fields->username);
+		$passwordInput = new PasswordInput($user->fields->password)
 		;
 		$view = new View('sign-up')
 			->add('feedbackView',  $feedbackView)

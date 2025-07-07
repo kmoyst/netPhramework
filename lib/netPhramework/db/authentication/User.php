@@ -11,16 +11,33 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Record;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidPassword;
-use Random\RandomException;
 
 class User implements \netPhramework\authentication\User
 {
 	private UserProfile $profile;
 
 	public function __construct(
-		private readonly Record $record,
+		public readonly Record $record,
 		public readonly UserRole $defaultRole,
 		public readonly UserFieldNames $fields) {}
+
+	/**
+	 * @param Variables $vars
+	 * @return User|bool|$this
+	 * @throws Exception
+	 * @throws FieldAbsent
+	 * @throws InvalidPassword
+	 * @throws InvalidValue
+	 */
+	public function parseRegistration(Variables $vars):self|bool
+	{
+		if(!$vars->has($this->fields->username) ||
+			!$vars->has($this->fields->password)) return false;
+		$this->setUsername($vars->get($this->fields->username));
+		$this->setPassword($vars->get($this->fields->password));
+		$this->setRole($this->defaultRole);
+		return $this;
+	}
 
 	/**
 	 * @return string
@@ -81,7 +98,7 @@ class User implements \netPhramework\authentication\User
 
 	/**
 	 * @param string $password
-	 * @param bool $hash
+	 * @param bool $encode
 	 * @return $this
 	 * @throws FieldAbsent
 	 * @throws InvalidPassword
@@ -137,62 +154,7 @@ class User implements \netPhramework\authentication\User
 	public function getProfile():UserProfile
 	{
 		if(!isset($this->profile))
-			$this->profile = new UserProfile();
+			$this->profile = new UserProfile($this->record, $this->fields);
 		return $this->profile;
-	}
-
-	/**
-	 * @return self
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 * @throws RandomException
-	 */
-	public function newResetCode():self
-	{
-		$field = $this->fields->resetCode;
-		$code = bin2hex(random_bytes(32));
-		$this->record->setValue($field, $code);
-		return $this;
-	}
-
-	/**
-	 * @return string|null
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function getResetCode():?string
-	{
-		return $this->record->getValue($this->fields->resetCode);
-	}
-
-	/**
-	 * @return $this
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 */
-	public function clearResetCode():self
-	{
-		$this->record->setValue($this->fields->resetCode, null);
-		return $this;
-	}
-
-	/**
-	 * @param Variables $vars
-	 * @return User|bool|$this
-	 * @throws Exception
-	 * @throws FieldAbsent
-	 * @throws InvalidPassword
-	 * @throws InvalidValue
-	 */
-	public function parse(Variables $vars):self|bool
-	{
-		if(!$vars->has($this->fields->username) ||
-			!$vars->has($this->fields->password)) return false;
-		$this->setUsername($vars->get($this->fields->username));
-		$this->setPassword($vars->get($this->fields->password));
-		$this->setRole($this->defaultRole);
-		return $this;
 	}
 }

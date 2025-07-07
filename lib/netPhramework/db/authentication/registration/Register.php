@@ -5,24 +5,26 @@ namespace netPhramework\db\authentication\registration;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\UserManager;
+use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\nodes\Save;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\locating\redirectors\Redirector;
+use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\redirectors\RedirectToSibling;
 
-class SaveUser extends Save
+class Register extends RecordSetProcess
 {
-	public function __construct(
-		private readonly UserManager $manager,
-		?Redirector $onSuccess = null,
-		string $name = 'save')
-	{
-		parent::__construct($onSuccess, null, $name);
-	}
+	protected string $name = 'register';
+
+	public function __construct
+	(
+	private readonly UserManager $manager,
+	private readonly Redirector $onSuccess = new RedirectToRoot('edit-profile')
+	)
+	{}
 
 	/**
 	 * @param Exchange $exchange
@@ -33,7 +35,7 @@ class SaveUser extends Save
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user = $this->manager->getUser($this->record);
+		$user = $this->manager->getUser($this->recordSet->newRecord());
 		try {
             $user->parseRegistration($exchange->getParameters());
             $user->save();

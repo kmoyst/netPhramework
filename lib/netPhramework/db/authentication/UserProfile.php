@@ -3,20 +3,35 @@
 namespace netPhramework\db\authentication;
 
 use netPhramework\common\Variables;
+use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Record;
+use Random\RandomException;
 
 readonly class UserProfile
 {
 	public function __construct(
 		private Record $record,
-		private UserFieldNames $fields
-	)
-	{
+		public UserFieldNames $fields
+	) {}
 
+	/**
+	 * @param Variables $vars
+	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 */
+	public function parse(Variables $vars):self
+	{
+		$this->setEmailAddress($vars->getOrNull($this->fields->email));
+		$this->setFirstName($vars->getOrNull($this->fields->firstName));
+		$this->setLastName($vars->getOrNull($this->fields->lastName));
+		return $this;
 	}
+
 	/**
 	 * @return string|null
 	 * @throws FieldAbsent
@@ -113,17 +128,50 @@ readonly class UserProfile
 	}
 
 	/**
-	 * @param Variables $vars
+	 * @return self
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 * @throws RandomException
+	 */
+	public function newResetCode():self
+	{
+		$field = $this->fields->resetCode;
+		$code = bin2hex(random_bytes(32));
+		$this->record->setValue($field, $code);
+		return $this;
+	}
+
+	/**
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getResetCode():?string
+	{
+		return $this->record->getValue($this->fields->resetCode);
+	}
+
+	/**
 	 * @return $this
 	 * @throws FieldAbsent
 	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
-	public function parse(Variables $vars):self
+	public function clearResetCode():self
 	{
-		$this->setFirstName($vars->getOrNull($this->fields->firstName));
-		$this->setLastName($vars->getOrNull($this->fields->lastName));
-		$this->setEmailAddress($vars->getOrNull($this->fields->email));
+		$this->record->setValue($this->fields->resetCode, null);
+		return $this;
+	}
+
+	/**
+	 * @return $this
+	 * @throws MappingException
+	 * @throws DuplicateEntryException
+	 */
+	public function save():self
+	{
+		$this->record->save();
 		return $this;
 	}
 }

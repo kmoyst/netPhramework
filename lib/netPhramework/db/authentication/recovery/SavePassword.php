@@ -17,18 +17,13 @@ use netPhramework\responding\ResponseCode;
 
 class SavePassword extends RecordSetProcess
 {
-	private readonly Redirector $onFailure;
-	private readonly Redirector $onSuccess;
-
-	public function __construct(
-		private readonly UserManager $manager,
-		?Redirector $onSuccess = null,
-		?Redirector $onFailure = null
+	public function __construct
+	(
+	private readonly UserManager $manager,
+	private readonly Redirector $onSuccess = new RedirectToRoot('log-in'),
+	private readonly Redirector $onFailure = new RedirectToRoot('log-in')
 	)
-	{
-		$this->onSuccess = $onSuccess ?? new RedirectToRoot('log-in');
-		$this->onFailure = $onFailure ?? new RedirectToRoot('log-in');
-	}
+	{}
 
 	/**
 	 * @param Exchange $exchange
@@ -44,14 +39,13 @@ class SavePassword extends RecordSetProcess
 			$parameters = $exchange->getParameters()
 			;
 			$user = $this->manager->findByResetCode($parameters);
-			$user
-				->setPassword($parameters->get($user->fields->password))
-				->clearResetCode()
-				->save()
+			$user->setPassword($parameters->get($user->fields->password));
+			$user->getProfile()->clearResetCode();
+			$user->save()
 			;
 			$exchange->getSession()
-				->addErrorMessage('New Password Saved')
-				->addErrorCode(ResponseCode::OK)
+				->addFeedbackMessage('New Password Saved')
+				->setFeedbackCode(ResponseCode::OK)
 			;
 			$exchange->redirect($this->onSuccess);
 		} catch (RecordNotFound) {

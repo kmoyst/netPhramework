@@ -66,6 +66,7 @@ readonly class ProfileViewManager
 	 */
 	private function add(string $variableName, string $fieldName):void
 	{
-		$this->view->add($variableName, $this->user->getValue($fieldName));
+		$value = $this->user->record->getValue($fieldName);
+		$this->view->add($variableName, $value);
 	}
 }

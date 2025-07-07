@@ -8,9 +8,12 @@ class ReroutedPath extends Path
 {
 	private bool $rerouted = false;
 
-	public function __construct(
-		private readonly MutablePath $path,
-		private readonly Rerouter $rerouter) {}
+	public function __construct
+	(
+	private readonly MutablePath $path,
+	private readonly Rerouter $rerouter
+	)
+	{}
 
 	private function reroute():self
 	{

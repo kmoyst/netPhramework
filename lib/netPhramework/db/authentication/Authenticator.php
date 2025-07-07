@@ -1,32 +1,31 @@
 <?php
 
 namespace netPhramework\db\authentication;
-use netPhramework\authentication\User as UserLoggingIn;
+use netPhramework\authentication\User;
+use netPhramework\db\authentication\User as DbUser;
 use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
-use netPhramework\db\mapping\RecordSet;
 
 class Authenticator implements \netPhramework\authentication\Authenticator
 {
-	private UserLoggingIn $userLoggingIn;
-	private User $user;
+	private User $userLoggingIn;
+	private DbUser $dbUser;
 
-	/**
-	 * A database backed authentication strategy
-	 */
-	public function __construct(
-		private readonly RecordSet $recordSet,
-		?User $user = null) {}
+	public function __construct
+	(
+	private readonly UserManager $manager
+	)
+	{}
 
-	public function setUserLoggingIn(UserLoggingIn $user): Authenticator
+	public function setUserLoggingIn(User $user): Authenticator
 	{
 		$this->userLoggingIn = $user;
 		return $this;
 	}
 
-	public function getHashedUser():UserLoggingIn
+	public function getHashedUser():User
 	{
-		return $this->user; // the hashed user delivers a hashed password
+		return $this->dbUser;
 	}
 
 	/**
@@ -36,16 +35,17 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	 */
 	public function checkUsername(): bool
 	{
-		foreach($this->recordSet as $record)
+		$username = $this->userLoggingIn->getUsername();
+		$user	  = $this->manager->findByUsername($username);
+		if($user instanceof DbUser)
 		{
-			$user = $this->user ?? new User($record);
-			if($user->getUsername() === $this->userLoggingIn->getUsername())
-			{
-				$this->user = $user;
-				return true;
-			}
+			$this->dbUser = $user;
+			return true;
 		}
-		return false;
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -57,7 +57,7 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	{
 		return
 			isset($this->userLoggingIn) &&
-			isset($this->user) &&
-			$this->user->checkPassword($this->userLoggingIn->getPassword());
+			isset($this->dbUser) &&
+			$this->dbUser->checkPassword($this->userLoggingIn->getPassword());
 	}
 }

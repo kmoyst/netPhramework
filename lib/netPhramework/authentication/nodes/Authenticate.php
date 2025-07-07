@@ -9,7 +9,8 @@ use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToSibling as ToSibling;
+use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
+use netPhramework\locating\redirectors\RedirectToSibling as toSibling;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 
@@ -19,8 +20,10 @@ class Authenticate implements Node
 
 	public function __construct(
 		private readonly Authenticator $authenticator,
-		private readonly ?Redirector   $onSuccess = null,
-        private readonly ?Redirector   $onFailure = null) {}
+		private readonly Redirector $onSuccess = new toRoot(),
+        private readonly Redirector $onFailure = new toSibling('log-in')
+	)
+	{}
 
     /**
      * @param Exchange $exchange
@@ -30,8 +33,6 @@ class Authenticate implements Node
 	public function handleExchange(Exchange $exchange): void
     {
         $manager   = new LogInManager();
-		$onFailure = $this->onFailure ?? new ToSibling('log-in');
-		$onSuccess = $this->onSuccess ?? new ToSibling('log-in-status');
 		$user	   = $manager->userFromVariables($exchange->getParameters());
 		$this->authenticator->setUserLoggingIn($user);
 		if(!$this->authenticator->checkUsername())
@@ -40,7 +41,7 @@ class Authenticate implements Node
 			$msg = $username ?
 				"User not found: $username" :
 				"Please enter your username and password to login";
-			$exchange->error(new InvalidUsername($msg), $onFailure);
+			$exchange->error(new InvalidUsername($msg), $this->onFailure);
 		}
 		elseif(!$this->authenticator->checkPassword())
 		{
@@ -48,13 +49,13 @@ class Authenticate implements Node
 			$msg = $password ?
 				"Password incorrect" :
 				"Please enter your password";
-            $exchange->error(new InvalidPassword($msg), $onFailure);
+            $exchange->error(new InvalidPassword($msg), $this->onFailure);
 		}
 		else
 		{
 			$user = $this->authenticator->getHashedUser();
 			$exchange->getSession()->login($user);
-			$exchange->redirect($onSuccess);
+			$exchange->redirect($this->onSuccess);
 		}
 	}
 }

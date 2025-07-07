@@ -19,12 +19,7 @@ class EditProfile implements Node
 {
 	use LeafTrait;
 
-	public function __construct(
-		private readonly UserManager $manager,
-		string $name = 'edit-profile')
-	{
-		$this->name = $name;
-	}
+	public function __construct(private readonly UserManager $manager) {}
 
 	/**
 	 * @param Exchange $exchange
@@ -38,21 +33,20 @@ class EditProfile implements Node
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$manager  = $this->manager;
-		$username = $exchange->getSession()->getUser()->getUsername();
-		$user     = $manager->findByUsername($username);
+		$user     = $this->manager->findByUsername($exchange->getSession());
+		$profile  = $user->getProfile();
 		$inputs   = new InputSet();
 		$inputs
-			->textInput($user->fields->firstName)
-			->setValue($user->getFirstName())
+			->textInput($profile->fields->firstName)
+			->setValue($profile->getFirstName())
 		;
 		$inputs
-			->textInput($user->fields->lastName)
-			->setValue($user->getLastName())
+			->textInput($profile->fields->lastName)
+			->setValue($profile->getLastName())
 		;
 		$inputs
-			->textInput($user->fields->email)
-			->setValue($user->getEmailAddress())
+			->textInput($profile->fields->email)
+			->setValue($profile->getEmailAddress())
 		;
 		$exchange->ok(new View('edit-profile')
 			->add('inputs', $inputs)

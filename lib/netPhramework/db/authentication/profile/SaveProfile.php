@@ -20,12 +20,7 @@ class SaveProfile implements Node
 {
 	use LeafTrait;
 
-	public function __construct(
-		private readonly UserManager $manager,
-		string $name = 'save-profile')
-	{
-		$this->name = $name;
-	}
+	public function __construct(private readonly UserManager $manager) {}
 
     /**
      * @param Exchange $exchange
@@ -41,9 +36,8 @@ class SaveProfile implements Node
      */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$sessionUser = $exchange->getSession()->getUser();
-		$user = $this->manager->findByUsername($sessionUser->getUsername());
-		$user->parseProfile($exchange->getParameters())->save();
+		$user = $this->manager->findByUsername($exchange->getSession());
+		$user->getProfile()->parse($exchange->getParameters())->save();
 		$exchange->redirect(new RedirectToSibling('view-profile'));
 	}
 }

@@ -10,7 +10,9 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\db\mapping\Record;
+use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NotFound;
+use netPhramework\core\Session;
 
 readonly class UserManager
 {
@@ -80,19 +82,24 @@ readonly class UserManager
 	}
 
 	/**
-	 * @param string|Variables $source
+	 * @param string|Variables|Session $source
 	 * @return User|null
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 * @throws NotFound
 	 * @throws RecordRetrievalException
+	 * @throws InvalidSession
 	 */
-	public function findByUsername(string|Variables $source):?User
+	public function findByUsername(string|Variables|Session $source):?User
 	{
 		if($source instanceof Variables)
 		{
 			$username = $this->parseForUsername($source);
 			if(!$username) throw new NotFound();
+		}
+		elseif($source instanceof Session)
+		{
+			$username = $source->getUser()->getUsername();
 		}
 		else
 		{

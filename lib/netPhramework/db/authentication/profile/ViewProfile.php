@@ -22,12 +22,7 @@ class ViewProfile implements Node
 {
 	use LeafTrait;
 
-	public function __construct(
-		private readonly UserManager $manager,
-		string $name = 'view-profile')
-	{
-		$this->name = $name;
-	}
+	public function __construct(private readonly UserManager $manager) {}
 
 	/**
 	 * @param Exchange $exchange
@@ -43,13 +38,13 @@ class ViewProfile implements Node
 	{
 		$session 	 = $exchange->getSession();
 		$user   	 = $this->findUser($session->getUser());
-		$fields 	 = $user->getFields()
+		$profile	 = $user->getProfile()
 		;
 		$viewManager = new ProfileViewManager($user)
-			->mandatoryAdd('username',    $fields->username)
-			->optionalAdd('firstName',    $fields->firstName)
-			->optionalAdd('lastName',     $fields->lastName)
-			->optionalAdd('emailAddress', $fields->email)
+			->mandatoryAdd('username',    $user->fields->username)
+			->optionalAdd('firstName',    $profile->fields->firstName)
+			->optionalAdd('lastName',     $profile->fields->lastName)
+			->optionalAdd('emailAddress', $profile->fields->email)
 			->addCustom('role',    		  $user->getRole()->friendlyName())
 			->addCustom('callbackInput',  new CallbackInput($exchange))
 			->addCustom('feedbackView',   new FeedbackView($session))
@@ -63,9 +58,10 @@ class ViewProfile implements Node
 	 * @return User
 	 * @throws AuthenticationException
 	 * @throws FieldAbsent
+	 * @throws InvalidSession
 	 * @throws MappingException
-	 * @throws RecordRetrievalException
 	 * @throws NotFound
+	 * @throws RecordRetrievalException
 	 */
 	private function findUser(?SessionUser $sessionUser):User
 	{

@@ -28,7 +28,7 @@ class Session
      * @return $this
      * @throws InvalidSession
      */
-    public function addErrorMessage(string $message):Session
+    public function addFeedbackMessage(string $message):Session
     {
         $this->start();
         $this->sessionVars[$this->errorMessageKey] = $message;
@@ -39,7 +39,7 @@ class Session
      * @return string|null
      * @throws InvalidSession
      */
-    public function getErrorMessageAndClear():?string
+    public function getFeedbackAndClear():?string
     {
         $this->start();
         if(isset($this->sessionVars[$this->errorMessageKey]))
@@ -56,7 +56,7 @@ class Session
      * @return $this
      * @throws InvalidSession
      */
-    public function addErrorCode(ResponseCode $code):self
+    public function setFeedbackCode(ResponseCode $code):self
     {
         $this->start();
         $this->sessionVars[$this->errorCodeKey] = $code->value;
