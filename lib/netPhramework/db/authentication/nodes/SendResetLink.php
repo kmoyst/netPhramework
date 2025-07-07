@@ -36,7 +36,7 @@ class SendResetLink extends RecordSetProcess
 		private readonly RecordFinder $userRecords,
 		private readonly string $sender,
 		private readonly ?string $senderName = null,
-		?Redirector $toChangePassword = null,
+		?Rerouter $toChangePassword = null,
 		?Redirector $afterProcess = null
 	)
 	{
