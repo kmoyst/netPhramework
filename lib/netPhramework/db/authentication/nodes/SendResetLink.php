@@ -14,32 +14,35 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\db\mapping\Record;
+use netPhramework\locating\Location;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
+use netPhramework\locating\rerouters\Rerouter;
+use netPhramework\locating\rerouters\RerouteToSibling;
+use netPhramework\locating\UriFromLocation;
 use netPhramework\networking\EmailDelivery;
 use netPhramework\networking\EmailException;
-use netPhramework\networking\SmtpServer;
 use netPhramework\networking\StreamSocketException;
 use netPhramework\responding\ResponseCode;
 use Random\RandomException;
 
 class SendResetLink extends RecordSetProcess
 {
-	private readonly SmtpServer $smtpServer;
+	private readonly Rerouter $toChangePassword;
 	private readonly Redirector $afterProcess;
+	private readonly string $resetCodeField;
 
 	public function __construct(
-		private readonly string $changePasswordNode,
 		private readonly RecordFinder $userRecords,
 		private readonly string $sender,
 		private readonly ?string $senderName = null,
-		?Redirector $afterProcess = null,
-		private readonly string $resetCodeField = 'reset-code',
-		?SmtpServer $smtpServer = null
+		?Redirector $toChangePassword = null,
+		?Redirector $afterProcess = null
 	)
 	{
-		$this->smtpServer = $smtpServer ?? new SmtpServer();
+		$this->toChangePassword = new RerouteToSibling('change-password');
 		$this->afterProcess = new RedirectToRoot('log-in');
+		$this->resetCodeField = EnrolledUserField::RESET_CODE->value;
 	}
 
 	/**
@@ -58,7 +61,7 @@ class SendResetLink extends RecordSetProcess
 			$record = $this->findRecord($exchange);
 			$record->setValue($this->resetCodeField, bin2hex(random_bytes(32)));
 			$record->save();
-			if($this->sendEmail($record))
+			if($this->sendEmail($record, $exchange))
 				$exchange->getSession()
 					->addErrorMessage('Password Reset Link Sent')
 					->addErrorCode(ResponseCode::OK);
@@ -94,30 +97,32 @@ class SendResetLink extends RecordSetProcess
 
 	/**
 	 * @param Record $userRecord
+	 * @param Exchange $exchange
 	 * @return bool
+	 * @throws EmailException
 	 * @throws Exception
 	 * @throws FieldAbsent
 	 * @throws MappingException
-	 * @throws EmailException
 	 * @throws StreamSocketException
 	 */
-	private function sendEmail(Record $userRecord):bool
+	private function sendEmail(Record $userRecord, Exchange $exchange):bool
 	{
 		$profile   = new UserProfile()->setRecord($userRecord);
 		$resetCode = $userRecord->getValue($this->resetCodeField);
 		if(($emailAddress = $profile->getEmailAddress()) === null)
 			return false;
-		$message = [];
-		$message[] = 'Reset your password here: ';
-		$message[] = $this->changePasswordNode;
-		$message[] = "?reset-code=$resetCode";
-		new EmailDelivery($this->smtpServer)
+		$location = new Location()->setPath($exchange->getPath());
+		$location->getParameters()->add($this->resetCodeField, $resetCode);
+		$this->toChangePassword->reroute($location->getPath());
+		$uri = new UriFromLocation($location);
+		$siteAddress = $exchange->getSiteAddress();
+		new EmailDelivery($exchange->getSmtpServer())
 			->setRecipient($profile->getEmailAddress())
 			->setRecipientName($profile->getFullName())
 			->setSender($this->sender)
 			->setSenderName($this->senderName)
 			->setSubject('Reset Password Request')
-			->setMessage(implode('', $message))
+			->setMessage("Reset your password here: $siteAddress$uri")
 			->send()
 		;
 		return true;

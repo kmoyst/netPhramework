@@ -7,6 +7,7 @@ use netPhramework\exceptions\PathException;
 use netPhramework\locating\Location;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
+use netPhramework\networking\SmtpServer;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
@@ -19,10 +20,12 @@ use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {
+	private ExchangeEnvironment $environment;
 	private Location $location;
 	private Session $session;
 	private CallbackManager $callbackManager;
 	private FileManager $fileManager;
+	private SmtpServer $smtpServer;
     private Wrapper $wrapper;
 	private Response $response;
 
@@ -107,10 +110,28 @@ class SocketExchange implements Exchange
 		return $this->session;
 	}
 
-	/** @inheritdoc  */
+	/** @inheritDoc  */
 	public function getFileManager(): FileManager
 	{
 		return $this->fileManager;
+	}
+
+	/** @inheritDoc */
+	public function getSiteAddress(): string
+	{
+		return $this->environment->getSiteAddress();
+	}
+
+	/** @inheritDoc */
+	public function getSmtpServer(): SmtpServer
+	{
+		if(!isset($this->smtpServer))
+		{
+			$address = $this->environment->getSmtpServerAddress();
+			$name = $this->environment->getSmtpServerName();
+			$this->smtpServer = new SmtpServer($address, $name);
+		}
+		return $this->smtpServer;
 	}
 
 	/**
@@ -174,6 +195,16 @@ class SocketExchange implements Exchange
 	public function setWrapper(Wrapper $wrapper): self
 	{
 		$this->wrapper = $wrapper;
+		return $this;
+	}
+
+	/**
+	 * @param ExchangeEnvironment $environment
+	 * @return $this
+	 */
+	public function setEnvironment(ExchangeEnvironment $environment): self
+	{
+		$this->environment = $environment;
 		return $this;
 	}
 }

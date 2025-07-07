@@ -5,6 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\Variables;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
+use netPhramework\networking\SmtpServer;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
 use netPhramework\responding\ResponseCode;
@@ -87,4 +88,13 @@ interface Exchange extends CallbackContext
 	 */
 	public function getFileManager():FileManager;
 
+	/**
+	 * @return string
+	 */
+	public function getSiteAddress():string;
+
+	/**
+	 * @return SmtpServer
+	 */
+	public function getSmtpServer():SmtpServer;
 }

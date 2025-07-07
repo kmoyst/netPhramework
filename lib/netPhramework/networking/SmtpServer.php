@@ -7,11 +7,10 @@ readonly class SmtpServer
 	private StreamSocket $socket;
 
 	public function __construct(
-		string $serverAddress = 'ssl://mail.moyst.ca:465',
-		private string $serverName = 'moyst.ca'
-	)
+		private string $serverAddress,
+		private string $serverName)
 	{
-		$this->socket = new StreamSocket($serverAddress);
+		$this->socket = new StreamSocket($this->serverAddress);
 	}
 
 	/**

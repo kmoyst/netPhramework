@@ -4,8 +4,28 @@ namespace netPhramework\locating;
 
 use netPhramework\common\Variables;
 
-abstract class Location extends ReadableLocation
+class Location extends ReadableLocation
 {
-	abstract public function getPath(): MutablePath;
-	abstract public function getParameters(): Variables;
+	protected MutablePath $path;
+	protected Variables $parameters;
+
+	public function getPath(): MutablePath
+	{
+		if(!isset($this->path))
+			$this->path = new MutablePath();
+		return $this->path;
+	}
+
+	public function setPath(MutablePath $path): self
+	{
+		$this->path = $path;
+		return $this;
+	}
+
+	public function getParameters(): Variables
+	{
+		if(!isset($this->parameters))
+			$this->parameters = new Variables();
+		return $this->parameters;
+	}
 }

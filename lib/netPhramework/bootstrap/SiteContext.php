@@ -35,7 +35,7 @@ class SiteContext implements RequestContext
 
 	public function getRequestInterpreter(): RequestInterpreter
 	{
-		return new RequestInterpreter();
+		return new RequestInterpreter($this->environment);
 	}
 
 	public function getResponder(Encoder $encoder): Responder

@@ -5,14 +5,9 @@ namespace netPhramework\core;
 use netPhramework\locating\LocationFromUri;
 use netPhramework\locating\Location;
 
-class RequestInterpreter
+readonly class RequestInterpreter
 {
-	private RequestInput $input;
-
-	public function __construct(?RequestInput $input = null)
-	{
-		$this->input = $input ?? new RequestInput();
-	}
+	public function __construct(private RequestEnvironment $environment) {}
 
 	/**
 	 * @param Application $application
@@ -20,7 +15,7 @@ class RequestInterpreter
 	 */
 	public function establishRequest(Application $application):Request
 	{
-		$location = new LocationFromUri($this->input->getUri());
+		$location = new LocationFromUri($this->environment->getUri());
 		return $this->createRequest($application, $location);
 	}
 
@@ -32,7 +27,7 @@ class RequestInterpreter
 	private function createRequest(
 		Application $application, Location $location):Request
 	{
-		if(($postParameters = $this->input->getPostParameters()) !== null)
+		if(($postParameters = $this->environment->getPostParameters()) !== null)
 		{
 			$socket = $application->openActiveSocket();
 			$location->getParameters()->clear()->merge($postParameters);

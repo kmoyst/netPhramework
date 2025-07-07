@@ -7,9 +7,6 @@ use netPhramework\exceptions\PathException;
 
 class LocationFromUri extends Location
 {
-	private MutablePath $path;
-	private Variables $parameters;
-
 	public function __construct(private readonly string $uri) {}
 
 	/**

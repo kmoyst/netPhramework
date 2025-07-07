@@ -10,10 +10,10 @@ use netPhramework\locating\Redirectable;
 class Redirection extends Location implements Redirectable, Response
 {
 	private ResponseCode $code;
-	private Variables $parameters;
 
-	public function __construct(private readonly MutablePath $path)
+	public function __construct(MutablePath $path)
 	{
+		$this->path = $path;
 		$this->parameters = new Variables();
 	}
 

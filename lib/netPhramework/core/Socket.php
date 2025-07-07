@@ -35,6 +35,7 @@ readonly class Socket
 				->setFileManager($context->getFileManager())
 				->setWrapper($this->wrapper)
 				->setCallbackManager($context->getCallbackManager())
+				->setEnvironment($context->getEnvironment())
 			;
 			$navigator
 				->setRoot($this->root)
