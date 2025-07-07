@@ -36,12 +36,12 @@ readonly class Environment implements RequestEnvironment, ExchangeEnvironment
 
 	public function getSmtpServerAddress(): string
 	{
-		return 'ssl://mail.moyst.ca:465';
+		return $this->get('SMTP_SERVER_ADDRESS');
 	}
 
 	public function getSmtpServerName(): string
 	{
-		return 'moyst.ca';
+		return $this->get('SMTP_SERVER_NAME');
 	}
 
 	private function getScheme():string
