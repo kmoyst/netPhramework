@@ -6,6 +6,7 @@ use netPhramework\authentication\SessionUser;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
+use netPhramework\db\authentication\presentation\ProfileViewManager;
 use netPhramework\db\authentication\User;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -44,7 +45,7 @@ class ViewProfile implements Node
 		$user   	 = $this->findUser($session->getUser());
 		$fields 	 = $user->getFields()
 		;
-		$viewManager = new ViewManager($user)
+		$viewManager = new ProfileViewManager($user)
 			->mandatoryAdd('username',    $fields->username)
 			->optionalAdd('firstName',    $fields->firstName)
 			->optionalAdd('lastName',     $fields->lastName)

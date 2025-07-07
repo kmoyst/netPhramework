@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\profile;
+namespace netPhramework\db\authentication\presentation;
 
 use netPhramework\db\authentication\User;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -8,7 +8,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-readonly class ViewManager
+readonly class ProfileViewManager
 {
 	public View $view;
 
