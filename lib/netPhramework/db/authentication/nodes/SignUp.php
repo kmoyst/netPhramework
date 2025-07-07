@@ -6,16 +6,24 @@ use netPhramework\core\Exchange;
 use netPhramework\db\authentication\EnrolledUser;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\locating\ReroutedPath;
+use netPhramework\locating\rerouters\Rerouter;
+use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
 class SignUp extends RecordSetProcess
 {
+	private readonly EnrolledUser $user;
+	private readonly Rerouter $toSave;
+
 	public function __construct(
-		private readonly ?EnrolledUser $enrolledUser = null,
-		private readonly string $actionLeaf = 'insert',
-		string $name = 'sign-up')
+		?Rerouter $toSave = null,
+		string $name = 'sign-up',
+		?EnrolledUser $user = null)
 	{
+		$this->user = $user ?? new EnrolledUser();
+		$this->toSave = $toSave ?? new RerouteToSibling('insert');
 		$this->name = $name;
 	}
 
@@ -26,16 +34,19 @@ class SignUp extends RecordSetProcess
      */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user = $this->enrolledUser ?? new EnrolledUser();
-		$user->setRecord($this->recordSet->newRecord());
-        $feedbackView = new FeedbackView($exchange->getSession());
-        $responseCode = $exchange->getSession()->resolveResponseCode();
-        $view = new View('sign-up')
-			->add('usernameInput', $user->getUsernameInput())
-			->add('passwordInput', $user->getPasswordInput())
-			->add('formAction', $this->actionLeaf)
-            ->add('errorView', $feedbackView)
-        ;
+		$feedbackView = new FeedbackView($exchange->getSession());
+		$formAction   = new ReroutedPath($exchange->getPath(), $this->toSave);
+		;
+		$this->user->setRecord($this->recordSet->newRecord())
+		;
+		$view = new View('sign-up')
+			->add('feedbackView',  $feedbackView)
+			->add('formAction',    $formAction)
+			->add('usernameInput', $this->user->getUsernameInput())
+			->add('passwordInput', $this->user->getPasswordInput())
+		;
+		$responseCode = $exchange->getSession()->resolveResponseCode()
+		;
 		$exchange->display($view, $responseCode);
 	}
 }

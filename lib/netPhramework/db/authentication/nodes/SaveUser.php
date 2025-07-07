@@ -14,7 +14,7 @@ use netPhramework\exceptions\InvalidPassword;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToSibling;
 
-class UserSave extends Save
+class SaveUser extends Save
 {
 	public function __construct(
 		?Redirector $onSuccess = null,
