@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\authentication;
 
+use netPhramework\authentication\UserRole;
 use netPhramework\common\Variables;
 use netPhramework\db\configuration\RecordFinder;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -15,28 +16,27 @@ readonly class UserManager
 {
 	public function __construct(
 		private RecordFinder $finder,
-		public string $resetCodeFieldName = UserField::RESET_CODE->value,
-		public string $usernameFieldName = UserField::USERNAME->value,
-		public string $passwordFieldName = UserField::PASSWORD->value
+		public UserRole $defaultRole = UserRole::STANDARD_USER,
+		public UserFieldNames $fields = new UserFieldNames()
 	) {}
 
 	public function parseForResetCode(Variables $variables):string|false
 	{
-		$value = $variables->getOrNull($this->resetCodeFieldName);
+		$value = $variables->getOrNull($this->fields->resetCode);
 		if($value === null) return false;
 		else return $value;
 	}
 
 	public function parseForUsername(Variables $variables):string|false
 	{
-		$value = $variables->getOrNull($this->usernameFieldName);
+		$value = $variables->getOrNull($this->fields->username);
 		if($value === null) return false;
 		else return $value;
 	}
 
 	public function getUser(Record $record):?User
 	{
-		return new User($record);
+		return new User($record, $this->defaultRole, $this->fields);
 	}
 
 	/**
@@ -76,7 +76,7 @@ readonly class UserManager
 		{
 			$resetCode = $source;
 		}
-		return $this->findUser($this->resetCodeFieldName, $resetCode);
+		return $this->findUser($this->fields->resetCode, $resetCode);
 	}
 
 	/**
@@ -98,6 +98,6 @@ readonly class UserManager
 		{
 			$username = $source;
 		}
-		return $this->findUser($this->usernameFieldName, $username);
+		return $this->findUser($this->fields->username, $username);
 	}
 }

@@ -13,72 +13,14 @@ use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidPassword;
 use Random\RandomException;
 
-readonly class User implements \netPhramework\authentication\User
+class User implements \netPhramework\authentication\User
 {
-	public UserFieldNames $fields;
+	private UserProfile $profile;
 
 	public function __construct(
-		public Record $record,
-		public UserRole $defaultRole = UserRole::STANDARD_USER,
-		?UserFieldNames $fields = null)
-	{
-		$this->fields = $fields ?? new UserFieldNames();
-	}
-
-	public function getFields():UserFieldNames
-	{
-		return $this->fields;
-	}
-
-	/**
-	 * @param Variables $vars
-	 * @return User|bool|$this
-	 * @throws Exception
-	 * @throws FieldAbsent
-	 * @throws InvalidPassword
-	 * @throws InvalidValue
-	 */
-	public function parseAndSet(Variables $vars):self|bool
-	{
-		if(!$this->confirmInputVarsExist($vars)) return false;
-		$this->setUsername($vars->get($this->fields->username));
-		$this->setPassword($vars->get($this->fields->password));
-		if($this->isNew()) $this->setRole($this->defaultRole);
-		return $this;
-	}
-
-	private function confirmInputVarsExist(Variables $vars):bool
-	{
-		return
-			$vars->has($this->fields->username) &&
-			$vars->has($this->fields->password);
-	}
-
-	/**
-	 * @param Variables $vars
-	 * @return $this
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 */
-	public function parseProfile(Variables $vars):self
-	{
-		$this->setFirstName($vars->getOrNull($this->fields->firstName));
-		$this->setLastName($vars->getOrNull($this->fields->lastName));
-		$this->setEmailAddress($vars->getOrNull($this->fields->email));
-		return $this;
-	}
-
-	/**
-	 * @param string $fieldName
-	 * @return string|null
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function getValue(string $fieldName):?string
-	{
-		return $this->record->getValue($fieldName);
-	}
+		private readonly Record $record,
+		public readonly UserRole $defaultRole,
+		public readonly UserFieldNames $fields) {}
 
 	/**
 	 * @return string
@@ -125,70 +67,6 @@ readonly class User implements \netPhramework\authentication\User
 	}
 
 	/**
-	 * @return string
-	 */
-	public function getResetCodeField():string
-	{
-		return $this->fields->resetCode;
-	}
-
-	/**
-	 * @return string|null
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function getEmailAddress():?string
-	{
-		return $this->record->getValue($this->fields->email);
-	}
-
-	/**
-	 * @return string|null
-	 * @throws MappingException
-	 */
-	public function getFullName():?string
-	{
-		try {
-			$f = $this->getFirstName();
-			$l = $this->getLastName();
-			if (empty($f) || empty($l)) return null;
-			else return "$f $l";
-		} catch (FieldAbsent) {
-			return null;
-		}
-	}
-
-	/**
-	 * @return string|null
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function getFirstName():?string
-	{
-		return $this->record->getValue($this->fields->firstName);
-	}
-
-	/**
-	 * @return string|null
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function getLastName():?string
-	{
-		return $this->record->getValue($this->fields->lastName);
-	}
-
-	/**
-	 * @return bool
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function hasEmailAddress():bool
-	{
-		return !empty($this->getEmailAddress());
-	}
-
-	/**
 	 * @param string $username
 	 * @return $this
 	 * @throws FieldAbsent
@@ -202,58 +80,33 @@ readonly class User implements \netPhramework\authentication\User
 	}
 
 	/**
-	 * @param ?string $firstName
-	 * @return $this
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 */
-	public function setFirstName(?string $firstName):self
-	{
-		$this->record->setValue($this->fields->firstName, $firstName);
-		return $this;
-	}
-
-	/**
-	 * @param ?string $lastName
-	 * @return $this
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 */
-	public function setLastName(?string $lastName):self
-	{
-		$this->record->setValue($this->fields->lastName, $lastName);
-		return $this;
-	}
-
-	/**
-	 * @param ?string $emailAddress
-	 * @return $this
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 */
-	public function setEmailAddress(?string $emailAddress):self
-	{
-		$this->record->setValue($this->fields->email, $emailAddress);
-		return $this;
-	}
-
-	/**
 	 * @param string $password
+	 * @param bool $hash
 	 * @return $this
 	 * @throws FieldAbsent
 	 * @throws InvalidPassword
 	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
-	public function setPassword(string $password):self
+	public function setPassword(string $password, bool $encode = true):self
 	{
 		if(strlen($password) < 8)
 			throw new InvalidPassword("Password must be at least 8 characters");
-		$hash = password_hash($password, PASSWORD_DEFAULT);
-		$this->record->setValue($this->fields->password, $hash);
+		$value = $encode?password_hash($password, PASSWORD_DEFAULT):$password;
+		$this->record->setValue($this->fields->password, $value);
+		return $this;
+	}
+
+	/**
+	 * @param UserRole $role
+	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 */
+	public function setRole(UserRole $role):self
+	{
+		$this->record->setValue($this->fields->role, $role->value);
 		return $this;
 	}
 
@@ -269,17 +122,23 @@ readonly class User implements \netPhramework\authentication\User
 		return password_verify($password, $this->getPassword());
 	}
 
-    /**
-     * @param UserRole $role
-     * @return $this
-     * @throws FieldAbsent
-     * @throws InvalidValue
-     * @throws MappingException
-     */
-	public function setRole(UserRole $role):self
+	/**
+	 * @return $this
+	 * @throws DuplicateEntryException
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 */
+	public function save():User
 	{
-		$this->record->setValue($this->fields->role, $role->value);
+		$this->record->save();
 		return $this;
+	}
+
+	public function getProfile():UserProfile
+	{
+		if(!isset($this->profile))
+			$this->profile = new UserProfile();
+		return $this->profile;
 	}
 
 	/**
@@ -320,19 +179,20 @@ readonly class User implements \netPhramework\authentication\User
 	}
 
 	/**
-	 * @return $this
-	 * @throws DuplicateEntryException
+	 * @param Variables $vars
+	 * @return User|bool|$this
+	 * @throws Exception
+	 * @throws FieldAbsent
+	 * @throws InvalidPassword
 	 * @throws InvalidValue
-	 * @throws MappingException
 	 */
-	public function save():User
+	public function parse(Variables $vars):self|bool
 	{
-		$this->record->save();
+		if(!$vars->has($this->fields->username) ||
+			!$vars->has($this->fields->password)) return false;
+		$this->setUsername($vars->get($this->fields->username));
+		$this->setPassword($vars->get($this->fields->password));
+		$this->setRole($this->defaultRole);
 		return $this;
-	}
-
-	public function isNew():bool
-	{
-		return $this->record->isNew();
 	}
 }

@@ -35,7 +35,7 @@ class SaveUser extends Save
 	{
 		$user = $this->manager->getUser($this->record);
 		try {
-            $user->parseAndSet($exchange->getParameters());
+            $user->parseRegistration($exchange->getParameters());
             $user->save();
 			$exchange->getSession()->login($user);
             $exchange->redirect($this->onSuccess);
