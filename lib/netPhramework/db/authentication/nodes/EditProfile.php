@@ -5,7 +5,7 @@ namespace netPhramework\db\authentication\nodes;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
-use netPhramework\db\authentication\EnrolledUserField;
+use netPhramework\db\authentication\UserField;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -41,7 +41,7 @@ class EditProfile implements Node
 		$user 	 = $exchange->getSession()->getUser();
 		$record  = $this->userRecords
 			->findUniqueRecord(
-				EnrolledUserField::USERNAME->value,
+				UserField::USERNAME->value,
 				$user->getUsername());
 		$inputs  = new InputSet();
 		$profile = new UserProfile();

@@ -1,32 +1,32 @@
 <?php
 
 namespace netPhramework\db\authentication;
-use netPhramework\authentication\User;
+use netPhramework\authentication\User as UserLoggingIn;
 use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\mapping\RecordSet;
 
 class Authenticator implements \netPhramework\authentication\Authenticator
 {
-	private User $userLoggingIn;
-	private EnrolledUser $enrolledUser;
+	private UserLoggingIn $userLoggingIn;
+	private User $user;
 
 	/**
 	 * A database backed authentication strategy
 	 */
 	public function __construct(
 		private readonly RecordSet $recordSet,
-		?EnrolledUser $enrolledUser = null) {}
+		?User $user = null) {}
 
-	public function setUserLoggingIn(User $user): Authenticator
+	public function setUserLoggingIn(UserLoggingIn $user): Authenticator
 	{
 		$this->userLoggingIn = $user;
 		return $this;
 	}
 
-	public function getHashedUser():User
+	public function getHashedUser():UserLoggingIn
 	{
-		return $this->enrolledUser;
+		return $this->user; // the hashed user delivers a hashed password
 	}
 
 	/**
@@ -38,12 +38,10 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	{
 		foreach($this->recordSet as $record)
 		{
-			$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
-			$enrolledUser->setRecord($record);
-			if($enrolledUser->getUsername()
-				=== $this->userLoggingIn->getUsername())
+			$user = $this->user ?? new User($record);
+			if($user->getUsername() === $this->userLoggingIn->getUsername())
 			{
-				$this->enrolledUser = $enrolledUser;
+				$this->user = $user;
 				return true;
 			}
 		}
@@ -59,8 +57,7 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	{
 		return
 			isset($this->userLoggingIn) &&
-			isset($this->enrolledUser) &&
-			$this->enrolledUser->checkPassword(
-				$this->userLoggingIn->getPassword());
+			isset($this->user) &&
+			$this->user->checkPassword($this->userLoggingIn->getPassword());
 	}
 }

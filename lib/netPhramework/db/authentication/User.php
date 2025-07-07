@@ -1,7 +1,6 @@
 <?php
 
 namespace netPhramework\db\authentication;
-use netPhramework\authentication\User;
 use netPhramework\authentication\UserRole;
 use netPhramework\common\Variables;
 use netPhramework\core\Exception;
@@ -12,53 +11,60 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Record;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidPassword;
-use netPhramework\presentation\Input;
-use netPhramework\presentation\PasswordInput;
-use netPhramework\presentation\TextInput;
+use Random\RandomException;
 
-class EnrolledUser implements User
+class User implements \netPhramework\authentication\User
 {
-	protected Record $record;
+	private Record $record;
+	private UserFieldNames $fields;
 
 	public function __construct(
-		protected EnrolledUserField $usernameField =
-		EnrolledUserField::USERNAME,
-		protected EnrolledUserField $passwordField =
-		EnrolledUserField::PASSWORD,
-		protected EnrolledUserField $roleField =
-		EnrolledUserField::ROLE,
-		protected EnrolledUserField $resetCodeField =
-		EnrolledUserField::RESET_CODE
-	) {}
-
-	public function setRecord(Record $record): self
+		Record $record,
+		private readonly UserRole $defaultRole = UserRole::STANDARD_USER,
+		?UserFieldNames $fields = null)
 	{
 		$this->record = $record;
-		return $this;
+		$this->fields = $fields ?? new UserFieldNames();
+	}
+
+	public function getFields():UserFieldNames
+	{
+		return $this->fields;
 	}
 
 	/**
 	 * @param Variables $vars
-	 * @return EnrolledUser|bool|$this
+	 * @return User|bool|$this
 	 * @throws Exception
 	 * @throws FieldAbsent
 	 * @throws InvalidPassword
 	 * @throws InvalidValue
 	 */
-	public function parseAndSet(Variables $vars):EnrolledUser|bool
+	public function parseAndSet(Variables $vars):self|bool
 	{
 		if(!$this->confirmInputVarsExist($vars)) return false;
-		$this->setUsername($vars->get($this->usernameField->value));
-		$this->setPassword($vars->get($this->passwordField->value));
-		if($this->isNew()) $this->setRole(UserRole::STANDARD_USER);
+		$this->setUsername($vars->get($this->fields->username));
+		$this->setPassword($vars->get($this->fields->password));
+		if($this->isNew()) $this->setRole($this->defaultRole);
 		return $this;
 	}
 
 	private function confirmInputVarsExist(Variables $vars):bool
 	{
 		return
-			$vars->has($this->usernameField->value) &&
-			$vars->has($this->passwordField->value);
+			$vars->has($this->fields->username) &&
+			$vars->has($this->fields->password);
+	}
+
+	/**
+	 * @param string $fieldName
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getValue(string $fieldName):?string
+	{
+		return $this->record->getValue($fieldName);
 	}
 
 	/**
@@ -69,7 +75,7 @@ class EnrolledUser implements User
 	 */
 	public function getUsername():string
 	{
-		$username = $this->record->getValue($this->usernameField->value);
+		$username = $this->record->getValue($this->fields->username);
 		if($username === null)
 			throw new AuthenticationException("Stored username is empty");
 		return $username;
@@ -83,7 +89,7 @@ class EnrolledUser implements User
 	 */
 	public function getPassword():string
 	{
-		$password = $this->record->getValue($this->passwordField->value);
+		$password = $this->record->getValue($this->fields->password);
 		if($password === null)
 			throw new AuthenticationException("Stored Password Is Empty");
 		return $password;
@@ -97,12 +103,76 @@ class EnrolledUser implements User
 	 */
 	public function getRole(): UserRole
 	{
-		$role = $this->record->getValue($this->roleField->value);
+		$role = $this->record->getValue($this->fields->role);
 		if($role === null)
 			throw new AuthenticationException("Stored Role Is Empty");
 		if(UserRole::tryFrom($role) === null)
 			throw new AuthenticationException("Stored role is invalid");
 		return UserRole::tryFrom($role);
+	}
+
+	/**
+	 * @return string
+	 */
+	public function getResetCodeField():string
+	{
+		return $this->fields->resetCode;
+	}
+
+	/**
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getEmailAddress():?string
+	{
+		return $this->record->getValue($this->fields->email);
+	}
+
+	/**
+	 * @return string|null
+	 * @throws MappingException
+	 */
+	public function getFullName():?string
+	{
+		try {
+			$f = $this->getFirstName();
+			$l = $this->getLastName();
+			if (empty($f) || empty($l)) return null;
+			else return "$f $l";
+		} catch (FieldAbsent) {
+			return null;
+		}
+	}
+
+	/**
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getFirstName():?string
+	{
+		return $this->record->getValue($this->fields->firstName);
+	}
+
+	/**
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getLastName():?string
+	{
+		return $this->record->getValue($this->fields->lastName);
+	}
+
+	/**
+	 * @return bool
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function hasEmailAddress():bool
+	{
+		return !empty($this->getEmailAddress());
 	}
 
 	/**
@@ -112,10 +182,9 @@ class EnrolledUser implements User
 	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
-	public function setUsername(string $username):EnrolledUser
+	public function setUsername(string $username):self
 	{
-		$this->record->getCell(
-			$this->usernameField->value)->setValue($username);
+		$this->record->setValue($this->fields->username, $username);
 		return $this;
 	}
 
@@ -127,12 +196,12 @@ class EnrolledUser implements User
 	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
-	public function setPassword(string $password):EnrolledUser
+	public function setPassword(string $password):self
 	{
 		if(strlen($password) < 8)
 			throw new InvalidPassword("Password must be at least 8 characters");
 		$hash = password_hash($password, PASSWORD_DEFAULT);
-		$this->record->getCell($this->passwordField->value)->setValue($hash);
+		$this->record->setValue($this->fields->password, $hash);
 		return $this;
 	}
 
@@ -157,8 +226,33 @@ class EnrolledUser implements User
      */
 	public function setRole(UserRole $role):self
 	{
-		$this->record->getCell($this->roleField->value)->setValue($role->value);
+		$this->record->setValue($this->fields->role, $role->value);
 		return $this;
+	}
+
+	/**
+	 * @return self
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 * @throws RandomException
+	 */
+	public function newResetCode():self
+	{
+		$field = $this->fields->resetCode;
+		$code = bin2hex(random_bytes(32));
+		$this->record->setValue($field, $code);
+		return $this;
+	}
+
+	/**
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getResetCode():?string
+	{
+		return $this->record->getValue($this->fields->resetCode);
 	}
 
 	/**
@@ -169,7 +263,7 @@ class EnrolledUser implements User
 	 */
 	public function clearResetCode():self
 	{
-		$this->record->setValue($this->resetCodeField->value, null);
+		$this->record->setValue($this->fields->resetCode, null);
 		return $this;
 	}
 
@@ -179,7 +273,7 @@ class EnrolledUser implements User
 	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
-	public function save():EnrolledUser
+	public function save():User
 	{
 		$this->record->save();
 		return $this;
@@ -188,15 +282,5 @@ class EnrolledUser implements User
 	public function isNew():bool
 	{
 		return $this->record->isNew();
-	}
-
-	public function getUsernameInput():Input
-	{
-		return new TextInput($this->usernameField->value);
-	}
-
-	public function getPasswordInput():Input
-	{
-		return new PasswordInput($this->passwordField->value);
 	}
 }

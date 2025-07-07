@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\nodes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\authentication\EnrolledUser;
+use netPhramework\db\authentication\User;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
@@ -17,9 +17,9 @@ use netPhramework\locating\redirectors\RedirectToSibling;
 class SaveUser extends Save
 {
 	public function __construct(
-		?Redirector $onSuccess = null,
-		string $name = 'save',
-		private readonly ?EnrolledUser $enrolledUser = null)
+		?Redirector            $onSuccess = null,
+		string                 $name = 'save',
+		private readonly ?User $enrolledUser = null)
 	{
 		parent::__construct($onSuccess, null, $name);
 	}
@@ -33,7 +33,7 @@ class SaveUser extends Save
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
+		$enrolledUser = $this->enrolledUser ?? new User();
 		$enrolledUser->setRecord($this->record);
 		try {
             $enrolledUser->parseAndSet($exchange->getParameters());

@@ -10,7 +10,7 @@ use netPhramework\db\presentation\recordTable\{columns\TextColumn,
 readonly class ColumnSetStrategy implements StrategyInterface
 {
 	public function __construct(
-		private string $usernameField = EnrolledUserField::USERNAME->value) {}
+		private string $usernameField = UserField::USERNAME->value) {}
 
 	public function configureColumnSet(ColumnSet $columnSet): void
 	{

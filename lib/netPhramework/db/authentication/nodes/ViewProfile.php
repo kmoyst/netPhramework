@@ -2,26 +2,26 @@
 
 namespace netPhramework\db\authentication\nodes;
 
+use netPhramework\authentication\SessionUser;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
-use netPhramework\db\authentication\EnrolledUserField;
-use netPhramework\db\authentication\UserProfile;
-use netPhramework\db\configuration\RecordFinder;
+use netPhramework\db\authentication\User;
+use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
+use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\presentation\CallbackInput;
-use netPhramework\rendering\View;
+use netPhramework\presentation\FeedbackView;
 
 class ViewProfile implements Node
 {
 	use LeafTrait;
 
 	public function __construct(
-		private readonly RecordFinder $userRecords,
+		private readonly UserManager $manager,
 		string $name = 'view-profile')
 	{
 		$this->name = $name;
@@ -30,28 +30,44 @@ class ViewProfile implements Node
 	/**
 	 * @param Exchange $exchange
 	 * @return void
+	 * @throws AuthenticationException
 	 * @throws FieldAbsent
-	 * @throws MappingException
-	 * @throws RecordNotFound
-	 * @throws RecordRetrievalException
 	 * @throws InvalidSession
+	 * @throws MappingException
+	 * @throws RecordRetrievalException
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user 	= $exchange->getSession()->getUser();
-		$record = $this->userRecords
-			->findUniqueRecord(
-				EnrolledUserField::USERNAME->value,
-				$user->getUsername());
-		$profile = new UserProfile()->setRecord($record);
-		$callbackInput = new CallbackInput($exchange);
-		$exchange->ok(new View('view-profile')
-			->add('firstName', $profile->getFirstName())
-			->add('lastName', $profile->getLastName())
-			->add('username', $profile->getUsername())
-			->add('role', $profile->getRole()->friendlyName())
-			->add('emailAddress', $profile->getEmailAddress())
-			->add('callbackInput', $callbackInput)
-		);
+		$session 	 = $exchange->getSession();
+		$user   	 = $this->findUser($session->getUser());
+		$fields 	 = $user->getFields()
+		;
+		$viewManager = new ViewManager($user)
+			->mandatoryAdd('username',    $fields->username)
+			->optionalAdd('firstName',    $fields->firstName)
+			->optionalAdd('lastName',     $fields->lastName)
+			->optionalAdd('emailAddress', $fields->email)
+			->addCustom('role',    		  $user->getRole()->friendlyName())
+			->addCustom('callbackInput',  new CallbackInput($exchange))
+			->addCustom('feedbackView',   new FeedbackView($session))
+			;
+		$responseCode = $session->resolveResponseCode();
+		$exchange->display($viewManager->view, $responseCode);
+	}
+
+	/**
+	 * @param ?SessionUser $sessionUser
+	 * @return User
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 * @throws RecordRetrievalException
+	 * @throws AuthenticationException
+	 */
+	private function findUser(?SessionUser $sessionUser):User
+	{
+		if($sessionUser === null)
+			throw new AuthenticationException(
+				"A visitor tried to view their profile");
+		return $this->manager->findByUsername($sessionUser->getUsername());
 	}
 }

@@ -5,8 +5,8 @@ namespace netPhramework\db\authentication\nodes;
 use netPhramework\common\Variables;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\authentication\EnrolledUser;
-use netPhramework\db\authentication\EnrolledUserField;
+use netPhramework\db\authentication\User;
+use netPhramework\db\authentication\UserField;
 use netPhramework\db\configuration\RecordFinder;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -21,7 +21,7 @@ use netPhramework\responding\ResponseCode;
 
 class SavePassword extends RecordSetProcess
 {
-	private readonly EnrolledUser $enrolledUser;
+	private readonly User $enrolledUser;
 	private readonly Redirector $onFailure;
 	private readonly Redirector $onSuccess;
 
@@ -29,12 +29,12 @@ class SavePassword extends RecordSetProcess
 		private readonly RecordFinder $userFinder,
 		?Redirector $onSuccess = null,
 		?Redirector $onFailure = null,
-		?EnrolledUser $enrolledUser = null
+		?User $enrolledUser = null
 	)
 	{
 		$this->onSuccess = new RedirectToRoot('log-in');
 		$this->onFailure = new RedirectToRoot('log-in');
-		$this->enrolledUser = $enrolledUser ?? new EnrolledUser();
+		$this->enrolledUser = $enrolledUser ?? new User();
 	}
 
 	/**
@@ -53,7 +53,7 @@ class SavePassword extends RecordSetProcess
 			$this->enrolledUser
 				->setRecord($record)
 				->setPassword(
-					$parameters->get(EnrolledUserField::PASSWORD->value))
+					$parameters->get(UserField::PASSWORD->value))
 				->clearResetCode()
 				->save()
 				;
@@ -81,8 +81,8 @@ class SavePassword extends RecordSetProcess
 	 */
 	private function findRecord(Variables $parameters): Record
 	{
-		$resetCode = $parameters->get(EnrolledUserField::RESET_CODE->value);
+		$resetCode = $parameters->get(UserField::RESET_CODE->value);
 		return $this->userFinder
-			->findUniqueRecord(EnrolledUserField::RESET_CODE->value,$resetCode);
+			->findUniqueRecord(UserField::RESET_CODE->value,$resetCode);
 	}
 }

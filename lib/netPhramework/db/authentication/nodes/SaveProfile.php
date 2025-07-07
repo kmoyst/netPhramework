@@ -6,7 +6,7 @@ use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
-use netPhramework\db\authentication\EnrolledUserField;
+use netPhramework\db\authentication\UserField;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\configuration\RecordFinder;
 use netPhramework\db\exceptions\DuplicateEntryException;
@@ -46,7 +46,7 @@ class SaveProfile implements Node
 		$user   = $exchange->getSession()->getUser();
 		$record = $this->userRecords
 			->findUniqueRecord(
-				EnrolledUserField::USERNAME->value, $user->getUsername());
+				UserField::USERNAME->value, $user->getUsername());
 		new UserProfile()
 			->setRecord($record)
 			->parseForValues($exchange->getParameters())
