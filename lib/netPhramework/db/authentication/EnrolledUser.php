@@ -26,7 +26,9 @@ class EnrolledUser implements User
 		protected EnrolledUserField $passwordField =
 		EnrolledUserField::PASSWORD,
 		protected EnrolledUserField $roleField =
-		EnrolledUserField::ROLE
+		EnrolledUserField::ROLE,
+		protected EnrolledUserField $resetCodeField =
+		EnrolledUserField::RESET_CODE
 	) {}
 
 	public function setRecord(Record $record): self
@@ -161,7 +163,20 @@ class EnrolledUser implements User
 
 	/**
 	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 */
+	public function clearResetCode():self
+	{
+		$this->record->setValue($this->resetCodeField->value, null);
+		return $this;
+	}
+
+	/**
+	 * @return $this
 	 * @throws DuplicateEntryException
+	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
 	public function save():EnrolledUser

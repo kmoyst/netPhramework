@@ -108,7 +108,7 @@ class SendResetLink extends RecordSetProcess
 		$message = [];
 		$message[] = 'Reset your password here: ';
 		$message[] = $this->changePasswordNode;
-		$message[] = "?reset-code=$resetCode .";
+		$message[] = "?reset-code=$resetCode";
 		new EmailDelivery($this->smtpServer)
 			->setRecipient($profile->getEmailAddress())
 			->setRecipientName($profile->getFullName())
