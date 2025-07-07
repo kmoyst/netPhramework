@@ -56,6 +56,16 @@ class UserProfile
 	}
 
 	/**
+	 * @return bool
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function hasEmailAddress(): bool
+	{
+		return $this->getEmailAddress() !== null;
+	}
+
+	/**
 	 * @return string|null
 	 * @throws FieldAbsent
 	 * @throws MappingException

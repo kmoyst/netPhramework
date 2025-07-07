@@ -40,8 +40,10 @@ class SendResetLink extends RecordSetProcess
 		?Redirector $afterProcess = null
 	)
 	{
-		$this->toChangePassword = new RerouteToSibling('change-password');
-		$this->afterProcess = new RedirectToRoot('log-in');
+		$this->toChangePassword = $toChangePassword
+			?? new RerouteToSibling('change-password');
+		$this->afterProcess = $afterProcess
+			?? new RedirectToRoot('log-in');
 		$this->resetCodeField = EnrolledUserField::RESET_CODE->value;
 	}
 
@@ -89,7 +91,6 @@ class SendResetLink extends RecordSetProcess
 	private function findRecord(Exchange $exchange):Record
 	{
 		$records		= $this->userRecords;
-		$enrolledUser 	= $this->enrolledUser ?? new EnrolledUser();
 		$fieldName 		= EnrolledUserField::USERNAME->value;
 		$username 		= $exchange->getParameters()->get($fieldName);
 		return $records->findUniqueRecord($fieldName, $username);
@@ -109,8 +110,7 @@ class SendResetLink extends RecordSetProcess
 	{
 		$profile   = new UserProfile()->setRecord($userRecord);
 		$resetCode = $userRecord->getValue($this->resetCodeField);
-		if(($emailAddress = $profile->getEmailAddress()) === null)
-			return false;
+		if(!$profile->hasEmailAddress()) return false;
 		$location = new Location()->setPath($exchange->getPath());
 		$location->getParameters()->add($this->resetCodeField, $resetCode);
 		$this->toChangePassword->reroute($location->getPath());
