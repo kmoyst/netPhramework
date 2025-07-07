@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes\registration;
+namespace netPhramework\db\authentication\registration;
 
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\UserManager;

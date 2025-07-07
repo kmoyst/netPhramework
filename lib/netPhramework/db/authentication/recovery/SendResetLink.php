@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes\passwordManagement;
+namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;

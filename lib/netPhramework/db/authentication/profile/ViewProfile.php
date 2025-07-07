@@ -1,12 +1,12 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes\profileManagement;
+namespace netPhramework\db\authentication\profile;
 
 use netPhramework\authentication\SessionUser;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
-use netPhramework\db\authentication\nodes\profileManagement\presentation\ViewManager;
+use netPhramework\db\authentication\profile\presentation\ViewManager;
 use netPhramework\db\authentication\User;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;

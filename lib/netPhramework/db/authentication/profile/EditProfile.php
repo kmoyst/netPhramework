@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes\profileManagement;
+namespace netPhramework\db\authentication\profile;
 
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;

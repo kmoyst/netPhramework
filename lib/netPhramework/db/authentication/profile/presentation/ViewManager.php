@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes\profileManagement\presentation;
+namespace netPhramework\db\authentication\profile\presentation;
 
 use netPhramework\db\authentication\User;
 use netPhramework\db\exceptions\FieldAbsent;

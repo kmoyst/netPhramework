@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes\registration;
+namespace netPhramework\db\authentication\registration;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;

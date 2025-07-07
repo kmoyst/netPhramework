@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes\profileManagement;
+namespace netPhramework\db\authentication\profile;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
