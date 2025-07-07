@@ -16,6 +16,8 @@ class UserProfile
 {
 	private Record $record;
 
+	public function __construct() {}
+
 	public function setRecord(Record $record): self
 	{
 		$this->record = $record;
@@ -71,6 +73,19 @@ class UserProfile
 	public function getLastName(): ?string
 	{
 		return $this->record->getValue(UserProfileField::LAST_NAME->value);
+	}
+
+	/**
+	 * @return string|null
+	 * @throws FieldAbsent
+	 * @throws MappingException
+	 */
+	public function getFullName(): ?string
+	{
+		$firstname = $this->getFirstName();
+		$lastname  = $this->getLastName();
+		if($firstname === null || $lastname === null) return null;
+		else return trim("$firstname $lastname");
 	}
 
 	/**

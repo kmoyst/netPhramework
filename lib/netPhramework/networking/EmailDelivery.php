@@ -6,13 +6,13 @@ use netPhramework\core\Exception;
 
 class EmailDelivery
 {
-	public readonly string $charset;
-	public readonly string $boundary;
+	private readonly string $charset;
+	private readonly string $boundary;
 
 	private string $recipient;
-	private string $recipientName;
+	private ?string $recipientName;
 	private string $sender;
-	private string $senderName;
+	private ?string $senderName;
 	private string $subject;
 	private string $message;
 
@@ -35,21 +35,32 @@ class EmailDelivery
 		;
 		try {
 			$this->server
-				->openConnection()
+				->connect()
 				->hello()
 				->sendingFrom($this->sender)
 				->sendingTo($this->recipient)
 				->start()
-				->writePlainText($this)
+				->compose($this->generateEmail())
 				->send()
 				->bye();
 		} catch (SmtpException $e) {
 			$msg = $e->getMessage() . ', ' . $this->server->getLastMessage();
 			throw new SmtpException(trim($msg,', '));
 		} finally {
-			$this->server->closeConnection();
+			$this->server->disconnect();
 		}
 		return $this;
+	}
+
+	private function generateEmail():Email
+	{
+		return new Email(
+			$this->resolveSenderName(),
+			$this->resolveRecipientName(),
+			$this->subject,
+			$this->message ?? '',
+			$this->charset
+		);
 	}
 
 	private function isPrepared():bool
@@ -58,7 +69,7 @@ class EmailDelivery
 			&& isset($this->subject);
 	}
 
-	public function resolveSenderName():string
+	private function resolveSenderName():string
 	{
 		if(isset($this->senderName))
 			return mb_encode_mimeheader(
@@ -66,18 +77,13 @@ class EmailDelivery
 		else return $this->sender;
 	}
 
-	public function resolveRecipientName():string
+	private function resolveRecipientName():string
 	{
 		if(isset($this->recipientName))
 			return mb_encode_mimeheader(
 				"\"$this->recipientName\" <$this->recipient>");
 		else
 			return $this->recipient;
-	}
-
-	public function getSubject(): string
-	{
-		return $this->subject;
 	}
 
 	// SETTER METHODS //
@@ -106,13 +112,13 @@ class EmailDelivery
 		return $this;
 	}
 
-	public function setRecipientName(string $recipientName): self
+	public function setRecipientName(?string $recipientName): self
 	{
 		$this->recipientName = $recipientName;
 		return $this;
 	}
 
-	public function setSenderName(string $senderName): self
+	public function setSenderName(?string $senderName): self
 	{
 		$this->senderName = $senderName;
 		return $this;

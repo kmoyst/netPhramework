@@ -43,6 +43,7 @@ class LogInPage implements Node
             ->add('passwordInput', 	$manager->getPasswordInput())
             ->add('formAction', 	$formAction)
             ->add('errorView', 		$feedbackView)
+			->add('forgotPasswordLink', '/users/forgot-password')
             ;
     }
 }

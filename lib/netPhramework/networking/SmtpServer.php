@@ -19,7 +19,7 @@ readonly class SmtpServer
 	 * @throws SmtpException
 	 * @throws StreamSocketException
 	 */
-	public function openConnection():self
+	public function connect():self
 	{
 		$this->verify(SmtpResponseCode::SERVICE_READY, $this->socket
 			->open()
@@ -102,23 +102,23 @@ readonly class SmtpServer
 		return $this;
 	}
 
-	public function closeConnection():self
+	public function disconnect():self
 	{
 		$this->socket->close();
 		return $this;
 	}
 
-	public function writePlainText(EmailDelivery $email):self
+	public function compose(Email $email):self
 	{
 		$this->socket
-			->write("From: " . $email->resolveSenderName())
-			->write("To: " . $email->resolveRecipientName())
-			->write("Subject: " . $email->getSubject())
+			->write("From: $email->from")
+			->write("To:  $email->to")
+			->write("Subject: $email->subject")
 			->write("MIME-Version: 1.0")
-			->write("Content-Type: text/plain; charset=$email->charset")
+			->write("Content-Type: text/html; charset=$email->charset")
 			->write("Content-Transfer-Encoding: 8bit")
 			->write('')
-			->write($this->message ?? '')
+			->write($email->message)
 		;
 		return $this;
 	}
