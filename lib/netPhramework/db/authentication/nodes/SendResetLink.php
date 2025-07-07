@@ -21,6 +21,7 @@ use netPhramework\networking\EmailException;
 use netPhramework\networking\SmtpServer;
 use netPhramework\networking\StreamSocketException;
 use netPhramework\responding\ResponseCode;
+use Random\RandomException;
 
 class SendResetLink extends RecordSetProcess
 {
@@ -49,12 +50,13 @@ class SendResetLink extends RecordSetProcess
 	 * @throws MappingException
 	 * @throws RecordNotFound
 	 * @throws RecordRetrievalException
+	 * @throws RandomException
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
 		try {
 			$record = $this->findRecord($exchange);
-			$record->setValue($this->resetCodeField, md5(uniqid()));
+			$record->setValue($this->resetCodeField, bin2hex(random_bytes(32)));
 			$record->save();
 			if($this->sendEmail($record))
 				$exchange->getSession()
