@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes;
+namespace netPhramework\db\authentication\nodes\registration;
 
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\UserManager;
@@ -10,8 +10,8 @@ use netPhramework\locating\ReroutedPath;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\presentation\FeedbackView;
-use netPhramework\presentation\TextInput;
 use netPhramework\presentation\PasswordInput;
+use netPhramework\presentation\TextInput;
 use netPhramework\rendering\View;
 
 class SignUp extends RecordSetProcess

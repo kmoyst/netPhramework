@@ -1,9 +1,8 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes;
+namespace netPhramework\db\authentication\nodes\passwordManagement;
 
 use netPhramework\core\Exchange;
-use netPhramework\db\authentication\User;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;

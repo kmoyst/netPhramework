@@ -13,13 +13,13 @@ use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidPassword;
 use Random\RandomException;
 
-class User implements \netPhramework\authentication\User
+readonly class User implements \netPhramework\authentication\User
 {
-	public readonly UserFieldNames $fields;
+	public UserFieldNames $fields;
 
 	public function __construct(
-		public readonly Record $record,
-		public readonly UserRole $defaultRole = UserRole::STANDARD_USER,
+		public Record $record,
+		public UserRole $defaultRole = UserRole::STANDARD_USER,
 		?UserFieldNames $fields = null)
 	{
 		$this->fields = $fields ?? new UserFieldNames();

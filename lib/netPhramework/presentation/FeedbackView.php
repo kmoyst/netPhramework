@@ -20,7 +20,7 @@ readonly class FeedbackView implements Encodable
 			if($message === null) return '';
 			$view = new ImmutableView('error-message', ['message' => $message]);
 			return $encoder->encodeViewable($view);
-		} catch (InvalidSession $e) {
+		} catch (InvalidSession) {
 			return '';
 		}
 	}

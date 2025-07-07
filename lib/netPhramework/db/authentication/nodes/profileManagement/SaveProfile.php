@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes;
+namespace netPhramework\db\authentication\nodes\profileManagement;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
@@ -13,8 +13,8 @@ use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
-use netPhramework\locating\redirectors\RedirectToSibling;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\locating\redirectors\RedirectToSibling;
 
 class SaveProfile implements Node
 {

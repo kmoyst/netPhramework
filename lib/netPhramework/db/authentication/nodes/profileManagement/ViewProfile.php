@@ -1,11 +1,12 @@
 <?php
 
-namespace netPhramework\db\authentication\nodes;
+namespace netPhramework\db\authentication\nodes\profileManagement;
 
 use netPhramework\authentication\SessionUser;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
+use netPhramework\db\authentication\nodes\profileManagement\presentation\ViewManager;
 use netPhramework\db\authentication\User;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -13,6 +14,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\exceptions\NotFound;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
 
@@ -34,6 +36,7 @@ class ViewProfile implements Node
 	 * @throws FieldAbsent
 	 * @throws InvalidSession
 	 * @throws MappingException
+	 * @throws NotFound
 	 * @throws RecordRetrievalException
 	 */
 	public function handleExchange(Exchange $exchange): void
@@ -58,10 +61,11 @@ class ViewProfile implements Node
 	/**
 	 * @param ?SessionUser $sessionUser
 	 * @return User
+	 * @throws AuthenticationException
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 * @throws RecordRetrievalException
-	 * @throws AuthenticationException
+	 * @throws NotFound
 	 */
 	private function findUser(?SessionUser $sessionUser):User
 	{
