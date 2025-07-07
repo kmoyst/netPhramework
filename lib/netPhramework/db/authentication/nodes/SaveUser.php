@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\nodes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\authentication\User;
+use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
@@ -17,9 +17,9 @@ use netPhramework\locating\redirectors\RedirectToSibling;
 class SaveUser extends Save
 {
 	public function __construct(
-		?Redirector            $onSuccess = null,
-		string                 $name = 'save',
-		private readonly ?User $enrolledUser = null)
+		private readonly UserManager $manager,
+		?Redirector $onSuccess = null,
+		string $name = 'save')
 	{
 		parent::__construct($onSuccess, null, $name);
 	}
@@ -33,15 +33,14 @@ class SaveUser extends Save
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$enrolledUser = $this->enrolledUser ?? new User();
-		$enrolledUser->setRecord($this->record);
+		$user = $this->manager->getUser($this->record);
 		try {
-            $enrolledUser->parseAndSet($exchange->getParameters());
-            $enrolledUser->save();
-			$exchange->getSession()->login($enrolledUser);
+            $user->parseAndSet($exchange->getParameters());
+            $user->save();
+			$exchange->getSession()->login($user);
             $exchange->redirect($this->onSuccess);
         } catch (DuplicateEntryException) {
-            $message = "User already exists: " . $enrolledUser->getUsername();
+            $message = "User already exists: " . $user->getUsername();
             $exchange->error(new Exception($message),
                 new RedirectToSibling('sign-up'));
         } catch (InvalidValue|InvalidPassword $e) {

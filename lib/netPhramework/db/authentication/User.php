@@ -15,15 +15,13 @@ use Random\RandomException;
 
 class User implements \netPhramework\authentication\User
 {
-	private Record $record;
-	private UserFieldNames $fields;
+	public readonly UserFieldNames $fields;
 
 	public function __construct(
-		Record $record,
-		private readonly UserRole $defaultRole = UserRole::STANDARD_USER,
+		public readonly Record $record,
+		public readonly UserRole $defaultRole = UserRole::STANDARD_USER,
 		?UserFieldNames $fields = null)
 	{
-		$this->record = $record;
 		$this->fields = $fields ?? new UserFieldNames();
 	}
 
@@ -54,6 +52,21 @@ class User implements \netPhramework\authentication\User
 		return
 			$vars->has($this->fields->username) &&
 			$vars->has($this->fields->password);
+	}
+
+	/**
+	 * @param Variables $vars
+	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 */
+	public function parseProfile(Variables $vars):self
+	{
+		$this->setFirstName($vars->getOrNull($this->fields->firstName));
+		$this->setLastName($vars->getOrNull($this->fields->lastName));
+		$this->setEmailAddress($vars->getOrNull($this->fields->email));
+		return $this;
 	}
 
 	/**
@@ -185,6 +198,45 @@ class User implements \netPhramework\authentication\User
 	public function setUsername(string $username):self
 	{
 		$this->record->setValue($this->fields->username, $username);
+		return $this;
+	}
+
+	/**
+	 * @param ?string $firstName
+	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 */
+	public function setFirstName(?string $firstName):self
+	{
+		$this->record->setValue($this->fields->firstName, $firstName);
+		return $this;
+	}
+
+	/**
+	 * @param ?string $lastName
+	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 */
+	public function setLastName(?string $lastName):self
+	{
+		$this->record->setValue($this->fields->lastName, $lastName);
+		return $this;
+	}
+
+	/**
+	 * @param ?string $emailAddress
+	 * @return $this
+	 * @throws FieldAbsent
+	 * @throws InvalidValue
+	 * @throws MappingException
+	 */
+	public function setEmailAddress(?string $emailAddress):self
+	{
+		$this->record->setValue($this->fields->email, $emailAddress);
 		return $this;
 	}
 

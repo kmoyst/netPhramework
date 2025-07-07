@@ -4,37 +4,34 @@ namespace netPhramework\db\authentication\nodes;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\db\authentication\User;
-use netPhramework\db\authentication\UserField;
-use netPhramework\db\configuration\RecordFinder;
+use netPhramework\db\authentication\UserManager;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
+use netPhramework\exceptions\NotFound;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\presentation\HiddenInput;
+use netPhramework\presentation\PasswordInput;
 use netPhramework\rendering\View;
 
 class ChangePassword extends RecordSetProcess
 {
-	private readonly User $enrolledUser;
 	private readonly Rerouter $formRouter;
 	private readonly Redirector $onNotFound;
 
 	public function __construct(
-		private readonly RecordFinder $userFinder,
+		private readonly UserManager $manager,
 		?Rerouter $formRouter = null,
-		?Redirector $onNotFound = null,
-		?User $enrolledUser = null
+		?Redirector $onNotFound = null
 	)
 	{
 		$this->formRouter = $formRouter?? new RerouteToSibling('save-password');
 		$this->onNotFound = $onNotFound?? new RedirectToRoot('log-in');
-		$this->enrolledUser = $enrolledUser?? new User();
 	}
 
 	/**
@@ -48,22 +45,22 @@ class ChangePassword extends RecordSetProcess
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
+		$manager		= $this->manager;
 		$parameters		= $exchange->getParameters();
-		$resetCodeField = UserField::RESET_CODE->value;
-		$resetCode 		= $parameters->get($resetCodeField);
-		try {
-			$this->userFinder->findUniqueRecord($resetCodeField, $resetCode);
-		} catch (RecordNotFound) {
-			$e = new RecordNotFound('Invalid Reset Code');
-			$exchange->error($e, $this->onNotFound);
+		$resetCodeField = $manager->resetCodeFieldName;
+		$resetCode 		= $manager->parseForResetCode($parameters);
+		if(!$manager->findByResetCode($resetCode))
+		{
+			$exchange->error(new NotFound(), $this->onNotFound);
 			return;
 		}
 		$resetCodeInput = new HiddenInput($resetCodeField, $resetCode);
+		$passwordInput  = new PasswordInput($manager->passwordFieldName);
 		$formAction		= $exchange->getPath();
 		$this->formRouter->reroute($formAction);
 		$view = new View('change-password')
 			->add('resetCodeInput', $resetCodeInput)
-			->add('passwordInput', $this->enrolledUser->getPasswordInput())
+			->add('passwordInput', $passwordInput)
 			->add('formAction', $formAction)
 			;
 		$exchange->ok($view);

@@ -6,13 +6,14 @@ use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
 use netPhramework\db\authentication\UserField;
-use netPhramework\db\authentication\UserProfile;
-use netPhramework\db\configuration\RecordFinder;
+use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
+use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\exceptions\NotFound;
 use netPhramework\presentation\InputSet;
 use netPhramework\rendering\View;
 
@@ -21,7 +22,7 @@ class EditProfile implements Node
 	use LeafTrait;
 
 	public function __construct(
-		private readonly RecordFinder $userRecords,
+		private readonly UserManager $manager,
 		string $name = 'edit-profile')
 	{
 		$this->name = $name;
@@ -30,26 +31,35 @@ class EditProfile implements Node
 	/**
 	 * @param Exchange $exchange
 	 * @return void
+	 * @throws AuthenticationException
 	 * @throws FieldAbsent
-	 * @throws MappingException
-	 * @throws RecordNotFound
-	 * @throws RecordRetrievalException
 	 * @throws InvalidSession
+	 * @throws MappingException
+	 * @throws RecordRetrievalException
+	 * @throws NotFound
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user 	 = $exchange->getSession()->getUser();
-		$record  = $this->userRecords
-			->findUniqueRecord(
-				UserField::USERNAME->value,
-				$user->getUsername());
-		$inputs  = new InputSet();
-		$profile = new UserProfile();
-		$profile->setRecord($record)->addInputs($inputs);
+		$manager  = $this->manager;
+		$username = $exchange->getSession()->getUser()->getUsername();
+		$user     = $manager->findByUsername($username);
+		$inputs   = new InputSet();
+		$inputs
+			->textInput($user->fields->firstName)
+			->setValue($user->getFirstName())
+		;
+		$inputs
+			->textInput($user->fields->lastName)
+			->setValue($user->getLastName())
+		;
+		$inputs
+			->textInput($user->fields->email)
+			->setValue($user->getEmailAddress())
+		;
 		$exchange->ok(new View('edit-profile')
 			->add('inputs', $inputs)
 			->add('userDescription', $user->getUsername())
-			->add('role',$user->getRole()->friendlyName())
+			->add('role', $user->getRole()->friendlyName())
 		);
 	}
 }

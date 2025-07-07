@@ -55,9 +55,8 @@ class SendResetLink extends RecordSetProcess
 	public function handleExchange(Exchange $exchange): void
 	{
 		try {
-			$searchField = $this->userManager->getResetCodeFieldName();
-			$searchValue = $exchange->getParameters()->get($searchField);
-			$user = $this->userManager->findUser($searchField, $searchValue);
+			$parameters  = $exchange->getParameters();
+			$user = $this->userManager->findByUsername($parameters);
 			$user->newResetCode()->save();
 			if($this->sendEmail($user, $exchange))
 				$exchange->getSession()

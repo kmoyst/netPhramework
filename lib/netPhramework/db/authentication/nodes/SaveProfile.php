@@ -6,9 +6,7 @@ use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
-use netPhramework\db\authentication\UserField;
-use netPhramework\db\authentication\UserProfile;
-use netPhramework\db\configuration\RecordFinder;
+use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
@@ -23,7 +21,7 @@ class SaveProfile implements Node
 	use LeafTrait;
 
 	public function __construct(
-		private readonly RecordFinder $userRecords,
+		private readonly UserManager $manager,
 		string $name = 'save-profile')
 	{
 		$this->name = $name;
@@ -43,15 +41,9 @@ class SaveProfile implements Node
      */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user   = $exchange->getSession()->getUser();
-		$record = $this->userRecords
-			->findUniqueRecord(
-				UserField::USERNAME->value, $user->getUsername());
-		new UserProfile()
-			->setRecord($record)
-			->parseForValues($exchange->getParameters())
-			->save()
-		;
+		$sessionUser = $exchange->getSession()->getUser();
+		$user = $this->manager->findByUsername($sessionUser->getUsername());
+		$user->parseProfile($exchange->getParameters())->save();
 		$exchange->redirect(new RedirectToSibling('view-profile'));
 	}
 }

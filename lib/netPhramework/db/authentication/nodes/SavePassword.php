@@ -2,18 +2,15 @@
 
 namespace netPhramework\db\authentication\nodes;
 
-use netPhramework\common\Variables;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\User;
-use netPhramework\db\authentication\UserField;
-use netPhramework\db\configuration\RecordFinder;
+use netPhramework\db\authentication\UserManager;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
-use netPhramework\db\mapping\Record;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
@@ -21,20 +18,17 @@ use netPhramework\responding\ResponseCode;
 
 class SavePassword extends RecordSetProcess
 {
-	private readonly User $enrolledUser;
 	private readonly Redirector $onFailure;
 	private readonly Redirector $onSuccess;
 
 	public function __construct(
-		private readonly RecordFinder $userFinder,
+		private readonly UserManager $manager,
 		?Redirector $onSuccess = null,
-		?Redirector $onFailure = null,
-		?User $enrolledUser = null
+		?Redirector $onFailure = null
 	)
 	{
-		$this->onSuccess = new RedirectToRoot('log-in');
-		$this->onFailure = new RedirectToRoot('log-in');
-		$this->enrolledUser = $enrolledUser ?? new User();
+		$this->onSuccess = $onSuccess ?? new RedirectToRoot('log-in');
+		$this->onFailure = $onFailure ?? new RedirectToRoot('log-in');
 	}
 
 	/**
@@ -48,15 +42,14 @@ class SavePassword extends RecordSetProcess
 	public function handleExchange(Exchange $exchange): void
 	{
 		try {
-			$parameters   = $exchange->getParameters();
-			$record 	  = $this->findRecord($parameters);
-			$this->enrolledUser
-				->setRecord($record)
-				->setPassword(
-					$parameters->get(UserField::PASSWORD->value))
+			$parameters = $exchange->getParameters()
+			;
+			$user = $this->manager->findByResetCode($parameters);
+			$user
+				->setPassword($parameters->get($user->fields->password))
 				->clearResetCode()
 				->save()
-				;
+			;
 			$exchange->getSession()
 				->addErrorMessage('New Password Saved')
 				->addErrorCode(ResponseCode::OK)
@@ -68,21 +61,5 @@ class SavePassword extends RecordSetProcess
 		} catch (InvalidPassword $e) {
 			$exchange->error($e, $this->onFailure);
 		}
-	}
-
-	/**
-	 * @param Variables $parameters
-	 * @return Record
-	 * @throws Exception
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 * @throws RecordNotFound
-	 * @throws RecordRetrievalException
-	 */
-	private function findRecord(Variables $parameters): Record
-	{
-		$resetCode = $parameters->get(UserField::RESET_CODE->value);
-		return $this->userFinder
-			->findUniqueRecord(UserField::RESET_CODE->value,$resetCode);
 	}
 }
