@@ -13,7 +13,6 @@ class ChildAsset extends Composite implements RecordChild
 {
 	private Asset $asset;
 	private string $linkField;
-	private Record $record;
 
 	/**
 	 * @param Asset $asset
