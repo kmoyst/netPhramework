@@ -13,5 +13,6 @@ abstract class Node
 	 */
 	abstract public function getChild(string $name):Node;
 	abstract public function handleExchange(Exchange $exchange):void;
+	abstract public function getComponentName():string;
 	abstract public function getName():string;
 }

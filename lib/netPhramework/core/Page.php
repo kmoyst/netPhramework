@@ -21,7 +21,7 @@ class Page extends Node
 
 	public function getName():string
 	{
-		return $this->resolveName($this->name ?? $this->templateName);
+		return $this->name ?? $this->templateName;
 	}
 
 	public function handleExchange(Exchange $exchange): void

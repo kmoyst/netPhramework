@@ -34,7 +34,7 @@ class EditParent extends RecordProcess
 	{
 	}
 
-	public function getName():string { return $this->resolveName('edit'); }
+	public function getName():string { return 'edit'; }
 
 	/**
 	 * @param Exchange $exchange

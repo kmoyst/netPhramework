@@ -14,10 +14,9 @@ trait LeafTrait
 		throw new NodeNotFound("Not Found: $name");
 	}
 
-	public function getName(): string
+	public function getComponentName(): string
 	{
-		$name = Utils::camelToKebab(Utils::baseClassName($this));
-		return $this->resolveName($name);
+		return $this->isDefault ? '' : $this->getName();
 	}
 
 	public function makeDefault():self
@@ -26,8 +25,8 @@ trait LeafTrait
 		return $this;
 	}
 
-	protected function resolveName(string $name):string
+	public function getName():string
 	{
-		return $this->isDefault ? '' : $name;
+		return Utils::camelToKebab(Utils::baseClassName($this));
 	}
 }
