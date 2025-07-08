@@ -8,12 +8,12 @@ final class Directory extends Node
 {
 	use CompositeBehaviour;
 
-	private NodeSet $children;
+	private DirectoryChildSet $children;
     private string|Index $index;
 
     public function __construct(private readonly string $name)
 	{
-		$this->children = new NodeSet();
+		$this->children = new DirectoryChildSet();
 	}
 
 	public function add(Node $node):self

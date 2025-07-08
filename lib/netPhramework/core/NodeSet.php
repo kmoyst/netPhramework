@@ -1,23 +1,45 @@
 <?php
 namespace netPhramework\core;
 use Iterator;
+use netPhramework\exceptions\NodeNotFound;
+
 class NodeSet implements Iterator
 {
-    private array $nodes = [];
+    protected array $nodes = [];
 
-	public function add(Node $node):void
+	public function has(string $id):bool
+	{
+		return array_key_exists($id, $this->nodes);
+	}
+
+	/**
+	 * @param string $id
+	 * @return Node
+	 * @throws NodeNotFound
+	 */
+	public function get(string $id):Node
+	{
+		$this->confirmNode($id);
+		return $this->nodes[$id];
+	}
+
+	/**
+	 * @param Node $node
+	 * @return void
+	 */
+	protected function storeNode(Node $node):void
 	{
 		$this->nodes[$node->getNodeId()] = $node;
 	}
 
-	public function has(string $name):bool
+	/**
+	 * @param string $id
+	 * @return void
+	 * @throws NodeNotFound
+	 */
+	protected function confirmNode(string $id):void
 	{
-		return array_key_exists($name, $this->nodes);
-	}
-
-	public function get(string $name):Node
-	{
-		return $this->nodes[$name];
+		if(!$this->has($id)) throw new NodeNotFound("Not Found: $id");
 	}
 
 	public function getNames():array

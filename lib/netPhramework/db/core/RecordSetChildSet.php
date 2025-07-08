@@ -2,27 +2,18 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\exceptions\NodeNotFound;
+use netPhramework\core\NodeSet;
 
-class RecordSetChildSet
+class RecordSetChildSet extends NodeSet
 {
-	private array $nodes = [];
-
-	public function add(RecordSetChild $node):self
+	public function add(RecordSetChild $node): void
 	{
-		$this->nodes[$node->getNodeId()] = $node;
-		return $this;
+		$this->storeNode($node);
 	}
 
-	/**
-	 * @param string $name
-	 * @return RecordSetChild
-	 * @throws NodeNotFound
-	 */
-	public function get(string $name):RecordSetChild
+	public function get(string $id): RecordSetChild
 	{
-		if(!isset($this->nodes[$name]))
-			throw new NodeNotFound("Not Found: $name");
-		return $this->nodes[$name];
+		$this->confirmNode($id);
+		return $this->nodes[$id];
 	}
 }
