@@ -8,16 +8,16 @@ use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
 
-readonly class Asset implements Node
+class Asset extends Node
 {
 	use CompositeTrait;
 
 	public function __construct(
-		private string $name,
-		private RecordSet $recordSet,
-		private RecordChildSet $recordChildSet,
-		private RecordSetChildSet $recordSetChildSet,
-		private StringPredicate $recordIdPredicate
+		private readonly string $name,
+		private readonly RecordSet $recordSet,
+		private readonly RecordChildSet $recordChildSet,
+		private readonly RecordSetChildSet $recordSetChildSet,
+		private readonly StringPredicate $recordIdPredicate
 	) {}
 
 	public function getName(): string

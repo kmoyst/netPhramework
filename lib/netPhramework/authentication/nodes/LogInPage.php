@@ -12,7 +12,7 @@ use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
-class LogInPage implements Node
+class LogInPage extends Node
 {
 	use LeafTrait;
 

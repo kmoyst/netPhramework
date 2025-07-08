@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\NodeNotFound;
 
-final class Directory implements Node
+final class Directory extends Node
 {
 	use CompositeTrait;
 

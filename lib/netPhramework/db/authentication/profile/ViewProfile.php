@@ -18,7 +18,7 @@ use netPhramework\exceptions\NotFound;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
 
-class ViewProfile implements Node
+class ViewProfile extends Node
 {
 	use LeafTrait;
 

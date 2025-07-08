@@ -10,7 +10,7 @@ use netPhramework\locating\Redirectable;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\responding\ResponseCode;
 
-class Redirector implements Node
+class Redirector extends Node
 {
 	use LeafTrait;
 

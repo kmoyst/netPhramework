@@ -16,7 +16,7 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\locating\redirectors\RedirectToSibling;
 
-class SaveProfile implements Node
+class SaveProfile extends Node
 {
 	use LeafTrait;
 

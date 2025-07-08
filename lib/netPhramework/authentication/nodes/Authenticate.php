@@ -14,7 +14,7 @@ use netPhramework\locating\redirectors\RedirectToSibling as toSibling;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 
-class Authenticate implements Node
+class Authenticate extends Node
 {
 	use LeafTrait;
 

@@ -4,14 +4,14 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\NodeNotFound;
 
-interface Node
+abstract class Node
 {
 	/**
 	 * @param string $name
 	 * @return Node
 	 * @throws NodeNotFound
 	 */
-	public function getChild(string $name):Node;
-	public function handleExchange(Exchange $exchange):void;
-	public function getName():string;
+	abstract public function getChild(string $name):Node;
+	abstract public function handleExchange(Exchange $exchange):void;
+	abstract public function getName():string;
 }

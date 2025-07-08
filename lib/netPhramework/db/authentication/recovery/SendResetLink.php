@@ -25,7 +25,7 @@ use netPhramework\networking\StreamSocketException;
 use netPhramework\responding\ResponseCode;
 use Random\RandomException;
 
-class SendResetLink implements Node
+class SendResetLink extends Node
 {
 	use LeafTrait;
 

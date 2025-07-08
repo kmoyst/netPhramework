@@ -5,7 +5,7 @@ namespace netPhramework\db\core;
 use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
 
-abstract class RecordSetChild implements Node
+abstract class RecordSetChild extends Node
 {
 	protected RecordSet $recordSet;
 

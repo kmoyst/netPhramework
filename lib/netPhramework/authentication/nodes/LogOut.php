@@ -10,7 +10,7 @@ use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\exceptions\InvalidSession;
 
-class LogOut implements Node
+class LogOut extends Node
 {
 	use LeafTrait;
 

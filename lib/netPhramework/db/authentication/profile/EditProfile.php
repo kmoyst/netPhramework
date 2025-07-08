@@ -15,7 +15,7 @@ use netPhramework\exceptions\NotFound;
 use netPhramework\presentation\InputSet;
 use netPhramework\rendering\View;
 
-class EditProfile implements Node
+class EditProfile extends Node
 {
 	use LeafTrait;
 

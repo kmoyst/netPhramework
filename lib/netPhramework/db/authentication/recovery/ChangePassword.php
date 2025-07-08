@@ -21,7 +21,7 @@ use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\PasswordInput;
 use netPhramework\rendering\View;
 
-class ChangePassword implements Node
+class ChangePassword extends Node
 {
 	use LeafTrait;
 

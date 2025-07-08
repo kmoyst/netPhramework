@@ -7,7 +7,7 @@ use netPhramework\core\Exchange;
 use netPhramework\core\LeafTrait;
 use netPhramework\rendering\View;
 
-class LogInFailure implements Node
+class LogInFailure extends Node
 {
 	use LeafTrait;
 

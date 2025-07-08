@@ -8,7 +8,7 @@ use netPhramework\core\LeafTrait;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 
-class LogInStatus implements Node
+class LogInStatus extends Node
 {
 	use LeafTrait;
 

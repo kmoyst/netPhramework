@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class Page implements Node
+class Page extends Node
 {
 	use LeafTrait;
 

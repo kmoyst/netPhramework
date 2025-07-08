@@ -8,7 +8,6 @@ use netPhramework\core\LeafTrait;
 use netPhramework\core\Node;
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
-use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
@@ -18,7 +17,7 @@ use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\responding\ResponseCode;
 
-class SavePassword implements Node
+class SavePassword extends Node
 {
 	use LeafTrait;
 

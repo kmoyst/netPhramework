@@ -13,7 +13,7 @@ use netPhramework\locating\rerouters\RerouteToSibling as toSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
-class ForgotPassword implements Node
+class ForgotPassword extends Node
 {
 	use LeafTrait;
 
