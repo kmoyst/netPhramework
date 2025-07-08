@@ -10,7 +10,7 @@ use netPhramework\db\nodes\Insert;
 use netPhramework\db\nodes\Update;
 use netPhramework\locating\redirectors\Redirector;
 
-class ActiveAssetBuilder extends AssetBuilder
+class ActiveAppBuilder extends AppBuilder
 {
     /**
      * This is a potent method, only meant to be used during initial

@@ -12,7 +12,7 @@ use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
 
-class PassiveAssetBuilder extends AssetBuilder
+class PassiveAppBuilder extends AppBuilder
 {
     /**
      * This is a potent method, only meant to be used during initial

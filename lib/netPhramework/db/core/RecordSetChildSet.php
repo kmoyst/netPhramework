@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\NodeSet;
+use netPhramework\core\HasNodes;
 
-class RecordSetChildSet extends NodeSet
+class RecordSetChildSet extends HasNodes
 {
 	public function add(RecordSetChild $node): void
 	{
