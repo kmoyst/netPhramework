@@ -2,18 +2,34 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\core\Directory;
+use netPhramework\core\Node;
 use netPhramework\db\core\Application;
+use netPhramework\db\core\AssetNode;
+use netPhramework\db\core\Asset;
 use netPhramework\db\core\ChildAsset;
 use netPhramework\db\exceptions\ConfigurationException;
 
-class AppBuilder
+class ApplicationBuilder
 {
+	private Asset $asset;
+
 	public function __construct
 	(
 	private readonly Application $application
 	)
 	{}
+
+	public function newAsset(string $name):self
+	{
+		$this->asset = $this->application->newAsset($name);
+		return $this;
+	}
+
+	public function add(AssetNode $node):self
+	{
+		$node->enlist($this->asset);
+		return $this;
+	}
 
 	public function childAsset(
 		AssetStrategy $strategy, string $linkField):self

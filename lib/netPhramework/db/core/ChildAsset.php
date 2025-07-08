@@ -9,8 +9,10 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Record;
 
-class ChildAsset extends Composite implements RecordChild
+class ChildAsset extends Composite implements AssetNode
 {
+	use RecordChild;
+
 	private Asset $asset;
 	private string $linkField;
 

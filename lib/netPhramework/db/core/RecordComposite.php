@@ -7,9 +7,9 @@ use netPhramework\core\Node;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\exceptions\NodeNotFound;
 
-class RecordComposite extends Composite implements RecordSetChild
+class RecordComposite extends Composite implements AssetNode
 {
-	use HasRecordSet;
+	use RecordSetChild;
 
 	public function __construct(
 		private readonly RecordChildSet $nodeSet,

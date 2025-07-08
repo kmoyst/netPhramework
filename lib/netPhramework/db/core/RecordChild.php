@@ -2,10 +2,20 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Node;
 use netPhramework\db\mapping\Record;
 
-interface RecordChild extends Node
+trait RecordChild
 {
-	public function setRecord(Record $record): self;
+	protected Record $record;
+
+	public function setRecord(Record $record): self
+	{
+		$this->record = $record;
+		return $this;
+	}
+
+	public function enlist(Asset $asset):void
+	{
+		$asset->recordChildSet->add($this);
+	}
 }
