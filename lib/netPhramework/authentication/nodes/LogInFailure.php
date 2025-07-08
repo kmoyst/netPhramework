@@ -2,15 +2,12 @@
 
 namespace netPhramework\authentication\nodes;
 
-use netPhramework\core\Node;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafBehaviour;
+use netPhramework\core\Leaf;
 use netPhramework\rendering\View;
 
-class LogInFailure extends Node
+class LogInFailure extends Leaf
 {
-	use LeafBehaviour;
-
 	public function handleExchange(Exchange $exchange): void
 	{
 		$message = $exchange->getParameters()->getOrNull('message' ?? '');

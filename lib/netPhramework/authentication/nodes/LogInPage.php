@@ -3,19 +3,16 @@
 namespace netPhramework\authentication\nodes;
 
 use netPhramework\authentication\LogInManager;
-use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafBehaviour;
+use netPhramework\core\Leaf;
 use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
-class LogInPage extends Node
+class LogInPage extends Leaf
 {
-	use LeafBehaviour;
-
     public function __construct(
 		private readonly ?View $view = null,
 		private readonly ?Rerouter $forForm = null

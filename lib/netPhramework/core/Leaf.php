@@ -5,13 +5,13 @@ namespace netPhramework\core;
 use netPhramework\common\Utils;
 use netPhramework\exceptions\NodeNotFound;
 
-trait LeafBehaviour
+abstract class Leaf implements Node
 {
 	private bool $isIndex = false;
 
-	public function getChild(string $name): never
+	public function getChild(string $id): never
 	{
-		throw new NodeNotFound("Not Found: $name");
+		throw new NodeNotFound("Not Found: $id");
 	}
 
 	public function getNodeId(): string

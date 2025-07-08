@@ -4,8 +4,7 @@ namespace netPhramework\db\authentication\profile;
 
 use netPhramework\authentication\SessionUser;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafBehaviour;
-use netPhramework\core\Node;
+use netPhramework\core\Leaf;
 use netPhramework\db\authentication\presentation\ProfileViewManager;
 use netPhramework\db\authentication\User;
 use netPhramework\db\authentication\UserManager;
@@ -18,10 +17,8 @@ use netPhramework\exceptions\NotFound;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
 
-class ViewProfile extends Node
+class ViewProfile extends Leaf
 {
-	use LeafBehaviour;
-
 	public function __construct(private readonly UserManager $manager) {}
 
 	/**

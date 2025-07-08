@@ -5,10 +5,8 @@ namespace netPhramework\core;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class Page extends Node
+class Page extends Leaf
 {
-	use LeafBehaviour;
-
     private View $view;
 
 	public function __construct(

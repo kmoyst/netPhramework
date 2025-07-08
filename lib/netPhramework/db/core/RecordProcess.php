@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\LeafBehaviour;
+use netPhramework\core\Leaf;
 
-abstract class RecordProcess extends RecordChild
+abstract class RecordProcess extends Leaf implements RecordChild
 {
-	use LeafBehaviour;
+	use HasRecord;
 }

@@ -4,18 +4,14 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\NodeNotFound;
 
-abstract class Node
+interface Node
 {
 	/**
 	 * Returns the Node's Id
 	 *
 	 * @return string
 	 */
-	public function getNodeId():string
-	{
-		return $this->getName();
-	}
-
+	public function getNodeId():string;
 	/**
 	 * Retrieves a child node
 	 *
@@ -23,7 +19,7 @@ abstract class Node
 	 * @return Node
 	 * @throws NodeNotFound
 	 */
-	abstract public function getChild(string $id):Node;
+	public function getChild(string $id):Node;
 
 	/**
 	 * Handles the Request / Response Exchange
@@ -31,12 +27,12 @@ abstract class Node
 	 * @param Exchange $exchange
 	 * @return void
 	 */
-	abstract public function handleExchange(Exchange $exchange):void;
+	public function handleExchange(Exchange $exchange):void;
 
 	/**
 	 * Returns the Node's Name
 	 *
 	 * @return string
 	 */
-	abstract public function getName():string;
+	public function getName():string;
 }

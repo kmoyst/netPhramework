@@ -4,20 +4,17 @@ namespace netPhramework\authentication\nodes;
 
 use netPhramework\authentication\Authenticator;
 use netPhramework\authentication\LogInManager;
-use netPhramework\core\Node;
+use netPhramework\core\Leaf;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafBehaviour;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
 use netPhramework\locating\redirectors\RedirectToSibling as toSibling;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 
-class Authenticate extends Node
+class Authenticate extends Leaf
 {
-	use LeafBehaviour;
-
 	public function __construct(
 		private readonly Authenticator $authenticator,
 		private readonly Redirector $onSuccess = new toRoot(),

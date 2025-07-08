@@ -4,8 +4,7 @@ namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafBehaviour;
-use netPhramework\core\Node;
+use netPhramework\core\Leaf;
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -21,10 +20,8 @@ use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\PasswordInput;
 use netPhramework\rendering\View;
 
-class ChangePassword extends Node
+class ChangePassword extends Leaf
 {
-	use LeafBehaviour;
-
 	public function __construct
 	(
 	private readonly UserManager $manager,

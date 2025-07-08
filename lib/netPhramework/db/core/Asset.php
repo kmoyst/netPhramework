@@ -3,15 +3,13 @@
 namespace netPhramework\db\core;
 
 use netPhramework\common\StringPredicate;
-use netPhramework\core\CompositeBehaviour;
+use netPhramework\core\Composite;
 use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
 
-class Asset extends Node
+class Asset extends Composite
 {
-	use CompositeBehaviour;
-
 	public function __construct(
 		private readonly string $name,
 		private readonly RecordSet $recordSet,

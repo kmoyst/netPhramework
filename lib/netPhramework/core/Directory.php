@@ -4,10 +4,8 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\NodeNotFound;
 
-final class Directory extends Node
+final class Directory extends Composite
 {
-	use CompositeBehaviour;
-
 	private DirectoryChildSet $children;
     private string|Index $index;
 

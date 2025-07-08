@@ -2,19 +2,18 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\CompositeBehaviour;
+use netPhramework\core\Composite;
 use netPhramework\core\Node;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Record;
 
-class ChildAsset extends RecordChild
+class ChildAsset extends Composite implements RecordChild
 {
-	use CompositeBehaviour;
-
 	private Asset $asset;
 	private string $linkField;
+	private Record $record;
 
 	/**
 	 * @param Asset $asset

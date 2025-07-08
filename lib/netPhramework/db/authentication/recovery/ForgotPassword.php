@@ -3,8 +3,7 @@
 namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafBehaviour;
-use netPhramework\core\Node;
+use netPhramework\core\Leaf;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\locating\ReroutedPath;
@@ -13,10 +12,8 @@ use netPhramework\locating\rerouters\RerouteToSibling as toSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
-class ForgotPassword extends Node
+class ForgotPassword extends Leaf
 {
-	use LeafBehaviour;
-
 	public function __construct
 	(
 	private readonly UserManager $manager,
