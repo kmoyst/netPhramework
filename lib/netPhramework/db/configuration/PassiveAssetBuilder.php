@@ -59,11 +59,13 @@ class PassiveAssetBuilder extends AssetBuilder
 	public function includeBrowse(
 		?ColumnSetStrategy $columnSetStrategy = null,
 		?ViewStrategy $tableViewStrategy = null,
-		bool $isDefault = true): self
+		bool $isIndex = true): self
 	{
 		$process = new Browse($columnSetStrategy, $tableViewStrategy);
-		if($isDefault) $process->makeIndex();
-		$this->add($process);
+		if($isIndex)
+			$this->add($process->asIndex());
+		else
+			$this->add($process);
 		return $this;
 	}
 

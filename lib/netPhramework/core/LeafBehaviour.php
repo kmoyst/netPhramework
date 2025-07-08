@@ -19,7 +19,7 @@ trait LeafBehaviour
 		return $this->isIndex ? '' : $this->getName();
 	}
 
-	public function makeIndex():self
+	public function asIndex():self
 	{
 		$this->isIndex = true;
 		return $this;
