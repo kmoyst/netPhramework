@@ -7,9 +7,9 @@ class FileManager
 	private array $uploadInfo;
 	private string $fieldName;
 
-	public function __construct(array $uploadInfo)
+	public function __construct(?array $uploadInfo = null)
 	{
-		$this->uploadInfo = $uploadInfo;
+		$this->uploadInfo = $uploadInfo ?? $_FILES;
 	}
 
 	public function hasFile():bool

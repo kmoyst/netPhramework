@@ -13,20 +13,13 @@ use netPhramework\responding\Responder;
 
 class SiteContext implements RequestContext
 {
-	protected readonly Session 	   $session;
-	protected readonly FileManager $fileManager;
-	protected readonly Environment $environment;
-
-	public function __construct(
-		?Environment $environment 	= null,
-		?Session     $session 		= null,
-		?FileManager $fileManager 	= null
+	public function __construct
+	(
+	protected readonly Environment $environment = new Environment(),
+	protected readonly Session 	   $session 	= new Session(),
+	protected readonly FileManager $fileManager = new FileManager()
 	)
-	{
-		$this->environment	= $environment 	?? new Environment();
-		$this->session 		= $session 		?? new Session();
-		$this->fileManager 	= $fileManager 	?? new FileManager($_FILES);
-	}
+	{}
 
 	public function getCallbackManager(): CallbackManager
 	{
