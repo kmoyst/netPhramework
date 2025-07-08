@@ -30,7 +30,7 @@ final class Directory extends Node
 		{
 			return (is_string($this->index) ?
 				new Index($this->index) : $this->index)
-				->setComponents($this->children);
+				->setNodeSet($this->children);
 		}
         else
             throw new NodeNotFound("Not Found: $id");

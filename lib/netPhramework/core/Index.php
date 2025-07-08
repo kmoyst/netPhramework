@@ -6,21 +6,21 @@ use netPhramework\common\Utils;
 
 class Index extends Page
 {
-	private NodeSet $nodes;
+	private NodeSet $nodeSet;
 
-	public function setComponents(NodeSet $nodes): self
+	public function setNodeSet(NodeSet $nodeSet): self
 	{
-		$this->nodes = $nodes;
+		$this->nodeSet = $nodeSet;
 		return $this;
 	}
 
 	public function handleExchange(Exchange $exchange): void
 	{
 		$links = [];
-		foreach($this->nodes as $name => $node)
+		foreach($this->nodeSet as $node)
 		{
-			$desc = Utils::kebabToSpace($name);
-			$links[$name] = $desc;
+			$desc = Utils::kebabToSpace($node->getName());
+			$links[$node->getNodeId()] = $desc;
 		}
 		ksort($links);
 		$this->add('links', $links);
