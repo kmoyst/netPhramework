@@ -15,9 +15,8 @@ class Update extends RecordProcess
 	public function __construct(
 		private readonly ?RecordProcess $saveProcess = null,
 		private readonly ?Redirector    $dispatcher = null,
-		string $name = 'update')
+		)
 	{
-		$this->name = $name;
 	}
 
     /**

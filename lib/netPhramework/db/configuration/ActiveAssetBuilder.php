@@ -51,19 +51,17 @@ class ActiveAssetBuilder extends AssetBuilder
 
 	public function includeInsert(
 		?RecordProcess $saveProcess = null,
-		?Redirector    $onSuccess = null,
-		?string        $processName = 'insert'): self
+		?Redirector    $onSuccess = null): self
 	{
-		$this->add(new Insert($saveProcess, $onSuccess, $processName));
+		$this->add(new Insert($saveProcess, $onSuccess));
 		return $this;
 	}
 
 	public function includeUpdate(
 		?RecordProcess $saveProcess = null,
-		?Redirector    $onSuccess = null,
-		?string        $processName = 'update'): self
+		?Redirector    $onSuccess = null): self
 	{
-		$this->add(new Update($saveProcess, $onSuccess, $processName));
+		$this->add(new Update($saveProcess, $onSuccess));
 		return $this;
 	}
 
@@ -77,10 +75,9 @@ class ActiveAssetBuilder extends AssetBuilder
 	}
 
 	public function includeDelete(
-		?Redirector $onSuccess = null,
-		string      $processName = 'delete'): self
+		?Redirector $onSuccess = null): self
 	{
-		$this->add(new Delete($onSuccess, $processName));
+		$this->add(new Delete($onSuccess));
 		return $this;
 	}
 }

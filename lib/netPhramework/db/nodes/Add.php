@@ -16,10 +16,8 @@ use netPhramework\rendering\View;
 class Add extends RecordSetProcess
 {
 	public function __construct(
-		protected readonly ?RecordFormStrategy $formStrategy = null,
-		string $name = 'add')
+		protected readonly ?RecordFormStrategy $formStrategy = null)
 	{
-		$this->name = $name;
 	}
 
 	/**

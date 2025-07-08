@@ -7,7 +7,7 @@ use netPhramework\exceptions\NodeNotFound;
 
 trait LeafTrait
 {
-	protected string $name;
+	protected bool $isDefault = false;
 
 	public function getChild(string $name): never
 	{
@@ -16,6 +16,18 @@ trait LeafTrait
 
 	public function getName(): string
 	{
-		return $this->name ?? Utils::camelToKebab(Utils::baseClassName($this));
+		$name = Utils::camelToKebab(Utils::baseClassName($this));
+		return $this->resolveName($name);
+	}
+
+	public function makeDefault():self
+	{
+		$this->isDefault = true;
+		return $this;
+	}
+
+	protected function resolveName(string $name):string
+	{
+		return $this->isDefault ? '' : $name;
 	}
 }

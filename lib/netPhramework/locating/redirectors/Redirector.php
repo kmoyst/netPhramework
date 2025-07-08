@@ -34,10 +34,4 @@ class Redirector extends Node
 	{
 		$exchange->redirect($this);
 	}
-
-	public function setName(string $name): self
-	{
-		$this->name = $name;
-		return $this;
-	}
 }

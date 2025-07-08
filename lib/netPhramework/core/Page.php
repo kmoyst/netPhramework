@@ -10,25 +10,23 @@ class Page extends Node
 	use LeafTrait;
 
     protected View $view;
-    protected string $templateName;
 
 	public function __construct(
-        string $templateName,
-		?string $name = null,
+        protected string $templateName,
+		protected ?string $name = null,
         ?string $title = null)
 	{
         $this->view = new View($templateName, $title);
-		$this->name = $name ?? $templateName;
+	}
+
+	public function getName():string
+	{
+		return $this->resolveName($this->name ?? $this->templateName);
 	}
 
 	public function handleExchange(Exchange $exchange): void
 	{
 		$exchange->ok($this->view);
-	}
-
-	public function getName(): string
-	{
-		return $this->name;
 	}
 
     public function add(string $key, string|Encodable|iterable|null $value):self

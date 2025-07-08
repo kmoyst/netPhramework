@@ -30,11 +30,11 @@ class EditParent extends RecordProcess
 		private readonly ?RecordFormStrategy  $formStrategy = null,
 		private readonly ?ColumnSetStrategy   $childColumnSetStrategy = null,
 		private readonly ?ViewStrategy        $childViewStrategy = null,
-		private readonly int                  $childFilterThreshold = 5,
-		string $name = 'edit')
+		private readonly int                  $childFilterThreshold = 5)
 	{
-		$this->name = $name;
 	}
+
+	public function getName():string { return $this->resolveName('edit'); }
 
 	/**
 	 * @param Exchange $exchange

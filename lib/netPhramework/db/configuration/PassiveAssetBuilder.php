@@ -59,26 +59,25 @@ class PassiveAssetBuilder extends AssetBuilder
 	public function includeBrowse(
 		?ColumnSetStrategy $columnSetStrategy = null,
 		?ViewStrategy $tableViewStrategy = null,
-		string $processName = ''): self
+		bool $isDefault = true): self
 	{
-		$this->add(new Browse(
-			$columnSetStrategy, $tableViewStrategy, $processName));
+		$process = new Browse($columnSetStrategy, $tableViewStrategy);
+		if($isDefault) $process->makeDefault();
+		$this->add($process);
 		return $this;
 	}
 
 	public function includeEdit(
-		?RecordFormStrategy $formStrategy = null,
-		string $processName = 'edit'): self
+		?RecordFormStrategy $formStrategy = null): self
 	{
-		$this->add(new Edit($formStrategy, $processName));
+		$this->add(new Edit($formStrategy));
 		return $this;
 	}
 
 	public function includeAdd(
-		?RecordFormStrategy $formStrategy = null,
-		string $processName = 'add'): self
+		?RecordFormStrategy $formStrategy = null): self
 	{
-		$this->add(new Add($formStrategy, $processName));
+		$this->add(new Add($formStrategy));
 		return $this;
 	}
 

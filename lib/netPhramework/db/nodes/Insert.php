@@ -15,10 +15,8 @@ class Insert extends RecordSetProcess
 {
 	public function __construct(
 		private readonly ?RecordProcess $saveProcess = null,
-        private readonly ?Redirector    $dispatcher = null,
-		string $name = 'insert')
+        private readonly ?Redirector    $dispatcher = null)
 	{
-		$this->name = $name;
 	}
 
     /**

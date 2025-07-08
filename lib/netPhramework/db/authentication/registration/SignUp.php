@@ -16,8 +16,6 @@ use netPhramework\rendering\View;
 
 class SignUp extends RecordSetProcess
 {
-	protected string $name = 'sign-up';
-
 	public function __construct
 	(
 	private readonly UserManager $userManager,

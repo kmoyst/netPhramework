@@ -17,12 +17,13 @@ class LogInPage extends Node
 	use LeafTrait;
 
     public function __construct(
-		string $name = 'log-in',
 		private readonly ?View $view = null,
 		private readonly ?Rerouter $forForm = null
-    ) { $this->name = $name; }
+    ) {}
 
-    /**
+	public function getName(): string { return 'log-in'; }
+
+	/**
      * @param Exchange $exchange
      * @return void
      * @throws Exception

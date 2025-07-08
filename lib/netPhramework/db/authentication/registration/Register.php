@@ -17,8 +17,6 @@ use netPhramework\locating\redirectors\RedirectToSibling;
 
 class Register extends RecordSetProcess
 {
-	protected string $name = 'register';
-
 	public function __construct
 	(
 	private readonly UserManager $manager,
