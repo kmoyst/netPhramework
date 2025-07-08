@@ -1,14 +1,14 @@
 <?php
 
 namespace netPhramework\db\authentication;
-use netPhramework\authentication\User;
+use netPhramework\authentication\User as BaseUser;
 use netPhramework\db\authentication\User as DbUser;
 use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
 
 class Authenticator implements \netPhramework\authentication\Authenticator
 {
-	private User $userLoggingIn;
+	private BaseUser $userLoggingIn;
 	private DbUser $dbUser;
 
 	public function __construct
@@ -17,13 +17,13 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	)
 	{}
 
-	public function setUserLoggingIn(User $user): Authenticator
+	public function setUserLoggingIn(BaseUser $user): Authenticator
 	{
 		$this->userLoggingIn = $user;
 		return $this;
 	}
 
-	public function getHashedUser():User
+	public function getHashedUser():BaseUser
 	{
 		return $this->dbUser;
 	}
