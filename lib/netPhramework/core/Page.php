@@ -9,11 +9,11 @@ class Page extends Node
 {
 	use LeafBehaviour;
 
-    protected View $view;
+    private View $view;
 
 	public function __construct(
-        protected string $templateName,
-		protected ?string $name = null,
+        string $templateName,
+		private readonly ?string $name = null,
         ?string $title = null)
 	{
         $this->view = new View($templateName, $title);
@@ -21,7 +21,7 @@ class Page extends Node
 
 	public function getName():string
 	{
-		return $this->name ?? $this->templateName;
+		return $this->name ?? $this->view->getTemplateName();
 	}
 
 	public function handleExchange(Exchange $exchange): void
