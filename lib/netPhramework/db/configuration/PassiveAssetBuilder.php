@@ -62,7 +62,7 @@ class PassiveAssetBuilder extends AssetBuilder
 		bool $isDefault = true): self
 	{
 		$process = new Browse($columnSetStrategy, $tableViewStrategy);
-		if($isDefault) $process->makeDefault();
+		if($isDefault) $process->makeIndex();
 		$this->add($process);
 		return $this;
 	}

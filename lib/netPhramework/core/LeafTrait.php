@@ -7,7 +7,7 @@ use netPhramework\exceptions\NodeNotFound;
 
 trait LeafTrait
 {
-	protected bool $isDefault = false;
+	protected bool $isIndex = false;
 
 	public function getChild(string $name): never
 	{
@@ -16,12 +16,12 @@ trait LeafTrait
 
 	public function getNodeId(): string
 	{
-		return $this->isDefault ? '' : $this->getName();
+		return $this->isIndex ? '' : $this->getName();
 	}
 
-	public function makeDefault():self
+	public function makeIndex():self
 	{
-		$this->isDefault = true;
+		$this->isIndex = true;
 		return $this;
 	}
 
