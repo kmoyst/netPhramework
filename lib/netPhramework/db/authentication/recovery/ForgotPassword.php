@@ -8,7 +8,7 @@ use netPhramework\db\core\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\locating\ReroutedPath;
 use netPhramework\locating\rerouters\Rerouter;
-use netPhramework\locating\rerouters\RerouteToSibling;
+use netPhramework\locating\rerouters\RerouteToSibling as toSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
@@ -19,7 +19,7 @@ class ForgotPassword extends RecordSetProcess
 	public function __construct
 	(
 	private readonly UserManager $manager,
-	private readonly Rerouter $toSendLink = new RerouteToSibling('send-link')
+	private readonly Rerouter $toSendLink = new toSibling('send-reset-link')
 	)
 	{}
 

@@ -4,6 +4,7 @@ namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
+use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\authentication\UserProfile;
 use netPhramework\db\core\RecordSetProcess;
@@ -13,9 +14,9 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\locating\Location;
 use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToRoot;
+use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
 use netPhramework\locating\rerouters\Rerouter;
-use netPhramework\locating\rerouters\RerouteToSibling;
+use netPhramework\locating\rerouters\RerouteToSibling as toSibling;
 use netPhramework\locating\UriFromLocation;
 use netPhramework\networking\EmailDelivery;
 use netPhramework\networking\EmailException;
@@ -25,17 +26,15 @@ use Random\RandomException;
 
 class SendResetLink extends RecordSetProcess
 {
-	protected string $name = 'send-link';
+	protected string $name = 'send-reset-link';
 
 	public function __construct
 	(
-	private readonly UserManager $userManager,
+	private readonly UserManager $manager,
 	private readonly string $sender,
 	private readonly ?string $senderName = null,
-	private readonly Rerouter
-		$toChangePassword = new RerouteToSibling('change-password'),
-	private readonly Redirector
-		$afterProcess = new RedirectToRoot('log-in')
+	private readonly Rerouter $toChangePass = new toSibling('change-password'),
+	private readonly Redirector $afterProcess = new toRoot('log-in')
 	)
 	{}
 
@@ -52,11 +51,13 @@ class SendResetLink extends RecordSetProcess
 	public function handleExchange(Exchange $exchange): void
 	{
 		try {
-			$parameters  = $exchange->getParameters();
-			$user = $this->userManager->findByUsername($parameters);
+			$parameters = $exchange->getParameters();
+			$recovery = new Recovery($this->manager, $parameters);
+			$user = $this->manager->findByUsername($parameters);
 			if($user === null) throw new RecordNotFound();
-			$user->getProfile()->newResetCode()->save();
-			if($this->sendEmail($user->getProfile(), $exchange))
+			$recovery->setUser($user)->newResetCode()->save();
+			if($this->sendEmail(
+				$user->getProfile(), $exchange, $recovery->getResetCode()))
 				$exchange->getSession()
 					->addFeedbackMessage('Password Reset Link Sent')
 					->setFeedbackCode(ResponseCode::OK);
@@ -75,6 +76,7 @@ class SendResetLink extends RecordSetProcess
 	/**
 	 * @param UserProfile $profile
 	 * @param Exchange $exchange
+	 * @param string $resetCode
 	 * @return bool
 	 * @throws EmailException
 	 * @throws Exception
@@ -82,12 +84,12 @@ class SendResetLink extends RecordSetProcess
 	 * @throws MappingException
 	 * @throws StreamSocketException
 	 */
-	private function sendEmail(UserProfile $profile, Exchange $exchange):bool
+	private function sendEmail(
+		UserProfile $profile, Exchange $exchange, string $resetCode):bool
 	{
 		if(!$profile->hasEmailAddress()) return false;
-		$resetCode = $profile->getResetCode();
 		$location = new Location()->setPath($exchange->getPath());
-		$this->toChangePassword->reroute($location->getPath());
+		$this->toChangePass->reroute($location->getPath());
 		$location->getParameters()->add($profile->fields->resetCode,$resetCode);
 		$uri = new UriFromLocation($location);
 		$siteAddress = $exchange->getSiteAddress();

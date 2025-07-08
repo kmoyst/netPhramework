@@ -8,7 +8,6 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Record;
-use Random\RandomException;
 
 readonly class UserProfile
 {
@@ -125,43 +124,6 @@ readonly class UserProfile
 	public function hasEmailAddress():bool
 	{
 		return !empty($this->getEmailAddress());
-	}
-
-	/**
-	 * @return self
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 * @throws RandomException
-	 */
-	public function newResetCode():self
-	{
-		$field = $this->fields->resetCode;
-		$code = bin2hex(random_bytes(32));
-		$this->record->setValue($field, $code);
-		return $this;
-	}
-
-	/**
-	 * @return string|null
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function getResetCode():?string
-	{
-		return $this->record->getValue($this->fields->resetCode);
-	}
-
-	/**
-	 * @return $this
-	 * @throws FieldAbsent
-	 * @throws InvalidValue
-	 * @throws MappingException
-	 */
-	public function clearResetCode():self
-	{
-		$this->record->setValue($this->fields->resetCode, null);
-		return $this;
 	}
 
 	/**

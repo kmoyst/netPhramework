@@ -4,11 +4,11 @@ namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
+use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\NotFound;
 use netPhramework\locating\redirectors\Redirector;
@@ -28,7 +28,8 @@ class ChangePassword extends RecordSetProcess
 	private readonly Rerouter $toSave = new RerouteToSibling('save-password'),
 	private readonly Redirector $onNotFound = new RedirectToRoot('log-in')
 	)
-	{}
+	{
+	}
 
 	/**
 	 * @param Exchange $exchange
@@ -36,25 +37,23 @@ class ChangePassword extends RecordSetProcess
 	 * @throws Exception
 	 * @throws FieldAbsent
 	 * @throws MappingException
-	 * @throws RecordNotFound
 	 * @throws RecordRetrievalException
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$manager		= $this->manager;
-		$parameters		= $exchange->getParameters();
-		$resetCodeField = $manager->fields->resetCode;
-		$resetCode 		= $manager->parseForResetCode($parameters);
-		if(!$manager->findByResetCode($resetCode))
+		$recovery = new Recovery($this->manager, $exchange->getParameters());
+		if(!$recovery->findUser()->userFound())
 		{
 			$exchange->error(new NotFound(), $this->onNotFound);
 			return;
 		}
-		$resetCodeInput = new HiddenInput($resetCodeField, $resetCode);
-		$passwordInput  = new PasswordInput($manager->fields->password);
-		$formAction		= new ReroutedPath($exchange->getPath(), $this->toSave);
+		$resetField    = $recovery->getResetField();
+		$resetCode     = $recovery->getResetCode();
+		$resetInput	   = new HiddenInput($resetField, $resetCode);
+		$passwordInput = new PasswordInput($recovery->getPasswordField());
+		$formAction	   = new ReroutedPath($exchange->getPath(), $this->toSave);
 		$view = new View('change-password')
-			->add('resetCodeInput', $resetCodeInput)
+			->add('resetCodeInput', $resetInput)
 			->add('passwordInput', $passwordInput)
 			->add('formAction', $formAction)
 			;

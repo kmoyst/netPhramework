@@ -4,6 +4,7 @@ namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
+use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -35,24 +36,24 @@ class SavePassword extends RecordSetProcess
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
+		$recovery = new Recovery($this->manager, $exchange->getParameters());
 		try {
-			$parameters = $exchange->getParameters()
-			;
-			$user = $this->manager->findByResetCode($parameters);
-			$user->setPassword($parameters->get($user->fields->password));
-			$user->getProfile()->clearResetCode();
-			$user->save()
-			;
-			$exchange->getSession()
-				->addFeedbackMessage('New Password Saved')
-				->setFeedbackCode(ResponseCode::OK)
-			;
-			$exchange->redirect($this->onSuccess);
+			$recovery->findUser();
+			if(!$recovery->userFound()) throw new RecordNotFound();
+			$recovery
+				->clearResetCode()
+				->parsePassword()
+				->save();
 		} catch (RecordNotFound) {
 			$e = new RecordNotFound("User Not Found");
 			$exchange->error($e, $this->onFailure);
 		} catch (InvalidPassword $e) {
 			$exchange->error($e, $this->onFailure);
 		}
+		$exchange->getSession()
+			->addFeedbackMessage('New Password Saved')
+			->setFeedbackCode(ResponseCode::OK)
+		;
+		$exchange->redirect($this->onSuccess);
 	}
 }

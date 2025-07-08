@@ -22,20 +22,6 @@ readonly class UserManager
 		public UserFieldNames $fields = new UserFieldNames()
 	) {}
 
-	public function parseForResetCode(Variables $variables):string|false
-	{
-		$value = $variables->getOrNull($this->fields->resetCode);
-		if($value === null) return false;
-		else return $value;
-	}
-
-	public function parseForUsername(Variables $variables):string|false
-	{
-		$value = $variables->getOrNull($this->fields->username);
-		if($value === null) return false;
-		else return $value;
-	}
-
 	public function getUser(Record $record):?User
 	{
 		return new User($record, $this->defaultRole, $this->fields);
@@ -57,28 +43,6 @@ readonly class UserManager
 		} catch (RecordNotFound) {
 			return null;
 		}
-	}
-
-	/**
-	 * @param string|Variables $source
-	 * @return User|null
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 * @throws RecordRetrievalException
-	 * @throws NotFound
-	 */
-	public function findByResetCode(string|Variables $source):?User
-	{
-		if($source instanceof Variables)
-		{
-			$resetCode = $this->parseForResetCode($source);
-			if(!$resetCode) throw new NotFound();
-		}
-		else
-		{
-			$resetCode = $source;
-		}
-		return $this->findUser($this->fields->resetCode, $resetCode);
 	}
 
 	/**
@@ -106,5 +70,12 @@ readonly class UserManager
 			$username = $source;
 		}
 		return $this->findUser($this->fields->username, $username);
+	}
+
+	private function parseForUsername(Variables $variables):string|false
+	{
+		$value = $variables->getOrNull($this->fields->username);
+		if($value === null) return false;
+		else return $value;
 	}
 }
