@@ -34,16 +34,6 @@ readonly class Environment implements RequestEnvironment, ExchangeEnvironment
 		return "$scheme://$authority";
 	}
 
-	public function getSmtpServerAddress(): string
-	{
-		return $this->getVariable('SMTP_SERVER_ADDRESS');
-	}
-
-	public function getSmtpServerName(): string
-	{
-		return $this->getVariable('SMTP_SERVER_NAME');
-	}
-
 	private function getScheme():string
 	{
 		return $this->getVariable('HTTPS') === 'on' ? 'https' : 'http';
@@ -52,5 +42,15 @@ readonly class Environment implements RequestEnvironment, ExchangeEnvironment
 	private function getAuthority():string
 	{
 		return $this->getVariable('HTTP_HOST');
+	}
+
+	public function getSmtpServerAddress(): string
+	{
+		return $this->getVariable('SMTP_SERVER_ADDRESS');
+	}
+
+	public function getSmtpServerName(): string
+	{
+		return $this->getVariable('SMTP_SERVER_NAME');
 	}
 }
