@@ -19,11 +19,12 @@ use netPhramework\presentation\FeedbackView;
 
 class Browse extends RecordSetProcess
 {
-	public function __construct(
-		protected readonly ?ColumnSetStrategy $columnSetStrategy = null,
-		protected readonly ?ViewStrategy $tableViewStrategy = null)
-	{
-	}
+	public function __construct
+	(
+	private readonly ?ColumnSetStrategy $columnSetStrategy = null,
+	private readonly ?ViewStrategy 		$tableViewStrategy = null
+	)
+	{}
 
 	/**
 	 * @param Exchange $exchange
