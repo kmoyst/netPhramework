@@ -14,16 +14,16 @@ class Controller
 	{
 		register_shutdown_function([$this, 'shutdown']);
 		set_error_handler([$this, 'handleError']);
-		set_exception_handler([$this, 'handleException']);
-
-		$this->environment = $context->getEnvironment();
-
-		$application = new Application();
-
+		set_exception_handler([$this, 'handleException'])
+		;
+		$this->environment = $context->getEnvironment()
+		;
+		$application = new Application()
+		;
 		$responder 	 = $context->getResponder($context->getEncoder());
 		$interpreter = $context->getRequestInterpreter();
-		$config	     = $context->getConfiguration();
-
+		$config	     = $context->getConfiguration()
+		;
 		try
 		{
 			try
