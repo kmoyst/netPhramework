@@ -11,9 +11,12 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\db\presentation\recordForm\RecordFormBuilder;
-use netPhramework\db\presentation\recordForm\RecordFormStrategy;
-use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
+use netPhramework\db\presentation\recordForm\
+{
+	RecordFormBuilder,
+	RecordFormStrategy as FormStrategy,
+	RecordFormStrategyBasic as BasicFormStrategy
+};
 use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\ViewBuilder;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
@@ -25,14 +28,15 @@ use netPhramework\rendering\Viewable;
 
 class EditParent extends RecordProcess
 {
-	public function __construct(
-		private readonly ChildSelector        $childSelector,
-		private readonly ?RecordFormStrategy  $formStrategy = null,
-		private readonly ?ColumnSetStrategy   $childColumnSetStrategy = null,
-		private readonly ?ViewStrategy        $childViewStrategy = null,
-		private readonly int                  $childFilterThreshold = 5)
-	{
-	}
+	public function __construct
+	(
+	private readonly ChildSelector 		$childSelector,
+	private readonly FormStrategy 		$formStrategy = new BasicFormStrategy(),
+	private readonly ?ColumnSetStrategy $childColumnSetStrategy = null,
+	private readonly ?ViewStrategy 		$childViewStrategy = null,
+	private readonly int 				$childFilterThreshold = 5
+	)
+	{}
 
 	public function getName():string { return 'edit'; }
 
@@ -67,8 +71,7 @@ class EditParent extends RecordProcess
 	private function editForm(Exchange $exchange):Viewable
 	{
 		$callbackInput = new CallbackInput($exchange);
-		$strategy 	   = $this->formStrategy ?? new RecordFormStrategyBasic();
-		$inputSet 	   = new RecordFormBuilder($strategy)
+		$inputSet 	   = new RecordFormBuilder($this->formStrategy)
 			->setRecord($this->record)
 			->addRecordInputs()
 			->getInputSet()
