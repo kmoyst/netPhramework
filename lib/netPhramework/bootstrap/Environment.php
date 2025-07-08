@@ -17,14 +17,14 @@ readonly class Environment implements RequestEnvironment, ExchangeEnvironment
 		return filter_input_array(INPUT_POST);
 	}
 
-	public function get(string $varName):?string
+	public function getVariable(string $varName):?string
 	{
 		return filter_input(INPUT_SERVER, $varName);
 	}
 
 	public function inDevelopment():bool
 	{
-		return $this->get('ERROR_LEVEL') === 'DEVELOPMENT';
+		return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT';
 	}
 
 	public function getSiteAddress():string
@@ -36,21 +36,21 @@ readonly class Environment implements RequestEnvironment, ExchangeEnvironment
 
 	public function getSmtpServerAddress(): string
 	{
-		return $this->get('SMTP_SERVER_ADDRESS');
+		return $this->getVariable('SMTP_SERVER_ADDRESS');
 	}
 
 	public function getSmtpServerName(): string
 	{
-		return $this->get('SMTP_SERVER_NAME');
+		return $this->getVariable('SMTP_SERVER_NAME');
 	}
 
 	private function getScheme():string
 	{
-		return $this->get('HTTPS') === 'on' ? 'https' : 'http';
+		return $this->getVariable('HTTPS') === 'on' ? 'https' : 'http';
 	}
 
 	private function getAuthority():string
 	{
-		return $this->get('HTTP_HOST');
+		return $this->getVariable('HTTP_HOST');
 	}
 }
