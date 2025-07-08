@@ -30,21 +30,21 @@ class Asset extends Node
 		return $this->recordSet;
 	}
 
-	public function getChild(string $name): Node
+	public function getChild(string $id): Node
 	{
-		return $this->resolveChild($name)->setRecordSet($this->recordSet);
+		return $this->resolveChild($id)->setRecordSet($this->recordSet);
 	}
 
 	/**
-	 * @param string $name
+	 * @param string $id
 	 * @return RecordSetChild
 	 * @throws NodeNotFound
 	 */
-	private function resolveChild(string $name): RecordSetChild
+	private function resolveChild(string $id): RecordSetChild
 	{
-		if($this->recordIdPredicate->test($name))
-			return new RecordComposite($this->recordChildSet, $name);
+		if($this->recordIdPredicate->test($id))
+			return new RecordComposite($this->recordChildSet, $id);
 		else
-			return $this->recordSetChildSet->get($name);
+			return $this->recordSetChildSet->get($id);
 	}
 }

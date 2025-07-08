@@ -17,15 +17,15 @@ class RecordComposite extends RecordSetChild
 	) {}
 
 	/**
-	 * @param string $name
+	 * @param string $id
 	 * @return Node
 	 * @throws MappingException
 	 * @throws NodeNotFound
 	 */
-	public function getChild(string $name): Node
+	public function getChild(string $id): Node
 	{
 		$record = $this->recordSet->getRecord($this->recordId);
-		return $this->nodeSet->get($name)->setRecord($record);
+		return $this->nodeSet->get($id)->setRecord($record);
 	}
 
 	public function getName(): string

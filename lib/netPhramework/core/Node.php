@@ -7,13 +7,36 @@ use netPhramework\exceptions\NodeNotFound;
 abstract class Node
 {
 	/**
-	 * @param string $name
+	 * Returns the Node's Id
+	 *
+	 * @return string
+	 */
+	public function getNodeId():string
+	{
+		return $this->getName();
+	}
+
+	/**
+	 * Retrieves a child node
+	 *
+	 * @param string $id
 	 * @return Node
 	 * @throws NodeNotFound
 	 */
-	abstract public function getChild(string $name):Node;
-	abstract public function handleExchange(Exchange $exchange):void;
-	abstract public function getName():string;
+	abstract public function getChild(string $id):Node;
 
-	public function getComponentName():string { return $this->getName(); }
+	/**
+	 * Handles the Request / Response Exchange
+	 *
+	 * @param Exchange $exchange
+	 * @return void
+	 */
+	abstract public function handleExchange(Exchange $exchange):void;
+
+	/**
+	 * Returns the Node's Name
+	 *
+	 * @return string
+	 */
+	abstract public function getName():string;
 }

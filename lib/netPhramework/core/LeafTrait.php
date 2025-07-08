@@ -14,7 +14,7 @@ trait LeafTrait
 		throw new NodeNotFound("Not Found: $name");
 	}
 
-	public function getComponentName(): string
+	public function getNodeId(): string
 	{
 		return $this->isDefault ? '' : $this->getName();
 	}

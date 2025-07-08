@@ -7,7 +7,7 @@ class NodeSet implements Iterator
 
 	public function add(Node $node):void
 	{
-		$this->nodes[$node->getComponentName()] = $node;
+		$this->nodes[$node->getNodeId()] = $node;
 	}
 
 	public function has(string $name):bool

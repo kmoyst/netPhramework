@@ -22,18 +22,18 @@ final class Directory extends Node
 		return $this;
 	}
 
-    public function getChild(string $name): Node
+    public function getChild(string $id): Node
     {
-        if($this->children->has($name))
-            return $this->children->get($name);
-        elseif($name === '' && isset($this->index))
+        if($this->children->has($id))
+            return $this->children->get($id);
+        elseif($id === '' && isset($this->index))
 		{
 			return (is_string($this->index) ?
 				new Index($this->index) : $this->index)
 				->setComponents($this->children);
 		}
         else
-            throw new NodeNotFound("Not Found: $name");
+            throw new NodeNotFound("Not Found: $id");
     }
 
 	public function getName(): string

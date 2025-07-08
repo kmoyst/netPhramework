@@ -44,9 +44,9 @@ class ChildAsset extends RecordChild
 		return $this;
 	}
 
-	public function getChild(string $name): Node
+	public function getChild(string $id): Node
 	{
-		return $this->asset->getChild($name);
+		return $this->asset->getChild($id);
 	}
 
 	public function getName(): string
