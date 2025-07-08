@@ -1,11 +1,12 @@
 <?php
 
-namespace netPhramework\db\authentication;
-use netPhramework\db\presentation\recordTable\{columns\TextColumn,
+namespace netPhramework\db\authentication\presentation;
+use netPhramework\db\authentication\UserField;
+use netPhramework\db\presentation\recordTable\{columns\EmailColumn,
+	columns\TextColumn,
 	columns\UserRoleColumn,
 	columnSet\ColumnSet,
-	columnSet\ColumnSetStrategy as StrategyInterface
-};
+	columnSet\ColumnSetStrategy as StrategyInterface};
 
 readonly class ColumnSetStrategy implements StrategyInterface
 {
@@ -16,8 +17,10 @@ readonly class ColumnSetStrategy implements StrategyInterface
 	{
 		$columnSet
 			->remove('password')
+			->remove('reset-code')
 			->add(new TextColumn($this->usernameField))
 			->add(new UserRoleColumn())
+			->add(new EmailColumn('email-address'))
 			;
 	}
 }

@@ -30,7 +30,7 @@ class UserRoleColumn implements Column
 	{
 		return UserRole::tryFrom(
 			$record->getValue(
-				UserField::ROLE->value))->name;
+				UserField::ROLE->value))->friendlyName();
 	}
 
 	public function getEncodableValue(Record $record): Encodable|string

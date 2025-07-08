@@ -7,7 +7,7 @@ use netPhramework\common\Variables;
 
 class SelectInputWithLabel extends SelectInput
 {
-	protected string $templateName = 'select-input-with-label';
+	protected string $templateName = 'form/select-input-with-label';
 
 	public function getVariables(): Variables
 	{
