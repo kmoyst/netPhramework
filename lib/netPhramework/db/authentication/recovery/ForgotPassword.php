@@ -3,8 +3,9 @@
 namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exchange;
+use netPhramework\core\LeafTrait;
+use netPhramework\core\Node;
 use netPhramework\db\authentication\UserManager;
-use netPhramework\db\core\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\locating\ReroutedPath;
 use netPhramework\locating\rerouters\Rerouter;
@@ -12,9 +13,9 @@ use netPhramework\locating\rerouters\RerouteToSibling as toSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
-class ForgotPassword extends RecordSetProcess
+class ForgotPassword implements Node
 {
-	protected string $name = 'forgot-password';
+	use LeafTrait;
 
 	public function __construct
 	(

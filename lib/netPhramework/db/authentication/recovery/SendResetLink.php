@@ -4,10 +4,11 @@ namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
+use netPhramework\core\LeafTrait;
+use netPhramework\core\Node;
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\authentication\UserProfile;
-use netPhramework\db\core\RecordSetProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
@@ -24,9 +25,9 @@ use netPhramework\networking\StreamSocketException;
 use netPhramework\responding\ResponseCode;
 use Random\RandomException;
 
-class SendResetLink extends RecordSetProcess
+class SendResetLink implements Node
 {
-	protected string $name = 'send-reset-link';
+	use LeafTrait;
 
 	public function __construct
 	(
