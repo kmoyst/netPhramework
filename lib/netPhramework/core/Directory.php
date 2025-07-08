@@ -6,12 +6,12 @@ use netPhramework\exceptions\NodeNotFound;
 
 final class Directory extends Composite
 {
-	private DirectoryChildSet $children;
+	private DirectoryTree $children;
     private string|Index $index;
 
     public function __construct(private readonly string $name)
 	{
-		$this->children = new DirectoryChildSet();
+		$this->children = new DirectoryTree();
 	}
 
 	public function add(Node $node):self

@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-class DirectoryChildSet extends NodeSet
+class DirectoryTree extends NodeSet
 {
 	public function add(Node $node):void { $this->storeNode($node); }
 }
