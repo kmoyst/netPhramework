@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\configuration;
 
+use netPhramework\db\core\Asset;
 use netPhramework\db\core\ChildAsset;
 use netPhramework\db\core\RecordProcess;
-use netPhramework\db\exceptions\ConfigurationException;
 use netPhramework\db\nodes\Delete;
 use netPhramework\db\nodes\Insert;
 use netPhramework\db\nodes\Update;
@@ -19,12 +19,13 @@ class ActiveApplicationBuilder extends ApplicationBuilder
      * them to the Directory.
      *
      * @return self
-	 * @throws ConfigurationException
      */
     public function addAllAssetsWithDefaults():self
     {
-        foreach($this->mapper->listAllRecordSets() as $name)
-            $this->includeDefaults()->commit($name);
+        foreach($this->application->listAllRecordSets() as $name)
+		{
+			$this->newAsset($name)->includeDefaults();
+		}
         return $this;
     }
 
@@ -37,15 +38,19 @@ class ActiveApplicationBuilder extends ApplicationBuilder
 			;
 	}
 
-	public function childWithDefaults(
-		string $mappedName,
-		string $linkField,
-		?string $assetName = null):self
+	public function childWithDefaults(string $name, string $linkField):self
 	{
-		$composer   = new self($this->mapper);
-		$childAsset = $composer->includeDefaults()->get($mappedName,$assetName);
-		$childNode  = new ChildAsset($childAsset, $linkField);
+		$composer   = new self($this->application);
+		$childAsset	= $composer->newAsset($name);
+		$composer->includeDefaults();
+		$childNode  = new ChildAsset($composer->get(), $linkField);
 		$this->add($childNode);
+		return $this;
+	}
+
+	public function setAsset(Asset $asset):self
+	{
+		$this->asset = $asset;
 		return $this;
 	}
 

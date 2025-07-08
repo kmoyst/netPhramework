@@ -21,13 +21,12 @@ class PassiveApplicationBuilder extends ApplicationBuilder
      * them to the Directory.
      *
      * @return self
-	 * @throws ConfigurationException
      */
     public function addAllAssetsWithDefaults():self
     {
-        foreach($this->mapper->listAllRecordSets() as $name)
+        foreach($this->application->listAllRecordSets() as $name)
         {
-            $this->includeDefaults()->commit($name);
+            $this->newAsset($name)->includeDefaults()->commit();
         }
         return $this;
     }
@@ -45,11 +44,11 @@ class PassiveApplicationBuilder extends ApplicationBuilder
 		string $linkField,
 		?string $assetName = null):self
 	{
-		$builder 	= new self($this->mapper);
+		$builder 	= new self($this->application);
 		$childAsset = $builder
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
-			->get($mappedName, $assetName)
+			->get()
 		;
 		$childNode = new ChildAsset($childAsset, $linkField);
 		$this->add($childNode);

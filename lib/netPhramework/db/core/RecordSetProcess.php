@@ -4,7 +4,7 @@ namespace netPhramework\db\core;
 
 use netPhramework\core\Leaf;
 
-abstract class RecordSetProcess extends Leaf implements AssetNode
+abstract class RecordSetProcess extends Leaf implements RecordSetChild
 {
-	use RecordSetChild;
+	use HasRecordSet;
 }

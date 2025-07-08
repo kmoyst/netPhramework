@@ -2,61 +2,60 @@
 
 namespace netPhramework\db\configuration;
 
-use netPhramework\core\Node;
 use netPhramework\db\core\Application;
-use netPhramework\db\core\AssetNode;
 use netPhramework\db\core\Asset;
+use netPhramework\db\core\AssetNode;
 use netPhramework\db\core\ChildAsset;
-use netPhramework\db\exceptions\ConfigurationException;
+use netPhramework\db\core\RecordChild;
+use netPhramework\db\core\RecordSetChild;
 
 class ApplicationBuilder
 {
-	private Asset $asset;
+	protected Asset $asset;
 
 	public function __construct
 	(
-	private readonly Application $application
+	protected readonly Application $application
 	)
 	{}
 
 	public function newAsset(string $name):self
 	{
-		$this->asset = $this->application->newAsset($name);
+		$recordSet   = $this->application->recordsFor($name);
+		$this->asset = new Asset($name, $recordSet);
 		return $this;
 	}
 
 	public function add(AssetNode $node):self
 	{
-		$node->enlist($this->asset);
+		if($node instanceof RecordChild)
+			$this->asset->recordChildSet->add($node);
+		elseif($node instanceof RecordSetChild)
+			$this->asset->recordSetChildSet->add($node);
 		return $this;
 	}
 
-	public function childAsset(
-		AssetStrategy $strategy, string $linkField):self
+	public function childAsset(AssetStrategy $strategy, string $linkField):self
 	{
-		$child = $strategy->create($this->mapper);
+		$child = $strategy->create($this->application);
 		$this->add(new ChildAsset($child, $linkField));
 		return $this;
 	}
 
-	public function strategy(NodeStrategy $strategy):self
+	public function strategy(AssetNodeStrategy $strategy):self
 	{
-		$this->add($strategy->create($this->mapper));
+		$this->add($strategy->create($this->application));
 		return $this;
 	}
 
-	/**
-	 * @param string $mappedName
-	 * @param string|null $assetName
-	 * @return $this
-	 * @throws ConfigurationException
-	 */
-	public function commit(
-		string $mappedName, ?string $assetName = null): self
+	public function get():Asset
 	{
-		if($this->directory === null)
-			throw new ConfigurationException("No directory for commit");
-		$this->directory->add($this->get($mappedName, $assetName));
+		return $this->asset;
+	}
+
+	public function commit():self
+	{
+		$this->application->add($this->get());
 		return $this;
 	}
 }

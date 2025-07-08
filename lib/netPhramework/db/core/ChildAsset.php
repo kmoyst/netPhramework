@@ -9,10 +9,8 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Record;
 
-class ChildAsset extends Composite implements AssetNode
+class ChildAsset extends Composite implements RecordChild
 {
-	use RecordChild;
-
 	private Asset $asset;
 	private string $linkField;
 
@@ -34,7 +32,7 @@ class ChildAsset extends Composite implements AssetNode
 	 */
 	public function setRecord(Record $record): RecordChild
 	{
-		$childRecords = $this->asset->getRecordSet();
+		$childRecords = $this->asset->recordSet;
 		$field = $childRecords->getField($this->linkField);
 		$condition = new Condition()
 			->setField($field)
