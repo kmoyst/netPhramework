@@ -10,31 +10,31 @@ readonly class RequestInterpreter
 	public function __construct(private RequestEnvironment $environment) {}
 
 	/**
-	 * @param Application $application
+	 * @param Site $site
 	 * @return Request
 	 */
-	public function establishRequest(Application $application):Request
+	public function establishRequest(Site $site):Request
 	{
 		$location = new LocationFromUri($this->environment->getUri());
-		return $this->createRequest($application, $location);
+		return $this->createRequest($site, $location);
 	}
 
 	/**
-	 * @param Application $application
+	 * @param Site $site
 	 * @param Location $location
 	 * @return Request
 	 */
 	private function createRequest(
-		Application $application, Location $location):Request
+		Site $site, Location $location):Request
 	{
 		if(($postParameters = $this->environment->getPostParameters()) !== null)
 		{
-			$socket = $application->openActiveSocket();
+			$socket = $site->openActiveSocket();
 			$location->getParameters()->clear()->merge($postParameters);
 		}
 		else
 		{
-			$socket = $application->openPassiveSocket();
+			$socket = $site->openPassiveSocket();
 		}
 		return new Request($location, $socket);
 	}

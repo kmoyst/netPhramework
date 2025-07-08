@@ -8,7 +8,7 @@ powerful, declarative approach to application configuration.
 ### Resources mapped in Composite tree with linked-list navigation
 The fundamental strength of the `netPhramework` design is the 
 interchangeability of resources. Every resource in 
-the `Application` is a `Node`. A `Node` is a component in a composite tree, 
+the `Site` is a `Node`. A `Node` is a component in a composite tree, 
 Leaf or Composite. A Directory is a Composite, an record update process is a 
 Leaf, a static Page is a Leaf, an Asset representing a database entity is
 a composite of records and processes. So, `/patients/8/appointments/31/edit` is

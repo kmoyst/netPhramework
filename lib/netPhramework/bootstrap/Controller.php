@@ -2,7 +2,7 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\core\Application;
+use netPhramework\core\Site;
 use netPhramework\core\Exception;
 
 class Controller
@@ -18,7 +18,7 @@ class Controller
 		;
 		$this->environment = $context->getEnvironment()
 		;
-		$application = new Application()
+		$site = new Site()
 		;
 		$responder 	 = $context->getResponder($context->getEncoder());
 		$interpreter = $context->getRequestInterpreter();
@@ -28,17 +28,17 @@ class Controller
 		{
 			try
 			{
-				$application->configure($config);
+				$site->configure($config);
 			}
 			catch (Exception $exception)
 			{
 				$exception
 					->setEnvironment($this->environment)
-					->deliver($responder); // wrapper set by Application
+					->deliver($responder); // wrapper set by Site
 				return;
 			}
 			$interpreter
-				->establishRequest($application)
+				->establishRequest($site)
 				->process($context)
 				->deliver($responder)
 			;

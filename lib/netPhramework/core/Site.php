@@ -6,7 +6,7 @@ namespace netPhramework\core;
 use netPhramework\bootstrap\Configuration;
 use netPhramework\rendering\Wrapper;
 
-class Application
+class Site
 {
 	private Directory $passiveNode;
 	private Directory $activeNode;
@@ -24,7 +24,7 @@ class Application
 	 * @return $this
 	 * @throws \Exception
 	 */
-	public function configure(Configuration $configuration):Application
+	public function configure(Configuration $configuration):Site
     {
 		try
 		{
