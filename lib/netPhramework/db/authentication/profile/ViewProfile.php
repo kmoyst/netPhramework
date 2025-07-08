@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\profile;
 
 use netPhramework\authentication\SessionUser;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafTrait;
+use netPhramework\core\LeafBehaviour;
 use netPhramework\core\Node;
 use netPhramework\db\authentication\presentation\ProfileViewManager;
 use netPhramework\db\authentication\User;
@@ -20,7 +20,7 @@ use netPhramework\presentation\FeedbackView;
 
 class ViewProfile extends Node
 {
-	use LeafTrait;
+	use LeafBehaviour;
 
 	public function __construct(private readonly UserManager $manager) {}
 

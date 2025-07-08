@@ -4,13 +4,13 @@ namespace netPhramework\authentication\nodes;
 
 use netPhramework\core\Node;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafTrait;
+use netPhramework\core\LeafBehaviour;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 
 class LogInStatus extends Node
 {
-	use LeafTrait;
+	use LeafBehaviour;
 
 	/**
 	 * @param Exchange $exchange

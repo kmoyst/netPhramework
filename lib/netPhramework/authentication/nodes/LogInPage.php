@@ -6,7 +6,7 @@ use netPhramework\authentication\LogInManager;
 use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafTrait;
+use netPhramework\core\LeafBehaviour;
 use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
@@ -14,7 +14,7 @@ use netPhramework\rendering\View;
 
 class LogInPage extends Node
 {
-	use LeafTrait;
+	use LeafBehaviour;
 
     public function __construct(
 		private readonly ?View $view = null,

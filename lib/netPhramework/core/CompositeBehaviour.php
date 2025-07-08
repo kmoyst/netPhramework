@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\locating\redirectors\RedirectToChild;
 
-trait CompositeTrait
+trait CompositeBehaviour
 {
 	public function handleExchange(Exchange $exchange): void
 	{

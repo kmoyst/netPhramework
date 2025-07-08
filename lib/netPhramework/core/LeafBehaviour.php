@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\Utils;
 use netPhramework\exceptions\NodeNotFound;
 
-trait LeafTrait
+trait LeafBehaviour
 {
 	protected bool $isIndex = false;
 

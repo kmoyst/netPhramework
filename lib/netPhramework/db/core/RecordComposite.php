@@ -2,14 +2,14 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\CompositeTrait;
+use netPhramework\core\CompositeBehaviour;
 use netPhramework\core\Node;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\exceptions\NodeNotFound;
 
 class RecordComposite extends RecordSetChild
 {
-	use CompositeTrait;
+	use CompositeBehaviour;
 
 	public function __construct(
 		private readonly RecordChildSet $nodeSet,

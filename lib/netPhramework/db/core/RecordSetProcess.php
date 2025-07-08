@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\LeafTrait;
+use netPhramework\core\LeafBehaviour;
 
 abstract class RecordSetProcess extends RecordSetChild
 {
-	use LeafTrait;
+	use LeafBehaviour;
 }

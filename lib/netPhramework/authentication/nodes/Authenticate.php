@@ -7,7 +7,7 @@ use netPhramework\authentication\LogInManager;
 use netPhramework\core\Node;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafTrait;
+use netPhramework\core\LeafBehaviour;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
 use netPhramework\locating\redirectors\RedirectToSibling as toSibling;
@@ -16,7 +16,7 @@ use netPhramework\exceptions\InvalidUsername;
 
 class Authenticate extends Node
 {
-	use LeafTrait;
+	use LeafBehaviour;
 
 	public function __construct(
 		private readonly Authenticator $authenticator,

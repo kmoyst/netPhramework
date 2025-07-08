@@ -4,12 +4,12 @@ namespace netPhramework\authentication\nodes;
 
 use netPhramework\core\Node;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafTrait;
+use netPhramework\core\LeafBehaviour;
 use netPhramework\rendering\View;
 
 class LogInFailure extends Node
 {
-	use LeafTrait;
+	use LeafBehaviour;
 
 	public function handleExchange(Exchange $exchange): void
 	{

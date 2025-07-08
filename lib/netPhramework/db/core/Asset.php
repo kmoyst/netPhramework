@@ -3,14 +3,14 @@
 namespace netPhramework\db\core;
 
 use netPhramework\common\StringPredicate;
-use netPhramework\core\CompositeTrait;
+use netPhramework\core\CompositeBehaviour;
 use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
 
 class Asset extends Node
 {
-	use CompositeTrait;
+	use CompositeBehaviour;
 
 	public function __construct(
 		private readonly string $name,

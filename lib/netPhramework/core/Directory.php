@@ -6,7 +6,7 @@ use netPhramework\exceptions\NodeNotFound;
 
 final class Directory extends Node
 {
-	use CompositeTrait;
+	use CompositeBehaviour;
 
 	private NodeSet $children;
     private string|Index $index;
