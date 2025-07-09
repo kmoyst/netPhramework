@@ -2,13 +2,13 @@
 
 namespace netPhramework\db\application\configuration;
 
-use netPhramework\bootstrap\Configuration;
+use netPhramework\bootstrap\Application;
 use netPhramework\core\Directory;
 use netPhramework\core\Resource;
 use netPhramework\db\application\mapping\RecordMapper;
 use netPhramework\rendering\WrapperConfiguration;
 
-class AdminConfiguration extends Configuration
+class AdminApplication extends Application
 {
 	public function __construct(protected readonly RecordMapper $mapper) {}
 

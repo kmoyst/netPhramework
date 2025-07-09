@@ -6,7 +6,7 @@ use netPhramework\core\Directory;
 use netPhramework\core\Page;
 use netPhramework\rendering\Wrapper;
 
-class Configuration
+class Application
 {
     public function buildPassiveTree(Directory $root):void
 	{

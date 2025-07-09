@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-use netPhramework\bootstrap\Configuration;
+use netPhramework\bootstrap\Application;
 use netPhramework\rendering\Wrapper;
 
 readonly class Site
@@ -16,11 +16,11 @@ readonly class Site
 	{}
 
 	/**
-	 * @param Configuration $configuration
+	 * @param Application $configuration
 	 * @return $this
 	 * @throws \Exception
 	 */
-	public function configure(Configuration $configuration):Site
+	public function configure(Application $configuration):Site
     {
 		$configuration->buildPassiveTree($this->passiveRoot);
 		$configuration->buildActiveTree($this->activeRoot);
