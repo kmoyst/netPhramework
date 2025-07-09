@@ -34,7 +34,8 @@ class Controller
 			{
 				$exception
 					->setEnvironment($this->environment)
-					->deliver($responder); // wrapper set by Site
+					->setWrapper($site->wrapper)
+					->deliver($responder);
 				return;
 			}
 			$interpreter

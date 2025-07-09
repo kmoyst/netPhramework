@@ -15,24 +15,12 @@ readonly class Site
 	)
 	{}
 
-	/**
-	 * @param Configuration $configuration
-	 * @return $this
-	 * @throws Exception
-	 */
 	public function configure(Configuration $configuration):Site
     {
-		try
-		{
-			$configuration->buildPassiveTree($this->passiveRoot);
-			$configuration->buildActiveTree($this->activeRoot);
-			$configuration->configureWrapper($this->wrapper);
-			return $this;
-		}
-		catch (Exception $exception)
-		{
-			throw $exception->setWrapper($this->wrapper);
-		}
+		$configuration->buildPassiveTree($this->passiveRoot);
+		$configuration->buildActiveTree($this->activeRoot);
+		$configuration->configureWrapper($this->wrapper);
+		return $this;
 	}
 
 	public function openPassiveSocket(): Socket
