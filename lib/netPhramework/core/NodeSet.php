@@ -2,13 +2,17 @@
 
 namespace netPhramework\core;
 
-use Iterator;
 use netPhramework\common\IsKeyedIterable;
 use netPhramework\exceptions\NodeNotFound;
 
-class NodeSet implements Iterator
+class NodeSet extends NodeIterator
 {
 	use IsKeyedIterable;
+
+	public function current(): Node
+	{
+		return current($this->items);
+	}
 
 	/**
 	 * @param string $id
@@ -17,32 +21,13 @@ class NodeSet implements Iterator
 	 */
 	public function get(string $id):Node
 	{
-		$this->confirmNode($id);
+		if(!$this->has($id)) throw new NodeNotFound("Not Found: $id");
 		return $this->items[$id];
 	}
 
 	public function add(Node $node):self
 	{
-		$this->storeNode($node);
-		return $this;
-	}
-
-	/**
-	 * @param Node $node
-	 * @return void
-	 */
-	protected function storeNode(Node $node):void
-	{
 		$this->items[$node->getNodeId()] = $node;
-	}
-
-	/**
-	 * @param string $id
-	 * @return void
-	 * @throws NodeNotFound
-	 */
-	protected function confirmNode(string $id):void
-	{
-		if(!$this->has($id)) throw new NodeNotFound("Not Found: $id");
+		return $this;
 	}
 }

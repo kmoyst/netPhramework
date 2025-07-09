@@ -2,11 +2,14 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\common\IsKeyedIterable;
+use netPhramework\core\NodeIterator;
 
-class RecordChildSet
+class RecordChildSet extends NodeIterator
 {
-	use IsKeyedIterable;
+	public function current(): RecordChild
+	{
+		return current($this->items);
+	}
 
 	public function add(RecordChild $child):self
 	{

@@ -2,8 +2,6 @@
 
 namespace netPhramework\common;
 
-use netPhramework\core\Node;
-
 trait IsKeyedIterable
 {
 	protected array $items = [];
@@ -16,11 +14,6 @@ trait IsKeyedIterable
 	public function getNames():array
 	{
 		return array_keys($this->items);
-	}
-
-	public function current(): Node
-	{
-		return current($this->items);
 	}
 
 	public function next(): void
