@@ -41,12 +41,11 @@ class PassiveAssetBuilder extends AssetBuilder
 	}
 
 	public function childWithDefaults(
-		string $mappedName,
-		string $linkField,
-		?string $assetName = null):self
+		string $name,
+		string $linkField):self
 	{
 		$asset = new self($this->mapper)
-			->newAsset($mappedName)
+			->newAsset($name)
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
 			->get();
