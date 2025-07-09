@@ -15,6 +15,11 @@ readonly class Site
 	)
 	{}
 
+	/**
+	 * @param Configuration $configuration
+	 * @return $this
+	 * @throws \Exception
+	 */
 	public function configure(Configuration $configuration):Site
     {
 		$configuration->buildPassiveTree($this->passiveRoot);
