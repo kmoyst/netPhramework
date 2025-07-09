@@ -1,13 +1,17 @@
 <?php
 
-namespace netPhramework\db\configuration;
+namespace netPhramework\db\application\mapping;
 
 use netPhramework\db\abstraction\Database;
 use netPhramework\db\mapping\RecordSet;
 
 readonly class RecordMapper implements RecordAccess, RecordSetFactory
 {
-    public function __construct(private Database $database) {}
+	public function __construct
+	(
+		private Database $database
+	)
+	{}
 
 	public function lookupFor(string $name): RecordLookup
 	{
@@ -32,8 +36,8 @@ readonly class RecordMapper implements RecordAccess, RecordSetFactory
 		return new RecordSet($schema, $table);
 	}
 
-    public function listAllRecordSets():array
-    {
-        return $this->database->listTables();
-    }
+	public function listAllRecordSets():array
+	{
+		return $this->database->listTables();
+	}
 }

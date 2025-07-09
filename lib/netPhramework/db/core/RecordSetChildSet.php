@@ -2,18 +2,18 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\NodeSet;
-
-class RecordSetChildSet extends NodeSet
+class RecordSetChildSet
 {
-	public function add(RecordSetChild $node): void
+	private array $children = [];
+
+	public function add(RecordSetChild $child):self
 	{
-		$this->storeNode($node);
+		$this->children[$child->getName()] = $child;
+		return $this;
 	}
 
-	public function get(string $id): RecordSetChild
+	public function get(string $name):RecordSetChild
 	{
-		$this->confirmNode($id);
-		return $this->nodes[$id];
+		return $this->children[$name];
 	}
 }

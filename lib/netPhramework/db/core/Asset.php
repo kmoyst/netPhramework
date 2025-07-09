@@ -2,30 +2,26 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\common\StringPredicate;
 use netPhramework\core\Composite;
 use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
-use netPhramework\exceptions\NodeNotFound;
+use netPhramework\db\core\RecordSetChildSet as setChildSet;
+use netPhramework\common\StringPredicate as Predicate;
 
 class Asset extends Composite
 {
-	public function __construct(
-		private readonly string $name,
-		private readonly RecordSet $recordSet,
-		private readonly RecordChildSet $recordChildSet,
-		private readonly RecordSetChildSet $recordSetChildSet,
-		private readonly StringPredicate $recordIdPredicate
+	public function __construct
+	(
+	public readonly string $name,
+	public readonly RecordSet $recordSet,
+	public readonly Predicate $recordIdPredicate   = new NumericIdPredicate(),
+	public readonly RecordChildSet $recordChildSet = new RecordChildSet(),
+	public readonly setChildSet $recordSetChildSet = new RecordSetChildSet()
 	) {}
 
 	public function getName(): string
 	{
 		return $this->name;
-	}
-
-	public function getRecordSet(): RecordSet
-	{
-		return $this->recordSet;
 	}
 
 	public function getChild(string $id): Node
@@ -36,7 +32,6 @@ class Asset extends Composite
 	/**
 	 * @param string $id
 	 * @return RecordSetChild
-	 * @throws NodeNotFound
 	 */
 	private function resolveChild(string $id): RecordSetChild
 	{

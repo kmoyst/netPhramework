@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\configuration;
+namespace netPhramework\db\application\mapping;
 use Iterator;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;

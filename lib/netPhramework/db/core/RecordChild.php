@@ -7,5 +7,5 @@ use netPhramework\db\mapping\Record;
 
 interface RecordChild extends Node
 {
-	public function setRecord(Record $record): self;
+	public function setRecord(Record $record):self;
 }

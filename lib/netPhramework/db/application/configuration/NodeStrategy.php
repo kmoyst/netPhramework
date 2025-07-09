@@ -1,8 +1,9 @@
 <?php
 
-namespace netPhramework\db\configuration;
+namespace netPhramework\db\application\configuration;
 
 use netPhramework\core\Node;
+use netPhramework\db\application\mapping\RecordMapper;
 
 interface NodeStrategy
 {

@@ -12,7 +12,7 @@ class RecordComposite extends Composite implements RecordSetChild
 	use HasRecordSet;
 
 	public function __construct(
-		private readonly RecordChildSet $nodeSet,
+		private readonly RecordChildSet $childSet,
 		private readonly string $recordId
 	) {}
 
@@ -25,7 +25,7 @@ class RecordComposite extends Composite implements RecordSetChild
 	public function getChild(string $id): Node
 	{
 		$record = $this->recordSet->getRecord($this->recordId);
-		return $this->nodeSet->get($id)->setRecord($record);
+		return $this->childSet->get($id)->setRecord($record);
 	}
 
 	public function getName(): string
