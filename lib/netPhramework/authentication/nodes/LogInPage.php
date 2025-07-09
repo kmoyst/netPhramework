@@ -6,6 +6,8 @@ use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\core\Leaf;
+use netPhramework\locating\ReroutedPath;
+use netPhramework\locating\rerouters\RerouteToRoot;
 use netPhramework\locating\rerouters\RerouteToSibling;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
@@ -15,7 +17,8 @@ class LogInPage extends Leaf
 {
     public function __construct(
 		private readonly ?View $view = null,
-		private readonly ?Rerouter $forForm = null
+		private readonly ?Rerouter $forForm = null,
+		private readonly ?Rerouter $forForgotPassword = null
     ) {}
 
 	public function getName(): string { return 'log-in'; }
@@ -33,6 +36,10 @@ class LogInPage extends Leaf
         $relocator  = $this->forForm??new RerouteToSibling('authenticate');
         $relocator->reroute($formAction)
 		;
+		$forForgotPassword = $this->forForgotPassword??
+			new RerouteToRoot('forgot-password');
+		$forgotPasswordLink = new ReroutedPath(
+			$exchange->getPath(), $forForgotPassword);
         $feedbackView = new FeedbackView($exchange->getSession());
         $responseCode = $exchange->getSession()->resolveResponseCode()
 		;
@@ -41,7 +48,7 @@ class LogInPage extends Leaf
             ->add('passwordInput', 	$manager->getPasswordInput())
             ->add('formAction', 	$formAction)
             ->add('errorView', 		$feedbackView)
-			->add('forgotPasswordLink', '/users/forgot-password')
+			->add('forgotPasswordLink', $forgotPasswordLink)
             ;
     }
 }
