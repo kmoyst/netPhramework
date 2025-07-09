@@ -2,18 +2,20 @@
 
 namespace netPhramework\db\core;
 
+use netPhramework\common\IsIterable;
+
 class RecordSetChildSet
 {
-	private array $children = [];
+	use IsIterable;
 
 	public function add(RecordSetChild $child):self
 	{
-		$this->children[$child->getNodeId()] = $child;
+		$this->items[$child->getNodeId()] = $child;
 		return $this;
 	}
 
 	public function get(string $name):RecordSetChild
 	{
-		return $this->children[$name];
+		return $this->items[$name];
 	}
 }
