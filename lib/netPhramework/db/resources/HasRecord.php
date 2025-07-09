@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\db\mapping;
+namespace netPhramework\db\resources;
 
 use netPhramework\db\core\Record;
 
-abstract class File implements \netPhramework\core\File
+trait HasRecord
 {
 	protected Record $record;
 

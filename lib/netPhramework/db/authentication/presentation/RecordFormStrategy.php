@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\authentication\presentation;
 use netPhramework\authentication\UserRole;
-use netPhramework\db\mapping\Record;
+use netPhramework\db\core\Record;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy as baseStrategy;
 use netPhramework\presentation\InputSet;
 

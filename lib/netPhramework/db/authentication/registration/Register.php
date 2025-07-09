@@ -5,7 +5,7 @@ namespace netPhramework\db\authentication\registration;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\UserManager;
-use netPhramework\db\core\RecordSetProcess;
+use netPhramework\db\resources\RecordSetProcess;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;

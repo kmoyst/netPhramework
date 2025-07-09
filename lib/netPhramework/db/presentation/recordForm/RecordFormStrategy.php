@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\presentation\recordForm;
 
-use netPhramework\db\mapping\Record;
+use netPhramework\db\core\Record;
 use netPhramework\presentation\InputSet;
 
 interface RecordFormStrategy

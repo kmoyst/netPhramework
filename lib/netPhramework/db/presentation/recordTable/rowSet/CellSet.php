@@ -4,9 +4,9 @@ namespace netPhramework\db\presentation\recordTable\rowSet;
 
 use Iterator;
 use netPhramework\core\Exception;
+use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
-use netPhramework\db\mapping\Record;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\rendering\Encodable;
 

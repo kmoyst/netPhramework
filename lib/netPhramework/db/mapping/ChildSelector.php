@@ -2,6 +2,9 @@
 
 namespace netPhramework\db\mapping;
 
+use netPhramework\db\core\Record;
+use netPhramework\db\core\RecordSet;
+use netPhramework\db\core\RecordSetFactory;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 

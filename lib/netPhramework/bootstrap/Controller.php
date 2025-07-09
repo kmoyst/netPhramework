@@ -22,7 +22,7 @@ class Controller
 		;
 		$responder 	 = $context->getResponder($context->getEncoder());
 		$interpreter = $context->getRequestInterpreter();
-		$config	     = $context->getConfiguration()
+		$config	     = $context->getApplication()
 		;
 		try
 		{

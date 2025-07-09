@@ -5,12 +5,12 @@ namespace netPhramework\db\authentication;
 use netPhramework\authentication\UserRole;
 use netPhramework\common\Variables;
 use netPhramework\core\Session;
+use netPhramework\db\core\Record;
+use netPhramework\db\core\RecordFinder;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
-use netPhramework\db\mapping\Record;
-use netPhramework\db\mapping\RecordFinder;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NotFound;
 

@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\registration;
 
 use netPhramework\core\Exchange;
 use netPhramework\db\authentication\UserManager;
-use netPhramework\db\core\RecordSetProcess;
+use netPhramework\db\resources\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\locating\ReroutedPath;
 use netPhramework\locating\rerouters\Rerouter;
