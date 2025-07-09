@@ -9,9 +9,16 @@ readonly class RecordMapper implements RecordAccess, RecordSetFactory
 {
 	public function __construct
 	(
-		private Database $database
+		private Database $database,
+		public RecordMapSet $mapSet = new RecordMapSet()
 	)
 	{}
+
+	public function addMap(RecordMap $map):self
+	{
+		$this->mapSet->add($map);
+		return $this;
+	}
 
 	public function lookupFor(string $name): RecordLookup
 	{
@@ -31,8 +38,10 @@ readonly class RecordMapper implements RecordAccess, RecordSetFactory
 
 	public function recordsFor(string $name):RecordSet
 	{
-		$schema = $this->database->getSchema($name);
-		$table 	= $this->database->getTable($name);
+		$mappedName = $this->mapSet->has($name) ?
+			$this->mapSet->get($name)->mappedName : $name;
+		$schema = $this->database->getSchema($mappedName);
+		$table 	= $this->database->getTable($mappedName);
 		return new RecordSet($schema, $table);
 	}
 

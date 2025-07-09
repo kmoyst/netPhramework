@@ -30,11 +30,13 @@ class ActiveAssetBuilder extends AssetBuilder
         return $this;
     }
 
-	public function includeDefaults(): self
+	public function includeDefaults(
+		?RecordProcess $saveProcess = null,
+		?Redirector    $onSuccessfulSave = null): self
 	{
 		return $this
-			->includeInsert()
-			->includeUpdate()
+			->includeInsert($saveProcess, $onSuccessfulSave)
+			->includeUpdate($saveProcess, $onSuccessfulSave)
 			->includeDelete()
 			;
 	}
