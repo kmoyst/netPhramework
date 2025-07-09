@@ -8,10 +8,10 @@ use netPhramework\responding\Response;
 
 readonly class Socket
 {
-	private Node $root;
+	private Resource $root;
     private Wrapper $wrapper;
 
-    public function __construct(Node $root, Wrapper $wrapper)
+    public function __construct(Resource $root, Wrapper $wrapper)
     {
         $this->root = $root;
         $this->wrapper = $wrapper;

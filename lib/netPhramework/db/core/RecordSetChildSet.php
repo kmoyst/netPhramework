@@ -2,9 +2,10 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\NodeIterator;
+use netPhramework\core\ResourceIterator;
+use netPhramework\exceptions\ResourceNotFound;
 
-class RecordSetChildSet extends NodeIterator
+class RecordSetChildSet extends ResourceIterator
 {
 	public function current(): RecordSetChild
 	{
@@ -13,12 +14,18 @@ class RecordSetChildSet extends NodeIterator
 
 	public function add(RecordSetChild $child):self
 	{
-		$this->items[$child->getNodeId()] = $child;
+		$this->storeResource($child);
 		return $this;
 	}
 
-	public function get(string $name):RecordSetChild
+	/**
+	 * @param string $resourceId
+	 * @return RecordSetChild
+	 * @throws ResourceNotFound
+	 */
+	public function get(string $resourceId):RecordSetChild
 	{
-		return $this->items[$name];
+		$this->confirmResource($resourceId);
+		return $this->items[$resourceId];
 	}
 }

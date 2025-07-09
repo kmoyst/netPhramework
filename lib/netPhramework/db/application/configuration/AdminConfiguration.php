@@ -4,7 +4,7 @@ namespace netPhramework\db\application\configuration;
 
 use netPhramework\bootstrap\Configuration;
 use netPhramework\core\Directory;
-use netPhramework\core\Node;
+use netPhramework\core\Resource;
 use netPhramework\db\application\mapping\RecordMapper;
 use netPhramework\rendering\WrapperConfiguration;
 
@@ -12,7 +12,7 @@ class AdminConfiguration extends Configuration
 {
 	public function __construct(protected readonly RecordMapper $mapper) {}
 
-	public function createPassiveNode(): Node
+	public function createPassiveNode(): Resource
 	{
 		$root = new Directory('')
 		;
@@ -21,7 +21,7 @@ class AdminConfiguration extends Configuration
 		return $root;
 	}
 
-	public function createActiveNode(): Node
+	public function createActiveNode(): Resource
 	{
 		$root = new Directory('')
 		;

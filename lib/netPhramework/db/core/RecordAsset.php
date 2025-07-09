@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Node;
+use netPhramework\core\Resource;
 
-interface RecordAsset extends Node
+interface RecordAsset extends Resource
 {
 
 }

@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\exceptions;
 
-use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exceptions\ResourceNotFound;
 
-class RecordNotFound extends NodeNotFound
+class RecordNotFound extends ResourceNotFound
 {
 
 }

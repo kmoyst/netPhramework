@@ -3,14 +3,14 @@
 namespace netPhramework\core;
 
 use netPhramework\locating\Path;
-use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exceptions\ResourceNotFound;
 
 class Navigator
 {
-	private Node $root;
+	private Resource $root;
 	private Path $path;
 
-	public function setRoot(Node $root): Navigator
+	public function setRoot(Resource $root): Navigator
 	{
 		$this->root = $root;
 		return $this;
@@ -23,21 +23,18 @@ class Navigator
 	}
 
 	/**
-	 * @return Node
-	 * @throws NodeNotFound
+	 * @return Resource
+	 * @throws ResourceNotFound
 	 */
-	public function navigate():Node
+	public function navigate():Resource
 	{
         return $this->traverse($this->root, $this->path);
 	}
 
 	/**
-	 * @param Node $node
-	 * @param Path|null $path
-	 * @return Node
-	 * @throws NodeNotFound
+	 * @throws ResourceNotFound
 	 */
-    private function traverse(Node $node, ?Path $path):Node
+    private function traverse(Resource $node, ?Path $path):Resource
     {
         if($path === null) return $node;
         $child = $node->getChild($path->getName());

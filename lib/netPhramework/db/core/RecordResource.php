@@ -3,10 +3,11 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Composite;
-use netPhramework\core\Node;
+use netPhramework\core\Resource;
 use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\core\RecordSetChildSet as setChildSet;
 use netPhramework\common\StringPredicate as Predicate;
+use netPhramework\exceptions\ResourceNotFound;
 
 class RecordResource extends Composite
 {
@@ -24,7 +25,7 @@ class RecordResource extends Composite
 		return $this->name;
 	}
 
-	public function getChild(string $id): Node
+	public function getChild(string $id): Resource
 	{
 		return $this->resolveChild($id)->setRecordSet($this->recordSet);
 	}
@@ -32,6 +33,7 @@ class RecordResource extends Composite
 	/**
 	 * @param string $id
 	 * @return RecordSetChild
+	 * @throws ResourceNotFound
 	 */
 	private function resolveChild(string $id): RecordSetChild
 	{

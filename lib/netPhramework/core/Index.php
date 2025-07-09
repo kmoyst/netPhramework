@@ -6,9 +6,9 @@ use netPhramework\common\Utils;
 
 class Index extends Page
 {
-	private NodeSet $nodeSet;
+	private ResourceSet $nodeSet;
 
-	public function setNodeSet(NodeSet $nodeSet): self
+	public function setNodeSet(ResourceSet $nodeSet): self
 	{
 		$this->nodeSet = $nodeSet;
 		return $this;
@@ -20,7 +20,7 @@ class Index extends Page
 		foreach($this->nodeSet as $node)
 		{
 			$desc = Utils::kebabToSpace($node->getName());
-			$links[$node->getNodeId()] = $desc;
+			$links[$node->getResourceId()] = $desc;
 		}
 		ksort($links);
 		$this->add('links', $links);

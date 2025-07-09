@@ -2,8 +2,8 @@
 
 namespace netPhramework\db\application\configuration;
 
-use netPhramework\core\BuildableNode;
-use netPhramework\core\Node;
+use netPhramework\core\BuildableResource;
+use netPhramework\core\Resource;
 use netPhramework\db\application\mapping\RecordMapper;
 use netPhramework\db\core\RecordResource;
 use netPhramework\db\core\OneToManyLink;
@@ -27,7 +27,7 @@ class RecordResourceBuilder
 		return $this;
 	}
 
-	public function add(Node $node):self
+	public function add(Resource $node):self
 	{
 		if($node instanceof RecordChild)
 			$this->asset->recordChildSet->add($node);
@@ -57,7 +57,7 @@ class RecordResourceBuilder
 		return $asset;
 	}
 
-	public function commit(BuildableNode $node):self
+	public function commit(BuildableResource $node):self
 	{
 		$node->add($this->get());
 		return $this;

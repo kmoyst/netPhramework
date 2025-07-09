@@ -2,18 +2,18 @@
 
 namespace netPhramework\core;
 
-use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exceptions\ResourceNotFound;
 
-class Directory extends Composite implements BuildableNode
+class Directory extends Composite implements BuildableResource
 {
 	protected string|Index $autoIndexer;
 
 	public function __construct(
 		public readonly string $name,
-		protected NodeSet $children = new NodeSet()
+		protected ResourceSet $children = new ResourceSet()
 	) {}
 
-	public function add(Node $node):self
+	public function add(Resource $node):self
 	{
 		$this->children->add($node);
 		return $this;
@@ -24,7 +24,7 @@ class Directory extends Composite implements BuildableNode
 		return $this->name;
 	}
 
-	public function getChild(string $id): Node
+	public function getChild(string $id): Resource
 	{
 		if($this->children->has($id)) return $this->children->get($id);
 		else return $this->autoIndexIfPermitted($id);
@@ -33,7 +33,7 @@ class Directory extends Composite implements BuildableNode
 	/**
 	 * @param string $id
 	 * @return Index
-	 * @throws NodeNotFound
+	 * @throws ResourceNotFound
 	 */
 	protected function autoIndexIfPermitted(string $id):Index
 	{
@@ -45,7 +45,7 @@ class Directory extends Composite implements BuildableNode
 		}
 		else
 		{
-			throw new NodeNotFound("Not Found: $id");
+			throw new ResourceNotFound("Not Found: $id");
 		}
 	}
 

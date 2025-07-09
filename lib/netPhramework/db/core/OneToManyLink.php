@@ -3,7 +3,7 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Composite;
-use netPhramework\core\Node;
+use netPhramework\core\Resource;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
@@ -11,7 +11,6 @@ use netPhramework\db\mapping\Record;
 
 class OneToManyLink extends Composite implements RecordChild
 {
-
 	public function __construct
 	(
 	private readonly RecordResource $recordSetComposite,
@@ -37,7 +36,7 @@ class OneToManyLink extends Composite implements RecordChild
 		return $this;
 	}
 
-	public function getChild(string $id): Node
+	public function getChild(string $id): Resource
 	{
 		return $this->recordSetComposite->getChild($id);
 	}

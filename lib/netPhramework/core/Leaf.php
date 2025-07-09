@@ -3,18 +3,18 @@
 namespace netPhramework\core;
 
 use netPhramework\common\Utils;
-use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exceptions\ResourceNotFound;
 
-abstract class Leaf implements Node
+abstract class Leaf implements Resource
 {
 	private bool $isIndex = false;
 
 	public function getChild(string $id): never
 	{
-		throw new NodeNotFound("Not Found: $id");
+		throw new ResourceNotFound("Not Found: $id");
 	}
 
-	public function getNodeId(): string
+	public function getResourceId(): string
 	{
 		return $this->isIndex ? '' : $this->getName();
 	}

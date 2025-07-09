@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\application\configuration;
 
-use netPhramework\core\BuildableNode;
+use netPhramework\core\BuildableResource;
 use netPhramework\db\core\OneToManyLink;
 use netPhramework\db\nodes\Add;
 use netPhramework\db\nodes\Browse;
@@ -20,10 +20,10 @@ class PassiveRecordResourceBuilder extends RecordResourceBuilder
 	 * generates an asset with all default processes for each one and adds
 	 * them to the Directory.
 	 *
-	 * @param BuildableNode $node
+	 * @param BuildableResource $node
 	 * @return self
 	 */
-    public function addAllAssetsWithDefaults(BuildableNode $node):self
+    public function addAllAssetsWithDefaults(BuildableResource $node):self
     {
         foreach($this->mapper->listAllRecordSets() as $name)
         {

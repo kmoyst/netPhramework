@@ -4,9 +4,9 @@ namespace netPhramework\core;
 
 use netPhramework\locating\redirectors\RedirectToChild;
 
-abstract class Composite implements Node
+abstract class Composite implements Resource
 {
-	public function getNodeId():string
+	public function getResourceId():string
 	{
 		return $this->getName();
 	}

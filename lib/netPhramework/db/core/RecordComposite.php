@@ -3,9 +3,9 @@
 namespace netPhramework\db\core;
 
 use netPhramework\core\Composite;
-use netPhramework\core\Node;
+use netPhramework\core\Resource;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exceptions\ResourceNotFound;
 
 class RecordComposite extends Composite implements RecordSetChild
 {
@@ -18,11 +18,11 @@ class RecordComposite extends Composite implements RecordSetChild
 
 	/**
 	 * @param string $id
-	 * @return Node
+	 * @return Resource
 	 * @throws MappingException
-	 * @throws NodeNotFound
+	 * @throws ResourceNotFound
 	 */
-	public function getChild(string $id): Node
+	public function getChild(string $id): Resource
 	{
 		$record = $this->recordSet->getRecord($this->recordId);
 		return $this->childSet->get($id)->setRecord($record);
