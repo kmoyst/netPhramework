@@ -50,13 +50,14 @@ class AssetBuilder
 
 	public function get():Asset
 	{
-		return $this->asset;
+		$asset = $this->asset;
+		$this->reset();
+		return $asset;
 	}
 
 	public function commit(BuildableNode $node):self
 	{
 		$node->add($this->get());
-		$this->reset();
 		return $this;
 	}
 
