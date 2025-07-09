@@ -1,13 +1,11 @@
 <?php
 
-namespace netPhramework\db\application\mapping;
+namespace netPhramework\db\mapping;
 
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
-use netPhramework\db\mapping\Record;
-use netPhramework\db\mapping\RecordSet;
 
 readonly class RecordFinder
 {

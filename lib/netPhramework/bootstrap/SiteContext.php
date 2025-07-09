@@ -65,7 +65,7 @@ class SiteContext implements RequestContext
 		return $this->fileManager;
 	}
 
-	public function getConfiguration(): Application
+	public function getApplication(): Application
 	{
 		return new Application();
 	}

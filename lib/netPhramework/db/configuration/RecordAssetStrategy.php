@@ -1,9 +1,9 @@
 <?php
 
-namespace netPhramework\db\application\configuration;
+namespace netPhramework\db\configuration;
 
-use netPhramework\db\application\mapping\RecordMapper;
 use netPhramework\db\core\RecordAsset;
+use netPhramework\db\mapping\RecordMapper;
 
 interface RecordAssetStrategy
 {

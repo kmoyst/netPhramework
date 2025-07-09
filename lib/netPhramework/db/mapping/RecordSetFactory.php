@@ -1,8 +1,6 @@
 <?php
 
-namespace netPhramework\db\application\mapping;
-
-use netPhramework\db\mapping\RecordSet;
+namespace netPhramework\db\mapping;
 
 interface RecordSetFactory
 {

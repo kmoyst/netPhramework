@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\application\mapping;
+namespace netPhramework\db\mapping;
 
 interface RecordAccess
 {

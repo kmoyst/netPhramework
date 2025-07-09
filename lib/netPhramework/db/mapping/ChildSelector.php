@@ -1,12 +1,9 @@
 <?php
 
-namespace netPhramework\db\application\mapping;
+namespace netPhramework\db\mapping;
 
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\mapping\Condition;
-use netPhramework\db\mapping\Record;
-use netPhramework\db\mapping\RecordSet;
 
 class ChildSelector
 {

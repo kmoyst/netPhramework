@@ -1,8 +1,6 @@
 <?php
 
-namespace netPhramework\db\application\mapping;
-
-use netPhramework\db\mapping\Record;
+namespace netPhramework\db\mapping;
 
 interface RecordDescriber
 {

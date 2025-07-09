@@ -1,14 +1,14 @@
 <?php
 
-namespace netPhramework\db\application\configuration;
+namespace netPhramework\db\configuration;
 
 use netPhramework\core\Directory;
 use netPhramework\core\Resource;
-use netPhramework\db\application\mapping\RecordMapper;
-use netPhramework\db\core\RecordResource;
 use netPhramework\db\core\OneToManyLink;
 use netPhramework\db\core\RecordChild;
+use netPhramework\db\core\RecordResource;
 use netPhramework\db\core\RecordSetChild;
+use netPhramework\db\mapping\RecordMapper;
 
 class RecordResourceBuilder
 {

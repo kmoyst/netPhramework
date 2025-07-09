@@ -1,10 +1,9 @@
 <?php
 
-namespace netPhramework\db\application\mapping;
+namespace netPhramework\db\mapping;
 use Iterator;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
-use netPhramework\db\mapping\RecordSet;
 
 readonly class RecordOptions implements Iterator
 {

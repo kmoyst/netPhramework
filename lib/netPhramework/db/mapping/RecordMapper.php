@@ -1,9 +1,8 @@
 <?php
 
-namespace netPhramework\db\application\mapping;
+namespace netPhramework\db\mapping;
 
 use netPhramework\db\abstraction\Database;
-use netPhramework\db\mapping\RecordSet;
 
 readonly class RecordMapper implements RecordAccess, RecordSetFactory
 {

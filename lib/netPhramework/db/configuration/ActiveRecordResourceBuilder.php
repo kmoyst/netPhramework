@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\application\configuration;
+namespace netPhramework\db\configuration;
 
 use netPhramework\core\Directory;
 use netPhramework\db\core\OneToManyLink;

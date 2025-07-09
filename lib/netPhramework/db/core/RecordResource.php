@@ -2,11 +2,11 @@
 
 namespace netPhramework\db\core;
 
+use netPhramework\common\StringPredicate as Predicate;
 use netPhramework\core\Composite;
 use netPhramework\core\Resource;
-use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\core\RecordSetChildSet as setChildSet;
-use netPhramework\common\StringPredicate as Predicate;
+use netPhramework\db\mapping\RecordSet;
 use netPhramework\exceptions\ResourceNotFound;
 
 class RecordResource extends Composite

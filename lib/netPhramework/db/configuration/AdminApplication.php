@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\db\application\configuration;
+namespace netPhramework\db\configuration;
 
 use netPhramework\bootstrap\Application;
 use netPhramework\core\Directory;
 use netPhramework\core\Resource;
-use netPhramework\db\application\mapping\RecordMapper;
+use netPhramework\db\mapping\RecordMapper;
 use netPhramework\rendering\WrapperConfiguration;
 
 class AdminApplication extends Application
