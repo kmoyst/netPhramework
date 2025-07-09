@@ -4,15 +4,14 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\NodeNotFound;
 
-final class Directory extends Composite
+class Directory extends Composite implements BuildableNode
 {
-	private NodeSet $children;
-    private string|Index $index;
+	protected string|Index $autoIndexer;
 
-    public function __construct(private readonly string $name)
-	{
-		$this->children = new NodeSet();
-	}
+	public function __construct(
+		public readonly string $name,
+		protected NodeSet $children = new NodeSet()
+	) {}
 
 	public function add(Node $node):self
 	{
@@ -20,39 +19,49 @@ final class Directory extends Composite
 		return $this;
 	}
 
-    public function getChild(string $id): Node
-    {
-        if($this->children->has($id))
-            return $this->children->get($id);
-        elseif($id === '' && isset($this->index))
-		{
-			return (is_string($this->index) ?
-				new Index($this->index) : $this->index)
-				->setNodeSet($this->children);
-		}
-        else
-            throw new NodeNotFound("Not Found: $id");
-    }
-
 	public function getName(): string
-    {
-        return $this->name;
-    }
+	{
+		return $this->name;
+	}
+
+	public function getChild(string $id): Node
+	{
+		if($this->children->has($id)) return $this->children->get($id);
+		else return $this->autoIndexIfPermitted($id);
+	}
 
 	/**
-	 * Allows Directory to dynamically return an Index with reference to the
+	 * @param string $id
+	 * @return Index
+	 * @throws NodeNotFound
+	 */
+	protected function autoIndexIfPermitted(string $id):Index
+	{
+		if($id === '' && isset($this->autoIndexer))
+		{
+			return (is_string($this->autoIndexer) ?
+				new Index($this->autoIndexer) : $this->autoIndexer)
+				->setNodeSet($this->children);
+		}
+		else
+		{
+			throw new NodeNotFound("Not Found: $id");
+		}
+	}
+
+	/**
+	 * Allows dynamic creation and return of an Index with reference to the
 	 * child components if no leaf exists with name '' (empty string)
 	 *
 	 * If $index is null, uses a default Index with default template. If it
 	 * is a string, it uses the default Index but with the supplied template.
 	 * Otherwise, it will use the custom Index object provided.
 	 *
-	 * @param string|Index|null $index - template, custom or null for default
-	 * @return $this
+	 * @param string|Index|null $indexer
+	 * @return void
 	 */
-    public function allowIndex(string|Index|null $index = null):Directory
-    {
-        $this->index = $index ?? 'index';
-        return $this;
-    }
+	public function permitAutoIndex(string|Index|null $indexer = null):void
+	{
+		$this->autoIndexer = $indexer ?? 'index';
+	}
 }

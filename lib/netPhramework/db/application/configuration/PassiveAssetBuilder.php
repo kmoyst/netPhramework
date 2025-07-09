@@ -1,9 +1,9 @@
 <?php
 
-namespace netPhramework\db\configuration;
+namespace netPhramework\db\application\configuration;
 
-use netPhramework\db\core\ChildAsset;
-use netPhramework\db\exceptions\ConfigurationException;
+use netPhramework\core\BuildableNode;
+use netPhramework\db\core\AssetLink;
 use netPhramework\db\nodes\Add;
 use netPhramework\db\nodes\Browse;
 use netPhramework\db\nodes\Edit;
@@ -12,21 +12,22 @@ use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
 
-class PassiveApplicationBuilder extends ApplicationBuilder
+class PassiveAssetBuilder extends AssetBuilder
 {
-    /**
-     * This is a potent method, only meant to be used during initial
-     * development. It fetches every table name from the database and
-     * generates an asset with all default processes for each one and adds
-     * them to the Directory.
-     *
-     * @return self
-     */
-    public function addAllAssetsWithDefaults():self
+	/**
+	 * This is a potent method, only meant to be used during initial
+	 * development. It fetches every table name from the database and
+	 * generates an asset with all default processes for each one and adds
+	 * them to the Directory.
+	 *
+	 * @param BuildableNode $node
+	 * @return self
+	 */
+    public function addAllAssetsWithDefaults(BuildableNode $node):self
     {
-        foreach($this->application->listAllRecordSets() as $name)
+        foreach($this->mapper->listAllRecordSets() as $name)
         {
-            $this->newAsset($name)->includeDefaults()->commit();
+            $this->newAsset($name)->includeDefaults()->commit($node);
         }
         return $this;
     }
@@ -44,14 +45,15 @@ class PassiveApplicationBuilder extends ApplicationBuilder
 		string $linkField,
 		?string $assetName = null):self
 	{
-		$builder 	= new self($this->application);
-		$childAsset = $builder
+		$node 	  	  = new AssetLink()->setLinkField($linkField);
+		$assetBuilder = new self($this->mapper);
+		$node->setAsset($assetBuilder
+			->newAsset($mappedName)
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
-			->get()
+			->get())
 		;
-		$childNode = new ChildAsset($childAsset, $linkField);
-		$this->add($childNode);
+		$this->add($node);
 		return $this;
 	}
 

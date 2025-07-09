@@ -2,35 +2,31 @@
 
 namespace netPhramework\core;
 
-
 use netPhramework\bootstrap\Configuration;
 use netPhramework\rendering\Wrapper;
 
-class Site
+readonly class Site
 {
-	private Directory $passiveNode;
-	private Directory $activeNode;
-	private Wrapper $wrapper;
-
-	public function __construct()
-	{
-		$this->passiveNode = new Directory('');
-		$this->activeNode  = new Directory('');
-		$this->wrapper	   = new Wrapper();
-	}
+	public function __construct
+	(
+	private Directory $passiveRoot 	= new Directory(''),
+	private Directory $activeRoot 	= new Directory(''),
+	public  Wrapper $wrapper 		= new Wrapper()
+	)
+	{}
 
 	/**
 	 * @param Configuration $configuration
 	 * @return $this
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function configure(Configuration $configuration):Site
     {
 		try
 		{
+			$configuration->buildPassiveTree($this->passiveRoot);
+			$configuration->buildActiveTree($this->activeRoot);
 			$configuration->configureWrapper($this->wrapper);
-			$configuration->configurePassiveNode($this->passiveNode);
-			$configuration->configureActiveNode($this->activeNode);
 			return $this;
 		}
 		catch (Exception $exception)
@@ -41,16 +37,11 @@ class Site
 
 	public function openPassiveSocket(): Socket
 	{
-		return $this->openSocket($this->passiveNode);
+		return new Socket($this->passiveRoot, $this->wrapper);
 	}
 
 	public function openActiveSocket(): Socket
 	{
-		return $this->openSocket($this->activeNode);
-	}
-
-	private function openSocket(Directory $root): Socket
-	{
-		return new Socket($root, $this->wrapper);
+		return new Socket($this->activeRoot, $this->wrapper);
 	}
 }

@@ -1,44 +1,17 @@
 <?php
 
-namespace netPhramework\db\core;
+namespace netPhramework\db\application\mapping;
 
-use netPhramework\core\Composite;
-use netPhramework\core\Node;
-use netPhramework\core\NodeSet;
 use netPhramework\db\abstraction\Database;
-use netPhramework\db\configuration\RecordDescriber;
-use netPhramework\db\configuration\RecordFinder;
-use netPhramework\db\configuration\RecordLookup;
-use netPhramework\db\configuration\RecordMapper;
-use netPhramework\db\configuration\RecordOptions;
 use netPhramework\db\mapping\RecordSet;
 
-class Application extends Composite implements RecordMapper
+readonly class RecordMapper implements RecordAccess, RecordSetFactory
 {
-	private NodeSet $nodeSet;
-
 	public function __construct
 	(
-	private readonly string $name,
-	private readonly Database $database
+		private Database $database
 	)
 	{}
-
-	public function getChild(string $id): Node
-	{
-		return $this->nodeSet->get($id);
-	}
-
-	public function getName(): string
-	{
-		return $this->name;
-	}
-
-	public function add(Asset $asset):self
-	{
-		$this->nodeSet->add($asset);
-		return $this;
-	}
 
 	public function lookupFor(string $name): RecordLookup
 	{

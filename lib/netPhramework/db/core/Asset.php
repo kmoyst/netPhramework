@@ -5,11 +5,10 @@ namespace netPhramework\db\core;
 use netPhramework\core\Composite;
 use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
-use netPhramework\exceptions\NodeNotFound;
 use netPhramework\db\core\RecordSetChildSet as setChildSet;
 use netPhramework\common\StringPredicate as Predicate;
 
-class Asset extends Composite implements AssetConfig
+class Asset extends Composite
 {
 	public function __construct
 	(
@@ -33,7 +32,6 @@ class Asset extends Composite implements AssetConfig
 	/**
 	 * @param string $id
 	 * @return RecordSetChild
-	 * @throws NodeNotFound
 	 */
 	private function resolveChild(string $id): RecordSetChild
 	{

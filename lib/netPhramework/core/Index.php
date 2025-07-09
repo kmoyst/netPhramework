@@ -6,9 +6,9 @@ use netPhramework\common\Utils;
 
 class Index extends Page
 {
-	private HasNodes $nodeSet;
+	private NodeSet $nodeSet;
 
-	public function setNodeSet(HasNodes $nodeSet): self
+	public function setNodeSet(NodeSet $nodeSet): self
 	{
 		$this->nodeSet = $nodeSet;
 		return $this;

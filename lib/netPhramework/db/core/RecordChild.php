@@ -2,9 +2,10 @@
 
 namespace netPhramework\db\core;
 
+use netPhramework\core\Node;
 use netPhramework\db\mapping\Record;
 
-interface RecordChild extends AssetNode
+interface RecordChild extends Node
 {
 	public function setRecord(Record $record):self;
 }

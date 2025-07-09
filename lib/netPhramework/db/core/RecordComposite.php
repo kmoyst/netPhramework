@@ -32,9 +32,4 @@ class RecordComposite extends Composite implements RecordSetChild
 	{
 		return $this->recordId;
 	}
-
-	public function enlist(AssetNodeRecruiter $recruiter): void
-	{
-		$recruiter->recordSetChildSet->add($this);
-	}
 }

@@ -2,22 +2,18 @@
 
 namespace netPhramework\db\core;
 
-use Iterator;
-use netPhramework\core\HasNodes;
-
-class RecordSetChildSet implements Iterator
+class RecordSetChildSet
 {
-	use HasNodes;
+	private array $children = [];
 
 	public function add(RecordSetChild $child):self
 	{
-		$this->storeNode($child);
+		$this->children[$child->getName()] = $child;
 		return $this;
 	}
 
-	public function get(string $id):RecordSetChild
+	public function get(string $name):RecordSetChild
 	{
-		$this->confirmNode($id);
-		return $this->nodes[$id];
+		return $this->children[$name];
 	}
 }

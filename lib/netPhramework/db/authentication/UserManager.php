@@ -4,7 +4,8 @@ namespace netPhramework\db\authentication;
 
 use netPhramework\authentication\UserRole;
 use netPhramework\common\Variables;
-use netPhramework\db\configuration\RecordFinder;
+use netPhramework\core\Session;
+use netPhramework\db\application\mapping\RecordFinder;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
@@ -12,7 +13,6 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\db\mapping\Record;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NotFound;
-use netPhramework\core\Session;
 
 readonly class UserManager
 {
