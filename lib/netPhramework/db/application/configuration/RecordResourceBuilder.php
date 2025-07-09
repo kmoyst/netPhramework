@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\application\configuration;
 
-use netPhramework\core\BuildableResource;
+use netPhramework\core\Directory;
 use netPhramework\core\Resource;
 use netPhramework\db\application\mapping\RecordMapper;
 use netPhramework\db\core\RecordResource;
@@ -57,9 +57,9 @@ class RecordResourceBuilder
 		return $asset;
 	}
 
-	public function commit(BuildableResource $node):self
+	public function commit(Directory $directory):self
 	{
-		$node->add($this->get());
+		$directory->add($this->get());
 		return $this;
 	}
 

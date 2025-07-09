@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\ResourceNotFound;
 
-class Directory extends Composite implements BuildableResource
+class Directory extends Composite
 {
 	protected string|Index $autoIndexer;
 

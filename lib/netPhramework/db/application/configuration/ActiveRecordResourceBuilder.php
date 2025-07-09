@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\application\configuration;
 
-use netPhramework\core\BuildableResource;
+use netPhramework\core\Directory;
 use netPhramework\db\core\OneToManyLink;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\nodes\Delete;
@@ -18,10 +18,10 @@ class ActiveRecordResourceBuilder extends RecordResourceBuilder
 	 * generates an asset with all default processes for each one and adds
 	 * them to the Directory.
 	 *
-	 * @param BuildableResource $node
+	 * @param Directory $node
 	 * @return self
 	 */
-    public function addAllAssetsWithDefaults(BuildableResource $node):self
+    public function addAllAssetsWithDefaults(Directory $node):self
     {
         foreach($this->mapper->listAllRecordSets() as $name)
 		{
