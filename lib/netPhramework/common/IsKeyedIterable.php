@@ -4,7 +4,7 @@ namespace netPhramework\common;
 
 use netPhramework\core\Node;
 
-trait IsIterable
+trait IsKeyedIterable
 {
 	protected array $items = [];
 

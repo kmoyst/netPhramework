@@ -2,11 +2,11 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\common\IsIterable;
+use netPhramework\common\IsKeyedIterable;
 
 class RecordChildSet
 {
-	use IsIterable;
+	use IsKeyedIterable;
 
 	public function add(RecordChild $child):self
 	{
