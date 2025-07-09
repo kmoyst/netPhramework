@@ -5,14 +5,14 @@ namespace netPhramework\db\application\configuration;
 use netPhramework\core\BuildableNode;
 use netPhramework\core\Node;
 use netPhramework\db\application\mapping\RecordMapper;
-use netPhramework\db\core\Asset;
-use netPhramework\db\core\AssetLink;
+use netPhramework\db\core\RecordResource;
+use netPhramework\db\core\OneToManyLink;
 use netPhramework\db\core\RecordChild;
 use netPhramework\db\core\RecordSetChild;
 
-class AssetBuilder
+class RecordResourceBuilder
 {
-	protected ?Asset $asset = null;
+	protected ?RecordResource $asset = null;
 
 	public function __construct
 	(
@@ -23,7 +23,7 @@ class AssetBuilder
 	public function newAsset(string $name):self
 	{
 		$recordSet   = $this->mapper->recordsFor($name);
-		$this->asset = new Asset($name, $recordSet);
+		$this->asset = new RecordResource($name, $recordSet);
 		return $this;
 	}
 
@@ -36,19 +36,21 @@ class AssetBuilder
 		return $this;
 	}
 
-	public function childAsset(AssetStrategy $strategy, string $linkField):self
+	public function oneToMany(
+		RecordResourceStrategy $strategy, string $linkField):self
 	{
-		$this->add(new AssetLink($strategy->create($this->mapper), $linkField));
+		$node = new OneToManyLink($strategy->create($this->mapper), $linkField);
+		$this->add($node);
 		return $this;
 	}
 
-	public function strategy(NodeStrategy $strategy):self
+	public function strategy(RecordAssetStrategy $strategy):self
 	{
 		$this->add($strategy->create($this->mapper));
 		return $this;
 	}
 
-	public function get():Asset
+	public function get():RecordResource
 	{
 		$asset = $this->asset;
 		$this->reset();

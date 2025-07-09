@@ -8,7 +8,7 @@ use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\core\RecordSetChildSet as setChildSet;
 use netPhramework\common\StringPredicate as Predicate;
 
-class Asset extends Composite
+class RecordResource extends Composite
 {
 	public function __construct
 	(

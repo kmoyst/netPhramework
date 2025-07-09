@@ -16,7 +16,7 @@ class AdminConfiguration extends Configuration
 	{
 		$root = new Directory('')
 		;
-		new PassiveAssetBuilder($this->mapper)
+		new PassiveRecordResourceBuilder($this->mapper)
 			->addAllAssetsWithDefaults($root);
 		return $root;
 	}
@@ -25,7 +25,7 @@ class AdminConfiguration extends Configuration
 	{
 		$root = new Directory('')
 		;
-		new ActiveAssetBuilder($this->mapper)
+		new ActiveRecordResourceBuilder($this->mapper)
 			->addAllAssetsWithDefaults($root);
 		return $root;
 	}

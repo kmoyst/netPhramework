@@ -3,7 +3,7 @@
 namespace netPhramework\db\application\configuration;
 
 use netPhramework\core\BuildableNode;
-use netPhramework\db\core\AssetLink;
+use netPhramework\db\core\OneToManyLink;
 use netPhramework\db\nodes\Add;
 use netPhramework\db\nodes\Browse;
 use netPhramework\db\nodes\Edit;
@@ -12,7 +12,7 @@ use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
 
-class PassiveAssetBuilder extends AssetBuilder
+class PassiveRecordResourceBuilder extends RecordResourceBuilder
 {
 	/**
 	 * This is a potent method, only meant to be used during initial
@@ -40,7 +40,7 @@ class PassiveAssetBuilder extends AssetBuilder
 			->includeBrowse();
 	}
 
-	public function childWithDefaults(
+	public function oneToManyWithDefaults(
 		string $name,
 		string $linkField):self
 	{
@@ -49,7 +49,7 @@ class PassiveAssetBuilder extends AssetBuilder
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
 			->get();
-		$this->add(new AssetLink($asset, $linkField));
+		$this->add(new OneToManyLink($asset, $linkField));
 		return $this;
 	}
 

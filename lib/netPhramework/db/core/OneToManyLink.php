@@ -9,13 +9,13 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Record;
 
-class AssetLink extends Composite implements RecordChild
+class OneToManyLink extends Composite implements RecordChild
 {
 
 	public function __construct
 	(
-	private readonly Asset $asset,
-	private readonly string $linkField
+	private readonly RecordResource $recordSetComposite,
+	private readonly string         $linkField
 	)
 	{}
 
@@ -27,7 +27,7 @@ class AssetLink extends Composite implements RecordChild
 	 */
 	public function setRecord(Record $record): RecordChild
 	{
-		$childRecords = $this->asset->recordSet;
+		$childRecords = $this->recordSetComposite->recordSet;
 		$field = $childRecords->getField($this->linkField);
 		$condition = new Condition()
 			->setField($field)
@@ -39,11 +39,11 @@ class AssetLink extends Composite implements RecordChild
 
 	public function getChild(string $id): Node
 	{
-		return $this->asset->getChild($id);
+		return $this->recordSetComposite->getChild($id);
 	}
 
 	public function getName(): string
 	{
-		return $this->asset->getName();
+		return $this->recordSetComposite->getName();
 	}
 }

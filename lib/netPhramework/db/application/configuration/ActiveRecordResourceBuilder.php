@@ -3,14 +3,14 @@
 namespace netPhramework\db\application\configuration;
 
 use netPhramework\core\BuildableNode;
-use netPhramework\db\core\AssetLink;
+use netPhramework\db\core\OneToManyLink;
 use netPhramework\db\core\RecordProcess;
 use netPhramework\db\nodes\Delete;
 use netPhramework\db\nodes\Insert;
 use netPhramework\db\nodes\Update;
 use netPhramework\locating\redirectors\Redirector;
 
-class ActiveAssetBuilder extends AssetBuilder
+class ActiveRecordResourceBuilder extends RecordResourceBuilder
 {
 	/**
 	 * This is a potent method, only meant to be used during initial
@@ -41,14 +41,14 @@ class ActiveAssetBuilder extends AssetBuilder
 			;
 	}
 
-	public function childWithDefaults(string $name, string $linkField):self
+	public function oneToManyWithDefaults(string $name, string $linkField):self
 	{
 		$asset = new self($this->mapper)
 			->newAsset($name)
 			->includeDefaults()
 			->get()
 		;
-		$this->add(new AssetLink($asset, $linkField));
+		$this->add(new OneToManyLink($asset, $linkField));
 		return $this;
 	}
 

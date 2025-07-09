@@ -2,10 +2,9 @@
 
 namespace netPhramework\db\core;
 
-use netPhramework\core\Node;
 use netPhramework\db\mapping\RecordSet;
 
-interface RecordSetChild extends Node
+interface RecordSetChild extends RecordAsset
 {
 	public function setRecordSet(RecordSet $recordSet):self;
 }
