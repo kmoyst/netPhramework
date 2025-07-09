@@ -41,14 +41,12 @@ class ActiveAssetBuilder extends AssetBuilder
 
 	public function childWithDefaults(string $name, string $linkField):self
 	{
-		$node 			= new AssetLink()->setLinkField($linkField);
-		$assetBuilder 	= new self($this->mapper);
-		$node->setAsset($assetBuilder
+		$asset = new self($this->mapper)
 			->newAsset($name)
 			->includeDefaults()
-			->get())
+			->get()
 		;
-		$this->add($node);
+		$this->add(new AssetLink($asset, $linkField));
 		return $this;
 	}
 

@@ -36,12 +36,9 @@ class AssetBuilder
 		return $this;
 	}
 
-	public function asset(AssetStrategy $strategy, string $linkField):self
+	public function childAsset(AssetStrategy $strategy, string $linkField):self
 	{
-		$this->add(new AssetLink()
-			->setAsset($strategy->create($this->mapper))
-			->setLinkField($linkField))
-		;
+		$this->add(new AssetLink($strategy->create($this->mapper), $linkField));
 		return $this;
 	}
 

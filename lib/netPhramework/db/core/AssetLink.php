@@ -11,20 +11,13 @@ use netPhramework\db\mapping\Record;
 
 class AssetLink extends Composite implements RecordChild
 {
-	private Asset $asset;
-	private string $linkField;
 
-	public function setAsset(Asset $asset): self
-	{
-		$this->asset = $asset;
-		return $this;
-	}
-
-	public function setLinkField(string $linkField): self
-	{
-		$this->linkField = $linkField;
-		return $this;
-	}
+	public function __construct
+	(
+	private readonly Asset $asset,
+	private readonly string $linkField
+	)
+	{}
 
 	/**
 	 * @param Record $record
