@@ -12,7 +12,7 @@ use netPhramework\db\core\RecordSetChild;
 
 class AssetBuilder
 {
-	protected Asset $asset;
+	protected ?Asset $asset = null;
 
 	public function __construct
 	(
@@ -56,6 +56,13 @@ class AssetBuilder
 	public function commit(BuildableNode $node):self
 	{
 		$node->add($this->get());
+		$this->reset();
+		return $this;
+	}
+
+	public function reset():self
+	{
+		$this->asset = null;
 		return $this;
 	}
 }
