@@ -8,7 +8,7 @@ class RecordChildSet
 
 	public function add(RecordChild $child):self
 	{
-		$this->children[$child->getName()] = $child;
+		$this->children[$child->getNodeId()] = $child;
 		return $this;
 	}
 
