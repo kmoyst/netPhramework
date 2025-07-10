@@ -7,12 +7,12 @@ use netPhramework\core\Resource;
 use netPhramework\db\core\RecordMapper;
 use netPhramework\db\resources\OneToManyLink;
 use netPhramework\db\resources\RecordChild;
-use netPhramework\db\resources\RecordResource;
+use netPhramework\db\resources\AssetResource;
 use netPhramework\db\resources\RecordSetChild;
 
 class TreeBuilder
 {
-	protected ?RecordResource $resource;
+	protected ?AssetResource $resource;
 
 	public function __construct
 	(
@@ -30,7 +30,7 @@ class TreeBuilder
 	public function new(string $name):self
 	{
 		$recordSet = $this->mapper->recordsFor($name);
-		$this->resource = new RecordResource($name, $recordSet);
+		$this->resource = new AssetResource($name, $recordSet);
 		return $this;
 	}
 
@@ -57,7 +57,7 @@ class TreeBuilder
 		return $this;
 	}
 
-	public function get():RecordResource
+	public function get():AssetResource
 	{
 		$resource = $this->resource;
 		$this->reset();

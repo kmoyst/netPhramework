@@ -4,7 +4,7 @@ namespace netPhramework\db\resources;
 
 use netPhramework\db\core\RecordSet;
 
-interface RecordSetChild extends RecordAsset
+interface RecordSetChild extends Asset
 {
 	public function setRecordSet(RecordSet $recordSet):self;
 }

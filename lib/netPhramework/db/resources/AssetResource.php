@@ -10,7 +10,7 @@ use netPhramework\db\core\RecordSet;
 use netPhramework\db\resources\RecordSetChildSet as setChildSet;
 use netPhramework\exceptions\ResourceNotFound;
 
-class RecordResource extends Composite
+class AssetResource extends Composite
 {
 	public function __construct
 	(

@@ -13,8 +13,8 @@ class OneToManyLink extends Composite implements RecordChild
 {
 	public function __construct
 	(
-	private readonly RecordResource $recordSetComposite,
-	private readonly string         $linkField
+	private readonly AssetResource $recordSetComposite,
+	private readonly string        $linkField
 	)
 	{}
 
