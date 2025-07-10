@@ -1,10 +1,9 @@
 <?php
 
-namespace netPhramework\bootstrap;
+namespace netPhramework\db\application;
 
+use netPhramework\bootstrap\Application;
 use netPhramework\core\Directory;
-use netPhramework\db\application\ActiveTreeBuilder;
-use netPhramework\db\application\PassiveTreeBuilder;
 use netPhramework\db\core\RecordMapper;
 use netPhramework\rendering\WrapperConfiguration;
 

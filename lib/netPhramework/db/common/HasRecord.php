@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\resources;
+namespace netPhramework\db\common;
 
 use netPhramework\db\core\Record;
 
