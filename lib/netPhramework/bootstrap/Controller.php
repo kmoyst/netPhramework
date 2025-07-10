@@ -16,8 +16,9 @@ class Controller
 		set_error_handler([$this, 'handleError']);
 		set_exception_handler([$this, 'handleException'])
 		;
+		$this->environment 	= $context->environment
+		;
 		$site 				= new Site();
-		$this->environment 	= $context->environment;
 		$interpreter 		= $context->requestInterpreter;
 		$responder 	 		= $context->responder
 		;
@@ -41,7 +42,7 @@ class Controller
 		}
 		catch (\Exception $exception)
 		{
-			if($this->environment->inDevelopment())
+			if($this->environment->inDevelopment)
 			{
 				echo $exception->getMessage();
 			}
@@ -70,7 +71,7 @@ class Controller
 		int $errno, string $errstr, ?string $errfile = null,
 		?int $errline = null):bool
 	{
-		if($this->environment?->inDevelopment())
+		if($this->environment?->inDevelopment)
 		{
 			printf(
 				"<pre>PHP Error [%d]: %s\nFileMapper: %s\nLine: %s\n</pre>",
@@ -94,7 +95,7 @@ class Controller
 	}
 	public function handleException(\Throwable $exception):never
 	{
-		if($this->environment?->inDevelopment())
+		if($this->environment?->inDevelopment)
 		{
 			echo "<pre>";
 			print_r($exception);

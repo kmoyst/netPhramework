@@ -54,7 +54,7 @@ class Exception extends \Exception
 	 */
     public function getContent(): string
     {
-		if(isset($this->environment) && $this->environment->inDevelopment())
+		if(isset($this->environment) && $this->environment->inDevelopment)
 		{
 			$message = $this->message;
 		}

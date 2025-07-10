@@ -16,7 +16,7 @@ readonly class RequestInterpreter
 	 */
 	public function establishRequest(Site $site):Request
 	{
-		$location = new LocationFromUri($this->environment->getUri());
+		$location = new LocationFromUri($this->environment->uri);
 		return $this->createRequest($site, $location);
 	}
 
@@ -29,7 +29,7 @@ readonly class RequestInterpreter
 	private function createRequest(
 		Site $site, Location $location):Request
 	{
-		if(($postParameters = $this->environment->getPostParameters()) !== null)
+		if(($postParameters = $this->environment->postParameters) !== null)
 		{
 			$socket = $site->openActiveSocket();
 			$location->getParameters()->clear()->merge($postParameters);

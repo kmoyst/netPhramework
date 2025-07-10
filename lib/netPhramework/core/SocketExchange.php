@@ -119,18 +119,14 @@ class SocketExchange implements Exchange
 	/** @inheritDoc */
 	public function getSiteAddress(): string
 	{
-		return $this->environment->getSiteAddress();
+		return $this->environment->siteAddress;
 	}
 
 	/** @inheritDoc */
 	public function getSmtpServer(): SmtpServer
 	{
 		if(!isset($this->smtpServer))
-		{
-			$address = $this->environment->getSmtpServerAddress();
-			$name = $this->environment->getSmtpServerName();
-			$this->smtpServer = new SmtpServer($address, $name);
-		}
+			$this->smtpServer = new SmtpServer($this->environment);
 		return $this->smtpServer;
 	}
 

@@ -4,53 +4,52 @@ namespace netPhramework\bootstrap;
 
 use netPhramework\core\ExchangeEnvironment;
 use netPhramework\core\RequestEnvironment;
+use netPhramework\exceptions\ReadonlyException;
 
-readonly class Environment implements RequestEnvironment, ExchangeEnvironment
+class Environment implements RequestEnvironment, ExchangeEnvironment
 {
-	public function getUri(): string
-	{
-		return filter_input(INPUT_SERVER, 'REQUEST_URI');
+	public bool $inDevelopment {
+		get{return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT';}
+		set{throw new ReadonlyException("Property is read-only");}
 	}
 
-	public function getPostParameters(): ?array
-	{
-		return filter_input_array(INPUT_POST);
+	public string $uri {
+		get { return filter_input(INPUT_SERVER, 'REQUEST_URI');}
+	}
+
+	public ?array $postParameters {
+		get{return filter_input_array(INPUT_POST);}
+	}
+
+	public string $siteAddress {
+		get
+		{
+			return "$this->scheme://$this->authority";
+		}
+	}
+
+	public string $smtpServerName {
+		get {
+			return $this->getVariable('SMTP_SERVER_NAME');
+		}
+	}
+
+	public string $smtpServerAddress {
+		get {
+			return $this->getVariable('SMTP_SERVER_ADDRESS');
+		}
+	}
+
+	private string $scheme {
+		get {return $this->getVariable('HTTPS') === 'on' ? 'https' : 'http';}
+	}
+
+	private string $authority {
+		get {return $this->getVariable('HTTP_HOST');}
 	}
 
 	public function getVariable(string $varName):?string
 	{
 		return filter_input(INPUT_SERVER, $varName);
-	}
-
-	public function inDevelopment():bool
-	{
-		return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT';
-	}
-
-	public function getSiteAddress():string
-	{
-		$scheme = $this->getScheme();
-		$authority = $this->getAuthority();
-		return "$scheme://$authority";
-	}
-
-	private function getScheme():string
-	{
-		return $this->getVariable('HTTPS') === 'on' ? 'https' : 'http';
-	}
-
-	private function getAuthority():string
-	{
-		return $this->getVariable('HTTP_HOST');
-	}
-
-	public function getSmtpServerAddress(): string
-	{
-		return $this->getVariable('SMTP_SERVER_ADDRESS');
-	}
-
-	public function getSmtpServerName(): string
-	{
-		return $this->getVariable('SMTP_SERVER_NAME');
 	}
 }

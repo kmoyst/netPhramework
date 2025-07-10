@@ -4,6 +4,6 @@ namespace netPhramework\core;
 
 interface RequestEnvironment
 {
-	public function getUri(): string;
-	public function getPostParameters(): ?array;
+	public string $uri {get;}
+	public ?array $postParameters{get;}
 }

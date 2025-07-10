@@ -2,9 +2,7 @@
 
 namespace netPhramework\core;
 
-interface ExchangeEnvironment
+interface ExchangeEnvironment extends SmtpServerContext
 {
-	public function getSiteAddress():string;
-	public function getSmtpServerAddress():string;
-	public function getSmtpServerName():string;
+	public string $siteAddress{get;}
 }
