@@ -2,14 +2,14 @@
 
 namespace netPhramework\db\resources;
 
-use netPhramework\core\CompositeResource;
+use netPhramework\core\Composite;
 use netPhramework\core\Resource;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
 
-class OneToManyLink extends CompositeResource implements RecordChild
+class OneToManyLink extends Composite implements RecordChild
 {
 	public function __construct
 	(

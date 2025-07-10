@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\profile;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafResource;
+use netPhramework\core\Leaf;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -15,7 +15,7 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\locating\redirectors\RedirectToSibling;
 
-class SaveProfile extends LeafResource
+class SaveProfile extends Leaf
 {
 	public function __construct(private readonly UserManager $manager) {}
 

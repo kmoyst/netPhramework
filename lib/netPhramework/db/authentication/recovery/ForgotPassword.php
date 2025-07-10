@@ -3,7 +3,7 @@
 namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafResource;
+use netPhramework\core\Leaf;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\locating\ReroutedPath;
@@ -12,7 +12,7 @@ use netPhramework\locating\rerouters\RerouteToSibling as toSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
-class ForgotPassword extends LeafResource
+class ForgotPassword extends Leaf
 {
 	public function __construct
 	(

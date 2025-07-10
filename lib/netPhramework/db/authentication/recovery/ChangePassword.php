@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafResource;
+use netPhramework\core\Leaf;
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -20,7 +20,7 @@ use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\PasswordInput;
 use netPhramework\rendering\View;
 
-class ChangePassword extends LeafResource
+class ChangePassword extends Leaf
 {
 	public function __construct
 	(

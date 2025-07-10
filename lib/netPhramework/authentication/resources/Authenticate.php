@@ -4,7 +4,7 @@ namespace netPhramework\authentication\resources;
 
 use netPhramework\authentication\Authenticator;
 use netPhramework\authentication\LogInManager;
-use netPhramework\core\LeafResource;
+use netPhramework\core\Leaf;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
 use netPhramework\locating\redirectors\Redirector;
@@ -13,7 +13,7 @@ use netPhramework\locating\redirectors\RedirectToSibling as toSibling;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 
-class Authenticate extends LeafResource
+class Authenticate extends Leaf
 {
 	public function __construct(
 		private readonly Authenticator $authenticator,

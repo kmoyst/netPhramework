@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\locating\redirectors\RedirectToChild;
 
-abstract class CompositeResource implements Resource
+abstract class Composite implements Resource
 {
 	public function getResourceId():string
 	{

@@ -4,12 +4,12 @@ namespace netPhramework\locating\redirectors;
 
 use netPhramework\common\Variables;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafResource;
+use netPhramework\core\Leaf;
 use netPhramework\locating\Redirectable;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\responding\ResponseCode;
 
-class Redirector extends LeafResource
+class Redirector extends Leaf
 {
 	public function __construct(
 		protected readonly Rerouter     $relocator,

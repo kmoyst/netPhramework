@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class Page extends LeafResource
+class Page extends Leaf
 {
     private View $view;
 

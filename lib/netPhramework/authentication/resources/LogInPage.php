@@ -5,7 +5,7 @@ namespace netPhramework\authentication\resources;
 use netPhramework\authentication\LogInManager;
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafResource;
+use netPhramework\core\Leaf;
 use netPhramework\locating\ReroutedPath;
 use netPhramework\locating\rerouters\RerouteToRoot;
 use netPhramework\locating\rerouters\RerouteToSibling;
@@ -13,7 +13,7 @@ use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 
-class LogInPage extends LeafResource
+class LogInPage extends Leaf
 {
     public function __construct(
 		private readonly ?View $view = null,

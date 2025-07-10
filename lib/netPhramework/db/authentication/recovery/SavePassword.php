@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\LeafResource;
+use netPhramework\core\Leaf;
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -16,7 +16,7 @@ use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\responding\ResponseCode;
 
-class SavePassword extends LeafResource
+class SavePassword extends Leaf
 {
 	public function __construct
 	(
