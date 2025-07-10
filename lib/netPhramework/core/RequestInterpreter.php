@@ -12,6 +12,7 @@ readonly class RequestInterpreter
 	/**
 	 * @param Site $site
 	 * @return Request
+	 * @throws Exception
 	 */
 	public function establishRequest(Site $site):Request
 	{
@@ -23,6 +24,7 @@ readonly class RequestInterpreter
 	 * @param Site $site
 	 * @param Location $location
 	 * @return Request
+	 * @throws Exception
 	 */
 	private function createRequest(
 		Site $site, Location $location):Request

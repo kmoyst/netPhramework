@@ -27,6 +27,10 @@ class Site
 		return $this;
 	}
 
+	/**
+	 * @return Socket
+	 * @throws Exception
+	 */
 	public function openPassiveSocket(): Socket
 	{
 		$root = new Directory('');
@@ -34,6 +38,10 @@ class Site
 		return new Socket($root, $this->wrapper);
 	}
 
+	/**
+	 * @return Socket
+	 * @throws Exception
+	 */
 	public function openActiveSocket(): Socket
 	{
 		$root = new Directory('');

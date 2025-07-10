@@ -11,7 +11,7 @@ use netPhramework\core\FileManager;
 use netPhramework\rendering\Encoder;
 use netPhramework\responding\Responder;
 
-class SiteContext implements RequestContext
+abstract class SiteContext implements RequestContext
 {
 	public function __construct
 	(
@@ -65,8 +65,5 @@ class SiteContext implements RequestContext
 		return $this->fileManager;
 	}
 
-	public function getApplication(): Application
-	{
-		return new Application();
-	}
+	abstract public function getApplication(): Application;
 }

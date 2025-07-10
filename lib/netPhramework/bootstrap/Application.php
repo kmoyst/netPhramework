@@ -3,18 +3,29 @@
 namespace netPhramework\bootstrap;
 
 use netPhramework\core\Directory;
-use netPhramework\core\Page;
+use netPhramework\core\Exception;
 use netPhramework\rendering\Wrapper;
 
-class Application
+abstract class Application
 {
-    public function buildPassiveTree(Directory $root):void
-	{
-		$root->add(new Page('getting-started','','Welcome to netPhramework'));
-	}
+	/**
+	 * @param Directory $root
+	 * @return void
+	 * @throws Exception
+	 */
+    abstract public function buildPassiveTree(Directory $root):void;
 
-	public function buildActiveTree(Directory $root):void {}
+	/**
+	 * @param Directory $root
+	 * @return void
+	 * @throws Exception
+	 */
+	abstract public function buildActiveTree(Directory $root):void;
 
+	/**
+	 * @param Wrapper $wrapper
+	 * @return void
+	 */
 	public function configureWrapper(Wrapper $wrapper):void
 	{
 		$wrapper->addStyleSheet('framework-stylesheet');
