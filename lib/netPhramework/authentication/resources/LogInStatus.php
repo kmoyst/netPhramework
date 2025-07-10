@@ -2,12 +2,12 @@
 
 namespace netPhramework\authentication\resources;
 
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafResource;
 use netPhramework\core\Exchange;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\View;
 
-class LogInStatus extends Leaf
+class LogInStatus extends LeafResource
 {
 	/**
 	 * @param Exchange $exchange

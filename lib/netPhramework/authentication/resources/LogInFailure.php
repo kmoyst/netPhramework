@@ -3,10 +3,10 @@
 namespace netPhramework\authentication\resources;
 
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafResource;
 use netPhramework\rendering\View;
 
-class LogInFailure extends Leaf
+class LogInFailure extends LeafResource
 {
 	public function handleExchange(Exchange $exchange): void
 	{

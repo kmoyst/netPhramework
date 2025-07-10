@@ -3,7 +3,7 @@
 namespace netPhramework\db\authentication\profile;
 
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafResource;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -14,7 +14,7 @@ use netPhramework\exceptions\NotFound;
 use netPhramework\presentation\InputSet;
 use netPhramework\rendering\View;
 
-class EditProfile extends Leaf
+class EditProfile extends LeafResource
 {
 	public function __construct(private readonly UserManager $manager) {}
 

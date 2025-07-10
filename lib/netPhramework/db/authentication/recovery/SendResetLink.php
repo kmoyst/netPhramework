@@ -4,7 +4,7 @@ namespace netPhramework\db\authentication\recovery;
 
 use netPhramework\core\Exception;
 use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\core\LeafResource;
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\authentication\UserProfile;
@@ -24,7 +24,7 @@ use netPhramework\networking\StreamSocketException;
 use netPhramework\responding\ResponseCode;
 use Random\RandomException;
 
-class SendResetLink extends Leaf
+class SendResetLink extends LeafResource
 {
 
 	public function __construct

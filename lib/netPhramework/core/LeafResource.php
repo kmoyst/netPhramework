@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\Utils;
 use netPhramework\exceptions\ResourceNotFound;
 
-abstract class Leaf implements Resource
+abstract class LeafResource implements Resource
 {
 	private bool $isIndex = false;
 
