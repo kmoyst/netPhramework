@@ -4,7 +4,6 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
-use netPhramework\exceptions\ReadonlyException;
 use netPhramework\locating\Location;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
@@ -28,8 +27,8 @@ class SocketExchange implements Exchange
 	public Session $session {
 		get { return $this->session; }
 		set(Session $session) {
-			if(isset($this->session))
-				throw new ReadonlyException("Property is read-only");
+//			if(isset($this->session))
+//				throw new ReadonlyException("Property is read-only");
 			$this->session = $session;
 		}
 	}
@@ -37,8 +36,8 @@ class SocketExchange implements Exchange
 	public FileManager $fileManager {
 		get { return $this->fileManager; }
 		set(FileManager $fileManager) {
-			if(isset($this->fileManager))
-				throw new ReadonlyException("Property is read-only");
+//			if(isset($this->fileManager))
+//				throw new ReadonlyException("Property is read-only");
 			$this->fileManager = $fileManager;
 		}
 	}
@@ -46,20 +45,20 @@ class SocketExchange implements Exchange
 	public Location $location {
 		get { return clone $this->location; }
 		set(Location $location) {
-			if(isset($this->location))
-				throw new ReadonlyException("Property is read-only");
+//			if(isset($this->location))
+//				throw new ReadonlyException("Property is read-only");
 			$this->location = $location;
 		}
 	}
 
-	public Variables $parameters {
+	private(set) Variables $parameters {
 		get { return clone $this->location->getParameters(); }
-		set { throw new ReadonlyException("Property is read-only"); }
+		set {}
 	}
 
-	public MutablePath $path {
+	private(set) MutablePath $path {
 		get { return clone $this->location->getPath(); }
-		set { throw new ReadonlyException("Property is read-only"); }
+		set {}
 	}
 
 	public SmtpServer $smtpServer {
@@ -68,26 +67,22 @@ class SocketExchange implements Exchange
 				$this->smtpServer = new SmtpServer($this->environment);
 			return $this->smtpServer;
 		}
-		set { throw new ReadonlyException("Property is read-only"); }
+		set {}
 	}
 
-	public string $siteAddress {
+	private(set) string $siteAddress {
 		get { return $this->environment->siteAddress; }
-		set { throw new ReadonlyException("Property is read-only"); }
+		set {}
 	}
 
-	public string $callbackKey {
-		get { return $this->callbackManager->getCallbackKey(); }
-		set { throw new ReadonlyException("Property is read-only"); }
+	private(set) string $callbackKey {
+		get { return $this->callbackManager->callbackKey; }
+		set {}
 	}
 
-	public Response $response {
+	private(set) Response $response {
 		get { return $this->response; }
-		set (Response $response){
-			if(isset($this->response))
-				throw new ReadonlyException("Property is read-only");
-			$this->response = $response;
-		}
+		set (Response $response) { $this->response = $response; }
 	}
 
 

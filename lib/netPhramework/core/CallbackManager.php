@@ -19,18 +19,7 @@ readonly class CallbackManager
 	 *
 	 * @param string $callbackKey
 	 */
-	public function __construct(private string $callbackKey) {}
-
-	/**
-	 * QueryKey used for callback inputs and location parameters.
-	 * Set by SiteContext.
-	 *
-	 * @return string
-	 */
-	public function getCallbackKey(): string
-	{
-		return $this->callbackKey;
-	}
+	public function __construct(public string $callbackKey) {}
 
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
