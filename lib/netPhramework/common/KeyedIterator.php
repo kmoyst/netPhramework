@@ -4,7 +4,11 @@ namespace netPhramework\common;
 
 trait KeyedIterator
 {
-	protected array $items = [];
+	public function __construct
+	(
+		protected array $items = []
+	)
+	{}
 
 	public function has(string $id):bool
 	{

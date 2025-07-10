@@ -6,7 +6,7 @@ use Iterator;
 use netPhramework\common\KeyedIterator;
 use netPhramework\exceptions\ResourceNotFound;
 
-readonly abstract class ResourceIterator implements Iterator
+abstract class ResourceIterator implements Iterator
 {
 	use KeyedIterator;
 

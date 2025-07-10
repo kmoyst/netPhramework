@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\core;
 
+use netPhramework\common\StringIterator;
 use netPhramework\db\abstraction\Database;
 
 readonly class RecordMapper implements RecordAccess, RecordSetFactory
@@ -43,8 +44,8 @@ readonly class RecordMapper implements RecordAccess, RecordSetFactory
 		return new RecordSet($schema, $table);
 	}
 
-	public function listAllRecordSets():array
+	public function listAllRecordSets():StringIterator
 	{
-		return $this->database->listTables();
+		return new StringIterator($this->database->listTables());
 	}
 }

@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\db\exceptions\TreeBuilderException;
+use netPhramework\core\Directory;
 use netPhramework\db\resources\OneToManyLink;
 use netPhramework\db\processes\Add;
 use netPhramework\db\processes\Browse;
@@ -20,14 +20,14 @@ class PassiveTreeBuilder extends TreeBuilder
 	 * generates an asset with all default processes for each one and adds
 	 * them to the Directory.
 	 *
+	 * @param Directory $directory
 	 * @return self
-	 * @throws TreeBuilderException
 	 */
-    public function addAllAssetsWithDefaults():self
+    public function addAllAssetsWithDefaults(Directory $directory):self
     {
         foreach($this->mapper->listAllRecordSets() as $name)
         {
-            $this->includeDefaults()->commit($name);
+            $this->new($name)->includeDefaults()->commit($directory);
         }
         return $this;
     }
@@ -45,9 +45,10 @@ class PassiveTreeBuilder extends TreeBuilder
 		string $linkField):self
 	{
 		$asset = new self($this->mapper)
+			->new($name)
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
-			->get($name);
+			->get();
 		$this->add(new OneToManyLink($asset, $linkField));
 		return $this;
 	}

@@ -5,24 +5,18 @@ namespace netPhramework\db\application;
 use netPhramework\core\Directory;
 use netPhramework\core\Resource;
 use netPhramework\db\core\RecordMapper;
-use netPhramework\db\exceptions\TreeBuilderException;
-use netPhramework\db\resources\NumericIdPredicate;
 use netPhramework\db\resources\OneToManyLink;
 use netPhramework\db\resources\RecordChild;
-use netPhramework\db\resources\RecordChildSet;
 use netPhramework\db\resources\RecordResource;
 use netPhramework\db\resources\RecordSetChild;
-use netPhramework\db\resources\RecordSetChildSet;
 
 class TreeBuilder
 {
-	protected RecordChildSet $recordChildSet;
-	protected RecordSetChildSet $recordSetChildSet;
+	protected ?RecordResource $resource;
 
 	public function __construct
 	(
-		protected readonly RecordMapper $mapper,
-		protected ?Directory $directory = null
+	protected readonly RecordMapper $mapper
 	)
 	{
 		$this->reset();
@@ -30,22 +24,22 @@ class TreeBuilder
 
 	private function reset():void
 	{
-		$this->recordChildSet 	 = new RecordChildSet();
-		$this->recordSetChildSet = new RecordSetChildSet();
+		$this->resource = null;
 	}
 
-	public function setDirectory(Directory $directory): self
+	public function new(string $name):self
 	{
-		$this->directory = $directory;
+		$recordSet = $this->mapper->recordsFor($name);
+		$this->resource = new RecordResource($name, $recordSet);
 		return $this;
 	}
 
 	public function add(Resource $node):self
 	{
 		if($node instanceof RecordChild)
-			$this->recordChildSet->add($node);
+			$this->resource->recordChildSet->add($node);
 		elseif($node instanceof RecordSetChild)
-			$this->recordSetChildSet->add($node);
+			$this->resource->recordSetChildSet->add($node);
 		return $this;
 	}
 
@@ -63,27 +57,20 @@ class TreeBuilder
 		return $this;
 	}
 
-	public function get(string $name):RecordResource
+	public function get():RecordResource
 	{
-		$recordSet = $this->mapper->recordsFor($name);
-		$predicate = new NumericIdPredicate();
-		$resource  = new RecordResource(
-			$name, $recordSet, $predicate,
-			$this->recordChildSet, $this->recordSetChildSet);
+		$resource = $this->resource;
 		$this->reset();
 		return $resource;
 	}
 
 	/**
-	 * @param string $name
+	 * @param Directory $directory
 	 * @return $this
-	 * @throws TreeBuilderException
 	 */
-	public function commit(string $name):self
+	public function commit(Directory $directory):self
 	{
-		if($this->directory === null)
-			throw new TreeBuilderException("Directory not set in TreeBuilder");
-		$this->directory->add($this->get($name));
+		$directory->add($this->get());
 		return $this;
 	}
 }

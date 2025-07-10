@@ -5,7 +5,7 @@ namespace netPhramework\db\core;
 use Iterator;
 use netPhramework\common\KeyedIterator;
 
-readonly class RecordMapSet implements Iterator
+class RecordMapSet implements Iterator
 {
 	use KeyedIterator;
 

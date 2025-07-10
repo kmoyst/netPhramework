@@ -5,7 +5,7 @@ namespace netPhramework\core;
 use netPhramework\common\KeyedIterator;
 use netPhramework\exceptions\ResourceNotFound;
 
-readonly class ResourceSet extends ResourceIterator
+class ResourceSet extends ResourceIterator
 {
 	use KeyedIterator;
 

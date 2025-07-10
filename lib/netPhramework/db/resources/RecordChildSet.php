@@ -5,7 +5,7 @@ namespace netPhramework\db\resources;
 use netPhramework\core\ResourceIterator;
 use netPhramework\exceptions\ResourceNotFound;
 
-readonly class RecordChildSet extends ResourceIterator
+class RecordChildSet extends ResourceIterator
 {
 	public function current(): RecordChild
 	{
