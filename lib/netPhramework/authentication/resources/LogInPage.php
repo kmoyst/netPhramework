@@ -32,16 +32,16 @@ class LogInPage extends Leaf
     {
         $manager    = new LogInManager()
 		;
-		$formAction = $exchange->getPath();
+		$formAction = $exchange->path;
         $relocator  = $this->forForm??new RerouteToSibling('authenticate');
         $relocator->reroute($formAction)
 		;
 		$forForgotPassword = $this->forForgotPassword??
 			new RerouteToRoot('forgot-password');
 		$forgotPasswordLink = new ReroutedPath(
-			$exchange->getPath(), $forForgotPassword);
-        $feedbackView = new FeedbackView($exchange->getSession());
-        $responseCode = $exchange->getSession()->resolveResponseCode()
+			$exchange->path, $forForgotPassword);
+        $feedbackView = new FeedbackView($exchange->session);
+        $responseCode = $exchange->session->resolveResponseCode()
 		;
 		$exchange->display($this->view??new View('log-in-page'), $responseCode)
             ->add('usernameInput', 	$manager->getUsernameInput())

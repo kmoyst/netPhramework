@@ -50,22 +50,22 @@ class SendResetLink extends Leaf
 	public function handleExchange(Exchange $exchange): void
 	{
 		try {
-			$parameters = $exchange->getParameters();
+			$parameters = $exchange->parameters;
 			$recovery = new Recovery($this->manager, $parameters);
 			$user = $this->manager->findByUsername($parameters);
 			if($user === null) throw new RecordNotFound();
 			$recovery->setUser($user)->newResetCode()->save();
 			if($this->sendEmail(
 				$user->getProfile(), $exchange, $recovery->getResetCode()))
-				$exchange->getSession()
+				$exchange->session
 					->addFeedbackMessage('Password Reset Link Sent')
 					->setFeedbackCode(ResponseCode::OK);
 			else
-				$exchange->getSession()
+				$exchange->session
 					->addFeedbackMessage('User Has No Email Address')
 					->setFeedbackCode(ResponseCode::PRECONDITION_FAILED);
 		} catch (RecordNotFound) {
-			$exchange->getSession()
+			$exchange->session
 				->addFeedbackMessage('User Not Found')
 				->setFeedbackCode(ResponseCode::NOT_FOUND);
 		}
@@ -87,12 +87,12 @@ class SendResetLink extends Leaf
 		UserProfile $profile, Exchange $exchange, string $resetCode):bool
 	{
 		if(!$profile->hasEmailAddress()) return false;
-		$location = new Location()->setPath($exchange->getPath());
+		$location = new Location()->setPath($exchange->path);
 		$this->toChangePass->reroute($location->getPath());
 		$location->getParameters()->add($profile->fields->resetCode,$resetCode);
 		$uri = new UriFromLocation($location);
-		$siteAddress = $exchange->getSiteAddress();
-		new EmailDelivery($exchange->getSmtpServer())
+		$siteAddress = $exchange->siteAddress;
+		new EmailDelivery($exchange->smtpServer)
 			->setRecipient($profile->getEmailAddress())
 			->setRecipientName($profile->getFullName())
 			->setSender($this->sender)

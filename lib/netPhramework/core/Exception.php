@@ -56,7 +56,7 @@ class Exception extends \Exception
     {
 		if(isset($this->environment) && $this->environment->inDevelopment)
 		{
-			$message = $this->message;
+			$message = $this->message . $this->getTraceAsString();
 		}
 		else
 		{

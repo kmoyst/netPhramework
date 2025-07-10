@@ -33,8 +33,8 @@ class SaveProfile extends Leaf
      */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user = $this->manager->findByUsername($exchange->getSession());
-		$user->getProfile()->parse($exchange->getParameters())->save();
+		$user = $this->manager->findByUsername($exchange->session);
+		$user->getProfile()->parse($exchange->parameters)->save();
 		$exchange->redirect(new RedirectToSibling('view-profile'));
 	}
 }

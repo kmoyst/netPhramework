@@ -35,9 +35,9 @@ class Register extends RecordSetProcess
 	{
 		$user = $this->manager->getUser($this->recordSet->newRecord());
 		try {
-            $user->parseRegistration($exchange->getParameters());
+            $user->parseRegistration($exchange->parameters);
             $user->save();
-			$exchange->getSession()->login($user);
+			$exchange->session->login($user);
             $exchange->redirect($this->onSuccess);
         } catch (DuplicateEntryException) {
             $message = "User already exists: " . $user->getUsername();

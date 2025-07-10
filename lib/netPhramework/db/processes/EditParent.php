@@ -55,7 +55,7 @@ class EditParent extends RecordProcess
 		;
 		$exchange->display(
 			$view->setTitle("Edit Record"),
-			$exchange->getSession()->resolveResponseCode())
+			$exchange->session->resolveResponseCode())
 		;
 	}
 
@@ -96,8 +96,8 @@ class EditParent extends RecordProcess
 	{
 		$assetName	 	  = $this->childSelector->getAssetName();
 		$recordSet   	  = $this->childSelector->getChildren($this->record);
-		$compPath    	  = $exchange->getPath()->pop()->appendName($assetName);
-		$query 		 	  = new Query()->parse($exchange->getParameters());
+		$compPath    	  = $exchange->path->pop()->appendName($assetName);
+		$query 		 	  = new Query()->parse($exchange->parameters);
 		$includeQueryForm = $recordSet->count() > $this->childFilterThreshold;
 		return new ViewBuilder()
 			->setQuery($query)
@@ -105,7 +105,7 @@ class EditParent extends RecordProcess
 			->setCompositePath($compPath)
 			->setCallbackInputForRows(new CallbackInput($exchange, true))
 			->setCallbackInputForFilterForms(new CallbackInput($exchange))
-			->setFeedback(new FeedbackView($exchange->getSession()))
+			->setFeedback(new FeedbackView($exchange->session))
 			->buildColumnSet($this->childColumnSetStrategy)
 			->buildRowSetFactory()
 			->collate()

@@ -32,8 +32,8 @@ class SignUp extends RecordSetProcess
 	{
 		$user = $this->userManager->getUser($this->recordSet->newRecord())
 		;
-		$feedbackView  = new FeedbackView($exchange->getSession());
-		$formAction    = new ReroutedPath($exchange->getPath(), $this->toSave);
+		$feedbackView  = new FeedbackView($exchange->session);
+		$formAction    = new ReroutedPath($exchange->path, $this->toSave);
 		$usernameInput = new TextInput($user->fields->username);
 		$passwordInput = new PasswordInput($user->fields->password)
 		;
@@ -43,7 +43,7 @@ class SignUp extends RecordSetProcess
 			->add('usernameInput', $usernameInput)
 			->add('passwordInput', $passwordInput)
 		;
-		$responseCode = $exchange->getSession()->resolveResponseCode()
+		$responseCode = $exchange->session->resolveResponseCode()
 		;
 		$exchange->display($view, $responseCode);
 	}

@@ -27,25 +27,28 @@ class SocketExchange implements Exchange
 
 	public Session $session {
 		get { return $this->session; }
-		set {
+		set(Session $session) {
 			if(isset($this->session))
 				throw new ReadonlyException("Property is read-only");
+			$this->session = $session;
 		}
 	}
 
 	public FileManager $fileManager {
 		get { return $this->fileManager; }
-		set {
+		set(FileManager $fileManager) {
 			if(isset($this->fileManager))
 				throw new ReadonlyException("Property is read-only");
+			$this->fileManager = $fileManager;
 		}
 	}
 
 	public Location $location {
 		get { return clone $this->location; }
-		set {
+		set(Location $location) {
 			if(isset($this->location))
 				throw new ReadonlyException("Property is read-only");
+			$this->location = $location;
 		}
 	}
 
@@ -80,7 +83,11 @@ class SocketExchange implements Exchange
 
 	public Response $response {
 		get { return $this->response; }
-		set { throw new ReadonlyException("Property is read-only"); }
+		set (Response $response){
+			if(isset($this->response))
+				throw new ReadonlyException("Property is read-only");
+			$this->response = $response;
+		}
 	}
 
 

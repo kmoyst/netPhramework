@@ -22,7 +22,7 @@ class LogOut extends Leaf
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$exchange->getSession()->logout();
+		$exchange->session->logout();
 		$exchange->redirect($this->dispatcher ?? new RedirectToRoot());
 	}
 }

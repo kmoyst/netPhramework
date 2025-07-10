@@ -28,8 +28,8 @@ class ForgotPassword extends Leaf
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$formAction = new ReroutedPath($exchange->getPath(),$this->toSendLink);
-		$feedback 	= new FeedbackView($exchange->getSession())
+		$formAction = new ReroutedPath($exchange->path, $this->toSendLink);
+		$feedback 	= new FeedbackView($exchange->session)
 		;
 		$inputName  = $this->manager->fields->username
 		;
@@ -38,7 +38,7 @@ class ForgotPassword extends Leaf
 			->add('formAction', $formAction)
 			->add('feedbackView', $feedback)
 		;
-		$responseCode = $exchange->getSession()->resolveResponseCode();
+		$responseCode = $exchange->session->resolveResponseCode();
 		$exchange->display($view, $responseCode);
 	}
 }

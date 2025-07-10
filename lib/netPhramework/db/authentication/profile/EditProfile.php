@@ -30,7 +30,7 @@ class EditProfile extends Leaf
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user     = $this->manager->findByUsername($exchange->getSession());
+		$user     = $this->manager->findByUsername($exchange->session);
 		$profile  = $user->getProfile();
 		$inputs   = new InputSet();
 		$inputs

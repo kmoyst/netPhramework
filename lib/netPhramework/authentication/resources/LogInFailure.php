@@ -10,7 +10,7 @@ class LogInFailure extends Leaf
 {
 	public function handleExchange(Exchange $exchange): void
 	{
-		$message = $exchange->getParameters()->getOrNull('message' ?? '');
+		$message = $exchange->parameters->getOrNull('message' ?? '');
 		$exchange->ok(new View('message'))
 			->setTitle('Check Status')
 			->add('message', $message)

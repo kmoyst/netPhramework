@@ -44,13 +44,13 @@ class Browse extends RecordSetProcess
 			->setRecordSet($this->recordSet)
 			->setCompositePath($exchange->path->pop())
 			->setCallbackInputForRows(new CallbackInput($exchange))
-			->setFeedback(new FeedbackView($exchange->getSession()))
+			->setFeedback(new FeedbackView($exchange->session))
 			->buildColumnSet($this->columnSetStrategy)
 			->buildRowSetFactory()
 			->collate()
 			->generateView($this->tableViewStrategy)->setTitle('Browse Records')
 			;
 		$exchange->display(
-			$recordTableView, $exchange->getSession()->resolveResponseCode());
+			$recordTableView, $exchange->session->resolveResponseCode());
 	}
 }

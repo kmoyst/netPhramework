@@ -36,7 +36,7 @@ class SavePassword extends Leaf
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$recovery = new Recovery($this->manager, $exchange->getParameters());
+		$recovery = new Recovery($this->manager, $exchange->parameters);
 		try {
 			$recovery->findUser();
 			if(!$recovery->userFound()) throw new RecordNotFound();
@@ -50,7 +50,7 @@ class SavePassword extends Leaf
 		} catch (InvalidPassword $e) {
 			$exchange->error($e, $this->onFailure);
 		}
-		$exchange->getSession()
+		$exchange->session
 			->addFeedbackMessage('New Password Saved')
 			->setFeedbackCode(ResponseCode::OK)
 		;

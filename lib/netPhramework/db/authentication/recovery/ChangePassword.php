@@ -41,7 +41,7 @@ class ChangePassword extends Leaf
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$recovery = new Recovery($this->manager, $exchange->getParameters());
+		$recovery = new Recovery($this->manager, $exchange->parameters);
 		if(!$recovery->findUser()->userFound())
 		{
 			$exchange->error(new NotFound(), $this->onNotFound);
@@ -51,7 +51,7 @@ class ChangePassword extends Leaf
 		$resetCode     = $recovery->getResetCode();
 		$resetInput	   = new HiddenInput($resetField, $resetCode);
 		$passwordInput = new PasswordInput($recovery->getPasswordField());
-		$formAction	   = new ReroutedPath($exchange->getPath(), $this->toSave);
+		$formAction	   = new ReroutedPath($exchange->path, $this->toSave);
 		$view = new View('change-password')
 			->add('resetCodeInput', $resetInput)
 			->add('passwordInput', $passwordInput)

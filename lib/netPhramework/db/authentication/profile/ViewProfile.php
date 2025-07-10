@@ -33,7 +33,7 @@ class ViewProfile extends Leaf
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$session 	 = $exchange->getSession();
+		$session 	 = $exchange->session;
 		$user   	 = $this->findUser($session->getUser());
 		$profile	 = $user->getProfile()
 		;

@@ -13,6 +13,6 @@ abstract class Composite implements Resource
 
 	public function handleExchange(Exchange $exchange): void
 	{
-		$exchange->redirect(new RedirectToChild('',$exchange->getParameters()));
+		$exchange->redirect(new RedirectToChild('',$exchange->parameters));
 	}
 }

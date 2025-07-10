@@ -30,7 +30,7 @@ class Authenticate extends Leaf
 	public function handleExchange(Exchange $exchange): void
     {
         $manager   = new LogInManager();
-		$user	   = $manager->userFromVariables($exchange->getParameters());
+		$user	   = $manager->userFromVariables($exchange->parameters);
 		$this->authenticator->setUserLoggingIn($user);
 		if(!$this->authenticator->checkUsername())
 		{
@@ -51,7 +51,7 @@ class Authenticate extends Leaf
 		else
 		{
 			$user = $this->authenticator->getHashedUser();
-			$exchange->getSession()->login($user);
+			$exchange->session->login($user);
 			$exchange->redirect($this->onSuccess);
 		}
 	}
