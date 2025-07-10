@@ -3,12 +3,12 @@
 namespace netPhramework\core;
 
 use Iterator;
-use netPhramework\common\IsKeyedIterable;
+use netPhramework\common\KeyedIterator;
 use netPhramework\exceptions\ResourceNotFound;
 
-abstract class ResourceIterator implements Iterator
+readonly abstract class ResourceIterator implements Iterator
 {
-	use IsKeyedIterable;
+	use KeyedIterator;
 
 	protected function storeResource(Resource $resource):void
 	{

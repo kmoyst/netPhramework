@@ -2,7 +2,7 @@
 
 namespace netPhramework\common;
 
-trait IsKeyedIterable
+trait KeyedIterator
 {
 	protected array $items = [];
 

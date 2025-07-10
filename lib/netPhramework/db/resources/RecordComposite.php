@@ -2,12 +2,12 @@
 
 namespace netPhramework\db\resources;
 
-use netPhramework\core\Composite;
+use netPhramework\core\CompositeResource;
 use netPhramework\core\Resource;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\exceptions\ResourceNotFound;
 
-class RecordComposite extends Composite implements RecordSetChild
+class RecordComposite extends CompositeResource implements RecordSetChild
 {
 	use HasRecordSet;
 

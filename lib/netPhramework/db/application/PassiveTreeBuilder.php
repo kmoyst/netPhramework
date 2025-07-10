@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\core\Directory;
+use netPhramework\db\exceptions\TreeBuilderException;
 use netPhramework\db\resources\OneToManyLink;
 use netPhramework\db\processes\Add;
 use netPhramework\db\processes\Browse;
@@ -12,7 +12,7 @@ use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
 
-class PassiveRecordResourceBuilder extends RecordResourceBuilder
+class PassiveTreeBuilder extends TreeBuilder
 {
 	/**
 	 * This is a potent method, only meant to be used during initial
@@ -20,14 +20,14 @@ class PassiveRecordResourceBuilder extends RecordResourceBuilder
 	 * generates an asset with all default processes for each one and adds
 	 * them to the Directory.
 	 *
-	 * @param Directory $node
 	 * @return self
+	 * @throws TreeBuilderException
 	 */
-    public function addAllAssetsWithDefaults(Directory $node):self
+    public function addAllAssetsWithDefaults():self
     {
         foreach($this->mapper->listAllRecordSets() as $name)
         {
-            $this->newAsset($name)->includeDefaults()->commit($node);
+            $this->includeDefaults()->commit($name);
         }
         return $this;
     }
@@ -45,10 +45,9 @@ class PassiveRecordResourceBuilder extends RecordResourceBuilder
 		string $linkField):self
 	{
 		$asset = new self($this->mapper)
-			->newAsset($name)
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
-			->get();
+			->get($name);
 		$this->add(new OneToManyLink($asset, $linkField));
 		return $this;
 	}

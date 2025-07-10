@@ -3,13 +3,13 @@
 namespace netPhramework\db\resources;
 
 use netPhramework\common\StringPredicate as Predicate;
-use netPhramework\core\Composite;
+use netPhramework\core\CompositeResource;
 use netPhramework\core\Resource;
 use netPhramework\db\core\RecordSet;
 use netPhramework\db\resources\RecordSetChildSet as setChildSet;
 use netPhramework\exceptions\ResourceNotFound;
 
-class RecordResource extends Composite
+class RecordResource extends CompositeResource
 {
 	public function __construct
 	(

@@ -2,12 +2,12 @@
 
 namespace netPhramework\core;
 
-use netPhramework\common\IsKeyedIterable;
+use netPhramework\common\KeyedIterator;
 use netPhramework\exceptions\ResourceNotFound;
 
-class ResourceSet extends ResourceIterator
+readonly class ResourceSet extends ResourceIterator
 {
-	use IsKeyedIterable;
+	use KeyedIterator;
 
 	public function current(): Resource
 	{

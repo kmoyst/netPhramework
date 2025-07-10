@@ -3,11 +3,11 @@
 namespace netPhramework\db\core;
 
 use Iterator;
-use netPhramework\common\IsKeyedIterable;
+use netPhramework\common\KeyedIterator;
 
-class RecordMapSet implements Iterator
+readonly class RecordMapSet implements Iterator
 {
-	use IsKeyedIterable;
+	use KeyedIterator;
 
 	public function current(): RecordMap
 	{
@@ -16,12 +16,12 @@ class RecordMapSet implements Iterator
 
 	public function add(RecordMap $map):self
 	{
-		$this->items[$map->assetName] = $map;
+		$this->items[$map->resourceName] = $map;
 		return $this;
 	}
 
-	public function get(string $name):RecordMap
+	public function get(string $name):?RecordMap
 	{
-		return $this->items[$name];
+		return $this->items[$name] ?? null;
 	}
 }

@@ -37,10 +37,9 @@ readonly class RecordMapper implements RecordAccess, RecordSetFactory
 
 	public function recordsFor(string $name):RecordSet
 	{
-		$mappedName = $this->mapSet->has($name) ?
-			$this->mapSet->get($name)->mappedName : $name;
-		$schema = $this->database->getSchema($mappedName);
-		$table 	= $this->database->getTable($mappedName);
+		$rsName = $this->mapSet->get($name) ?? $name;
+		$schema = $this->database->getSchema($rsName);
+		$table 	= $this->database->getTable($rsName);
 		return new RecordSet($schema, $table);
 	}
 

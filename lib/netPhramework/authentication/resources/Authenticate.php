@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\authentication\nodes;
+namespace netPhramework\authentication\resources;
 
 use netPhramework\authentication\Authenticator;
 use netPhramework\authentication\LogInManager;
