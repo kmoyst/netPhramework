@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\resources;
 
-use netPhramework\common\IsNumericPredicate;
+use netPhramework\common\IsNumeric;
 use netPhramework\common\StringPredicate as Predicate;
 use netPhramework\core\Composite;
 use netPhramework\core\Resource;
@@ -16,7 +16,7 @@ class RecordResource extends Composite
 	(
 	public readonly string $name,
 	public readonly RecordSet $recordSet,
-	public readonly Predicate $recordIdPredicate   = new IsNumericPredicate(),
+	public readonly Predicate $recordIdPredicate   = new IsNumeric(),
 	public readonly RecordChildSet $recordChildSet = new RecordChildSet(),
 	public readonly setChildSet $recordSetChildSet = new RecordSetChildSet()
 	) {}

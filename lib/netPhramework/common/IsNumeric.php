@@ -2,7 +2,7 @@
 
 namespace netPhramework\common;
 
-class IsNumericPredicate implements StringPredicate
+class IsNumeric implements StringPredicate
 {
 	public function test(string $value): bool
 	{
