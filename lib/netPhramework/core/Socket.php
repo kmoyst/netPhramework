@@ -28,14 +28,14 @@ readonly class Socket
         try
 		{
             $exchange  = new SocketExchange();
-			$navigator = new Navigator();
-			$exchange
-				->setLocation($location)
-				->setSession($context->session)
-				->setFileManager($context->fileManager)
-				->setWrapper($this->wrapper)
-				->setCallbackManager($context->callbackManager)
-				->setEnvironment($context->environment)
+			$navigator = new Navigator()
+			;
+			$exchange->location 		= $location;
+			$exchange->wrapper 			= $this->wrapper;
+			$exchange->session 			= $context->session;
+			$exchange->fileManager 		= $context->fileManager;
+			$exchange->callbackManager 	= $context->callbackManager;
+			$exchange->environment 		= $context->environment
 			;
 			$navigator
 				->setRoot($this->root)
@@ -43,7 +43,7 @@ readonly class Socket
 				->navigate()
 				->handleExchange($exchange)
             ;
-			return $exchange->getResponse();
+			return $exchange->response;
 		}
 		catch (Exception $exception)
 		{

@@ -37,7 +37,7 @@ class Save extends RecordProcess
 	{
 		$record = $this->record;
 		try {
-			foreach($exchange->getParameters() as $k => $v)
+			foreach($exchange->parameters as $k => $v)
 				if($this->record->getCellSet()->has($k))
 				{
 					$this->record->setValue($k, $v);

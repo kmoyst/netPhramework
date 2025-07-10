@@ -9,6 +9,7 @@ use netPhramework\networking\SmtpServer;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
 use netPhramework\responding\ResponseCode;
+use netPhramework\locating\Location;
 
 /**
  * The central mediator for the Request-Response cycle
@@ -16,14 +17,14 @@ use netPhramework\responding\ResponseCode;
  */
 interface Exchange extends CallbackContext
 {
-	/**
-	 * A mutable copy of the originally requested Path
-	 *
-	 * @var MutablePath
-	 */
 	public MutablePath $path {get;}
-
 	public Variables $parameters {get;}
+	public Location $location {get;}
+	public Session $session {get;}
+	public FileManager $fileManager {get;}
+	public string $siteAddress {get;}
+	public SmtpServer $smtpServer {get;}
+
 	/**
 	 * Generate a standard displayable Response to be wrapped.
 	 *
@@ -65,28 +66,4 @@ interface Exchange extends CallbackContext
 	 * @return void
 	 */
 	public function error(Exception $exception, Redirector $fallback):void;
-
-	/**
-	 * Returns current Session
-	 *
-	 * @return Session
-	 */
-	public function getSession():Session;
-
-	/**
-	 * Manager for uploaded files via form
-	 *
-	 * @return FileManager
-	 */
-	public function getFileManager():FileManager;
-
-	/**
-	 * @return string
-	 */
-	public function getSiteAddress():string;
-
-	/**
-	 * @return SmtpServer
-	 */
-	public function getSmtpServer():SmtpServer;
 }

@@ -6,6 +6,8 @@ use netPhramework\rendering\Encodable;
 
 interface CallbackContext
 {
+	public string $callbackKey {get;}
+
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
 	 *
@@ -27,11 +29,4 @@ interface CallbackContext
 	 * @return string|Encodable
 	 */
 	public function callbackLink(bool $chain = false):string|Encodable;
-
-	/**
-	 * Returns Callback Key
-	 *
-	 * @return string
-	 */
-	public function getCallbackKey():string;
 }

@@ -21,9 +21,32 @@ use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {
+	public ExchangeEnvironment $environment;
+	public CallbackManager $callbackManager;
+	public Wrapper $wrapper;
+
+	public Session $session {
+		get { return $this->session; }
+		set {
+			if(isset($this->session))
+				throw new ReadonlyException("Property is read-only");
+		}
+	}
+
+	public FileManager $fileManager {
+		get { return $this->fileManager; }
+		set {
+			if(isset($this->fileManager))
+				throw new ReadonlyException("Property is read-only");
+		}
+	}
+
 	public Location $location {
 		get { return clone $this->location; }
-		set { throw new ReadonlyException("Property is read-only"); }
+		set {
+			if(isset($this->location))
+				throw new ReadonlyException("Property is read-only");
+		}
 	}
 
 	public Variables $parameters {
@@ -31,19 +54,35 @@ class SocketExchange implements Exchange
 		set { throw new ReadonlyException("Property is read-only"); }
 	}
 
-	/* @inheritDoc */
 	public MutablePath $path {
 		get { return clone $this->location->getPath(); }
 		set { throw new ReadonlyException("Property is read-only"); }
 	}
 
-	private ExchangeEnvironment $environment;
-	private Session $session;
-	private CallbackManager $callbackManager;
-	private FileManager $fileManager;
-	private SmtpServer $smtpServer;
-    private Wrapper $wrapper;
-	private Response $response;
+	public SmtpServer $smtpServer {
+		get {
+			if(!isset($this->smtpServer))
+				$this->smtpServer = new SmtpServer($this->environment);
+			return $this->smtpServer;
+		}
+		set { throw new ReadonlyException("Property is read-only"); }
+	}
+
+	public string $siteAddress {
+		get { return $this->environment->siteAddress; }
+		set { throw new ReadonlyException("Property is read-only"); }
+	}
+
+	public string $callbackKey {
+		get { return $this->callbackManager->getCallbackKey(); }
+		set { throw new ReadonlyException("Property is read-only"); }
+	}
+
+	public Response $response {
+		get { return $this->response; }
+		set { throw new ReadonlyException("Property is read-only"); }
+	}
+
 
 	/**
 	 * @param Redirector $fallback
@@ -100,111 +139,5 @@ class SocketExchange implements Exchange
 	{
 		if($chain) return clone $this->location;
 		return $this->callbackManager->callbackLink(clone $this->location);
-	}
-
-	/** @inheritDoc */
-	public function getCallbackKey(): string
-	{
-		return $this->callbackManager->getCallbackKey();
-	}
-
-	/** @inheritDoc */
-	public function getSession(): Session
-	{
-		return $this->session;
-	}
-
-	/** @inheritDoc  */
-	public function getFileManager(): FileManager
-	{
-		return $this->fileManager;
-	}
-
-	/** @inheritDoc */
-	public function getSiteAddress(): string
-	{
-		return $this->environment->siteAddress;
-	}
-
-	/** @inheritDoc */
-	public function getSmtpServer(): SmtpServer
-	{
-		if(!isset($this->smtpServer))
-			$this->smtpServer = new SmtpServer($this->environment);
-		return $this->smtpServer;
-	}
-
-	/**
-	 * For returning the Response set by Exchange handlers to Socket
-	 *
-	 * @return Response
-	 */
-	public function getResponse(): Response
-	{
-		return $this->response;
-	}
-
-	public function setLocation(Location $location): self
-	{
-		$this->location = $location;
-		return $this;
-	}
-
-	/**
-	 * Injector for CallbackManager
-	 *
-	 * @param CallbackManager $manager
-	 * @return $this
-	 */
-	public function setCallbackManager(CallbackManager $manager): self
-	{
-		$this->callbackManager = $manager;
-		return $this;
-	}
-
-	/**
-	 * Injector for Upload Manager
-	 *
-	 * @param FileManager $fileManager
-	 * @return $this
-	 */
-	public function setFileManager(FileManager $fileManager): self
-	{
-		$this->fileManager = $fileManager;
-		return $this;
-	}
-
-	/**
-	 * Injector for Session
-	 *
-	 * @param Session $session
-	 * @return $this
-	 */
-	public function setSession(Session $session): self
-	{
-		$this->session = $session;
-		return $this;
-	}
-
-	/**
-	 * Injector for current display wrapper
-	 *
-	 * @param Wrapper $wrapper
-	 * @return $this
-	 */
-	public function setWrapper(Wrapper $wrapper): self
-	{
-		$this->wrapper = $wrapper;
-		return $this;
-	}
-
-	/**
-	 * @param ExchangeEnvironment $environment
-	 * @return $this
-	 */
-	public function setEnvironment(ExchangeEnvironment $environment): self
-	{
-		$this->environment = $environment;
-		return $this;
 	}
 }
