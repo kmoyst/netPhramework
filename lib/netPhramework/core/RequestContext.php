@@ -6,8 +6,8 @@ use netPhramework\bootstrap\Environment;
 
 interface RequestContext
 {
-	public function getSession():Session;
-	public function getEnvironment():Environment;
-	public function getCallbackManager():CallbackManager;
-	public function getFileManager():FileManager;
+	public Session $session { get; }
+	public Environment $environment { get; }
+	public FileManager $fileManager { get; }
+	public CallbackManager $callbackManager  { get; }
 }

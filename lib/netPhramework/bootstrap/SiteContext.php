@@ -13,56 +13,26 @@ use netPhramework\responding\Responder;
 
 abstract class SiteContext implements RequestContext
 {
+	public readonly RequestInterpreter $requestInterpreter;
+	public readonly CallbackManager $callbackManager;
+	public readonly Responder $responder;
+
 	public function __construct
 	(
-	protected readonly Environment $environment = new Environment(),
-	protected readonly Session 	   $session 	= new Session(),
-	protected readonly FileManager $fileManager = new FileManager()
+	public readonly Environment $environment = new Environment(),
+	public readonly Session 	$session 	 = new Session(),
+	public readonly FileManager $fileManager = new FileManager(),
 	)
-	{}
-
-	public function getCallbackManager(): CallbackManager
 	{
-		return new CallbackManager('callback');
-	}
-
-	public function getRequestInterpreter(): RequestInterpreter
-	{
-		return new RequestInterpreter($this->environment);
-	}
-
-	public function getResponder(Encoder $encoder): Responder
-	{
-		return new Responder($encoder);
-	}
-
-	public function getEncoder(): Encoder
-	{
-		return new Encoder($this->configureFileFinder(new FileFinder()));
-	}
-
-	protected function configureFileFinder(FileFinder $fileFinder): FileFinder
-	{
-		return $fileFinder
+		$this->requestInterpreter = new RequestInterpreter($this->environment);
+		$this->callbackManager 	  = new CallbackManager('callback');
+		$fileFinder = new FileFinder()
 			->directory('../html')
 			->directory(__DIR__ . '/../../../html')
 			->extension('phtml')
-			->extension('css');
-	}
-
-	public function getEnvironment(): Environment
-	{
-		return $this->environment;
-	}
-
-	public function getSession(): Session
-	{
-		return $this->session;
-	}
-
-	public function getFileManager(): FileManager
-	{
-		return $this->fileManager;
+			->extension('css')
+		;
+		$this->responder = new Responder(new Encoder($fileFinder));
 	}
 
 	abstract public function getApplication(): Application;

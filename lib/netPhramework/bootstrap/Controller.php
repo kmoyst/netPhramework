@@ -16,19 +16,17 @@ class Controller
 		set_error_handler([$this, 'handleError']);
 		set_exception_handler([$this, 'handleException'])
 		;
-		$this->environment = $context->getEnvironment()
-		;
-		$site = new Site()
-		;
-		$responder 	 = $context->getResponder($context->getEncoder());
-		$interpreter = $context->getRequestInterpreter();
-		$application = $context->getApplication()
+		$site 				= new Site();
+		$this->environment 	= $context->environment;
+		$interpreter 		= $context->requestInterpreter;
+		$responder 	 		= $context->responder
 		;
 		try
 		{
+			$site->setApplication($context->getApplication())->configure()
+			;
 			try
 			{
-				$site->setApplication($application)->configure();
 				$request = $interpreter->establishRequest($site);
 			}
 			catch (Exception $exception)

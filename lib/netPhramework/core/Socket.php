@@ -31,11 +31,11 @@ readonly class Socket
 			$navigator = new Navigator();
 			$exchange
 				->setLocation($location)
-				->setSession($context->getSession())
-				->setFileManager($context->getFileManager())
+				->setSession($context->session)
+				->setFileManager($context->fileManager)
 				->setWrapper($this->wrapper)
-				->setCallbackManager($context->getCallbackManager())
-				->setEnvironment($context->getEnvironment())
+				->setCallbackManager($context->callbackManager)
+				->setEnvironment($context->environment)
 			;
 			$navigator
 				->setRoot($this->root)
@@ -49,7 +49,7 @@ readonly class Socket
 		{
 			return $exception
 				->setWrapper($this->wrapper)
-				->setEnvironment($context->getEnvironment())
+				->setEnvironment($context->environment)
 				;
 		}
 	}
