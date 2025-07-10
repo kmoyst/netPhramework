@@ -68,7 +68,7 @@ class Controller
 	}
 	public function handleError(
 		int $errno, string $errstr, ?string $errfile = null,
-		?int $errline = null/**, ?array $errcontext = null**/):bool
+		?int $errline = null):bool
 	{
 		if($this->environment?->inDevelopment())
 		{
