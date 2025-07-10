@@ -6,6 +6,11 @@ use netPhramework\rendering\Encodable;
 
 interface CallbackContext
 {
+	/**
+	 * Callback Key
+	 *
+	 * @var string
+	 */
 	public string $callbackKey {get;}
 
 	/**
