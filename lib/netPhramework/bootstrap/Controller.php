@@ -22,13 +22,14 @@ class Controller
 		;
 		$responder 	 = $context->getResponder($context->getEncoder());
 		$interpreter = $context->getRequestInterpreter();
-		$config	     = $context->getApplication()
+		$application = $context->getApplication()
 		;
 		try
 		{
 			try
 			{
-				$site->configure($config);
+				$site->setApplication($application)->configure();
+				$request = $interpreter->establishRequest($site);
 			}
 			catch (Exception $exception)
 			{
@@ -38,11 +39,7 @@ class Controller
 					->deliver($responder);
 				return;
 			}
-			$interpreter
-				->establishRequest($site)
-				->process($context)
-				->deliver($responder)
-			;
+			$request->process($context)->deliver($responder);
 		}
 		catch (\Exception $exception)
 		{
