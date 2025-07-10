@@ -15,7 +15,7 @@ use netPhramework\rendering\View;
 class Edit extends RecordProcess
 {
 	public function __construct(
-		private readonly ?RecordFormStrategy $formStrategy = null,
+		private readonly ?RecordFormStrategy $formStrategy = null
 		)
 	{
 	}

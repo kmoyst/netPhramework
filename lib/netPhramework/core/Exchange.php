@@ -17,6 +17,14 @@ use netPhramework\responding\ResponseCode;
 interface Exchange extends CallbackContext
 {
 	/**
+	 * A mutable copy of the originally requested Path
+	 *
+	 * @var MutablePath
+	 */
+	public MutablePath $path {get;}
+
+	public Variables $parameters {get;}
+	/**
 	 * Generate a standard displayable Response to be wrapped.
 	 *
 	 * @param View $view
@@ -57,22 +65,6 @@ interface Exchange extends CallbackContext
 	 * @return void
 	 */
 	public function error(Exception $exception, Redirector $fallback):void;
-
-	/**
-	 * Returns a mutable copy of the MutablePath of the originally requested
-	 * Location
-	 *
-	 * @return MutablePath
-	 */
-	public function getPath(): MutablePath;
-
-	/**
-	 * Returns a mutable copy of the parameters of the originally requested
-	 * Location
-	 *
-	 * @return Variables
-	 */
-	public function getParameters(): Variables;
 
 	/**
 	 * Returns current Session

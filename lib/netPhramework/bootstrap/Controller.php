@@ -55,6 +55,7 @@ class Controller
 			}
 		}
     }
+
 	public function shutdown():never
 	{
 		if(($error = error_get_last()) !== null &&
@@ -67,6 +68,7 @@ class Controller
 		}
 		exit($error !== null && $this->errorIsFatal($error['type']) ? 1 : 0);
 	}
+
 	public function handleError(
 		int $errno, string $errstr, ?string $errfile = null,
 		?int $errline = null):bool
@@ -93,6 +95,7 @@ class Controller
 		}
 		return !($this->fatalErrorHandled = $this->errorIsFatal($errno));
 	}
+
 	public function handleException(\Throwable $exception):never
 	{
 		if($this->environment?->inDevelopment)
@@ -107,6 +110,7 @@ class Controller
 		}
 		exit(1);
 	}
+
 	private function errorIsFatal(int $errno):bool
 	{
 		return in_array($errno, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR,

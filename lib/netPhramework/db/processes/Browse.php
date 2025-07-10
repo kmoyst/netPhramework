@@ -38,11 +38,11 @@ class Browse extends RecordSetProcess
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$query  = new Query()->parse($exchange->getParameters());
+		$query  = new Query()->parse($exchange->parameters);
 		$recordTableView = new ViewBuilder()
 			->setQuery($query)
 			->setRecordSet($this->recordSet)
-			->setCompositePath($exchange->getPath()->pop())
+			->setCompositePath($exchange->path->pop())
 			->setCallbackInputForRows(new CallbackInput($exchange))
 			->setFeedback(new FeedbackView($exchange->getSession()))
 			->buildColumnSet($this->columnSetStrategy)

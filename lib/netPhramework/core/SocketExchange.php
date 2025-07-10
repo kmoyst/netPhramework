@@ -4,6 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
+use netPhramework\exceptions\ReadonlyException;
 use netPhramework\locating\Location;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
@@ -20,8 +21,23 @@ use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {
+	public Location $location {
+		get { return clone $this->location; }
+		set { throw new ReadonlyException("Property is read-only"); }
+	}
+
+	public Variables $parameters {
+		get { return clone $this->location->getParameters(); }
+		set { throw new ReadonlyException("Property is read-only"); }
+	}
+
+	/* @inheritDoc */
+	public MutablePath $path {
+		get { return clone $this->location->getPath(); }
+		set { throw new ReadonlyException("Property is read-only"); }
+	}
+
 	private ExchangeEnvironment $environment;
-	private Location $location;
 	private Session $session;
 	private CallbackManager $callbackManager;
 	private FileManager $fileManager;
@@ -36,9 +52,9 @@ class SocketExchange implements Exchange
 	 */
 	public function redirect(Redirector $fallback):Variables
 	{
-		$redirection = new Redirection($this->getPath());
+		$redirection = new Redirection($this->path);
 		$callback    = $this->callbackManager
-			->callbackRedirector($this->getParameters());
+			->callbackRedirector($this->parameters);
 		($callback ?? $fallback)->redirect($redirection);
 		$this->response = $redirection;
 		return $redirection->getParameters();
@@ -90,18 +106,6 @@ class SocketExchange implements Exchange
 	public function getCallbackKey(): string
 	{
 		return $this->callbackManager->getCallbackKey();
-	}
-
-	/** @inheritDoc */
-	public function getPath(): MutablePath
-	{
-		return clone $this->location->getPath();
-	}
-
-	/** @inheritDoc */
-	public function getParameters(): Variables
-	{
-		return clone $this->location->getParameters();
 	}
 
 	/** @inheritDoc */
