@@ -9,7 +9,7 @@ use netPhramework\responding\FileManager;
 
 interface ExchangeContext
 {
-	public Environment $environment { get; }
+	public ExchangeEnvironment $environment { get; }
 	public CallbackManager $callbackManager  { get; }
 	public Session $session {get;}
 	public FileManager $fileManager {get;}

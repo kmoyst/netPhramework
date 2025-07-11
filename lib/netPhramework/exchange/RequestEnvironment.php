@@ -2,8 +2,7 @@
 
 namespace netPhramework\exchange;
 
-interface RequestEnvironment
+interface RequestEnvironment extends InterpreterEnvironment, ExchangeEnvironment
 {
 	public string $uri {get;}
-	public ?array $postParameters{get;}
 }

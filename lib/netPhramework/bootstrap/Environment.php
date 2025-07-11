@@ -2,10 +2,9 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\exchange\ExchangeEnvironment;
 use netPhramework\exchange\RequestEnvironment;
 
-class Environment implements RequestEnvironment, ExchangeEnvironment
+class Environment implements RequestEnvironment
 {
 	private(set) bool $inDevelopment {
 		get { return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT'; }

@@ -26,7 +26,7 @@ readonly class Controller
 	private function configure():self
 	{
 		$this->context->configureResponder($this->context->responder);
-		$this->context->site->nodeBuilder = $this->context->getNodeBuilder();
+		$this->context->app->nodeBuilder = $this->context->getNodeBuilder();
 		return $this;
 	}
 
@@ -35,8 +35,9 @@ readonly class Controller
 		try {
 			try {
 				$this->context->interpreter
-					->interpretRequest($this->context->site)
-					->process($this->context)
+					->interpret($this->context->app)
+					->request($this->context)
+					->process()
 					->deliver($this->context->responder);
 			} catch (Exception $exception) {
 				$exception

@@ -2,43 +2,23 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\core\Site;
+use netPhramework\core\Application;
 use netPhramework\exceptions\Exception;
-use netPhramework\locating\Location;
-use netPhramework\locating\LocationFromUri;
 
 readonly class RequestInterpreter
 {
 	public function __construct(private RequestEnvironment $environment) {}
 
 	/**
-	 * @param Site $site
-	 * @return Request
+	 * @param Application $application
+	 * @return RequestProcess
 	 * @throws Exception
 	 */
-	public function interpretRequest(Site $site):Request
+	public function interpret(Application $application):RequestProcess
 	{
-		$location = new LocationFromUri($this->environment->uri);
-		return $this->createRequest($site, $location);
-	}
-
-	/**
-	 * @param Site $site
-	 * @param Location $location
-	 * @return Request
-	 * @throws Exception
-	 */
-	private function createRequest(Site $site, Location $location):Request
-	{
-		if(($postParameters = $this->environment->postParameters) !== null)
-		{
-			$socket = $site->openActiveNode();
-			$location->getParameters()->clear()->merge($postParameters);
-		}
+		if($this->environment->postParameters === null)
+			return new PassiveProcess($application->openActiveNode());
 		else
-		{
-			$socket = $site->openPassiveNode();
-		}
-		return new Request($socket, $location);
+			return new ActiveProcess($application->openPassiveNode());
 	}
 }

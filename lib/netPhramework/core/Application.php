@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\Exception;
 
-class Site
+class Application
 {
 	public NodeBuilder $nodeBuilder;
 
