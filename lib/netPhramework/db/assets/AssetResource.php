@@ -4,8 +4,8 @@ namespace netPhramework\db\assets;
 
 use netPhramework\common\IsNumeric;
 use netPhramework\common\StringPredicate as Predicate;
-use netPhramework\db\core\RecordSet;
 use netPhramework\db\assets\RecordSetChildSet as setChildSet;
+use netPhramework\db\core\RecordSet;
 use netPhramework\exceptions\ResourceNotFound;
 use netPhramework\resources\Composite;
 use netPhramework\resources\Resource;
@@ -18,7 +18,7 @@ class AssetResource extends Composite
 	public readonly RecordSet $recordSet,
 	public readonly Predicate $recordIdPredicate   = new IsNumeric(),
 	public readonly RecordChildSet $recordChildSet = new RecordChildSet(),
-	public readonly setChildSet $recordSetChildSet = new RecordSetChildSet()
+	public readonly setChildSet $recordSetChildSet = new setChildSet()
 	) {}
 
 	public function getName(): string
