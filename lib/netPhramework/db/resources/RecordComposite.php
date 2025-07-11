@@ -4,8 +4,8 @@ namespace netPhramework\db\resources;
 
 use netPhramework\core\Composite;
 use netPhramework\core\Resource;
-use netPhramework\db\core\HasRecordSet;
 use netPhramework\db\exceptions\MappingException;
+use netPhramework\db\traits\HasRecordSet;
 use netPhramework\exceptions\ResourceNotFound;
 
 class RecordComposite extends Composite implements RecordSetChild

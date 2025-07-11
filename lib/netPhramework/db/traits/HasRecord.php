@@ -1,6 +1,8 @@
 <?php
 
-namespace netPhramework\db\core;
+namespace netPhramework\db\traits;
+
+use netPhramework\db\core\Record;
 
 trait HasRecord
 {
