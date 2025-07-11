@@ -1,12 +1,12 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\application;
 
 use netPhramework\exceptions\Exception;
 use netPhramework\resources\Directory;
 use netPhramework\responding\Responder;
 
-abstract class Application
+abstract class Configurator
 {
 	/**
 	 * @param Responder $responder
@@ -27,12 +27,12 @@ abstract class Application
 	 * @return void
 	 * @throws Exception
 	 */
-    abstract public function buildPassiveTree(Directory $root):void;
+    abstract public function configurePassiveNode(Directory $root):void;
 
 	/**
 	 * @param Directory $root
 	 * @return void
 	 * @throws Exception
 	 */
-	abstract public function buildActiveTree(Directory $root):void;
+	abstract public function configureActiveNode(Directory $root):void;
 }

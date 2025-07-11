@@ -4,12 +4,17 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\RequestExchange;
-use netPhramework\resources\Resource;
+use netPhramework\resources\Directory;
 use netPhramework\responding\Response;
 
-readonly class Socket
+readonly class Node
 {
-	public function __construct(private Resource $root) {}
+	public Directory $root;
+
+	public function __construct()
+	{
+		$this->root = new Directory('');
+	}
 
 	/**
 	 * @param RequestExchange $exchange

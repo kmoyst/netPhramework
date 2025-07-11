@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\application;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
@@ -11,7 +11,7 @@ use netPhramework\networking\SmtpServer;
 use netPhramework\responding\FileManager;
 use netPhramework\responding\Responder;
 
-abstract readonly class SiteContext implements ExchangeContext
+abstract readonly class Context implements ExchangeContext
 {
 	public RequestInterpreter $interpreter;
 	public CallbackManager $callbackManager;
@@ -30,5 +30,5 @@ abstract readonly class SiteContext implements ExchangeContext
 		$this->responder 		= new Responder();
 		$this->smtpServer		= new SmtpServer($this->environment);
 	}
-	abstract public function getApplication(): Application;
+	abstract public function getConfigurator(): Configurator;
 }

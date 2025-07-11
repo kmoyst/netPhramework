@@ -2,22 +2,22 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\core\Application;
+use netPhramework\application\Configurator;
 use netPhramework\db\core\RecordMapper;
 use netPhramework\resources\Directory;
 use netPhramework\responding\Responder;
 
-class Administration extends Application
+class Administration extends Configurator
 {
 	public function __construct(protected readonly RecordMapper $mapper) {}
 
-	public function buildPassiveTree(Directory $root): void
+	public function configurePassiveNode(Directory $root): void
 	{
 		new PassiveTreeBuilder($this->mapper)
 			->addAllAssetsWithDefaults($root);
 	}
 
-	public function buildActiveTree(Directory $root): void
+	public function configureActiveNode(Directory $root): void
 	{
 		new ActiveTreeBuilder($this->mapper)
 			->addAllAssetsWithDefaults($root);

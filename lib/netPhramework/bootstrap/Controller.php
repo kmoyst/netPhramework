@@ -2,13 +2,13 @@
 
 namespace netPhramework\bootstrap;
 
+use netPhramework\application\Context;
 use netPhramework\core\Site;
-use netPhramework\core\SiteContext;
 use netPhramework\exceptions\Exception;
 
 readonly class Controller
 {
-	public function __construct(private SiteContext $context) {}
+	public function __construct(private Context $context) {}
 
 	public function initialize():self
 	{
@@ -22,8 +22,8 @@ readonly class Controller
 	public function run():void
 	{
 		$site = new Site();
-		$site->application = $this->context->getApplication();
-		$site->application->configureResponder($this->context->responder);
+		$site->configurator = $this->context->getConfigurator();
+		$site->configurator->configureResponder($this->context->responder);
 		try {
 			try {
 				$this->context->interpreter

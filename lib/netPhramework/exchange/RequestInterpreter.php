@@ -32,12 +32,12 @@ readonly class RequestInterpreter
 	{
 		if(($postParameters = $this->environment->postParameters) !== null)
 		{
-			$socket = $site->openActiveSocket();
+			$socket = $site->openActiveNode();
 			$location->getParameters()->clear()->merge($postParameters);
 		}
 		else
 		{
-			$socket = $site->openPassiveSocket();
+			$socket = $site->openPassiveNode();
 		}
 		return new Request($socket, $location);
 	}

@@ -2,32 +2,32 @@
 
 namespace netPhramework\core;
 
+use netPhramework\application\Configurator;
 use netPhramework\exceptions\Exception;
-use netPhramework\resources\Directory;
 
 class Site
 {
-	public Application $application;
+	public Configurator $configurator;
 
 	/**
-	 * @return Socket
+	 * @return Node
 	 * @throws Exception
 	 */
-	public function openPassiveSocket(): Socket
+	public function openPassiveNode(): Node
 	{
-		$root = new Directory('');
-		$this->application->buildPassiveTree($root);
-		return new Socket($root);
+		$socket = new Node();
+		$this->configurator->configurePassiveNode($socket->root);
+		return $socket;
 	}
 
 	/**
-	 * @return Socket
+	 * @return Node
 	 * @throws Exception
 	 */
-	public function openActiveSocket(): Socket
+	public function openActiveNode(): Node
 	{
-		$root = new Directory('');
-		$this->application->buildActiveTree($root);
-		return new Socket($root);
+		$socket = new Node();
+		$this->configurator->configureActiveNode($socket->root);
+		return $socket;
 	}
 }
