@@ -23,7 +23,7 @@ abstract class SiteContext implements RequestContext
 	)
 	{
 		$this->interpreter 		= new RequestInterpreter($this->environment);
-		$this->callbackManager 	= new CallbackManager('callback');
+		$this->callbackManager 	= new CallbackManager();
 		$this->responder 		= new Responder();
 	}
 	abstract public function getApplication(): Application;

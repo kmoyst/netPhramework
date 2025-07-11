@@ -19,7 +19,7 @@ readonly class CallbackManager
 	 *
 	 * @param string $callbackKey
 	 */
-	public function __construct(public string $callbackKey) {}
+	public function __construct(public string $callbackKey = 'callback') {}
 
 	/**
 	 * Generates a callback link (usually to be added to a form in passive node)
