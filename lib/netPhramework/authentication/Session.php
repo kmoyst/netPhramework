@@ -12,7 +12,9 @@ class Session
 
 	private SessionUserProvider $userProvider;
 	private array $sessionVars;
-	private(set) ?SessionUser $user = null;
+	private(set) ?SessionUser $user {
+		get{$this->start();return $this->user ?? null;}
+	}
 
 	public function __construct(?SessionUserProvider $userProvider = null)
 	{
