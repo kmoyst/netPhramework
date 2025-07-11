@@ -4,11 +4,11 @@ namespace netPhramework\db\resources;
 
 use netPhramework\common\IsNumeric;
 use netPhramework\common\StringPredicate as Predicate;
-use netPhramework\core\Composite;
-use netPhramework\core\Resource;
 use netPhramework\db\core\RecordSet;
 use netPhramework\db\resources\RecordSetChildSet as setChildSet;
 use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\resources\Composite;
+use netPhramework\resources\Resource;
 
 class AssetResource extends Composite
 {

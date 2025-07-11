@@ -4,7 +4,7 @@ namespace netPhramework\presentation;
 
 
 use netPhramework\common\Variables;
-use netPhramework\core\CallbackContext;
+use netPhramework\exchange\CallbackContext;
 use netPhramework\rendering\Viewable;
 
 class CallbackInput extends Viewable

@@ -1,9 +1,11 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\exchange;
 
-use netPhramework\locating\LocationFromUri;
+use netPhramework\core\Site;
+use netPhramework\exceptions\Exception;
 use netPhramework\locating\Location;
+use netPhramework\locating\LocationFromUri;
 
 readonly class RequestInterpreter
 {

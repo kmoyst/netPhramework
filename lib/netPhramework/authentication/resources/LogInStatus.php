@@ -2,10 +2,10 @@
 
 namespace netPhramework\authentication\resources;
 
-use netPhramework\core\Leaf;
-use netPhramework\core\Exchange;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\exchange\Exchange;
 use netPhramework\rendering\View;
+use netPhramework\resources\Leaf;
 
 class LogInStatus extends Leaf
 {

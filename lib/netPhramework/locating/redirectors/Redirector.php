@@ -3,10 +3,10 @@
 namespace netPhramework\locating\redirectors;
 
 use netPhramework\common\Variables;
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\Redirectable;
 use netPhramework\locating\rerouters\Rerouter;
+use netPhramework\resources\Leaf;
 use netPhramework\responding\ResponseCode;
 
 class Redirector extends Leaf

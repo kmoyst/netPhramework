@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\resources;
 
-use netPhramework\core\Resource;
+use netPhramework\resources\Resource;
 
 interface Asset extends Resource
 {

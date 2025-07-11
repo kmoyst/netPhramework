@@ -2,8 +2,8 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\core\ExchangeEnvironment;
-use netPhramework\core\RequestEnvironment;
+use netPhramework\exchange\ExchangeEnvironment;
+use netPhramework\exchange\RequestEnvironment;
 
 class Environment implements RequestEnvironment, ExchangeEnvironment
 {

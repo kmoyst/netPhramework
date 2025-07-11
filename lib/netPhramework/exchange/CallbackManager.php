@@ -1,12 +1,12 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\exchange;
 
 use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
-use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\locating\Location;
 use netPhramework\locating\LocationFromUri;
+use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\rendering\Encodable;
 
 /**

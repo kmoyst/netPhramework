@@ -1,8 +1,9 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\resources;
 
 use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exchange\Exchange;
 
 interface Resource
 {

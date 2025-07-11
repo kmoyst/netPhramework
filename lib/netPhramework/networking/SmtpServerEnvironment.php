@@ -1,8 +1,8 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\networking;
 
-interface SmtpServerContext
+interface SmtpServerEnvironment
 {
 	public string $smtpServerAddress{get;}
 	public string $smtpServerName{get;}

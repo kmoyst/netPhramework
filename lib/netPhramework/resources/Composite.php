@@ -1,7 +1,8 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\resources;
 
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\redirectors\RedirectToChild;
 
 abstract class Composite implements Resource

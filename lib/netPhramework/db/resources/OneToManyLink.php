@@ -2,12 +2,12 @@
 
 namespace netPhramework\db\resources;
 
-use netPhramework\core\Composite;
-use netPhramework\core\Resource;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
+use netPhramework\resources\Composite;
+use netPhramework\resources\Resource;
 
 class OneToManyLink extends Composite implements RecordChild
 {

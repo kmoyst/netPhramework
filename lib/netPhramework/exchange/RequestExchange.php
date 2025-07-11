@@ -1,8 +1,10 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\exchange;
 
+use netPhramework\authentication\Session;
 use netPhramework\common\Variables;
+use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;
 use netPhramework\locating\Location;
 use netPhramework\locating\MutablePath;
@@ -11,13 +13,15 @@ use netPhramework\networking\SmtpServer;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
+use netPhramework\responding\File;
+use netPhramework\responding\FileManager;
 use netPhramework\responding\FileTransfer;
 use netPhramework\responding\Presentation;
 use netPhramework\responding\Redirection;
 use netPhramework\responding\Response;
 use netPhramework\responding\ResponseCode;
 
-class SocketExchange implements Exchange
+class RequestExchange implements Exchange
 {
 	private(set) Variables $parameters {
 		get { return clone $this->location->getParameters(); }
@@ -26,15 +30,6 @@ class SocketExchange implements Exchange
 
 	private(set) MutablePath $path {
 		get { return clone $this->location->getPath(); }
-		set {}
-	}
-
-	public SmtpServer $smtpServer {
-		get {
-			if(!isset($this->smtpServer))
-				$this->smtpServer = new SmtpServer($this->environment);
-			return $this->smtpServer;
-		}
 		set {}
 	}
 
@@ -57,17 +52,19 @@ class SocketExchange implements Exchange
 	public readonly FileManager $fileManager;
 	public readonly ExchangeEnvironment $environment;
 	public readonly CallbackManager $callbackManager;
+	public readonly SmtpServer $smtpServer;
 
 	public function __construct
 	(
 		public readonly Location $location,
-		RequestContext $context
+		ExchangeContext $context
 	)
 	{
 		$this->session 			= $context->session;
 		$this->fileManager 		= $context->fileManager;
 		$this->environment 		= $context->environment;
 		$this->callbackManager 	= $context->callbackManager;
+		$this->smtpServer		= $context->smtpServer;
 	}
 
 	/**

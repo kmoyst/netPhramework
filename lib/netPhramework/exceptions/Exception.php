@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\exceptions;
 
 use netPhramework\bootstrap\Environment;
 use netPhramework\rendering\Wrappable;

@@ -1,9 +1,9 @@
 <?php
 
-namespace netPhramework\bootstrap;
+namespace netPhramework\core;
 
-use netPhramework\core\Directory;
-use netPhramework\core\Exception;
+use netPhramework\exceptions\Exception;
+use netPhramework\resources\Directory;
 use netPhramework\responding\Responder;
 
 abstract class Application

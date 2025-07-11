@@ -2,10 +2,10 @@
 
 namespace netPhramework\db\authentication\registration;
 
-use netPhramework\core\Exchange;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\resources\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\ReroutedPath;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\locating\rerouters\RerouteToSibling;

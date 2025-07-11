@@ -2,8 +2,6 @@
 
 namespace netPhramework\db\authentication\profile;
 
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -11,8 +9,10 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NotFound;
+use netPhramework\exchange\Exchange;
 use netPhramework\presentation\InputSet;
 use netPhramework\rendering\View;
+use netPhramework\resources\Leaf;
 
 class EditProfile extends Leaf
 {

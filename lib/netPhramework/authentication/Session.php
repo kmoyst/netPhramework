@@ -1,11 +1,7 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\authentication;
 
-use netPhramework\authentication\SessionUser;
-use netPhramework\authentication\SessionUserAggregate;
-use netPhramework\authentication\SessionUserProvider;
-use netPhramework\authentication\User;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\responding\ResponseCode;
 

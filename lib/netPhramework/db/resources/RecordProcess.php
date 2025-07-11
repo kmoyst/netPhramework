@@ -2,8 +2,8 @@
 
 namespace netPhramework\db\resources;
 
-use netPhramework\core\Leaf;
 use netPhramework\db\traits\HasRecord;
+use netPhramework\resources\Leaf;
 
 abstract class RecordProcess extends Leaf implements RecordChild
 {

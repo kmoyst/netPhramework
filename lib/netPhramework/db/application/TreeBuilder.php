@@ -2,13 +2,13 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\core\Directory;
-use netPhramework\core\Resource;
 use netPhramework\db\core\RecordMapper;
+use netPhramework\db\resources\AssetResource;
 use netPhramework\db\resources\OneToManyLink;
 use netPhramework\db\resources\RecordChild;
-use netPhramework\db\resources\AssetResource;
 use netPhramework\db\resources\RecordSetChild;
+use netPhramework\resources\Directory;
+use netPhramework\resources\Resource;
 
 class TreeBuilder
 {

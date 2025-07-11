@@ -2,8 +2,6 @@
 
 namespace netPhramework\responding;
 
-use netPhramework\core\File;
-
 class FileTransfer implements Response
 {
 	private File $file;

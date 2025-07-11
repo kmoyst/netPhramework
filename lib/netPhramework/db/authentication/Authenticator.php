@@ -3,8 +3,8 @@
 namespace netPhramework\db\authentication;
 use netPhramework\authentication\User as BaseUser;
 use netPhramework\db\authentication\User as DbUser;
-use netPhramework\core\Exception;
 use netPhramework\db\exceptions\FieldAbsent;
+use netPhramework\exceptions\Exception;
 
 class Authenticator implements \netPhramework\authentication\Authenticator
 {

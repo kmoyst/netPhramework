@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\authentication;
 
+use netPhramework\authentication\Session;
 use netPhramework\authentication\UserRole;
 use netPhramework\common\Variables;
-use netPhramework\core\Session;
 use netPhramework\db\core\Record;
 use netPhramework\db\core\RecordFinder;
 use netPhramework\db\exceptions\FieldAbsent;

@@ -2,9 +2,6 @@
 
 namespace netPhramework\db\authentication\profile;
 
-use netPhramework\core\Exception;
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -12,8 +9,11 @@ use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
+use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\redirectors\RedirectToSibling;
+use netPhramework\resources\Leaf;
 
 class SaveProfile extends Leaf
 {

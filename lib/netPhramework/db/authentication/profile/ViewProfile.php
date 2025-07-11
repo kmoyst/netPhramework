@@ -3,8 +3,6 @@
 namespace netPhramework\db\authentication\profile;
 
 use netPhramework\authentication\SessionUser;
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
 use netPhramework\db\authentication\presentation\ProfileViewManager;
 use netPhramework\db\authentication\User;
 use netPhramework\db\authentication\UserManager;
@@ -14,8 +12,10 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NotFound;
+use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
+use netPhramework\resources\Leaf;
 
 class ViewProfile extends Leaf
 {

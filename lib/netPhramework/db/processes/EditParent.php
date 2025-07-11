@@ -2,9 +2,6 @@
 
 namespace netPhramework\db\processes;
 
-use netPhramework\core\Exception;
-use netPhramework\core\Exchange;
-use netPhramework\db\resources\RecordProcess;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
@@ -17,7 +14,10 @@ use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewBuilder;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
+use netPhramework\db\resources\RecordProcess;
+use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;

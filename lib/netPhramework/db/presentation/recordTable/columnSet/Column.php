@@ -2,10 +2,10 @@
 
 namespace netPhramework\db\presentation\recordTable\columnSet;
 
-use netPhramework\core\Exception;
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
+use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Encodable;
 
 interface Column

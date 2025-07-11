@@ -2,15 +2,15 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\core\Directory;
-use netPhramework\db\resources\OneToManyLink;
-use netPhramework\db\processes\Add;
-use netPhramework\db\processes\Browse;
-use netPhramework\db\processes\Edit;
 use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
+use netPhramework\db\processes\Add;
+use netPhramework\db\processes\Browse;
+use netPhramework\db\processes\Edit;
+use netPhramework\db\resources\OneToManyLink;
+use netPhramework\resources\Directory;
 
 class PassiveTreeBuilder extends TreeBuilder
 {

@@ -3,15 +3,15 @@
 namespace netPhramework\authentication\resources;
 
 use netPhramework\authentication\LogInManager;
-use netPhramework\core\Exception;
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\exceptions\Exception;
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\ReroutedPath;
+use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\locating\rerouters\RerouteToRoot;
 use netPhramework\locating\rerouters\RerouteToSibling;
-use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
+use netPhramework\resources\Leaf;
 
 class LogInPage extends Leaf
 {

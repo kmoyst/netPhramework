@@ -4,14 +4,14 @@ namespace netPhramework\authentication\resources;
 
 use netPhramework\authentication\Authenticator;
 use netPhramework\authentication\LogInManager;
-use netPhramework\core\Leaf;
-use netPhramework\core\Exception;
-use netPhramework\core\Exchange;
+use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\InvalidPassword;
+use netPhramework\exceptions\InvalidUsername;
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
 use netPhramework\locating\redirectors\RedirectToSibling as toSibling;
-use netPhramework\exceptions\InvalidPassword;
-use netPhramework\exceptions\InvalidUsername;
+use netPhramework\resources\Leaf;
 
 class Authenticate extends Leaf
 {

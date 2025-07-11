@@ -2,15 +2,15 @@
 
 namespace netPhramework\db\authentication\recovery;
 
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\exceptions\InvalidSession;
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\ReroutedPath;
 use netPhramework\locating\rerouters\Rerouter;
 use netPhramework\locating\rerouters\RerouteToSibling as toSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
+use netPhramework\resources\Leaf;
 
 class ForgotPassword extends Leaf
 {

@@ -2,8 +2,8 @@
 
 namespace netPhramework\db\resources;
 
-use netPhramework\core\ResourceIterator;
 use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\resources\ResourceIterator;
 
 class RecordSetChildSet extends ResourceIterator
 {

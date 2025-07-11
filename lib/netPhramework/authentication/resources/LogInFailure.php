@@ -2,9 +2,9 @@
 
 namespace netPhramework\authentication\resources;
 
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
+use netPhramework\exchange\Exchange;
 use netPhramework\rendering\View;
+use netPhramework\resources\Leaf;
 
 class LogInFailure extends Leaf
 {

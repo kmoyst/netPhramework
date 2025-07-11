@@ -2,7 +2,8 @@
 
 namespace netPhramework\core;
 
-use netPhramework\bootstrap\Application;
+use netPhramework\exceptions\Exception;
+use netPhramework\resources\Directory;
 
 class Site
 {

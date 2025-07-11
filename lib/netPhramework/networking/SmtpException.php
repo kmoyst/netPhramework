@@ -2,7 +2,7 @@
 
 namespace netPhramework\networking;
 
-use netPhramework\core\Exception;
+use netPhramework\exceptions\Exception;
 
 class SmtpException extends Exception
 {

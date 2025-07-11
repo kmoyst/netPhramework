@@ -2,9 +2,6 @@
 
 namespace netPhramework\db\authentication\recovery;
 
-use netPhramework\core\Exception;
-use netPhramework\core\Exchange;
-use netPhramework\core\Leaf;
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\authentication\UserProfile;
@@ -12,6 +9,8 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
+use netPhramework\exceptions\Exception;
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\Location;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
@@ -21,6 +20,7 @@ use netPhramework\locating\UriFromLocation;
 use netPhramework\networking\EmailDelivery;
 use netPhramework\networking\EmailException;
 use netPhramework\networking\StreamSocketException;
+use netPhramework\resources\Leaf;
 use netPhramework\responding\ResponseCode;
 use Random\RandomException;
 

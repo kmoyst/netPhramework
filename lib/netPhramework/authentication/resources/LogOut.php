@@ -2,12 +2,12 @@
 
 namespace netPhramework\authentication\resources;
 
-use netPhramework\core\Leaf;
-use netPhramework\core\Exception;
-use netPhramework\core\Exchange;
+use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\InvalidSession;
+use netPhramework\exchange\Exchange;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
-use netPhramework\exceptions\InvalidSession;
+use netPhramework\resources\Leaf;
 
 class LogOut extends Leaf
 {

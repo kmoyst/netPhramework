@@ -2,17 +2,18 @@
 
 namespace netPhramework\networking;
 
-use netPhramework\core\SmtpServerContext;
-
 readonly class SmtpServer
 {
 	private StreamSocket $socket;
 	private string $serverName;
 
-	public function __construct(SmtpServerContext $context)
+	public function __construct
+	(
+		SmtpServerEnvironment $environment
+	)
 	{
-		$this->socket 	  = new StreamSocket($context->smtpServerAddress);
-		$this->serverName = $context->smtpServerName;
+		$this->socket = new StreamSocket($environment->smtpServerAddress);
+		$this->serverName = $environment->smtpServerName;
 	}
 
 	/**

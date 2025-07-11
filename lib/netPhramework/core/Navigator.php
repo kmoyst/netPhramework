@@ -2,8 +2,9 @@
 
 namespace netPhramework\core;
 
-use netPhramework\locating\Path;
 use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\locating\Path;
+use netPhramework\resources\Resource;
 
 class Navigator
 {

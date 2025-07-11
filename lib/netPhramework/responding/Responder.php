@@ -3,7 +3,6 @@
 namespace netPhramework\responding;
 
 use netPhramework\common\FileFinder;
-use netPhramework\core\File;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Wrappable;

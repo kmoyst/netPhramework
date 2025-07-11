@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\resources;
 
 use netPhramework\common\Utils;
 use netPhramework\exceptions\ResourceNotFound;

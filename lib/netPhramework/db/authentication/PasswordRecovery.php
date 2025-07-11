@@ -3,12 +3,12 @@
 namespace netPhramework\db\authentication;
 
 use netPhramework\common\Variables;
-use netPhramework\core\Exception;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordRetrievalException;
+use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use Random\RandomException;
 

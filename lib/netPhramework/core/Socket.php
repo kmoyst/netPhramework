@@ -2,6 +2,9 @@
 
 namespace netPhramework\core;
 
+use netPhramework\exceptions\Exception;
+use netPhramework\exchange\RequestExchange;
+use netPhramework\resources\Resource;
 use netPhramework\responding\Response;
 
 readonly class Socket
@@ -9,10 +12,10 @@ readonly class Socket
 	public function __construct(private Resource $root) {}
 
 	/**
-	 * @param SocketExchange $exchange
+	 * @param RequestExchange $exchange
 	 * @return Response
 	 */
-    public function processRequest(SocketExchange $exchange):Response
+    public function processRequest(RequestExchange $exchange):Response
 	{
         try
 		{

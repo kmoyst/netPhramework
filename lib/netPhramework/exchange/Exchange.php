@@ -1,15 +1,19 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\exchange;
 
+use netPhramework\authentication\Session;
 use netPhramework\common\Variables;
+use netPhramework\exceptions\Exception;
+use netPhramework\locating\Location;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\networking\SmtpServer;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
+use netPhramework\responding\File;
+use netPhramework\responding\FileManager;
 use netPhramework\responding\ResponseCode;
-use netPhramework\locating\Location;
 
 /**
  * The central mediator for the Request-Response cycle

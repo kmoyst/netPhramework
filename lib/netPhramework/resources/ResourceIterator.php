@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\resources;
 
 use Iterator;
 use netPhramework\common\KeyedIterator;

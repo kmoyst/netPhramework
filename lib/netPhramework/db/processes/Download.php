@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\processes;
 
-use netPhramework\core\Exchange;
-use netPhramework\db\resources\RecordProcess;
 use netPhramework\db\mapping\File;
+use netPhramework\db\resources\RecordProcess;
+use netPhramework\exchange\Exchange;
 
 class Download extends RecordProcess
 {

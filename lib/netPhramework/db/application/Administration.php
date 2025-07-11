@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\bootstrap\Application;
-use netPhramework\core\Directory;
+use netPhramework\core\Application;
 use netPhramework\db\core\RecordMapper;
+use netPhramework\resources\Directory;
 use netPhramework\responding\Responder;
 
 class Administration extends Application
