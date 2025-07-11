@@ -11,7 +11,7 @@ readonly class Controller
 
 	public function run():void
 	{
-		$this->initialize()->configure()->exchange();
+		$this->initialize()->configure()->process();
 	}
 
 	private function initialize():self
@@ -30,7 +30,7 @@ readonly class Controller
 		return $this;
 	}
 
-	private function exchange():void
+	private function process():void
 	{
 		try {
 			try {
