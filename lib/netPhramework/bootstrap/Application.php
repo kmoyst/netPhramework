@@ -9,6 +9,20 @@ use netPhramework\responding\Responder;
 abstract class Application
 {
 	/**
+	 * @param Responder $responder
+	 * @return void
+	 */
+	public function configureResponder(Responder $responder):void
+	{
+		$responder->wrapper->addStyleSheet('framework-stylesheet');
+		$responder->templateFinder
+			->directory('../html')
+			->directory(__DIR__ . '/../../../html')
+			->extension('phtml')
+			->extension('css')
+		;
+	}
+	/**
 	 * @param Directory $root
 	 * @return void
 	 * @throws Exception
@@ -21,15 +35,4 @@ abstract class Application
 	 * @throws Exception
 	 */
 	abstract public function buildActiveTree(Directory $root):void;
-
-	public function configureResponder(Responder $responder):void
-	{
-		$responder->wrapper->addStyleSheet('framework-stylesheet');
-		$responder->templateFinder
-			->directory('../html')
-			->directory(__DIR__ . '/../../../html')
-			->extension('phtml')
-			->extension('css')
-		;
-	}
 }
