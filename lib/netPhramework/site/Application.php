@@ -3,30 +3,21 @@
 namespace netPhramework\site;
 
 use netPhramework\exceptions\Exception;
+use netPhramework\resources\Directory;
 
-class Application
+interface Application
 {
-	public NodeBuilder $nodeBuilder;
-
 	/**
-	 * @return Node
+	 * @param Directory $root
+	 * @return void
 	 * @throws Exception
 	 */
-	public function openPassiveNode(): Node
-	{
-		$node = new Node();
-		$this->nodeBuilder->buildPassiveNode($node->root);
-		return $node;
-	}
+    public function buildPassiveNode(Directory $root):void;
 
 	/**
-	 * @return Node
+	 * @param Directory $root
+	 * @return void
 	 * @throws Exception
 	 */
-	public function openActiveNode(): Node
-	{
-		$node = new Node();
-		$this->nodeBuilder->buildActiveNode($node->root);
-		return $node;
-	}
+	public function buildActiveNode(Directory $root):void;
 }

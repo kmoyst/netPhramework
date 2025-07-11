@@ -17,7 +17,7 @@ abstract class Context implements RequestContext
 	public CallbackManager $callbackManager;
 	public Responder $responder;
 	public SmtpServer $smtpServer;
-	public Application $app;
+	public Site $site;
 
 	public function __construct
 	(
@@ -26,7 +26,7 @@ abstract class Context implements RequestContext
 	public FileManager $fileManager = new FileManager(),
 	)
 	{
-		$this->app				= new Application();
+		$this->site				= new Site();
 		$this->interpreter 		= new RequestInterpreter($this->environment);
 		$this->callbackManager 	= new CallbackManager();
 		$this->responder 		= new Responder();
@@ -42,5 +42,5 @@ abstract class Context implements RequestContext
 			->extension('css')
 		;
 	}
-	abstract public function getNodeBuilder(): NodeBuilder;
+	abstract public function getApplication(): Application;
 }

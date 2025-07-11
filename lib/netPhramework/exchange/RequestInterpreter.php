@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\site\Application;
+use netPhramework\site\Site;
 use netPhramework\exceptions\Exception;
 
 readonly class RequestInterpreter
@@ -10,11 +10,11 @@ readonly class RequestInterpreter
 	public function __construct(private RequestEnvironment $environment) {}
 
 	/**
-	 * @param Application $application
+	 * @param Site $application
 	 * @return RequestProcess
 	 * @throws Exception
 	 */
-	public function interpret(Application $application):RequestProcess
+	public function interpret(Site $application):RequestProcess
 	{
 		if($this->environment->postParameters === null)
 			return new PassiveProcess($application->openPassiveNode());
