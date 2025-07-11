@@ -14,9 +14,7 @@ class SessionUserAggregate implements SessionUser, SessionUserProvider
 	private string $username;
 	private string $password;
 
-	private(set) UserRole $role {
-		get { return $this->role; }
-	}
+	private(set) UserRole $role;
 
 	public function __construct(
 		private readonly string $usernameKey = 'username',

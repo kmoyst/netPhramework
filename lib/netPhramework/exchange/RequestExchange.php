@@ -43,10 +43,7 @@ class RequestExchange implements Exchange
 		set {}
 	}
 
-	private(set) Response $response {
-		get { return $this->response; }
-		set (Response $response) { $this->response = $response; }
-	}
+	private(set) Response $response;
 
 	public readonly Session $session;
 	public readonly FileManager $fileManager;

@@ -6,7 +6,8 @@ class UserLoggingIn implements User
 {
 	private string $username;
 	private string $password;
-	private(set) UserRole $role {get{return UserRole::VISITOR;} set{}}
+
+	private(set) UserRole $role = UserRole::VISITOR;
 
 	public function getUsername(): string
 	{
