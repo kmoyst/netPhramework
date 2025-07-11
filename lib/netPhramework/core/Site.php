@@ -2,12 +2,11 @@
 
 namespace netPhramework\core;
 
-use netPhramework\application\Configurator;
 use netPhramework\exceptions\Exception;
 
 class Site
 {
-	public Configurator $configurator;
+	public NodeBuilder $configurator;
 
 	/**
 	 * @return Node
@@ -16,7 +15,7 @@ class Site
 	public function openPassiveNode(): Node
 	{
 		$socket = new Node();
-		$this->configurator->configurePassiveNode($socket->root);
+		$this->configurator->buildPassiveNode($socket->root);
 		return $socket;
 	}
 
@@ -27,7 +26,7 @@ class Site
 	public function openActiveNode(): Node
 	{
 		$socket = new Node();
-		$this->configurator->configureActiveNode($socket->root);
+		$this->configurator->buildActiveNode($socket->root);
 		return $socket;
 	}
 }

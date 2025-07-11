@@ -15,11 +15,23 @@ use netPhramework\exceptions\InvalidPassword;
 class User implements \netPhramework\authentication\User
 {
 	private UserProfile $profile;
+	private(set) UserRole $role
+	{
+		get {
+			$role = $this->record->getValue($this->fields->role);
+			if($role === null)
+				throw new AuthenticationException("Stored Role Is Empty");
+			if(UserRole::tryFrom($role) === null)
+				throw new AuthenticationException("Stored role is invalid");
+			return UserRole::tryFrom($role);
+		}
+	}
 
 	public function __construct(
 		public readonly Record $record,
 		public readonly UserRole $defaultRole,
-		public readonly UserFieldNames $fields) {}
+		public readonly UserFieldNames $fields)
+	{}
 
 	/**
 	 * @param Variables $vars

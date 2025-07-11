@@ -10,7 +10,6 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\locating\redirectors\RedirectToSibling;
 use netPhramework\resources\Leaf;
@@ -29,7 +28,6 @@ class SaveProfile extends Leaf
      * @throws RecordNotFound
      * @throws RecordRetrievalException
      * @throws Exception
-     * @throws InvalidSession
      */
 	public function handleExchange(Exchange $exchange): void
 	{

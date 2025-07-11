@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\application;
+namespace netPhramework\core;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
@@ -11,12 +11,13 @@ use netPhramework\networking\SmtpServer;
 use netPhramework\responding\FileManager;
 use netPhramework\responding\Responder;
 
-abstract readonly class Context implements ExchangeContext
+abstract class Context implements ExchangeContext
 {
 	public RequestInterpreter $interpreter;
 	public CallbackManager $callbackManager;
 	public Responder $responder;
 	public SmtpServer $smtpServer;
+	public Site $site;
 
 	public function __construct
 	(
@@ -25,10 +26,21 @@ abstract readonly class Context implements ExchangeContext
 	public FileManager $fileManager = new FileManager(),
 	)
 	{
+		$this->site				= new Site();
 		$this->interpreter 		= new RequestInterpreter($this->environment);
 		$this->callbackManager 	= new CallbackManager();
 		$this->responder 		= new Responder();
 		$this->smtpServer		= new SmtpServer($this->environment);
 	}
-	abstract public function getConfigurator(): Configurator;
+	public function configureResponder(Responder $responder):void
+	{
+		$responder->wrapper->addStyleSheet('framework-stylesheet');
+		$responder->templateFinder
+			->directory('../html')
+			->directory(__DIR__ . '/../../../html')
+			->extension('phtml')
+			->extension('css')
+		;
+	}
+	abstract public function getNodeBuilder(): NodeBuilder;
 }

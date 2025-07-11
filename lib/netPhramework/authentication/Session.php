@@ -12,7 +12,10 @@ class Session
 
 	private SessionUserProvider $userProvider;
 	private array $sessionVars;
-	private ?SessionUser $user = null;
+	private(set) ?SessionUser $user = null {
+		get { $this->start(); return $this->user; }
+		set(?SessionUser $user)	{ $this->user = $user; }
+	}
 
 	public function __construct(?SessionUserProvider $userProvider = null)
 	{
@@ -118,16 +121,6 @@ class Session
 	{
 		$this->start();
 		return $this->user !== null;
-	}
-
-	/**
-	 * @return User|null
-	 * @throws InvalidSession
-	 */
-	public function getUser(): ?User
-	{
-		$this->start();
-		return $this->user;
 	}
 
 	/**

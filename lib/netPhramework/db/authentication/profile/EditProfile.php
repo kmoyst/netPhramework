@@ -7,7 +7,6 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\AuthenticationException;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NotFound;
 use netPhramework\exchange\Exchange;
 use netPhramework\presentation\InputSet;
@@ -23,7 +22,6 @@ class EditProfile extends Leaf
 	 * @return void
 	 * @throws AuthenticationException
 	 * @throws FieldAbsent
-	 * @throws InvalidSession
 	 * @throws MappingException
 	 * @throws RecordRetrievalException
 	 * @throws NotFound

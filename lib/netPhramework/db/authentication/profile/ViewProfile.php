@@ -34,7 +34,7 @@ class ViewProfile extends Leaf
 	public function handleExchange(Exchange $exchange): void
 	{
 		$session 	 = $exchange->session;
-		$user   	 = $this->findUser($session->getUser());
+		$user   	 = $this->findUser($session->user);
 		$profile	 = $user->getProfile()
 		;
 		$viewManager = new ProfileViewManager($user)
@@ -55,7 +55,6 @@ class ViewProfile extends Leaf
 	 * @return User
 	 * @throws AuthenticationException
 	 * @throws FieldAbsent
-	 * @throws InvalidSession
 	 * @throws MappingException
 	 * @throws NotFound
 	 * @throws RecordRetrievalException

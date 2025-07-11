@@ -11,7 +11,6 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NotFound;
 
 readonly class UserManager
@@ -52,7 +51,6 @@ readonly class UserManager
 	 * @throws MappingException
 	 * @throws NotFound
 	 * @throws RecordRetrievalException
-	 * @throws InvalidSession
 	 */
 	public function findByUsername(string|Variables|Session $source):?User
 	{
@@ -63,7 +61,7 @@ readonly class UserManager
 		}
 		elseif($source instanceof Session)
 		{
-			$username = $source->getUser()->getUsername();
+			$username = $source->user->getUsername();
 		}
 		else
 		{

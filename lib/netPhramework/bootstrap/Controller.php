@@ -2,15 +2,19 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\application\Context;
-use netPhramework\core\Site;
+use netPhramework\core\Context;
 use netPhramework\exceptions\Exception;
 
 readonly class Controller
 {
 	public function __construct(private Context $context) {}
 
-	public function initialize():self
+	public function run():void
+	{
+		$this->initialize()->configure()->exchange();
+	}
+
+	private function initialize():self
 	{
 		$handler = new Handler($this->context->environment->inDevelopment);
 		register_shutdown_function([$handler, 'shutdown']);
@@ -19,15 +23,18 @@ readonly class Controller
 		return $this;
 	}
 
-	public function run():void
+	private function configure():self
 	{
-		$site = new Site();
-		$site->configurator = $this->context->getConfigurator();
-		$site->configurator->configureResponder($this->context->responder);
+		$this->context->configureResponder($this->context->responder);
+		return $this;
+	}
+
+	private function exchange():void
+	{
 		try {
 			try {
 				$this->context->interpreter
-					->interpretRequest($site)
+					->interpretRequest($this->context->site)
 					->process($this->context)
 					->deliver($this->context->responder);
 			} catch (Exception $exception) {

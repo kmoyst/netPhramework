@@ -6,6 +6,7 @@ class UserLoggingIn implements User
 {
 	private string $username;
 	private string $password;
+	private(set) UserRole $role {get{return UserRole::VISITOR;}}
 
 	public function getUsername(): string
 	{
@@ -27,10 +28,5 @@ class UserLoggingIn implements User
 	{
 		$this->password = $password;
 		return $this;
-	}
-
-	public function getRole(): UserRole
-	{
-		return UserRole::VISITOR;
 	}
 }
