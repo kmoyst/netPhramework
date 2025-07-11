@@ -7,7 +7,7 @@ use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\InvalidValue;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\resources\RecordSetProcess;
+use netPhramework\db\assets\RecordSetProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exchange\Exchange;

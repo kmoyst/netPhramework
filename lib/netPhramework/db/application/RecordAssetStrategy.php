@@ -3,7 +3,7 @@
 namespace netPhramework\db\application;
 
 use netPhramework\db\core\RecordMapper;
-use netPhramework\db\resources\Asset;
+use netPhramework\db\assets\Asset;
 
 interface RecordAssetStrategy
 {

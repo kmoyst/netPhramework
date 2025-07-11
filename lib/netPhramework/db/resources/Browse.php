@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\processes;
+namespace netPhramework\db\resources;
 
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
@@ -10,7 +10,7 @@ use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewBuilder;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
-use netPhramework\db\resources\RecordSetProcess;
+use netPhramework\db\assets\RecordSetProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;

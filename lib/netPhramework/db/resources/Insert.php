@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\db\processes;
+namespace netPhramework\db\resources;
 
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\resources\RecordProcess;
-use netPhramework\db\resources\RecordSetProcess;
+use netPhramework\db\assets\RecordProcess;
+use netPhramework\db\assets\RecordSetProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;

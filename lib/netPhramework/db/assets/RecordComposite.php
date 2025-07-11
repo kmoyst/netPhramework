@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\resources;
+namespace netPhramework\db\assets;
 
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\traits\HasRecordSet;
