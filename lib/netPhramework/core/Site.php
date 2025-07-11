@@ -14,9 +14,9 @@ class Site
 	 */
 	public function openPassiveNode(): Node
 	{
-		$socket = new Node();
-		$this->nodeBuilder->buildPassiveNode($socket->root);
-		return $socket;
+		$node = new Node();
+		$this->nodeBuilder->buildPassiveNode($node->root);
+		return $node;
 	}
 
 	/**
@@ -25,8 +25,8 @@ class Site
 	 */
 	public function openActiveNode(): Node
 	{
-		$socket = new Node();
-		$this->nodeBuilder->buildActiveNode($socket->root);
-		return $socket;
+		$node = new Node();
+		$this->nodeBuilder->buildActiveNode($node->root);
+		return $node;
 	}
 }
