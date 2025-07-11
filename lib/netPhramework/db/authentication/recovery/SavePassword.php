@@ -12,9 +12,9 @@ use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
-use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\resources\Leaf;
+use netPhramework\routing\redirectors\Redirector;
+use netPhramework\routing\redirectors\RedirectToRoot;
 
 class SavePassword extends Leaf
 {

@@ -8,7 +8,7 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\exceptions\Exception;
-use netPhramework\locating\MutablePath;
+use netPhramework\routing\MutablePath;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Viewable;
 

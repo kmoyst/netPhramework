@@ -7,6 +7,7 @@ use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
+use netPhramework\transferring\File;
 
 readonly class Responder
 {

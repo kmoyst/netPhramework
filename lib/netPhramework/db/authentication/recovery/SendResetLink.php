@@ -12,16 +12,16 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
-use netPhramework\locating\Location;
-use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
-use netPhramework\locating\rerouters\Rerouter;
-use netPhramework\locating\rerouters\RerouteToSibling as toSibling;
-use netPhramework\locating\UriFromLocation;
-use netPhramework\networking\EmailDelivery;
-use netPhramework\networking\EmailException;
-use netPhramework\networking\StreamSocketException;
 use netPhramework\resources\Leaf;
+use netPhramework\routing\Location;
+use netPhramework\routing\redirectors\Redirector;
+use netPhramework\routing\redirectors\RedirectToRoot as toRoot;
+use netPhramework\routing\rerouters\Rerouter;
+use netPhramework\routing\rerouters\RerouteToSibling as toSibling;
+use netPhramework\routing\UriFromLocation;
+use netPhramework\transferring\EmailDelivery;
+use netPhramework\transferring\EmailException;
+use netPhramework\transferring\StreamSocketException;
 use Random\RandomException;
 
 class SendResetLink extends Leaf

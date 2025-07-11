@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\locating\LocationFromUri;
+use netPhramework\routing\LocationFromUri;
 
 class ActiveProcess extends RequestProcess
 {

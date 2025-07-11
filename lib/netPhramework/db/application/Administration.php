@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\core\NodeBuilder;
+use netPhramework\site\NodeBuilder;
 use netPhramework\db\core\RecordMapper;
 use netPhramework\resources\Directory;
 

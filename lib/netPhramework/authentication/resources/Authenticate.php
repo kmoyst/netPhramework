@@ -8,9 +8,9 @@ use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 use netPhramework\exchange\Exchange;
-use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
-use netPhramework\locating\redirectors\RedirectToSibling as toSibling;
+use netPhramework\routing\redirectors\Redirector;
+use netPhramework\routing\redirectors\RedirectToRoot as toRoot;
+use netPhramework\routing\redirectors\RedirectToSibling as toSibling;
 use netPhramework\resources\Leaf;
 
 class Authenticate extends Leaf

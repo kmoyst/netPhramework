@@ -3,10 +3,10 @@
 namespace netPhramework\rendering;
 
 use netPhramework\common\FileFinder;
-use netPhramework\locating\ReadableLocation;
-use netPhramework\locating\Path;
-use netPhramework\locating\UriFromLocation;
-use netPhramework\locating\UriFromPath;
+use netPhramework\routing\ReadableLocation;
+use netPhramework\routing\Path;
+use netPhramework\routing\UriFromLocation;
+use netPhramework\routing\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
 use Stringable;
 

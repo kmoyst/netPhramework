@@ -11,7 +11,7 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
-use netPhramework\locating\redirectors\RedirectToSibling;
+use netPhramework\routing\redirectors\RedirectToSibling;
 use netPhramework\resources\Leaf;
 
 class SaveProfile extends Leaf

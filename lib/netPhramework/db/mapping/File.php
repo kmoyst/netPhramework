@@ -4,7 +4,7 @@ namespace netPhramework\db\mapping;
 
 use netPhramework\db\core\Record;
 
-abstract class File implements \netPhramework\exchange\File
+abstract class File implements \netPhramework\transferring\File
 {
 	protected Record $record;
 

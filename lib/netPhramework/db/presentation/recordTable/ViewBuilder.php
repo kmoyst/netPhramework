@@ -16,7 +16,7 @@ use netPhramework\db\presentation\recordTable\{collation\CollationMap,
 	rowSet\RowSet,
 	rowSet\RowSetFactory};
 use netPhramework\exceptions\Exception;
-use netPhramework\locating\MutablePath;
+use netPhramework\routing\MutablePath;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 

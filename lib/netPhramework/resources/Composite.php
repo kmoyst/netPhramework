@@ -3,7 +3,7 @@
 namespace netPhramework\resources;
 
 use netPhramework\exchange\Exchange;
-use netPhramework\locating\redirectors\RedirectToChild;
+use netPhramework\routing\redirectors\RedirectToChild;
 
 abstract class Composite implements Resource
 {

@@ -7,7 +7,7 @@ use netPhramework\db\processes\Insert;
 use netPhramework\db\processes\Update;
 use netPhramework\db\resources\OneToManyLink;
 use netPhramework\db\resources\RecordProcess;
-use netPhramework\locating\redirectors\Redirector;
+use netPhramework\routing\redirectors\Redirector;
 use netPhramework\resources\Directory;
 
 class ActiveTreeBuilder extends TreeBuilder

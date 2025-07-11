@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\networking\SmtpServerEnvironment;
+use netPhramework\transferring\SmtpServerEnvironment;
 
 interface ExchangeEnvironment extends SmtpServerEnvironment
 {

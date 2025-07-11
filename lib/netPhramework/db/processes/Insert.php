@@ -8,8 +8,8 @@ use netPhramework\db\resources\RecordProcess;
 use netPhramework\db\resources\RecordSetProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
-use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToParent;
+use netPhramework\routing\redirectors\Redirector;
+use netPhramework\routing\redirectors\RedirectToParent;
 
 class Insert extends RecordSetProcess
 {

@@ -3,10 +3,10 @@
 namespace netPhramework\exceptions;
 
 use netPhramework\bootstrap\Environment;
+use netPhramework\rendering\Wrappable;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\Response;
 use netPhramework\exchange\ResponseCode;
-use netPhramework\rendering\Wrappable;
 
 class Exception extends \Exception implements Wrappable, Response
 {

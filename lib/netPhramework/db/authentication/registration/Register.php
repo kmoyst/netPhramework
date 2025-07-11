@@ -11,9 +11,9 @@ use netPhramework\db\resources\RecordSetProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exchange\Exchange;
-use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToRoot;
-use netPhramework\locating\redirectors\RedirectToSibling;
+use netPhramework\routing\redirectors\Redirector;
+use netPhramework\routing\redirectors\RedirectToRoot;
+use netPhramework\routing\redirectors\RedirectToSibling;
 
 class Register extends RecordSetProcess
 {

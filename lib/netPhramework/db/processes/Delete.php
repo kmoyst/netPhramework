@@ -6,8 +6,8 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\resources\RecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
-use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToParent;
+use netPhramework\routing\redirectors\Redirector;
+use netPhramework\routing\redirectors\RedirectToParent;
 
 class Delete extends RecordProcess
 {

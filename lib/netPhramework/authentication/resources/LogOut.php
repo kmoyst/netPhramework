@@ -5,8 +5,8 @@ namespace netPhramework\authentication\resources;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
-use netPhramework\locating\redirectors\Redirector;
-use netPhramework\locating\redirectors\RedirectToRoot;
+use netPhramework\routing\redirectors\Redirector;
+use netPhramework\routing\redirectors\RedirectToRoot;
 use netPhramework\resources\Leaf;
 
 class LogOut extends Leaf
