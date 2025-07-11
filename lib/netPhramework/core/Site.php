@@ -6,7 +6,7 @@ use netPhramework\exceptions\Exception;
 
 class Site
 {
-	public NodeBuilder $configurator;
+	public NodeBuilder $nodeBuilder;
 
 	/**
 	 * @return Node
@@ -15,7 +15,7 @@ class Site
 	public function openPassiveNode(): Node
 	{
 		$socket = new Node();
-		$this->configurator->buildPassiveNode($socket->root);
+		$this->nodeBuilder->buildPassiveNode($socket->root);
 		return $socket;
 	}
 
@@ -26,7 +26,7 @@ class Site
 	public function openActiveNode(): Node
 	{
 		$socket = new Node();
-		$this->configurator->buildActiveNode($socket->root);
+		$this->nodeBuilder->buildActiveNode($socket->root);
 		return $socket;
 	}
 }

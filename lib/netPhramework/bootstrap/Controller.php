@@ -26,6 +26,7 @@ readonly class Controller
 	private function configure():self
 	{
 		$this->context->configureResponder($this->context->responder);
+		$this->context->site->nodeBuilder = $this->context->getNodeBuilder();
 		return $this;
 	}
 
