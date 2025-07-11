@@ -25,6 +25,7 @@ class User implements \netPhramework\authentication\User
 				throw new AuthenticationException("Stored role is invalid");
 			return UserRole::tryFrom($role);
 		}
+		set {}
 	}
 
 	public function __construct(
