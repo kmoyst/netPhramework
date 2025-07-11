@@ -11,10 +11,10 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exchange\Exchange;
+use netPhramework\exchange\ResponseCode;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot;
 use netPhramework\resources\Leaf;
-use netPhramework\responding\ResponseCode;
 
 class SavePassword extends Leaf
 {

@@ -11,9 +11,6 @@ use netPhramework\locating\redirectors\Redirector;
 use netPhramework\networking\SmtpServer;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\View;
-use netPhramework\responding\File;
-use netPhramework\responding\FileManager;
-use netPhramework\responding\ResponseCode;
 
 /**
  * The central mediator for the Request-Response cycle

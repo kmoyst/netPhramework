@@ -3,7 +3,7 @@
 namespace netPhramework\authentication;
 
 use netPhramework\exceptions\InvalidSession;
-use netPhramework\responding\ResponseCode;
+use netPhramework\exchange\ResponseCode;
 
 class Session
 {

@@ -13,13 +13,6 @@ use netPhramework\networking\SmtpServer;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
-use netPhramework\responding\File;
-use netPhramework\responding\FileManager;
-use netPhramework\responding\FileTransfer;
-use netPhramework\responding\Presentation;
-use netPhramework\responding\Redirection;
-use netPhramework\responding\Response;
-use netPhramework\responding\ResponseCode;
 
 class RequestExchange implements Exchange
 {

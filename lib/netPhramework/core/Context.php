@@ -5,11 +5,11 @@ namespace netPhramework\core;
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
 use netPhramework\exchange\CallbackManager;
+use netPhramework\exchange\FileManager;
 use netPhramework\exchange\RequestContext;
 use netPhramework\exchange\RequestInterpreter;
+use netPhramework\exchange\Responder;
 use netPhramework\networking\SmtpServer;
-use netPhramework\responding\FileManager;
-use netPhramework\responding\Responder;
 
 abstract class Context implements RequestContext
 {

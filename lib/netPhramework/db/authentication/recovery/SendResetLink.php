@@ -11,6 +11,7 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
+use netPhramework\exchange\ResponseCode;
 use netPhramework\locating\Location;
 use netPhramework\locating\redirectors\Redirector;
 use netPhramework\locating\redirectors\RedirectToRoot as toRoot;
@@ -21,7 +22,6 @@ use netPhramework\networking\EmailDelivery;
 use netPhramework\networking\EmailException;
 use netPhramework\networking\StreamSocketException;
 use netPhramework\resources\Leaf;
-use netPhramework\responding\ResponseCode;
 use Random\RandomException;
 
 class SendResetLink extends Leaf

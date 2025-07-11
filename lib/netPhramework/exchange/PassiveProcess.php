@@ -3,7 +3,6 @@
 namespace netPhramework\exchange;
 
 use netPhramework\locating\LocationFromUri;
-use netPhramework\responding\Response;
 
 class PassiveProcess extends RequestProcess
 {

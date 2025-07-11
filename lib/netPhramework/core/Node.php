@@ -4,8 +4,8 @@ namespace netPhramework\core;
 
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\RequestExchange;
+use netPhramework\exchange\Response;
 use netPhramework\resources\Directory;
-use netPhramework\responding\Response;
 
 readonly class Node
 {

@@ -4,7 +4,6 @@ namespace netPhramework\exchange;
 
 use netPhramework\authentication\Session;
 use netPhramework\networking\SmtpServer;
-use netPhramework\responding\FileManager;
 
 interface ExchangeContext
 {

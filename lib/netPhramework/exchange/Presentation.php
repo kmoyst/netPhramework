@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\responding;
+namespace netPhramework\exchange;
 
 use netPhramework\rendering\Wrappable;
 

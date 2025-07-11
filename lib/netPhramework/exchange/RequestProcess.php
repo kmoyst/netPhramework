@@ -3,7 +3,6 @@
 namespace netPhramework\exchange;
 
 use netPhramework\core\Node;
-use netPhramework\responding\Response;
 
 abstract class RequestProcess
 {

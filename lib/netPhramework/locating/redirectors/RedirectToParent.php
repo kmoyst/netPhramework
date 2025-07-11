@@ -3,9 +3,9 @@
 namespace netPhramework\locating\redirectors;
 
 use netPhramework\common\Variables;
+use netPhramework\exchange\ResponseCode;
 use netPhramework\locating\MutablePath;
 use netPhramework\locating\rerouters\RerouteToParent;
-use netPhramework\responding\ResponseCode;
 
 class RedirectToParent extends Redirector
 {
