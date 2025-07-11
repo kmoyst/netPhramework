@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\assets;
+namespace netPhramework\db\resources;
 
 use netPhramework\db\traits\HasRecord;
 use netPhramework\resources\Leaf;

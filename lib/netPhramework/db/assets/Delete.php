@@ -1,9 +1,9 @@
 <?php
 
-namespace netPhramework\db\resources;
+namespace netPhramework\db\assets;
 
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\assets\RecordProcess;
+use netPhramework\db\resources\RecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;

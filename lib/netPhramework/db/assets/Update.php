@@ -1,36 +1,36 @@
 <?php
 
-namespace netPhramework\db\resources;
+namespace netPhramework\db\assets;
 
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\assets\RecordProcess;
-use netPhramework\db\assets\RecordSetProcess;
+use netPhramework\db\resources\RecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\redirectors\RedirectToParent;
 
-class Insert extends RecordSetProcess
+class Update extends RecordProcess
 {
 	public function __construct(
 		private readonly ?RecordProcess $saveProcess = null,
-        private readonly ?Redirector    $dispatcher = null)
+		private readonly ?Redirector    $dispatcher = null,
+		)
 	{
 	}
 
     /**
      * @param Exchange $exchange
      * @return void
-     * @throws Exception
      * @throws FieldAbsent
      * @throws MappingException
+     * @throws Exception
      */
 	public function handleExchange(Exchange $exchange): void
 	{
         ($this->saveProcess ??
-            new Save($this->dispatcher ?? new RedirectToParent('')))
-				->setRecord($this->recordSet->newRecord())
+			new Save($this->dispatcher ?? new RedirectToParent('')))
+				->setRecord($this->record)
 			    ->handleExchange($exchange);
-	}
+    }
 }

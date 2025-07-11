@@ -2,10 +2,10 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\db\assets\AssetResource;
-use netPhramework\db\assets\OneToManyLink;
-use netPhramework\db\assets\RecordChild;
-use netPhramework\db\assets\RecordSetChild;
+use netPhramework\db\resources\AssetResource;
+use netPhramework\db\resources\OneToManyLink;
+use netPhramework\db\resources\RecordChild;
+use netPhramework\db\resources\RecordSetChild;
 use netPhramework\db\core\RecordMapper;
 use netPhramework\resources\Directory;
 use netPhramework\resources\Resource;

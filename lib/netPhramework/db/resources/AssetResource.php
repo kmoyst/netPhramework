@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\db\assets;
+namespace netPhramework\db\resources;
 
 use netPhramework\common\IsNumeric;
 use netPhramework\common\StringPredicate as Predicate;
-use netPhramework\db\assets\RecordSetChildSet as setChildSet;
+use netPhramework\db\resources\RecordSetChildSet as setChildSet;
 use netPhramework\db\core\RecordSet;
 use netPhramework\exceptions\ResourceNotFound;
 use netPhramework\resources\Composite;

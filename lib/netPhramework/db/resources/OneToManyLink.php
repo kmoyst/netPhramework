@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\assets;
+namespace netPhramework\db\resources;
 
 use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;

@@ -1,18 +1,18 @@
 <?php
 
-namespace netPhramework\db\assets;
+namespace netPhramework\db\resources;
 
 use netPhramework\exceptions\ResourceNotFound;
 use netPhramework\resources\ResourceIterator;
 
-class RecordSetChildSet extends ResourceIterator
+class RecordChildSet extends ResourceIterator
 {
-	public function current(): RecordSetChild
+	public function current(): RecordChild
 	{
 		return current($this->items);
 	}
 
-	public function add(RecordSetChild $child):self
+	public function add(RecordChild $child):self
 	{
 		$this->storeResource($child);
 		return $this;
@@ -20,10 +20,10 @@ class RecordSetChildSet extends ResourceIterator
 
 	/**
 	 * @param string $resourceId
-	 * @return RecordSetChild
+	 * @return RecordChild
 	 * @throws ResourceNotFound
 	 */
-	public function get(string $resourceId):RecordSetChild
+	public function get(string $resourceId):RecordChild
 	{
 		$this->confirmResource($resourceId);
 		return $this->items[$resourceId];

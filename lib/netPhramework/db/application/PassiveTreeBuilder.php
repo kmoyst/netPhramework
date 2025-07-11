@@ -6,10 +6,10 @@ use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
-use netPhramework\db\resources\Add;
-use netPhramework\db\resources\Browse;
-use netPhramework\db\resources\Edit;
-use netPhramework\db\assets\OneToManyLink;
+use netPhramework\db\assets\Add;
+use netPhramework\db\assets\Browse;
+use netPhramework\db\assets\Edit;
+use netPhramework\db\resources\OneToManyLink;
 use netPhramework\resources\Directory;
 
 class PassiveTreeBuilder extends TreeBuilder

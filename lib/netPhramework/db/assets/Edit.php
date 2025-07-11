@@ -1,22 +1,22 @@
 <?php
 
-namespace netPhramework\db\resources;
+namespace netPhramework\db\assets;
 
-use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
-use netPhramework\db\assets\RecordSetProcess;
+use netPhramework\db\resources\RecordProcess;
 use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\View;
 
-class Add extends RecordSetProcess
+class Edit extends RecordProcess
 {
 	public function __construct(
-		protected readonly ?RecordFormStrategy $formStrategy = null)
+		private readonly ?RecordFormStrategy $formStrategy = null
+		)
 	{
 	}
 
@@ -27,44 +27,34 @@ class Add extends RecordSetProcess
 	 * @throws MappingException
 	 */
 	public function handleExchange(Exchange $exchange): void
-    {
-		$editForm = $this->createEditForm(
-			new CallbackInput($exchange),
-			$this->recordSet->newRecord(),
-			'insert', $exchange->callbackLink())
-		;
+	{
 		$view = new View('edit')
-			->setTitle("Add Record")
-			->add('editForm', $editForm)
+			->setTitle("Edit Record")
+			->add('editForm', $this->createEditForm($exchange))
 		;
 		$exchange->ok($view);
 	}
 
 	/**
-	 * @param CallbackInput $callbackInput
-	 * @param Record $record
-	 * @param string $action
-	 * @param string $callbackLink
+	 * @param Exchange $exchange
 	 * @return View
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 */
-	private function createEditForm(
-		CallbackInput $callbackInput, Record $record,
-		string $action, string $callbackLink):View
+	private function createEditForm(Exchange $exchange):View
 	{
 		$strategy = $this->formStrategy ?? new RecordFormStrategyBasic();
 		$inputSet = new RecordFormBuilder($strategy)
-			->setRecord($record)
+			->setRecord($this->record)
 			->addRecordInputs()
 			->getInputSet()
 		;
 		return new View('edit-form')
 			->add('hasFileInput', $inputSet->hasFileInput())
 			->add('inputs', $inputSet)
-			->add('callbackInput', $callbackInput)
-			->add('action', $action)
-			->add('callbackLink', $callbackLink)
+			->add('callbackInput', new CallbackInput($exchange))
+			->add('action', 'update')
+			->add('callbackLink', $exchange->callbackLink())
 			;
 	}
 }

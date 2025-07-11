@@ -2,11 +2,11 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\db\resources\Delete;
-use netPhramework\db\resources\Insert;
-use netPhramework\db\resources\Update;
-use netPhramework\db\assets\OneToManyLink;
-use netPhramework\db\assets\RecordProcess;
+use netPhramework\db\assets\Delete;
+use netPhramework\db\assets\Insert;
+use netPhramework\db\assets\Update;
+use netPhramework\db\resources\OneToManyLink;
+use netPhramework\db\resources\RecordProcess;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\resources\Directory;
 

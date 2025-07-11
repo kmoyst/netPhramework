@@ -1,9 +1,9 @@
 <?php
 
-namespace netPhramework\db\resources;
+namespace netPhramework\db\assets;
 
 use netPhramework\db\mapping\File;
-use netPhramework\db\assets\RecordProcess;
+use netPhramework\db\resources\RecordProcess;
 use netPhramework\exchange\Exchange;
 
 class Download extends RecordProcess
