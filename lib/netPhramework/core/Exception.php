@@ -4,17 +4,15 @@ namespace netPhramework\core;
 
 use netPhramework\bootstrap\Environment;
 use netPhramework\rendering\Wrappable;
-use netPhramework\rendering\Wrapper;
 use netPhramework\responding\Responder;
 use netPhramework\responding\Response;
 use netPhramework\responding\ResponseCode;
 
-class Exception extends \Exception
-	implements Wrappable, Response
+class Exception extends \Exception implements Wrappable, Response
 {
 	protected string $friendlyMessage = "SERVER ERROR";
-    protected readonly ResponseCode $responseCode;
-    private Wrapper $wrapper;
+	protected readonly ResponseCode $responseCode;
+
 	private Environment $environment;
 
     public function __construct(
@@ -27,12 +25,6 @@ class Exception extends \Exception
     public function getResponseCode(): ResponseCode
     {
         return $this->responseCode;
-    }
-
-    public function setWrapper(Wrapper $wrapper): Exception
-    {
-        $this->wrapper = $wrapper;
-        return $this;
     }
 
 	public function setEnvironment(Environment $environment): Exception
@@ -54,7 +46,7 @@ class Exception extends \Exception
 	 */
     public function getContent(): string
     {
-		if(isset($this->environment) && $this->environment->inDevelopment)
+		if($this->environment->inDevelopment)
 		{
 			$message = $this->message . $this->getTraceAsString();
 		}
@@ -67,6 +59,6 @@ class Exception extends \Exception
 
 	public function deliver(Responder $responder): void
 	{
-		$responder->present($this->wrapper->wrap($this), $this->responseCode);
+		$responder->present($this, $this->responseCode);
 	}
 }

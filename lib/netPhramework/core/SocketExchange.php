@@ -11,7 +11,6 @@ use netPhramework\networking\SmtpServer;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
-use netPhramework\rendering\Wrapper;
 use netPhramework\responding\FileTransfer;
 use netPhramework\responding\Presentation;
 use netPhramework\responding\Redirection;
@@ -20,37 +19,6 @@ use netPhramework\responding\ResponseCode;
 
 class SocketExchange implements Exchange
 {
-	public ExchangeEnvironment $environment;
-	public CallbackManager $callbackManager;
-	public Wrapper $wrapper;
-
-	public Session $session {
-		get { return $this->session; }
-		set(Session $session) {
-//			if(isset($this->session))
-//				throw new ReadonlyException("Property is read-only");
-			$this->session = $session;
-		}
-	}
-
-	public FileManager $fileManager {
-		get { return $this->fileManager; }
-		set(FileManager $fileManager) {
-//			if(isset($this->fileManager))
-//				throw new ReadonlyException("Property is read-only");
-			$this->fileManager = $fileManager;
-		}
-	}
-
-	public Location $location {
-		get { return clone $this->location; }
-		set(Location $location) {
-//			if(isset($this->location))
-//				throw new ReadonlyException("Property is read-only");
-			$this->location = $location;
-		}
-	}
-
 	private(set) Variables $parameters {
 		get { return clone $this->location->getParameters(); }
 		set {}
@@ -85,6 +53,22 @@ class SocketExchange implements Exchange
 		set (Response $response) { $this->response = $response; }
 	}
 
+	public readonly Session $session;
+	public readonly FileManager $fileManager;
+	public readonly ExchangeEnvironment $environment;
+	public readonly CallbackManager $callbackManager;
+
+	public function __construct
+	(
+		public readonly Location $location,
+		RequestContext $context
+	)
+	{
+		$this->session 			= $context->session;
+		$this->fileManager 		= $context->fileManager;
+		$this->environment 		= $context->environment;
+		$this->callbackManager 	= $context->callbackManager;
+	}
 
 	/**
 	 * @param Redirector $fallback
@@ -94,8 +78,7 @@ class SocketExchange implements Exchange
 	public function redirect(Redirector $fallback):Variables
 	{
 		$redirection = new Redirection($this->path);
-		$callback    = $this->callbackManager
-			->callbackRedirector($this->parameters);
+		$callback    = $this->callbackManager->getRedirector($this->parameters);
 		($callback ?? $fallback)->redirect($redirection);
 		$this->response = $redirection;
 		return $redirection->getParameters();
@@ -110,10 +93,7 @@ class SocketExchange implements Exchange
     /** @inheritDoc */
 	public function display(View $view, ResponseCode $code):ConfigurableView
 	{
-		$this->response = new Presentation()
-			->setContent($this->wrapper->wrap($view))
-			->setCode($code)
-		;
+		$this->response = new Presentation($view, $code);
 		return $view;
 	}
 
@@ -132,7 +112,7 @@ class SocketExchange implements Exchange
 				rtrim($exception->getMessage(),": "));
             $this->session->setFeedbackCode($exception->getResponseCode());
         } catch (Exception) {
-			$this->response = $exception->setWrapper($this->wrapper);
+			$this->response = $exception;
         }
 	}
 
@@ -140,6 +120,6 @@ class SocketExchange implements Exchange
 	public function callbackLink(bool $chain = false):string|Encodable
 	{
 		if($chain) return clone $this->location;
-		return $this->callbackManager->callbackLink(clone $this->location);
+		return $this->callbackManager->getLink(clone $this->location);
 	}
 }

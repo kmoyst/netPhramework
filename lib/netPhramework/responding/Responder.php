@@ -2,18 +2,33 @@
 
 namespace netPhramework\responding;
 
+use netPhramework\common\FileFinder;
 use netPhramework\core\File;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
+use netPhramework\rendering\Wrappable;
+use netPhramework\rendering\Wrapper;
 
 readonly class Responder
 {
-	public function __construct(private Encoder $encoder) {}
+	public function __construct
+	(
+		public Encoder $encoder = new Encoder(),
+		public Wrapper $wrapper = new Wrapper(),
+		public FileFinder $templateFinder = new FileFinder()
+	)
+	{}
 
-	public function present(Encodable $content, ResponseCode $code): void
+	private function prepare():self
+	{
+		$this->encoder->setTemplateFinder($this->templateFinder);
+		return $this;
+	}
+
+	public function present(Wrappable $content, ResponseCode $code): void
 	{
 		http_response_code($code->value);
-		echo $content->encode($this->encoder);
+		echo $this->wrapper->wrap($content)->encode($this->prepare()->encoder);
 	}
 
 	public function redirect(Encodable $content, ResponseCode $code): void

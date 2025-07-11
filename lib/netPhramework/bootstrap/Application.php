@@ -4,7 +4,7 @@ namespace netPhramework\bootstrap;
 
 use netPhramework\core\Directory;
 use netPhramework\core\Exception;
-use netPhramework\rendering\Wrapper;
+use netPhramework\responding\Responder;
 
 abstract class Application
 {
@@ -22,12 +22,14 @@ abstract class Application
 	 */
 	abstract public function buildActiveTree(Directory $root):void;
 
-	/**
-	 * @param Wrapper $wrapper
-	 * @return void
-	 */
-	public function configureWrapper(Wrapper $wrapper):void
+	public function configureResponder(Responder $responder):void
 	{
-		$wrapper->addStyleSheet('framework-stylesheet');
+		$responder->wrapper->addStyleSheet('framework-stylesheet');
+		$responder->templateFinder
+			->directory('../html')
+			->directory(__DIR__ . '/../../../html')
+			->extension('phtml')
+			->extension('css')
+		;
 	}
 }

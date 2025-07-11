@@ -5,7 +5,7 @@ namespace netPhramework\db\application;
 use netPhramework\bootstrap\Application;
 use netPhramework\core\Directory;
 use netPhramework\db\core\RecordMapper;
-use netPhramework\rendering\WrapperConfiguration;
+use netPhramework\responding\Responder;
 
 class Administration extends Application
 {
@@ -23,8 +23,9 @@ class Administration extends Application
 			->addAllAssetsWithDefaults($root);
 	}
 
-	public function configureWrapper(WrapperConfiguration $wrapper): void
+	public function configureResponder(Responder $responder): void
 	{
-		$wrapper->setTitlePrefix('ADMINISTRATION');
+		parent::configureResponder($responder);
+		$responder->wrapper->setTitlePrefix('ADMINISTRATION');
 	}
 }

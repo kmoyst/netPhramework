@@ -14,7 +14,7 @@ readonly class RequestInterpreter
 	 * @return Request
 	 * @throws Exception
 	 */
-	public function establishRequest(Site $site):Request
+	public function interpretRequest(Site $site):Request
 	{
 		$location = new LocationFromUri($this->environment->uri);
 		return $this->createRequest($site, $location);
@@ -26,8 +26,7 @@ readonly class RequestInterpreter
 	 * @return Request
 	 * @throws Exception
 	 */
-	private function createRequest(
-		Site $site, Location $location):Request
+	private function createRequest(Site $site, Location $location):Request
 	{
 		if(($postParameters = $this->environment->postParameters) !== null)
 		{
@@ -38,6 +37,6 @@ readonly class RequestInterpreter
 		{
 			$socket = $site->openPassiveSocket();
 		}
-		return new Request($location, $socket);
+		return new Request($socket, $location);
 	}
 }

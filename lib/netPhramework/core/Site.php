@@ -3,29 +3,10 @@
 namespace netPhramework\core;
 
 use netPhramework\bootstrap\Application;
-use netPhramework\rendering\Wrapper;
 
 class Site
 {
-	private Application $application;
-
-	public function __construct
-	(
-	public readonly Wrapper $wrapper = new Wrapper()
-	)
-	{}
-
-	public function setApplication(Application $application): self
-	{
-		$this->application = $application;
-		return $this;
-	}
-
-	public function configure():self
-	{
-		$this->application->configureWrapper($this->wrapper);
-		return $this;
-	}
+	public Application $application;
 
 	/**
 	 * @return Socket
@@ -35,7 +16,7 @@ class Site
 	{
 		$root = new Directory('');
 		$this->application->buildPassiveTree($root);
-		return new Socket($root, $this->wrapper);
+		return new Socket($root);
 	}
 
 	/**
@@ -46,6 +27,6 @@ class Site
 	{
 		$root = new Directory('');
 		$this->application->buildActiveTree($root);
-		return new Socket($root, $this->wrapper);
+		return new Socket($root);
 	}
 }

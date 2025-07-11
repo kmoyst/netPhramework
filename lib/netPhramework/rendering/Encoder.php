@@ -10,9 +10,15 @@ use netPhramework\locating\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
 use Stringable;
 
-readonly class Encoder
+class Encoder
 {
-	public function __construct(private FileFinder $templateFinder) {}
+	private FileFinder $templateFinder;
+
+	public function setTemplateFinder(FileFinder $templateFinder): self
+	{
+		$this->templateFinder = $templateFinder;
+		return $this;
+	}
 
 	public function encodeText(string $text):string
 	{

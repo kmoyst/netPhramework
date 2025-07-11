@@ -2,55 +2,31 @@
 
 namespace netPhramework\core;
 
-use netPhramework\locating\Location;
-use netPhramework\rendering\Wrapper;
 use netPhramework\responding\Response;
 
 readonly class Socket
 {
-	private Resource $root;
-    private Wrapper $wrapper;
-
-    public function __construct(Resource $root, Wrapper $wrapper)
-    {
-        $this->root = $root;
-        $this->wrapper = $wrapper;
-    }
+	public function __construct(private Resource $root) {}
 
 	/**
-	 * @param Location $location
-	 * @param RequestContext $context
+	 * @param SocketExchange $exchange
 	 * @return Response
 	 */
-    public function processRequest(
-		Location $location, RequestContext $context):Response
+    public function processRequest(SocketExchange $exchange):Response
 	{
         try
 		{
-            $exchange  = new SocketExchange();
-			$navigator = new Navigator()
-			;
-			$exchange->location 		= $location;
-			$exchange->wrapper 			= $this->wrapper;
-			$exchange->session 			= $context->session;
-			$exchange->fileManager 		= $context->fileManager;
-			$exchange->callbackManager 	= $context->callbackManager;
-			$exchange->environment 		= $context->environment
-			;
-			$navigator
+			new Navigator()
 				->setRoot($this->root)
-				->setPath($location->getPath())
+				->setPath($exchange->path)
 				->navigate()
 				->handleExchange($exchange)
-            ;
+			;
 			return $exchange->response;
 		}
 		catch (Exception $exception)
 		{
-			return $exception
-				->setWrapper($this->wrapper)
-				->setEnvironment($context->environment)
-				;
+			return $exception->setEnvironment($exchange->environment);
 		}
 	}
 }

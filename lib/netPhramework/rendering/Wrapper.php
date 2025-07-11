@@ -4,7 +4,7 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\Variables;
 
-class Wrapper extends Viewable implements WrapperConfiguration
+class Wrapper extends Viewable
 {
 	private Variables $variables;
 	private Wrappable $wrappable;
@@ -45,7 +45,6 @@ class Wrapper extends Viewable implements WrapperConfiguration
 		return $this;
 	}
 
-	/** @inheritdoc  */
 	public function addStyleSheet(string $templateName):self
 	{
 		$this->styleSheets[] = new Template($templateName);

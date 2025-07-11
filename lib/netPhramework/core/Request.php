@@ -7,8 +7,12 @@ use netPhramework\responding\Response;
 
 readonly class Request
 {
-	public function __construct(private Location $location,
-								private Socket   $socket) {}
+	public function __construct
+	(
+	private Socket  $socket,
+	public Location $location
+	)
+	{}
 
 	/**
 	 * @param RequestContext $context
@@ -17,7 +21,7 @@ readonly class Request
 	 */
 	public function process(RequestContext $context):Response
 	{
-		return $this->socket
-			->processRequest($this->location, $context);
+		$exchange = new SocketExchange($this->location, $context);
+		return $this->socket->processRequest($exchange);
 	}
 }

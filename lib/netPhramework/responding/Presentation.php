@@ -2,24 +2,16 @@
 
 namespace netPhramework\responding;
 
-use netPhramework\rendering\Encodable;
+use netPhramework\rendering\Wrappable;
 
-class Presentation implements Response
+readonly class Presentation implements Response
 {
-	private Encodable $content;
-	private ResponseCode $code;
-
-	public function setContent(Encodable $content): self
-	{
-		$this->content = $content;
-		return $this;
-	}
-
-	public function setCode(ResponseCode $code): self
-	{
-		$this->code = $code;
-		return $this;
-	}
+	public function __construct
+	(
+		private Wrappable $content,
+		private ResponseCode $code
+	)
+	{}
 
 	public function deliver(Responder $responder): void
 	{

@@ -7,42 +7,39 @@ use netPhramework\core\Exception;
 
 class Controller
 {
-	private ?Environment $environment = null;
-	private bool $fatalErrorHandled   = false;
+	private bool $fatalErrorHandled = false;
 
-	public function run(SiteContext $context):void
+	public function __construct(private readonly SiteContext $context) {}
+
+	public function initialize():self
 	{
 		register_shutdown_function([$this, 'shutdown']);
 		set_error_handler([$this, 'handleError']);
-		set_exception_handler([$this, 'handleException'])
-		;
-		$this->environment 	= $context->environment
-		;
-		$site 				= new Site();
-		$interpreter 		= $context->requestInterpreter;
-		$responder 	 		= $context->responder
-		;
-		try
-		{
-			$site->setApplication($context->getApplication())->configure()
-			;
-			try
-			{
-				$request = $interpreter->establishRequest($site);
-			}
-			catch (Exception $exception)
-			{
+		set_exception_handler([$this, 'handleException']);
+		return $this;
+	}
+
+	public function run():void
+	{
+		$site = new Site();
+		$site->application = $this->context->getApplication();
+		$site->application->configureResponder($this->context->responder);
+		try {
+			try {
+				$this->context->interpreter
+					->interpretRequest($site)
+					->process($this->context)
+					->deliver($this->context->responder);
+			} catch (Exception $exception) {
 				$exception
-					->setEnvironment($this->environment)
-					->setWrapper($site->wrapper)
-					->deliver($responder);
+					->setEnvironment($this->context->environment)
+					->deliver($this->context->responder);
 				return;
 			}
-			$request->process($context)->deliver($responder);
 		}
 		catch (\Exception $exception)
 		{
-			if($this->environment->inDevelopment)
+			if($this->context->environment->inDevelopment)
 			{
 				echo $exception->getMessage();
 			}
@@ -73,7 +70,7 @@ class Controller
 		int $errno, string $errstr, ?string $errfile = null,
 		?int $errline = null):bool
 	{
-		if($this->environment?->inDevelopment)
+		if($this->context->environment->inDevelopment)
 		{
 			printf(
 				"<pre>PHP Error [%d]: %s\nFileMapper: %s\nLine: %s\n</pre>",
@@ -98,7 +95,7 @@ class Controller
 
 	public function handleException(\Throwable $exception):never
 	{
-		if($this->environment?->inDevelopment)
+		if($this->context->environment->inDevelopment)
 		{
 			echo "<pre>";
 			print_r($exception);
