@@ -1,8 +1,6 @@
 <?php
 
-namespace netPhramework\db\common;
-
-use netPhramework\db\core\RecordSet;
+namespace netPhramework\db\core;
 
 trait HasRecordSet
 {

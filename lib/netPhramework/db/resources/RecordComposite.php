@@ -4,7 +4,7 @@ namespace netPhramework\db\resources;
 
 use netPhramework\core\Composite;
 use netPhramework\core\Resource;
-use netPhramework\db\common\HasRecordSet;
+use netPhramework\db\core\HasRecordSet;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\exceptions\ResourceNotFound;
 
