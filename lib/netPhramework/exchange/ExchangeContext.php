@@ -3,7 +3,6 @@
 namespace netPhramework\exchange;
 
 use netPhramework\authentication\Session;
-use netPhramework\bootstrap\Environment;
 use netPhramework\networking\SmtpServer;
 use netPhramework\responding\FileManager;
 

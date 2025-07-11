@@ -17,8 +17,8 @@ readonly class RequestInterpreter
 	public function interpret(Application $application):RequestProcess
 	{
 		if($this->environment->postParameters === null)
-			return new PassiveProcess($application->openActiveNode());
+			return new PassiveProcess($application->openPassiveNode());
 		else
-			return new ActiveProcess($application->openPassiveNode());
+			return new ActiveProcess($application->openActiveNode());
 	}
 }

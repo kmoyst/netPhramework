@@ -36,8 +36,7 @@ readonly class Controller
 			try {
 				$this->context->interpreter
 					->interpret($this->context->app)
-					->request($this->context)
-					->process()
+					->exchange($this->context)
 					->deliver($this->context->responder);
 			} catch (Exception $exception) {
 				$exception

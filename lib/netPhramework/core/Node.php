@@ -20,7 +20,7 @@ readonly class Node
 	 * @param RequestExchange $exchange
 	 * @return Response
 	 */
-    public function exchange(RequestExchange $exchange):Response
+    public function handleExchange(RequestExchange $exchange):Response
 	{
         try
 		{

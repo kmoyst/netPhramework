@@ -3,13 +3,14 @@
 namespace netPhramework\exchange;
 
 use netPhramework\locating\LocationFromUri;
+use netPhramework\responding\Response;
 
 class PassiveProcess extends RequestProcess
 {
-	public function request(RequestContext $context):Request
+	public function exchange(RequestContext $context):Response
 	{
 		$location = new LocationFromUri($context->environment->uri);
 		$exchange = new RequestExchange($location, $context);
-		return new Request($this->node, $exchange);
+		return $this->node->handleExchange($exchange);
 	}
 }
