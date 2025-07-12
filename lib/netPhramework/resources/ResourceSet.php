@@ -9,23 +9,23 @@ class ResourceSet extends ResourceIterator
 {
 	use KeyedIterator;
 
-	public function current(): Resource
+	public function current(): Node
 	{
 		return current($this->items);
 	}
 
 	/**
 	 * @param string $resourceId
-	 * @return Resource
+	 * @return Node
 	 * @throws ResourceNotFound
 	 */
-	public function get(string $resourceId):Resource
+	public function get(string $resourceId):Node
 	{
 		$this->confirmResource($resourceId);
 		return $this->items[$resourceId];
 	}
 
-	public function add(Resource $resource):self
+	public function add(Node $resource):self
 	{
 		$this->storeResource($resource);
 		return $this;

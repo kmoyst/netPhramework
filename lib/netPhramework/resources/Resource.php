@@ -2,18 +2,36 @@
 
 namespace netPhramework\resources;
 
+use netPhramework\common\Utils;
 use netPhramework\exceptions\ResourceNotFound;
-use netPhramework\exchange\Exchange;
-
-interface Resource
+use Stringable;
+abstract class Resource implements Node, Stringable
 {
-	/**
-	 * @param string $id
-	 * @return Resource
-	 * @throws ResourceNotFound
-	 */
-	public function getChild(string $id):Resource;
-	public function getName():string;
-	public function getResourceId():string;
-	public function handleExchange(Exchange $exchange):void;
+	private bool $isIndex = false;
+
+	public function getChild(string $id): never
+	{
+		throw new ResourceNotFound("Not Found: $id");
+	}
+
+	public function getResourceId(): string
+	{
+		return $this->isIndex ? '' : $this->getName();
+	}
+
+	public function asIndex():self
+	{
+		$this->isIndex = true;
+		return $this;
+	}
+
+	public function getName():string
+	{
+		return Utils::camelToKebab(Utils::baseClassName($this));
+	}
+
+	public function __toString():string
+	{
+		return $this->getResourceId();
+	}
 }

@@ -13,7 +13,7 @@ class Directory extends Composite
 		protected ResourceSet $children = new ResourceSet()
 	) {}
 
-	public function add(Resource $node):self
+	public function add(Node $node):self
 	{
 		$this->children->add($node);
 		return $this;
@@ -24,7 +24,7 @@ class Directory extends Composite
 		return $this->name;
 	}
 
-	public function getChild(string $id): Resource
+	public function getChild(string $id): Node
 	{
 		if($this->children->has($id)) return $this->children->get($id);
 		else return $this->autoIndexIfPermitted($id);

@@ -5,9 +5,9 @@ namespace netPhramework\authentication\resources;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\rendering\View;
-use netPhramework\resources\Leaf;
+use netPhramework\resources\Resource;
 
-class LogInStatus extends Leaf
+class LogInStatus extends Resource
 {
 	/**
 	 * @param Exchange $exchange

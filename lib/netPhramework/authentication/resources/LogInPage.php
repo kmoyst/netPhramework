@@ -9,9 +9,9 @@ use netPhramework\routing\ReroutedPath;
 use netPhramework\routing\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
-use netPhramework\resources\Leaf;
+use netPhramework\resources\Resource;
 
-class LogInPage extends Leaf
+class LogInPage extends Resource
 {
 	private Rerouter $toAuthenticate;
 	private Rerouter $toForgotPassword;

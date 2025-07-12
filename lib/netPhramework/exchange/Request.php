@@ -21,7 +21,6 @@ readonly class Request
 		$location = new LocationFromUri($context->environment->uri);
 		$exchange = new Exchange($location, $context);
 		$handler  = new ExchangeHandler();
-		;
 		$this->strategy
 			->setApplication($context->getApplication())
 			->setLocation($location)

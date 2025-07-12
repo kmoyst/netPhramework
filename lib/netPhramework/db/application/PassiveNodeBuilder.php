@@ -6,10 +6,10 @@ use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
-use netPhramework\db\assets\Add;
-use netPhramework\db\assets\Browse;
-use netPhramework\db\assets\Edit;
-use netPhramework\db\resources\OneToManyLink;
+use netPhramework\db\resources\Add;
+use netPhramework\db\resources\Browse;
+use netPhramework\db\resources\Edit;
+use netPhramework\db\nodes\Branch;
 use netPhramework\resources\Directory;
 
 class PassiveNodeBuilder extends DynamicNodeBuilder
@@ -49,7 +49,7 @@ class PassiveNodeBuilder extends DynamicNodeBuilder
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
 			->get();
-		$this->add(new OneToManyLink($asset, $linkField));
+		$this->add(new Branch($asset, $linkField));
 		return $this;
 	}
 

@@ -10,7 +10,7 @@ abstract class ResourceIterator implements Iterator
 {
 	use KeyedIterator;
 
-	protected function storeResource(Resource $resource):void
+	protected function storeResource(Node $resource):void
 	{
 		$this->items[$resource->getResourceId()] = $resource;
 	}
@@ -26,5 +26,5 @@ abstract class ResourceIterator implements Iterator
 			throw new ResourceNotFound("Not Found: $resourceId");
 	}
 
-	abstract public function current():Resource;
+	abstract public function current():Node;
 }

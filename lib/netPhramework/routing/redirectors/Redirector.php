@@ -6,11 +6,11 @@ use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
-use netPhramework\resources\Leaf;
+use netPhramework\resources\Resource;
 use netPhramework\routing\Redirectable;
 use netPhramework\routing\rerouters\Rerouter;
 
-class Redirector extends Leaf
+class Redirector extends Resource
 {
 	public function __construct(
 		protected readonly Rerouter     $rerouter,

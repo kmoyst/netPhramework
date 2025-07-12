@@ -6,7 +6,7 @@ use netPhramework\exceptions\PathException;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\RedirectToChild;
 
-abstract class Composite implements Resource
+abstract class Composite implements Node
 {
 	public function getResourceId():string
 	{

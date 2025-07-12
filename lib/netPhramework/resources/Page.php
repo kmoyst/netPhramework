@@ -6,7 +6,7 @@ use netPhramework\exchange\Exchange;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
-class Page extends Leaf
+class Page extends Resource
 {
     private View $view;
 

@@ -2,17 +2,17 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\db\resources\AssetResource;
-use netPhramework\db\resources\OneToManyLink;
-use netPhramework\db\resources\RecordChild;
-use netPhramework\db\resources\RecordSetChild;
+use netPhramework\db\nodes\Asset;
+use netPhramework\db\nodes\Branch;
+use netPhramework\db\nodes\RecordChild;
+use netPhramework\db\nodes\RecordSetChild;
 use netPhramework\db\core\RecordMapper;
 use netPhramework\resources\Directory;
-use netPhramework\resources\Resource;
+use netPhramework\resources\Node;
 
 class DynamicNodeBuilder
 {
-	protected ?AssetResource $resource;
+	protected ?Asset $resource;
 
 	public function __construct
 	(
@@ -30,11 +30,11 @@ class DynamicNodeBuilder
 	public function new(string $name):self
 	{
 		$recordSet = $this->mapper->recordsFor($name);
-		$this->resource = new AssetResource($name, $recordSet);
+		$this->resource = new Asset($name, $recordSet);
 		return $this;
 	}
 
-	public function add(Resource $node):self
+	public function add(Node $node):self
 	{
 		if($node instanceof RecordChild)
 			$this->resource->recordChildSet->add($node);
@@ -43,10 +43,10 @@ class DynamicNodeBuilder
 		return $this;
 	}
 
-	public function oneToMany(
+	public function branch(
 		RecordResourceStrategy $strategy, string $linkField):self
 	{
-		$node = new OneToManyLink($strategy->create($this->mapper), $linkField);
+		$node = new Branch($strategy->create($this->mapper), $linkField);
 		$this->add($node);
 		return $this;
 	}
@@ -57,7 +57,7 @@ class DynamicNodeBuilder
 		return $this;
 	}
 
-	public function get():AssetResource
+	public function get():Asset
 	{
 		$resource = $this->resource;
 		$this->reset();

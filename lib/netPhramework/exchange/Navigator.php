@@ -3,15 +3,15 @@
 namespace netPhramework\exchange;
 
 use netPhramework\exceptions\ResourceNotFound;
-use netPhramework\resources\Resource;
+use netPhramework\resources\Node;
 use netPhramework\routing\Path;
 
 class Navigator
 {
-	private Resource $root;
+	private Node $root;
 	private Path $path;
 
-	public function setRoot(Resource $root): Navigator
+	public function setRoot(Node $root): Navigator
 	{
 		$this->root = $root;
 		return $this;
@@ -24,10 +24,10 @@ class Navigator
 	}
 
 	/**
-	 * @return Resource
+	 * @return Node
 	 * @throws ResourceNotFound
 	 */
-	public function navigate():Resource
+	public function navigate():Node
 	{
         return $this->traverse($this->root, $this->path);
 	}
@@ -35,7 +35,7 @@ class Navigator
 	/**
 	 * @throws ResourceNotFound
 	 */
-    private function traverse(Resource $node, ?Path $path):Resource
+    private function traverse(Node $node, ?Path $path):Node
     {
         if($path === null) return $node;
         $child = $node->getChild($path->getName());

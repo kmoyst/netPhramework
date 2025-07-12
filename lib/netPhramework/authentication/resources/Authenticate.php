@@ -9,9 +9,9 @@ use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\resources\Leaf;
+use netPhramework\resources\Resource;
 
-class Authenticate extends Leaf
+class Authenticate extends Resource
 {
 	private Authenticator $authenticator;
 	private Redirector $onSuccess;
