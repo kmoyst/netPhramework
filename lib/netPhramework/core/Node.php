@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\site;
+namespace netPhramework\core;
 
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\RequestExchange;

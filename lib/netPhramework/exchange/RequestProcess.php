@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\site\Node;
+use netPhramework\core\Node;
 
 abstract class RequestProcess
 {

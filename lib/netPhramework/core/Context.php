@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\site;
+namespace netPhramework\core;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;

@@ -2,7 +2,7 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\site\Context;
+use netPhramework\core\Context;
 use netPhramework\exceptions\Exception;
 
 readonly class Controller

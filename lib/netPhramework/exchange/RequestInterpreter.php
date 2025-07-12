@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\site\Site;
+use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 
 readonly class RequestInterpreter
