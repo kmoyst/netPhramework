@@ -2,9 +2,9 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\exchange\RequestEnvironment;
+use netPhramework\transferring\SmtpServerEnvironment;
 
-class Environment implements RequestEnvironment
+class Environment implements SmtpServerEnvironment
 {
 	private(set) bool $inDevelopment {
 		get { return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT'; }

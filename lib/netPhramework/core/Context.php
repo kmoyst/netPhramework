@@ -5,7 +5,6 @@ namespace netPhramework\core;
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
 use netPhramework\exchange\RequestContext;
-use netPhramework\exchange\RequestInterpreter;
 use netPhramework\exchange\Responder;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
@@ -13,7 +12,6 @@ use netPhramework\transferring\SmtpServer;
 
 abstract class Context implements RequestContext
 {
-	public RequestInterpreter $interpreter;
 	public CallbackManager $callbackManager;
 	public Responder $responder;
 	public SmtpServer $smtpServer;
@@ -25,7 +23,6 @@ abstract class Context implements RequestContext
 	public FileManager $fileManager = new FileManager(),
 	)
 	{
-		$this->interpreter 		= new RequestInterpreter();
 		$this->callbackManager 	= new CallbackManager();
 		$this->responder 		= new Responder();
 		$this->smtpServer		= new SmtpServer($this->environment);
