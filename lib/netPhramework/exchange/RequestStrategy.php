@@ -32,9 +32,9 @@ abstract class RequestStrategy
 	}
 
 	/**
-	 * @param ExchangeHandler $handler
+	 * @param Site $handler
 	 * @return void
 	 * @throws Exception
 	 */
-	abstract public function configure(ExchangeHandler $handler):void;
+	abstract public function configure(Site $handler):void;
 }

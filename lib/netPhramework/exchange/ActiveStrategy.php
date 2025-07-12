@@ -4,7 +4,7 @@ namespace netPhramework\exchange;
 
 class ActiveStrategy extends RequestStrategy
 {
-	public function configure(ExchangeHandler $handler):void
+	public function configure(Site $handler):void
 	{
 		$this->location->getParameters()
 			->clear()

@@ -20,13 +20,13 @@ readonly class Request
 	{
 		$location = new LocationFromUri($context->environment->uri);
 		$exchange = new Exchange($location, $context);
-		$handler  = new ExchangeHandler();
+		$site  = new Site();
 		$this->strategy
 			->setApplication($context->getApplication())
 			->setLocation($location)
 			->setEnvironment($context->environment)
-			->configure($handler);
-		$handler->handleExchange($exchange);
+			->configure($site);
+		$site->handleExchange($exchange);
 		return $exchange->response;
 	}
 }

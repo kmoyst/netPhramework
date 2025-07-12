@@ -5,7 +5,7 @@ namespace netPhramework\exchange;
 use netPhramework\exceptions\ResourceNotFound;
 use netPhramework\resources\Directory;
 
-class ExchangeHandler
+class Site
 {
 	public Directory $root;
 
