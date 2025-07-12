@@ -12,13 +12,13 @@ readonly class Administration implements Application
 
 	public function buildPassiveNode(Directory $root): void
 	{
-		new PassiveTreeBuilder($this->mapper)
+		new PassiveNodeBuilder($this->mapper)
 			->addAllAssetsWithDefaults($root);
 	}
 
 	public function buildActiveNode(Directory $root): void
 	{
-		new ActiveTreeBuilder($this->mapper)
+		new ActiveNodeBuilder($this->mapper)
 			->addAllAssetsWithDefaults($root);
 	}
 }

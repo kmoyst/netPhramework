@@ -10,7 +10,7 @@ use netPhramework\db\core\RecordMapper;
 use netPhramework\resources\Directory;
 use netPhramework\resources\Resource;
 
-class TreeBuilder
+class DynamicNodeBuilder
 {
 	protected ?AssetResource $resource;
 

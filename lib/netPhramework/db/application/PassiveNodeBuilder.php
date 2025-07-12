@@ -12,7 +12,7 @@ use netPhramework\db\assets\Edit;
 use netPhramework\db\resources\OneToManyLink;
 use netPhramework\resources\Directory;
 
-class PassiveTreeBuilder extends TreeBuilder
+class PassiveNodeBuilder extends DynamicNodeBuilder
 {
 	/**
 	 * This is a potent method, only meant to be used during initial

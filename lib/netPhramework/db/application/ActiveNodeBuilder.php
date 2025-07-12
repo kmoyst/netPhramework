@@ -10,7 +10,7 @@ use netPhramework\db\resources\RecordProcess;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\resources\Directory;
 
-class ActiveTreeBuilder extends TreeBuilder
+class ActiveNodeBuilder extends DynamicNodeBuilder
 {
 	/**
 	 * This is a potent method, only meant to be used during initial
