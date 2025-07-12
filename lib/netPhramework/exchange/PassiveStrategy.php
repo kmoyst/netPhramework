@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-class PassiveStrategy extends ResourceStrategy
+class PassiveStrategy extends RequestStrategy
 {
 	public function configure(ExchangeHandler $handler):void
 	{

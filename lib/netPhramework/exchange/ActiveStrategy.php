@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-class ActiveStrategy extends ResourceStrategy
+class ActiveStrategy extends RequestStrategy
 {
 	public function configure(ExchangeHandler $handler):void
 	{
