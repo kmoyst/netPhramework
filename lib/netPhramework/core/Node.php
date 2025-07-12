@@ -2,12 +2,11 @@
 
 namespace netPhramework\core;
 
-use netPhramework\exceptions\Exception;
-use netPhramework\exchange\RequestExchange;
-use netPhramework\exchange\Response;
+use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exchange\Exchange;
 use netPhramework\resources\Directory;
 
-readonly class Node
+class Node
 {
 	public Directory $root;
 
@@ -17,24 +16,17 @@ readonly class Node
 	}
 
 	/**
-	 * @param RequestExchange $exchange
-	 * @return Response
+	 * @param Exchange $exchange
+	 * @return void
+	 * @throws ResourceNotFound
 	 */
-    public function handleExchange(RequestExchange $exchange):Response
+    public function handleExchange(Exchange $exchange):void
 	{
-        try
-		{
-			new Navigator()
-				->setRoot($this->root)
-				->setPath($exchange->path)
-				->navigate()
-				->handleExchange($exchange)
-			;
-			return $exchange->response;
-		}
-		catch (Exception $exception)
-		{
-			return $exception->setEnvironment($exchange->environment);
-		}
+		new Navigator()
+			->setRoot($this->root)
+			->setPath($exchange->path)
+			->navigate()
+			->handleExchange($exchange)
+		;
 	}
 }

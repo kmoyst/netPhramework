@@ -26,7 +26,6 @@ readonly class Controller
 	private function configure():self
 	{
 		$this->context->configureResponder($this->context->responder);
-		$this->context->site->application = $this->context->getApplication();
 		return $this;
 	}
 
@@ -35,8 +34,10 @@ readonly class Controller
 		try {
 			try {
 				$this->context->interpreter
-					->interpret($this->context->site)
-					->exchange($this->context)
+					->initialize($this->context)
+					->interpret($this->context)
+					->prepare($this->context)
+					->exchange()
 					->deliver($this->context->responder);
 			} catch (Exception $exception) {
 				$exception

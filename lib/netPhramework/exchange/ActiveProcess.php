@@ -2,17 +2,14 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\routing\LocationFromUri;
-
 class ActiveProcess extends RequestProcess
 {
-	public function exchange(RequestContext $context):Response
+	public function prepare(RequestContext $context):self
 	{
-		$location = new LocationFromUri($context->environment->uri);
-		$location->getParameters()
+		$this->location->getParameters()
 			->clear()
 			->merge($context->environment->postParameters);
-		$exchange = new RequestExchange($location, $context);
-		return $this->node->handleExchange($exchange);
+		$context->getApplication()->buildActiveNode($this->node->root);
+		return $this;
 	}
 }
