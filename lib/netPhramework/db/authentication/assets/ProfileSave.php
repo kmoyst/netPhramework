@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\profile;
+namespace netPhramework\db\authentication\assets;
 
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\DuplicateEntryException;
@@ -11,19 +11,19 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
-use netPhramework\routing\redirectors\RedirectToSibling;
 use netPhramework\resources\Leaf;
+use netPhramework\routing\redirectors\Redirector;
 
-class SaveProfile extends Leaf
+class ProfileSave extends Leaf
 {
-	public function __construct(private readonly UserManager $manager) {}
+	private Redirector $onSuccess;
+	private Redirector $onFailure;
+	private UserManager $manager;
 
     /**
      * @param Exchange $exchange
      * @return void
-     * @throws DuplicateEntryException
      * @throws FieldAbsent
-     * @throws InvalidValue
      * @throws MappingException
      * @throws RecordNotFound
      * @throws RecordRetrievalException
@@ -32,7 +32,29 @@ class SaveProfile extends Leaf
 	public function handleExchange(Exchange $exchange): void
 	{
 		$user = $this->manager->findByUsername($exchange->session);
-		$user->getProfile()->parse($exchange->parameters)->save();
-		$exchange->redirect(new RedirectToSibling('view-profile'));
+		try {
+			$user->getProfile()->parse($exchange->parameters)->save();
+			$exchange->redirect($this->onSuccess);
+		} catch (DuplicateEntryException|InvalidValue $e) {
+			$exchange->error($e, $this->onFailure);
+		}
+	}
+
+	public function setOnSuccess(Redirector $onSuccess): self
+	{
+		$this->onSuccess = $onSuccess;
+		return $this;
+	}
+
+	public function setOnFailure(Redirector $onFailure): self
+	{
+		$this->onFailure = $onFailure;
+		return $this;
+	}
+
+	public function setUserManager(UserManager $manager): self
+	{
+		$this->manager = $manager;
+		return $this;
 	}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\recovery;
+namespace netPhramework\db\authentication\assets;
 
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
@@ -10,26 +10,21 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NotFound;
 use netPhramework\exchange\Exchange;
-use netPhramework\routing\redirectors\Redirector;
-use netPhramework\routing\redirectors\RedirectToRoot;
-use netPhramework\routing\ReroutedPath;
-use netPhramework\routing\rerouters\Rerouter;
-use netPhramework\routing\rerouters\RerouteToSibling;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\PasswordInput;
 use netPhramework\rendering\View;
 use netPhramework\resources\Leaf;
+use netPhramework\routing\redirectors\Redirector;
+use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\rerouters\Rerouter;
 
-class ChangePassword extends Leaf
+class PasswordChange extends Leaf
 {
-	public function __construct
-	(
-	private readonly UserManager $manager,
-	private readonly Rerouter $toSave = new RerouteToSibling('save-password'),
-	private readonly Redirector $onNotFound = new RedirectToRoot('log-in')
-	)
-	{
-	}
+	private Rerouter $toSave;
+	private Redirector $onNotFound;
+	private UserManager $manager;
+
+	public function __construct () {}
 
 	/**
 	 * @param Exchange $exchange
@@ -58,5 +53,23 @@ class ChangePassword extends Leaf
 			->add('formAction', $formAction)
 			;
 		$exchange->ok($view);
+	}
+
+	public function setToSave(Rerouter $toSave): self
+	{
+		$this->toSave = $toSave;
+		return $this;
+	}
+
+	public function setOnNotFound(Redirector $onNotFound): self
+	{
+		$this->onNotFound = $onNotFound;
+		return $this;
+	}
+
+	public function setUserManager(UserManager $manager): self
+	{
+		$this->manager = $manager;
+		return $this;
 	}
 }

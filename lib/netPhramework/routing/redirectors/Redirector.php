@@ -13,7 +13,7 @@ use netPhramework\routing\rerouters\Rerouter;
 class Redirector extends Leaf
 {
 	public function __construct(
-		protected readonly Rerouter     $relocator,
+		protected readonly Rerouter     $rerouter,
 		protected readonly ?Variables   $parameters = null,
 		protected readonly ResponseCode $code = ResponseCode::SEE_OTHER) {}
 
@@ -23,7 +23,7 @@ class Redirector extends Leaf
 	 */
 	public function redirect(Redirectable $redirectable):void
 	{
-		$this->relocator->reroute($redirectable->getPath());
+		$this->rerouter->reroute($redirectable->getPath());
 		$redirectable->getParameters()->merge($this->parameters ?? []);
 		$redirectable->setResponseCode($this->code);
 	}

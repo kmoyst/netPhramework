@@ -1,29 +1,31 @@
 <?php
 
-namespace netPhramework\db\authentication\registration;
+namespace netPhramework\db\authentication\assets;
 
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\resources\RecordSetProcess;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
-use netPhramework\routing\ReroutedPath;
-use netPhramework\routing\rerouters\Rerouter;
-use netPhramework\routing\rerouters\RerouteToSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\presentation\PasswordInput;
 use netPhramework\presentation\TextInput;
 use netPhramework\rendering\View;
+use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\rerouters\Rerouter;
 
-class SignUp extends RecordSetProcess
+class UserSignUp extends RecordSetProcess
 {
-	public function __construct
-	(
-	private readonly UserManager $userManager,
-	private readonly Rerouter $toSave = new RerouteToSibling('register')
-	)
-	{}
+	private Rerouter $toRegister;
+	private UserManager $userManager;
 
-    /**
+	public function __construct() {}
+
+	public function getName(): string
+	{
+		return 'sign-up';
+	}
+
+	/**
      * @param Exchange $exchange
      * @return void
      * @throws InvalidSession
@@ -33,7 +35,7 @@ class SignUp extends RecordSetProcess
 		$user = $this->userManager->getUser($this->recordSet->newRecord())
 		;
 		$feedbackView  = new FeedbackView($exchange->session);
-		$formAction    = new ReroutedPath($exchange->path, $this->toSave);
+		$formAction    = new ReroutedPath($exchange->path, $this->toRegister);
 		$usernameInput = new TextInput($user->fields->username);
 		$passwordInput = new PasswordInput($user->fields->password)
 		;
@@ -46,5 +48,17 @@ class SignUp extends RecordSetProcess
 		$responseCode = $exchange->session->resolveResponseCode()
 		;
 		$exchange->display($view, $responseCode);
+	}
+
+	public function setToRegister(Rerouter $toRegister): self
+	{
+		$this->toRegister = $toRegister;
+		return $this;
+	}
+
+	public function setUserManager(UserManager $userManager): self
+	{
+		$this->userManager = $userManager;
+		return $this;
 	}
 }

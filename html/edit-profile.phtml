@@ -1,7 +1,7 @@
 <div class="editProfile">
 <p>User: <?= $userDescription ?></p>
 <p>Role: <?= $role ?></p>
-<form name="edit-profile" method="post" action="save-profile">
+<form name="edit-profile" method="post" action="<?=$formAction?>">
 	<ul>
 		<? foreach($inputs as $input) { ?>
 			<li><?=$input?></li>

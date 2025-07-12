@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\profile;
+namespace netPhramework\db\authentication\assets;
 
 use netPhramework\authentication\SessionUser;
 use netPhramework\db\authentication\presentation\ProfileViewManager;
@@ -16,10 +16,15 @@ use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\resources\Leaf;
+use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\rerouters\Rerouter;
 
-class ViewProfile extends Leaf
+class ProfileView extends Leaf
 {
-	public function __construct(private readonly UserManager $manager) {}
+	private Rerouter $toEditProfile;
+	private UserManager $manager;
+
+	public function __construct() {}
 
 	/**
 	 * @param Exchange $exchange
@@ -35,13 +40,14 @@ class ViewProfile extends Leaf
 	{
 		$session 	 = $exchange->session;
 		$user   	 = $this->findUser($session->user);
-		$profile	 = $user->getProfile()
-		;
+		$profile	 = $user->getProfile();
+		$formAction  = new ReroutedPath($exchange->path, $this->toEditProfile);
 		$viewManager = new ProfileViewManager($user)
 			->mandatoryAdd('username',    $user->fields->username)
 			->optionalAdd('firstName',    $profile->fields->firstName)
 			->optionalAdd('lastName',     $profile->fields->lastName)
 			->optionalAdd('emailAddress', $profile->fields->email)
+			->addCustom('formAction',     $formAction)
 			->addCustom('role',    		  $user->getRole()->friendlyName())
 			->addCustom('callbackInput',  new CallbackInput($exchange))
 			->addCustom('feedbackView',   new FeedbackView($session))
@@ -65,5 +71,17 @@ class ViewProfile extends Leaf
 			throw new AuthenticationException(
 				"A visitor tried to view their profile");
 		return $this->manager->findByUsername($sessionUser->getUsername());
+	}
+
+	public function setToEditProfile(Rerouter $toEditProfile): self
+	{
+		$this->toEditProfile = $toEditProfile;
+		return $this;
+	}
+
+	public function setUserManager(UserManager $manager): self
+	{
+		$this->manager = $manager;
+		return $this;
 	}
 }

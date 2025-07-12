@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\profile;
+namespace netPhramework\db\authentication\assets;
 
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -12,9 +12,13 @@ use netPhramework\exchange\Exchange;
 use netPhramework\presentation\InputSet;
 use netPhramework\rendering\View;
 use netPhramework\resources\Leaf;
+use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\rerouters\Rerouter;
 
-class EditProfile extends Leaf
+class ProfileEdit extends Leaf
 {
+	private Rerouter $toSaveProfile;
+
 	public function __construct(private readonly UserManager $manager) {}
 
 	/**
@@ -28,9 +32,10 @@ class EditProfile extends Leaf
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user     = $this->manager->findByUsername($exchange->session);
-		$profile  = $user->getProfile();
-		$inputs   = new InputSet();
+		$user     	= $this->manager->findByUsername($exchange->session);
+		$profile  	= $user->getProfile();
+		$formAction = new ReroutedPath($exchange->path, $this->toSaveProfile);
+		$inputs   	= new InputSet();
 		$inputs
 			->textInput($profile->fields->firstName)
 			->setValue($profile->getFirstName())
@@ -47,6 +52,13 @@ class EditProfile extends Leaf
 			->add('inputs', $inputs)
 			->add('userDescription', $user->getUsername())
 			->add('role', $user->getRole()->friendlyName())
+			->add('formAction', $formAction)
 		);
+	}
+
+	public function setToSaveProfile(Rerouter $toSaveProfile): self
+	{
+		$this->toSaveProfile = $toSaveProfile;
+		return $this;
 	}
 }

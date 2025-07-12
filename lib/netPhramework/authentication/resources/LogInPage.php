@@ -7,19 +7,15 @@ use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\ReroutedPath;
 use netPhramework\routing\rerouters\Rerouter;
-use netPhramework\routing\rerouters\RerouteToRoot;
-use netPhramework\routing\rerouters\RerouteToSibling;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 use netPhramework\resources\Leaf;
 
 class LogInPage extends Leaf
 {
-    public function __construct(
-		private readonly ?View $view = null,
-		private readonly ?Rerouter $forForm = null,
-		private readonly ?Rerouter $forForgotPassword = null
-    ) {}
+	private Rerouter $toAuthenticate;
+	private Rerouter $toForgotPassword;
+	private Rerouter $toSignUp;
 
 	public function getName(): string { return 'log-in'; }
 
@@ -30,25 +26,36 @@ class LogInPage extends Leaf
      */
     public function handleExchange(Exchange $exchange): void
     {
-        $manager    = new LogInManager()
-		;
-		$formAction = $exchange->path;
-        $relocator  = $this->forForm??new RerouteToSibling('authenticate');
-        $relocator->reroute($formAction)
-		;
-		$forForgotPassword = $this->forForgotPassword??
-			new RerouteToRoot('forgot-password');
-		$forgotPasswordLink = new ReroutedPath(
-			$exchange->path, $forForgotPassword);
+        $manager = new LogInManager();
+		$formAction = new ReroutedPath($exchange->path, $this->toAuthenticate);
+		$toForgot = new ReroutedPath($exchange->path, $this->toForgotPassword);
         $feedbackView = new FeedbackView($exchange->session);
         $responseCode = $exchange->session->resolveResponseCode()
 		;
-		$exchange->display($this->view??new View('log-in-page'), $responseCode)
+		$exchange->display(new View('log-in-page'), $responseCode)
             ->add('usernameInput', 	$manager->getUsernameInput())
             ->add('passwordInput', 	$manager->getPasswordInput())
             ->add('formAction', 	$formAction)
             ->add('errorView', 		$feedbackView)
-			->add('forgotPasswordLink', $forgotPasswordLink)
+			->add('forgotPasswordLink', $toForgot)
             ;
     }
+
+	public function setToAuthenticate(Rerouter $toAuthenticate): self
+	{
+		$this->toAuthenticate = $toAuthenticate;
+		return $this;
+	}
+
+	public function setToForgotPassword(Rerouter $toForgotPassword): self
+	{
+		$this->toForgotPassword = $toForgotPassword;
+		return $this;
+	}
+
+	public function setToSignUp(Rerouter $toSignUp): self
+	{
+		$this->toSignUp = $toSignUp;
+		return $this;
+	}
 }

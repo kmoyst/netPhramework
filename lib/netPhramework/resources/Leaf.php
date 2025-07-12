@@ -4,8 +4,8 @@ namespace netPhramework\resources;
 
 use netPhramework\common\Utils;
 use netPhramework\exceptions\ResourceNotFound;
-
-abstract class Leaf implements Resource
+use Stringable;
+abstract class Leaf implements Resource, Stringable
 {
 	private bool $isIndex = false;
 
@@ -28,5 +28,10 @@ abstract class Leaf implements Resource
 	public function getName():string
 	{
 		return Utils::camelToKebab(Utils::baseClassName($this));
+	}
+
+	public function __toString():string
+	{
+		return $this->getResourceId();
 	}
 }

@@ -6,13 +6,12 @@ use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\routing\redirectors\RedirectToRoot;
 use netPhramework\resources\Leaf;
+use netPhramework\routing\redirectors\RedirectToRoot;
 
 class LogOut extends Leaf
 {
-	public function __construct(
-		private readonly ?Redirector $dispatcher = null) {}
+	private Redirector $afterLogout;
 
 	/**
 	 * @param Exchange $exchange
@@ -23,6 +22,12 @@ class LogOut extends Leaf
 	public function handleExchange(Exchange $exchange): void
 	{
 		$exchange->session->logout();
-		$exchange->redirect($this->dispatcher ?? new RedirectToRoot());
+		$exchange->redirect($this->redirector ?? new RedirectToRoot());
+	}
+
+	public function setAfterLogout(Redirector $afterLogout): self
+	{
+		$this->afterLogout = $afterLogout;
+		return $this;
 	}
 }

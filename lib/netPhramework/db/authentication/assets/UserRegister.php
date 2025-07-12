@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\registration;
+namespace netPhramework\db\authentication\assets;
 
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\DuplicateEntryException;
@@ -12,17 +12,15 @@ use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\routing\redirectors\RedirectToRoot;
 use netPhramework\routing\redirectors\RedirectToSibling;
 
-class Register extends RecordSetProcess
+class UserRegister extends RecordSetProcess
 {
-	public function __construct
-	(
-	private readonly UserManager $manager,
-	private readonly Redirector $onSuccess = new RedirectToRoot('edit-profile')
-	)
-	{}
+	private Redirector $onSuccess;
+	private Redirector $onFailure;
+	private UserManager $manager;
+
+	public function __construct() {}
 
 	/**
 	 * @param Exchange $exchange
@@ -46,5 +44,23 @@ class Register extends RecordSetProcess
         } catch (InvalidValue|InvalidPassword $e) {
             $exchange->error($e, new RedirectToSibling('sign-up'));
         }
+	}
+
+	public function setOnSuccess(Redirector $onSuccess): self
+	{
+		$this->onSuccess = $onSuccess;
+		return $this;
+	}
+
+	public function setOnFailure(Redirector $onFailure): self
+	{
+		$this->onFailure = $onFailure;
+		return $this;
+	}
+
+	public function setUserManager(UserManager $manager): self
+	{
+		$this->manager = $manager;
+		return $this;
 	}
 }

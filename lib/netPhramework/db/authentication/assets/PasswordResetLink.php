@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\recovery;
+namespace netPhramework\db\authentication\assets;
 
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
@@ -15,27 +15,22 @@ use netPhramework\exchange\ResponseCode;
 use netPhramework\resources\Leaf;
 use netPhramework\routing\Location;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\routing\redirectors\RedirectToRoot as toRoot;
 use netPhramework\routing\rerouters\Rerouter;
-use netPhramework\routing\rerouters\RerouteToSibling as toSibling;
 use netPhramework\routing\UriFromLocation;
 use netPhramework\transferring\EmailDelivery;
 use netPhramework\transferring\EmailException;
 use netPhramework\transferring\StreamSocketException;
 use Random\RandomException;
 
-class SendResetLink extends Leaf
+class PasswordResetLink extends Leaf
 {
+	private string $sender;
+	private ?string $senderName = null;
+	private Rerouter $toChangePass;
+	private Redirector $afterProcess;
+	private UserManager $manager;
 
-	public function __construct
-	(
-	private readonly UserManager $manager,
-	private readonly string $sender,
-	private readonly ?string $senderName = null,
-	private readonly Rerouter $toChangePass = new toSibling('change-password'),
-	private readonly Redirector $afterProcess = new toRoot('log-in')
-	)
-	{}
+	public function __construct() {}
 
 	/**
 	 * @param Exchange $exchange
@@ -102,5 +97,35 @@ class SendResetLink extends Leaf
 			->send()
 		;
 		return true;
+	}
+
+	public function setSender(string $sender): self
+	{
+		$this->sender = $sender;
+		return $this;
+	}
+
+	public function setSenderName(?string $senderName): self
+	{
+		$this->senderName = $senderName;
+		return $this;
+	}
+
+	public function setToChangePass(Rerouter $toChangePass): self
+	{
+		$this->toChangePass = $toChangePass;
+		return $this;
+	}
+
+	public function setAfterProcess(Redirector $afterProcess): self
+	{
+		$this->afterProcess = $afterProcess;
+		return $this;
+	}
+
+	public function setUserManager(UserManager $manager): self
+	{
+		$this->manager = $manager;
+		return $this;
 	}
 }

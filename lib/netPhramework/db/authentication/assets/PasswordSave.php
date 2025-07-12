@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\authentication\recovery;
+namespace netPhramework\db\authentication\assets;
 
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
@@ -14,17 +14,14 @@ use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\resources\Leaf;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\routing\redirectors\RedirectToRoot;
 
-class SavePassword extends Leaf
+class PasswordSave extends Leaf
 {
-	public function __construct
-	(
-	private readonly UserManager $manager,
-	private readonly Redirector $onSuccess = new RedirectToRoot('log-in'),
-	private readonly Redirector $onFailure = new RedirectToRoot('log-in')
-	)
-	{}
+	private Redirector $onSuccess;
+	private Redirector $onFailure;
+	private UserManager $manager;
+
+	public function __construct() {}
 
 	/**
 	 * @param Exchange $exchange
@@ -55,5 +52,23 @@ class SavePassword extends Leaf
 			->setFeedbackCode(ResponseCode::OK)
 		;
 		$exchange->redirect($this->onSuccess);
+	}
+
+	public function setOnSuccess(Redirector $onSuccess): self
+	{
+		$this->onSuccess = $onSuccess;
+		return $this;
+	}
+
+	public function setOnFailure(Redirector $onFailure): self
+	{
+		$this->onFailure = $onFailure;
+		return $this;
+	}
+
+	public function setUserManager(UserManager $manager): self
+	{
+		$this->manager = $manager;
+		return $this;
 	}
 }

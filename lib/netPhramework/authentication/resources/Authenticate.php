@@ -9,18 +9,13 @@ use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\routing\redirectors\RedirectToRoot as toRoot;
-use netPhramework\routing\redirectors\RedirectToSibling as toSibling;
 use netPhramework\resources\Leaf;
 
 class Authenticate extends Leaf
 {
-	public function __construct(
-		private readonly Authenticator $authenticator,
-		private readonly Redirector $onSuccess = new toRoot(),
-        private readonly Redirector $onFailure = new toSibling('log-in')
-	)
-	{}
+	private Authenticator $authenticator;
+	private Redirector $onSuccess;
+	private Redirector $onFailure;
 
     /**
      * @param Exchange $exchange
@@ -54,5 +49,23 @@ class Authenticate extends Leaf
 			$exchange->session->login($user);
 			$exchange->redirect($this->onSuccess);
 		}
+	}
+
+	public function setAuthenticator(Authenticator $authenticator): self
+	{
+		$this->authenticator = $authenticator;
+		return $this;
+	}
+
+	public function setOnSuccess(Redirector $onSuccess): self
+	{
+		$this->onSuccess = $onSuccess;
+		return $this;
+	}
+
+	public function setOnFailure(Redirector $onFailure): self
+	{
+		$this->onFailure = $onFailure;
+		return $this;
 	}
 }
