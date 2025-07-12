@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\mapping;
 
-use netPhramework\db\validators\Validator;
+use netPhramework\common\Validator;
 
 final class Field
 {

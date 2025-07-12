@@ -2,13 +2,13 @@
 
 namespace netPhramework\exchange;
 
-class ActiveStrategy extends RequestStrategy
+class ActiveStrategy extends ResourceStrategy
 {
 	public function configure(ExchangeHandler $handler):void
 	{
 		$this->location->getParameters()
 			->clear()
 			->merge($this->environment->postParameters);
-		$this->application->asActive($handler->root);
+		$this->application->asAnActiveResource($handler->root);
 	}
 }

@@ -3,7 +3,6 @@
 namespace netPhramework\db\resources;
 
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\db\traits\HasRecordSet;
 use netPhramework\exceptions\ResourceNotFound;
 use netPhramework\resources\Composite;
 use netPhramework\resources\Resource;

@@ -7,7 +7,7 @@ use netPhramework\site\Application;
 use netPhramework\exceptions\Exception;
 use netPhramework\routing\Location;
 
-abstract class RequestStrategy
+abstract class ResourceStrategy
 {
 	protected Application $application;
 	protected Location $location;

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\validators;
+namespace netPhramework\common;
 
 interface Validator
 {

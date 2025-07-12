@@ -8,7 +8,7 @@ use netPhramework\routing\LocationFromUri;
 
 readonly class Request
 {
-	public function __construct(protected RequestStrategy $strategy) {}
+	public function __construct(protected ResourceStrategy $strategy) {}
 
 	/**
 	 * @param RequestContext $context

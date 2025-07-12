@@ -10,13 +10,13 @@ readonly class Administration implements Application
 {
 	public function __construct(protected RecordMapper $mapper) {}
 
-	public function asPassive(Directory $root): void
+	public function asAPassiveResource(Directory $root): void
 	{
 		new PassiveNodeBuilder($this->mapper)
 			->addAllAssetsWithDefaults($root);
 	}
 
-	public function asActive(Directory $root): void
+	public function asAnActiveResource(Directory $root): void
 	{
 		new ActiveNodeBuilder($this->mapper)
 			->addAllAssetsWithDefaults($root);

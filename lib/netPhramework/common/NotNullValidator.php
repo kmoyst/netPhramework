@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\validators;
+namespace netPhramework\common;
 
 final class NotNullValidator implements Validator
 {

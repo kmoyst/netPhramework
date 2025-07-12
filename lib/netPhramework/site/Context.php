@@ -11,7 +11,7 @@ use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
 
-abstract class Context implements RequestContext
+abstract readonly class Context implements RequestContext
 {
 	public CallbackManager $callbackManager;
 	public Responder $responder;

@@ -12,12 +12,12 @@ interface Application
 	 * @return void
 	 * @throws Exception
 	 */
-    public function asPassive(Directory $root):void;
+    public function asAPassiveResource(Directory $root):void;
 
 	/**
 	 * @param Directory $root
 	 * @return void
 	 * @throws Exception
 	 */
-	public function asActive(Directory $root):void;
+	public function asAnActiveResource(Directory $root):void;
 }
