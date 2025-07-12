@@ -3,6 +3,7 @@
 namespace netPhramework\routing\redirectors;
 
 use netPhramework\common\Variables;
+use netPhramework\exceptions\PathException;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\resources\Leaf;
@@ -27,6 +28,11 @@ class Redirector extends Leaf
 		$redirectable->setResponseCode($this->code);
 	}
 
+	/**
+	 * @param Exchange $exchange
+	 * @return void
+	 * @throws PathException
+	 */
 	public function handleExchange(Exchange $exchange): void
 	{
 		$exchange->redirect($this);

@@ -1,10 +1,11 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\site;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
 use netPhramework\exchange\RequestContext;
+use netPhramework\exchange\RequestInterpreter;
 use netPhramework\exchange\Responder;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
@@ -15,6 +16,7 @@ abstract class Context implements RequestContext
 	public CallbackManager $callbackManager;
 	public Responder $responder;
 	public SmtpServer $smtpServer;
+	public RequestInterpreter $requestProcessor;
 
 	public function __construct
 	(
@@ -26,6 +28,7 @@ abstract class Context implements RequestContext
 		$this->callbackManager 	= new CallbackManager();
 		$this->responder 		= new Responder();
 		$this->smtpServer		= new SmtpServer($this->environment);
+		$this->requestProcessor = new RequestInterpreter();
 	}
 	public function configureResponder(Responder $responder):void
 	{

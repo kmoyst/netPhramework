@@ -2,23 +2,32 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\bootstrap\Environment;
-use netPhramework\routing\Location;
+use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\ResourceNotFound;
 use netPhramework\routing\LocationFromUri;
 
-class Request
+readonly class Request
 {
-	public readonly Exchange $exchange;
-	public readonly Location $location;
-	private(set) Environment $environment
-	{
-		get{ return $this->context->environment; }
-		set{}
-	}
+	public function __construct(protected RequestStrategy $strategy) {}
 
-	public function __construct(private readonly RequestContext $context)
+	/**
+	 * @param RequestContext $context
+	 * @return Response
+	 * @throws Exception
+	 * @throws ResourceNotFound
+	 */
+	public function process(RequestContext $context):Response
 	{
-		$this->location = new LocationFromUri($context->environment->uri);
-		$this->exchange = new Exchange($this->location, $context);
+		$location = new LocationFromUri($context->environment->uri);
+		$exchange = new Exchange($location, $context);
+		$handler  = new ExchangeHandler();
+		;
+		$this->strategy
+			->setApplication($context->getApplication())
+			->setLocation($location)
+			->setEnvironment($context->environment)
+			->configure($handler);
+		$handler->handleExchange($exchange);
+		return $exchange->response;
 	}
 }

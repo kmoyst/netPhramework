@@ -1,12 +1,11 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\exchange;
 
 use netPhramework\exceptions\ResourceNotFound;
-use netPhramework\exchange\Exchange;
 use netPhramework\resources\Directory;
 
-class Node
+class ExchangeHandler
 {
 	public Directory $root;
 

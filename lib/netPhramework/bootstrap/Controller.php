@@ -2,9 +2,8 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\core\Context;
+use netPhramework\site\Context;
 use netPhramework\exceptions\Exception;
-use netPhramework\exchange\RequestProcessor;
 
 readonly class Controller
 {
@@ -12,7 +11,7 @@ readonly class Controller
 
 	public function run():void
 	{
-		$this->initialize()->configure()->process();
+		$this->initialize()->configure()->exchange();
 	}
 
 	private function initialize():self
@@ -30,14 +29,13 @@ readonly class Controller
 		return $this;
 	}
 
-	private function process():void
+	private function exchange():void
 	{
 		try {
 			try {
-				new RequestProcessor($this->context)
-					->openSocket()
-					->prepare()
-					->process()
+				$this->context->requestProcessor
+					->interpret($this->context->environment)
+					->process($this->context)
 					->deliver($this->context->responder);
 			} catch (Exception $exception) {
 				$exception
