@@ -2,7 +2,7 @@
 
 namespace netPhramework\exceptions;
 
-class FileNotFound extends NotFound
+class FileNotFound extends Exception
 {
 
 }

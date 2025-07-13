@@ -2,8 +2,8 @@
 
 namespace netPhramework\db\exceptions;
 
-use netPhramework\exceptions\BadRequest;
+use netPhramework\exceptions\Exception;
 
-class FieldAbsent extends BadRequest
+class FieldAbsent extends Exception
 {
 }

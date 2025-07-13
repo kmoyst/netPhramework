@@ -4,6 +4,7 @@ namespace netPhramework\bootstrap;
 
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\ResourceNotFound;
 
 readonly class Controller
 {
@@ -37,11 +38,15 @@ readonly class Controller
 					->interpret($this->site->environment)
 					->process($this->site)
 					->deliver($this->site->responder);
+			} catch (ResourceNotFound $exception) {
+				$exception
+					->setEnvironment($this->site->environment)
+					->deliver($this->site->responder);
 			} catch (Exception $exception) {
 				$exception
 					->setEnvironment($this->site->environment)
 					->deliver($this->site->responder);
-				return;
+				$this->logException($exception);
 			}
 		}
 		catch (\Exception $exception)
@@ -52,11 +57,18 @@ readonly class Controller
 			}
 			else
 			{
-				ob_start();
-				print_r($exception);
-				error_log(ob_get_clean());
+				$this->logException($exception);
 				echo 'SERVER ERROR';
 			}
 		}
     }
+
+	private function logException(\Exception $exception):void
+	{
+		ob_start();
+		echo $exception->getCode();
+		echo ": ";
+		echo $exception->getMessage();
+		error_log('Error:'. ob_get_clean());
+	}
 }
