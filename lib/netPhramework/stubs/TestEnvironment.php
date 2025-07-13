@@ -2,7 +2,7 @@
 
 namespace netPhramework\stubs;
 
-class Environment extends \netPhramework\bootstrap\Environment
+class TestEnvironment implements \netPhramework\bootstrap\Environment
 {
 	protected(set) bool $inDevelopment {
 		get { return true; }

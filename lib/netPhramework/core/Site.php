@@ -4,6 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
+use netPhramework\bootstrap\WebEnvironment;
 use netPhramework\exchange\RequestInterpreter;
 use netPhramework\exchange\Responder;
 use netPhramework\routing\CallbackManager;
@@ -19,7 +20,7 @@ abstract readonly class Site
 
 	public function __construct
 	(
-	public Environment $environment = new Environment(),
+	public Environment $environment = new WebEnvironment(),
 	public Session     $session 	= new Session(),
 	public FileManager $fileManager = new FileManager(),
 	)
