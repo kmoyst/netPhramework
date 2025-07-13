@@ -120,6 +120,7 @@ class User implements \netPhramework\authentication\User
 	/**
 	 * @param string $password
 	 * @param bool $encode
+	 * @param bool $new
 	 * @return $this
 	 * @throws FieldAbsent
 	 * @throws InvalidPassword
