@@ -4,7 +4,6 @@ namespace netPhramework\core;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
-use netPhramework\exchange\Router;
 use netPhramework\exchange\RequestInterpreter;
 use netPhramework\exchange\Responder;
 use netPhramework\routing\CallbackManager;
