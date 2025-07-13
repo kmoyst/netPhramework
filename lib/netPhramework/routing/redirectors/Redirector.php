@@ -6,7 +6,7 @@ use netPhramework\common\Variables;
 use netPhramework\exceptions\PathException;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 use netPhramework\routing\Redirectable;
 use netPhramework\routing\rerouters\Rerouter;
 

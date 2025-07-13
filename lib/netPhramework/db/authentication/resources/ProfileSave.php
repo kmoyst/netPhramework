@@ -11,7 +11,7 @@ use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 use netPhramework\routing\redirectors\Redirector;
 
 class ProfileSave extends Resource

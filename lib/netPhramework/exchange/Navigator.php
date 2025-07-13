@@ -3,7 +3,7 @@
 namespace netPhramework\exchange;
 
 use netPhramework\exceptions\NodeNotFound;
-use netPhramework\resources\Node;
+use netPhramework\nodes\Node;
 use netPhramework\routing\Path;
 
 class Navigator

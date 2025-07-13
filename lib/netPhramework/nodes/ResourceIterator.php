@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\resources;
+namespace netPhramework\nodes;
 
 use Iterator;
 use netPhramework\common\KeyedIterator;

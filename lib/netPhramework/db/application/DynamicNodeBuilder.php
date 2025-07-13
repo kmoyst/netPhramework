@@ -7,8 +7,8 @@ use netPhramework\db\nodes\Branch;
 use netPhramework\db\nodes\RecordChild;
 use netPhramework\db\nodes\RecordSetChild;
 use netPhramework\db\core\RecordMapper;
-use netPhramework\resources\Directory;
-use netPhramework\resources\Node;
+use netPhramework\nodes\Directory;
+use netPhramework\nodes\Node;
 
 class DynamicNodeBuilder
 {

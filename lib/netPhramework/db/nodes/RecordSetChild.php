@@ -3,7 +3,7 @@
 namespace netPhramework\db\nodes;
 
 use netPhramework\db\core\RecordSet;
-use netPhramework\resources\Node;
+use netPhramework\nodes\Node;
 
 interface RecordSetChild extends Node
 {

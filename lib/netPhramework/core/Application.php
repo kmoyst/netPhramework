@@ -3,7 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\exceptions\Exception;
-use netPhramework\resources\Directory;
+use netPhramework\nodes\Directory;
 
 interface Application
 {

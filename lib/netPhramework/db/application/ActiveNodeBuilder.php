@@ -8,7 +8,7 @@ use netPhramework\db\resources\Update;
 use netPhramework\db\nodes\Branch;
 use netPhramework\db\nodes\RecordProcess;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\resources\Directory;
+use netPhramework\nodes\Directory;
 
 class ActiveNodeBuilder extends DynamicNodeBuilder
 {

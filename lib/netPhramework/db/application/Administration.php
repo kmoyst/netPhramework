@@ -4,7 +4,7 @@ namespace netPhramework\db\application;
 
 use netPhramework\core\Application;
 use netPhramework\db\core\RecordMapper;
-use netPhramework\resources\Directory;
+use netPhramework\nodes\Directory;
 
 readonly class Administration implements Application
 {

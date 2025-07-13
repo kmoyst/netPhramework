@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\resources;
+namespace netPhramework\nodes;
 
 use netPhramework\exchange\Exchange;
 use netPhramework\rendering\Encodable;

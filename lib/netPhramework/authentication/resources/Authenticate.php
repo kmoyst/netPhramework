@@ -9,7 +9,7 @@ use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exceptions\InvalidUsername;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 
 class Authenticate extends Resource
 {

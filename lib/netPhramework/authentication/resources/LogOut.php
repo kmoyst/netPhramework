@@ -6,7 +6,7 @@ use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 use netPhramework\routing\redirectors\RedirectToRoot;
 
 class LogOut extends Resource

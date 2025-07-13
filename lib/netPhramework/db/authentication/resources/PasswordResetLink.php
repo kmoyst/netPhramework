@@ -12,7 +12,7 @@ use netPhramework\db\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 use netPhramework\routing\Location;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\rerouters\Rerouter;

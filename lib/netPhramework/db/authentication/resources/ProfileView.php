@@ -15,7 +15,7 @@ use netPhramework\exceptions\NotFound;
 use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 use netPhramework\routing\ReroutedPath;
 use netPhramework\routing\rerouters\Rerouter;
 

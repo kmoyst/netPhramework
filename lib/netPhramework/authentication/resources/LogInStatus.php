@@ -5,7 +5,7 @@ namespace netPhramework\authentication\resources;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\rendering\View;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 
 class LogInStatus extends Resource
 {

@@ -4,8 +4,8 @@ namespace netPhramework\db\nodes;
 
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\exceptions\NodeNotFound;
-use netPhramework\resources\Composite;
-use netPhramework\resources\Node;
+use netPhramework\nodes\Composite;
+use netPhramework\nodes\Node;
 
 class RecordComposite extends Composite implements RecordSetChild
 {

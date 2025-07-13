@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\nodes;
 
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 
 abstract class RecordProcess extends Resource implements RecordChild
 {

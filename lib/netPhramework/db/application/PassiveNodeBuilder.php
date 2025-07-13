@@ -10,7 +10,7 @@ use netPhramework\db\resources\Add;
 use netPhramework\db\resources\Browse;
 use netPhramework\db\resources\Edit;
 use netPhramework\db\nodes\Branch;
-use netPhramework\resources\Directory;
+use netPhramework\nodes\Directory;
 
 class PassiveNodeBuilder extends DynamicNodeBuilder
 {

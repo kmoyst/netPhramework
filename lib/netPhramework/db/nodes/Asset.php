@@ -7,8 +7,8 @@ use netPhramework\common\StringPredicate as Predicate;
 use netPhramework\db\nodes\RecordSetChildSet as setChildSet;
 use netPhramework\db\core\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
-use netPhramework\resources\Composite;
-use netPhramework\resources\Node;
+use netPhramework\nodes\Composite;
+use netPhramework\nodes\Node;
 
 class Asset extends Composite
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\resources;
+namespace netPhramework\nodes;
 
 use netPhramework\exceptions\PathException;
 use netPhramework\exchange\Exchange;

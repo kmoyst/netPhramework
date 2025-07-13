@@ -9,7 +9,7 @@ use netPhramework\routing\ReroutedPath;
 use netPhramework\routing\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 
 class LogInPage extends Resource
 {

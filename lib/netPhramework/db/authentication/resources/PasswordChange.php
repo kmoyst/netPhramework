@@ -13,7 +13,7 @@ use netPhramework\exchange\Exchange;
 use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\PasswordInput;
 use netPhramework\rendering\View;
-use netPhramework\resources\Resource;
+use netPhramework\nodes\Resource;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\ReroutedPath;
 use netPhramework\routing\rerouters\Rerouter;

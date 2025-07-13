@@ -5,8 +5,8 @@ namespace netPhramework\exchange;
 use netPhramework\core\Application;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
-use netPhramework\resources\Directory;
-use netPhramework\resources\Node;
+use netPhramework\nodes\Directory;
+use netPhramework\nodes\Node;
 use netPhramework\routing\Path;
 
 readonly class Router

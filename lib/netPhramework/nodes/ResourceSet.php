@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\resources;
+namespace netPhramework\nodes;
 
 use netPhramework\common\KeyedIterator;
 use netPhramework\exceptions\NodeNotFound;

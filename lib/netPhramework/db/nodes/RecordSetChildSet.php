@@ -3,7 +3,7 @@
 namespace netPhramework\db\nodes;
 
 use netPhramework\exceptions\NodeNotFound;
-use netPhramework\resources\ResourceIterator;
+use netPhramework\nodes\ResourceIterator;
 
 class RecordSetChildSet extends ResourceIterator
 {

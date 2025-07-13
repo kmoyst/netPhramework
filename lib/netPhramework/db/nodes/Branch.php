@@ -6,8 +6,8 @@ use netPhramework\db\core\Record;
 use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;
-use netPhramework\resources\Composite;
-use netPhramework\resources\Node;
+use netPhramework\nodes\Composite;
+use netPhramework\nodes\Node;
 
 class Branch extends Composite implements RecordChild
 {
