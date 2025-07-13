@@ -11,31 +11,28 @@ use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
 
-abstract readonly class Site
+abstract class Site
 {
-	public CallbackManager $callbackManager;
-	public Responder $responder;
-	public SmtpServer $smtpServer;
-	public RequestInterpreter $requestProcessor;
-
 	public function __construct
 	(
-	public Environment $environment = new WebEnvironment(),
-	public Session     $session 	= new Session(),
-	public FileManager $fileManager = new FileManager(),
+	public Environment $environment 			  = new WebEnvironment(),
+	public RequestInterpreter $requestInterpreter = new RequestInterpreter(),
+	public Responder   $responder   			  = new Responder(),
+	public Session     $session 				  = new Session(),
+	public FileManager $fileManager 			  = new FileManager(),
+	public CallbackManager $callbackManager 	  = new CallbackManager(),
+	public SmtpServer $smtpServer 				  = new SmtpServer(),
 	)
 	{
-		$this->callbackManager 	= new CallbackManager();
-		$this->responder 		= new Responder();
-		$this->smtpServer		= new SmtpServer($this->environment);
-		$this->requestProcessor = new RequestInterpreter();
+		$this->smtpServer->initialize($this->environment);
 	}
 	public function configureResponder(Responder $responder):void
 	{
 		$responder->wrapper->addStyleSheet('framework-stylesheet');
 		$responder->templateFinder
 			->directory('../html')
-			->directory(__DIR__ . '/../../../html')
+			->directory(__DIR__ . '/../../../templates')
+			->extension('tpl')
 			->extension('phtml')
 			->extension('css')
 		;

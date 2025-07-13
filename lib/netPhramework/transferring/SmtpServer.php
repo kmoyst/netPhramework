@@ -7,10 +7,7 @@ readonly class SmtpServer
 	private StreamSocket $socket;
 	private string $serverName;
 
-	public function __construct
-	(
-		SmtpServerEnvironment $environment
-	)
+	public function initialize(SmtpServerEnvironment $environment):void
 	{
 		$this->socket = new StreamSocket($environment->smtpServerAddress);
 		$this->serverName = $environment->smtpServerName;
