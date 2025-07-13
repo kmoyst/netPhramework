@@ -50,7 +50,7 @@ class PasswordChange extends Resource
 			$whenResetCodeWasSet = $recovery->resetTime;
 			$isExpired = Utils::isExpired(
 				new DateTime($whenResetCodeWasSet),
-				new DateInterval('P1H'));
+				new DateInterval('PT1H'));
 			if($isExpired)
 			{
 				$recovery->clearResetCode()->save();

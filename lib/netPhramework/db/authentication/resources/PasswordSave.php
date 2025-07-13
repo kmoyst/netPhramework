@@ -39,7 +39,7 @@ class PasswordSave extends Resource
 			if(!$recovery->userFound()) throw new RecordNotFound();
 			$recovery
 				->clearResetCode()
-				->parsePassword()
+				->parsePassword(true)
 				->save();
 		} catch (RecordNotFound) {
 			$e = new RecordNotFound("User Not Found");

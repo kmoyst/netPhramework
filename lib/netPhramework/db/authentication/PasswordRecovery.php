@@ -120,10 +120,10 @@ class PasswordRecovery
 	 * @throws Exception
 	 * @throws InvalidPassword
 	 */
-	public function parsePassword():self
+	public function parsePassword(bool $new = false):self
 	{
 		$password = $this->parameters->get($this->user->fields->password);
-		$this->user->setPassword($password);
+		$this->user->setPassword($password, true, $new);
 		return $this;
 	}
 

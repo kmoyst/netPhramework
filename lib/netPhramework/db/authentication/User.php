@@ -126,10 +126,24 @@ class User implements \netPhramework\authentication\User
 	 * @throws InvalidValue
 	 * @throws MappingException
 	 */
-	public function setPassword(string $password, bool $encode = true):self
+	public function setPassword(
+		string $password, bool $encode = true, bool $new = false):self
 	{
-		if(strlen($password) < 8)
-			throw new InvalidPassword("Password must be at least 8 characters");
+		if($new)
+		{
+			if(strlen($password) < 8)
+				throw new InvalidPassword(
+					'Password must be at least 8 characters');
+			elseif(!preg_match('|[A-Z]|', $password))
+				throw new InvalidPassword(
+					'Password must contain an uppercase letter');
+			elseif(!preg_match('|[a-z]|', $password))
+				throw new InvalidPassword(
+					'Password must contain a lowercase letter');
+			elseif(!preg_match('/[\d\W_]/', $password))
+				throw new InvalidPassword(
+					'Password must contain a number or special character');
+		}
 		$value = $encode?password_hash($password, PASSWORD_DEFAULT):$password;
 		$this->record->setValue($this->fields->password, $value);
 		return $this;

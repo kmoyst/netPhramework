@@ -15,10 +15,9 @@ class Utils
 		DateTime $pastTime,
 		DateInterval $difference):bool
 	{
-		return str_starts_with(
-			(clone $pastTime)
+		return (clone $pastTime)
 				->add($difference)
-				->diff(new DateTime()),'+');
+				->diff(new DateTime())->invert === 0;
 	}
 	public static function kebabToSpace(string $kebab):string
 	{

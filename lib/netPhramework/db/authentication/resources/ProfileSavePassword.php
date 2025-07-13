@@ -35,7 +35,7 @@ class ProfileSavePassword extends Resource
 				throw new InvalidPassword('Please fill in both inputs');
 			if(!$user->checkPassword($currentPassword))
 				throw new InvalidPassword('Current password incorrect');
-			$user->setPassword($newPassword)->save();
+			$user->setPassword($newPassword, true, true)->save();
 			$exchange->session->login($user);
 			$exchange->session->addFeedbackMessage('Password saved');
 			$exchange->session->setFeedbackCode(ResponseCode::OK);
