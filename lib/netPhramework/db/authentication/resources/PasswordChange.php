@@ -53,11 +53,13 @@ class PasswordChange extends Resource
 				new DateInterval('P1H'));
 			if($isExpired)
 			{
+				$recovery->clearResetCode()->save();
 				$exchange->error(
 					new NotFound('Code expired'), $this->onFailure);
 				return;
 			}
 		} catch (DateMalformedStringException $e) {
+			$recovery->clearResetCode()->save();
 			$exchange->error(new NotFound('Code expired'), $this->onFailure);
 			return;
 		}

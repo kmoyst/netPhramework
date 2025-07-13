@@ -108,6 +108,7 @@ class PasswordRecovery
 	public function clearResetCode():self
 	{
 		$this->user->record->setValue($this->user->fields->resetCode, null);
+		$this->user->record->setValue($this->user->fields->resetTime, null);
 		return $this;
 	}
 
