@@ -55,7 +55,7 @@ class User implements \netPhramework\authentication\User
 		if(!$vars->has($this->fields->username) ||
 			!$vars->has($this->fields->password)) return false;
 		$this->setUsername($vars->get($this->fields->username));
-		$this->setPassword($vars->get($this->fields->password));
+		$this->setPassword($vars->get($this->fields->password), true, true);
 		$this->setRole($this->defaultRole);
 		return $this;
 	}
