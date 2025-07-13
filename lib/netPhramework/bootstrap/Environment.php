@@ -6,42 +6,42 @@ use netPhramework\transferring\SmtpServerEnvironment;
 
 class Environment implements SmtpServerEnvironment
 {
-	private(set) bool $inDevelopment {
+	protected(set) bool $inDevelopment {
 		get { return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT'; }
 		set {}
 	}
 
-	private(set) string $uri {
+	protected(set) string $uri {
 		get { return filter_input(INPUT_SERVER, 'REQUEST_URI'); }
 		set {}
 	}
 
-	private(set) ?array $postParameters {
+	protected(set) ?array $postParameters {
 		get { return filter_input_array(INPUT_POST); }
 		set {}
 	}
 
-	private(set) string $siteAddress {
+	protected(set) string $siteAddress {
 		get { return "$this->scheme://$this->authority"; }
 		set {}
 	}
 
-	private(set) string $smtpServerName {
+	protected(set) string $smtpServerName {
 		get { return $this->getVariable('SMTP_SERVER_NAME'); }
 		set {}
 	}
 
-	private(set) string $smtpServerAddress {
+	protected(set) string $smtpServerAddress {
 		get { return $this->getVariable('SMTP_SERVER_ADDRESS'); }
 		set {}
 	}
 
-	private string $scheme {
+	protected string $scheme {
 		get { return $this->getVariable('HTTPS') === 'on' ? 'https' : 'http'; }
 		set {}
 	}
 
-	private string $authority {
+	protected string $authority {
 		get { return $this->getVariable('HTTP_HOST'); }
 		set {}
 	}
