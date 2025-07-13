@@ -30,6 +30,7 @@ abstract class Site
 	{
 		$responder->wrapper->addStyleSheet('framework-stylesheet');
 		$responder->templateFinder
+			->directory('../templates')
 			->directory('../html')
 			->directory(__DIR__ . '/../../../templates')
 			->extension('tpl')
