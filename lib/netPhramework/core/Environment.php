@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\bootstrap;
+namespace netPhramework\core;
 
 use netPhramework\transferring\SmtpServerEnvironment;
 

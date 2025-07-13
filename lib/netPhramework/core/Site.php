@@ -3,8 +3,6 @@
 namespace netPhramework\core;
 
 use netPhramework\authentication\Session;
-use netPhramework\bootstrap\Environment;
-use netPhramework\bootstrap\WebEnvironment;
 use netPhramework\exchange\RequestInterpreter;
 use netPhramework\exchange\Responder;
 use netPhramework\routing\CallbackManager;

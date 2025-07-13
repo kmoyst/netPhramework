@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\bootstrap\Environment;
+use netPhramework\core\Environment;
 
 class RequestInterpreter
 {

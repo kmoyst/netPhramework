@@ -3,8 +3,8 @@
 namespace netPhramework\exchange;
 
 use netPhramework\authentication\Session;
-use netPhramework\bootstrap\Environment;
 use netPhramework\common\Variables;
+use netPhramework\core\Environment;
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;

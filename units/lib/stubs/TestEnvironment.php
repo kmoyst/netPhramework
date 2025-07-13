@@ -2,7 +2,7 @@
 
 namespace stubs;
 
-use netPhramework\bootstrap\Environment;
+use netPhramework\core\Environment;
 
 class TestEnvironment implements Environment
 {
