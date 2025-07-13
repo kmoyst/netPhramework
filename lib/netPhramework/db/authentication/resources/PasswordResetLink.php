@@ -30,6 +30,17 @@ class PasswordResetLink extends Resource
 	private Redirector $afterProcess;
 	private UserManager $manager;
 
+	private string $defaultMessage {
+		get{
+			$message   = [];
+			$message[] = 'Check your email.';
+			$message[] = 'If your account exists and has an email address,';
+			$message[] = 'a reset link has been sent';
+			return implode(' ', $message);
+		}
+		set{}
+	}
+
 	public function __construct() {}
 
 	/**
@@ -51,17 +62,14 @@ class PasswordResetLink extends Resource
 			if($user === null) throw new RecordNotFound();
 			$recovery->setUser($user)->newResetCode()->save();
 			$this->sendEmail($user->profile, $exchange, $recovery->resetCode);
-			$message   = [];
-			$message[] = 'Check your email.';
-			$message[] = 'If your account exists and has an email address,';
-			$message[] = 'a reset link has been sent';
 			$exchange->session
-				->addFeedbackMessage(implode('', $message))
+				->addFeedbackMessage($this->defaultMessage)
 				->setFeedbackCode(ResponseCode::OK);
 		} catch (RecordNotFound) {
+			usleep(random_int(10000,30000)); // to confuse attackers
 			$exchange->session
-				->addFeedbackMessage('User Not Found')
-				->setFeedbackCode(ResponseCode::NOT_FOUND);
+				->addFeedbackMessage($this->defaultMessage)
+				->setFeedbackCode(ResponseCode::OK);
 		}
 		$exchange->redirect($this->afterProcess);
 	}
