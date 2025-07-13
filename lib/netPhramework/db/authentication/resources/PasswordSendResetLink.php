@@ -22,7 +22,7 @@ use netPhramework\transferring\EmailException;
 use netPhramework\transferring\StreamSocketException;
 use Random\RandomException;
 
-class PasswordResetLink extends Resource
+class PasswordSendResetLink extends Resource
 {
 	private string $sender;
 	private ?string $senderName = null;

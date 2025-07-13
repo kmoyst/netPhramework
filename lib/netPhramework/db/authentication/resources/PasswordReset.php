@@ -11,7 +11,7 @@ use netPhramework\nodes\Resource;
 use netPhramework\routing\ReroutedPath;
 use netPhramework\routing\rerouters\Rerouter;
 
-class PasswordForgotten extends Resource
+class PasswordReset extends Resource
 {
 	private Rerouter $toSendLink;
 	private UserManager $manager;
