@@ -50,15 +50,14 @@ class PasswordResetLink extends Resource
 			$user = $this->manager->findByUsername($parameters);
 			if($user === null) throw new RecordNotFound();
 			$recovery->setUser($user)->newResetCode()->save();
-			if($this->sendEmail(
-				$user->getProfile(), $exchange, $recovery->getResetCode()))
-				$exchange->session
-					->addFeedbackMessage('Password Reset Link Sent')
-					->setFeedbackCode(ResponseCode::OK);
-			else
-				$exchange->session
-					->addFeedbackMessage('User Has No Email Address')
-					->setFeedbackCode(ResponseCode::PRECONDITION_FAILED);
+			$this->sendEmail($user->profile, $exchange, $recovery->resetCode);
+			$message   = [];
+			$message[] = 'Check your email.';
+			$message[] = 'If your account exists and has an email address,';
+			$message[] = 'a reset link has been sent';
+			$exchange->session
+				->addFeedbackMessage(implode('', $message))
+				->setFeedbackCode(ResponseCode::OK);
 		} catch (RecordNotFound) {
 			$exchange->session
 				->addFeedbackMessage('User Not Found')

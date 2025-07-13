@@ -33,7 +33,7 @@ class ProfileSave extends Resource
 	{
 		$user = $this->manager->findByUsername($exchange->session);
 		try {
-			$user->getProfile()->parse($exchange->parameters)->save();
+			$user->profile->parse($exchange->parameters)->save();
 			$exchange->redirect($this->onSuccess);
 		} catch (DuplicateEntryException|InvalidValue $e) {
 			$exchange->error($e, $this->onFailure);

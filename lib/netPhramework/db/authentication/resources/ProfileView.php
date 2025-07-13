@@ -40,7 +40,7 @@ class ProfileView extends Resource
 	{
 		$session 	 = $exchange->session;
 		$user   	 = $this->findUser($session->user);
-		$profile	 = $user->getProfile();
+		$profile	 = $user->profile;
 		$formAction  = new ReroutedPath($exchange->path, $this->toEditProfile);
 		$viewManager = new ProfileViewManager($user)
 			->mandatoryAdd('username',    $user->fields->username)

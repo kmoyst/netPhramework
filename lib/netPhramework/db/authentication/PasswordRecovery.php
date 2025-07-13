@@ -15,6 +15,12 @@ use Random\RandomException;
 class PasswordRecovery
 {
 	private ?User $user;
+	private(set) ?string $resetCode {
+		get{
+			return $this->user->record->getValue($this->getResetField());
+		}
+		set{}
+	}
 
 	public function __construct
 	(
@@ -62,16 +68,6 @@ class PasswordRecovery
 	public function getPasswordField():string
 	{
 		return $this->manager->fields->password;
-	}
-
-	/**
-	 * @return string|null
-	 * @throws FieldAbsent
-	 * @throws MappingException
-	 */
-	public function getResetCode():?string
-	{
-		return $this->user->record->getValue($this->getResetField());
 	}
 
 	/**

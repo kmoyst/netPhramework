@@ -14,7 +14,6 @@ use netPhramework\exceptions\InvalidPassword;
 
 class User implements \netPhramework\authentication\User
 {
-	private UserProfile $profile;
 	private(set) UserRole $role
 	{
 		get {
@@ -26,6 +25,15 @@ class User implements \netPhramework\authentication\User
 			return UserRole::tryFrom($role);
 		}
 		set {}
+	}
+
+	private(set) UserProfile $profile{
+		get {
+			if(!isset($this->profile))
+				$this->profile = new UserProfile($this->record, $this->fields);
+			return $this->profile;
+		}
+		set{}
 	}
 
 	public function __construct(
@@ -162,12 +170,5 @@ class User implements \netPhramework\authentication\User
 	{
 		$this->record->save();
 		return $this;
-	}
-
-	public function getProfile():UserProfile
-	{
-		if(!isset($this->profile))
-			$this->profile = new UserProfile($this->record, $this->fields);
-		return $this->profile;
 	}
 }

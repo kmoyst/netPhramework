@@ -33,7 +33,7 @@ class ProfileEdit extends Resource
 	public function handleExchange(Exchange $exchange): void
 	{
 		$user     	= $this->manager->findByUsername($exchange->session);
-		$profile  	= $user->getProfile();
+		$profile  	= $user->profile;
 		$formAction = new ReroutedPath($exchange->path, $this->toSaveProfile);
 		$inputs   	= new InputSet();
 		$inputs

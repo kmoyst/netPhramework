@@ -43,7 +43,7 @@ class PasswordChange extends Resource
 			return;
 		}
 		$resetField    = $recovery->getResetField();
-		$resetCode     = $recovery->getResetCode();
+		$resetCode     = $recovery->resetCode;
 		$resetInput	   = new HiddenInput($resetField, $resetCode);
 		$passwordInput = new PasswordInput($recovery->getPasswordField());
 		$formAction	   = new ReroutedPath($exchange->path, $this->toSave);
