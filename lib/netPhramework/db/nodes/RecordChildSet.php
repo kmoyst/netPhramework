@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\nodes;
 
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 use netPhramework\resources\ResourceIterator;
 
 class RecordChildSet extends ResourceIterator
@@ -21,7 +21,7 @@ class RecordChildSet extends ResourceIterator
 	/**
 	 * @param string $resourceId
 	 * @return RecordChild
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	public function get(string $resourceId):RecordChild
 	{

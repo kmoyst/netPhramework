@@ -3,7 +3,7 @@
 namespace netPhramework\db\nodes;
 
 use netPhramework\db\exceptions\MappingException;
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 use netPhramework\resources\Composite;
 use netPhramework\resources\Node;
 
@@ -20,7 +20,7 @@ class RecordComposite extends Composite implements RecordSetChild
 	 * @param string $id
 	 * @return Node
 	 * @throws MappingException
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	public function getChild(string $id): Node
 	{

@@ -2,6 +2,6 @@
 
 namespace netPhramework\exceptions;
 
-class ResourceNotFound extends NotFound
+class NodeNotFound extends NotFound
 {
 }

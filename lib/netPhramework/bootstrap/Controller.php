@@ -4,7 +4,7 @@ namespace netPhramework\bootstrap;
 
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 
 readonly class Controller
 {
@@ -38,7 +38,7 @@ readonly class Controller
 					->interpret($this->site->environment)
 					->process($this->site)
 					->deliver($this->site->responder);
-			} catch (ResourceNotFound $exception) {
+			} catch (NodeNotFound $exception) {
 				$exception
 					->setEnvironment($this->site->environment)
 					->deliver($this->site->responder);

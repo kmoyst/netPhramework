@@ -4,7 +4,7 @@ namespace netPhramework\resources;
 
 use Iterator;
 use netPhramework\common\KeyedIterator;
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 
 abstract class ResourceIterator implements Iterator
 {
@@ -18,12 +18,12 @@ abstract class ResourceIterator implements Iterator
 	/**
 	 * @param string $resourceId
 	 * @return void
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	protected function confirmResource(string $resourceId):void
 	{
 		if(!$this->has($resourceId))
-			throw new ResourceNotFound("Not Found: $resourceId");
+			throw new NodeNotFound("Not Found: $resourceId");
 	}
 
 	abstract public function current():Node;

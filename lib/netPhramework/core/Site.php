@@ -4,7 +4,7 @@ namespace netPhramework\core;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
-use netPhramework\exchange\Application;
+use netPhramework\exchange\Router;
 use netPhramework\exchange\RequestInterpreter;
 use netPhramework\exchange\Responder;
 use netPhramework\routing\CallbackManager;
@@ -41,10 +41,5 @@ abstract readonly class Site
 		;
 	}
 
-	public function getApplication(Configuration $configuration):Application
-	{
-		return new Application($configuration);
-	}
-
-	abstract public function getConfiguration():Configuration;
+	abstract public function getApplication():Application;
 }

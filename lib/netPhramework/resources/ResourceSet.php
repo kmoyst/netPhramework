@@ -3,7 +3,7 @@
 namespace netPhramework\resources;
 
 use netPhramework\common\KeyedIterator;
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 
 class ResourceSet extends ResourceIterator
 {
@@ -17,7 +17,7 @@ class ResourceSet extends ResourceIterator
 	/**
 	 * @param string $resourceId
 	 * @return Node
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	public function get(string $resourceId):Node
 	{

@@ -6,11 +6,11 @@ use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\routing\Location;
 
-abstract class RequestStrategy
+abstract class Dispatcher
 {
 	protected Site $site;
 	protected Location $location;
-	protected Application $application;
+	protected Router $router;
 
 	public function setSite(Site $site): self
 	{
@@ -26,14 +26,14 @@ abstract class RequestStrategy
 
 	public function prepare():self
 	{
-		$configuration = $this->site->getConfiguration();
-		$this->application = new Application($configuration);
+		$application = $this->site->getApplication();
+		$this->router = new Router($application);
 		return $this;
 	}
 
 	/**
-	 * @return Application
+	 * @return Router
 	 * @throws Exception
 	 */
-	abstract public function requestApplication():Application;
+	abstract public function dispatch():Router;
 }

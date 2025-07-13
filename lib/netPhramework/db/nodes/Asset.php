@@ -6,7 +6,7 @@ use netPhramework\common\IsNumeric;
 use netPhramework\common\StringPredicate as Predicate;
 use netPhramework\db\nodes\RecordSetChildSet as setChildSet;
 use netPhramework\db\core\RecordSet;
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 use netPhramework\resources\Composite;
 use netPhramework\resources\Node;
 
@@ -34,7 +34,7 @@ class Asset extends Composite
 	/**
 	 * @param string $id
 	 * @return RecordSetChild
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	private function resolveChild(string $id): RecordSetChild
 	{

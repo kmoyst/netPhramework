@@ -2,7 +2,7 @@
 
 namespace netPhramework\resources;
 
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exchange\Exchange;
 
 interface Node
@@ -10,7 +10,7 @@ interface Node
 	/**
 	 * @param string $id
 	 * @return Node
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	public function getChild(string $id):Node;
 	public function getName():string;

@@ -2,7 +2,7 @@
 
 namespace netPhramework\resources;
 
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 
 class Directory extends Composite
 {
@@ -33,7 +33,7 @@ class Directory extends Composite
 	/**
 	 * @param string $id
 	 * @return Index
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	protected function autoIndexIfPermitted(string $id):Index
 	{
@@ -45,7 +45,7 @@ class Directory extends Composite
 		}
 		else
 		{
-			throw new ResourceNotFound("Not Found: $id");
+			throw new NodeNotFound("Not Found: $id");
 		}
 	}
 

@@ -1,9 +1,10 @@
 <?php
 
-namespace netPhramework\routing;
+namespace netPhramework\exchange;
 
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 use netPhramework\resources\Node;
+use netPhramework\routing\Path;
 
 class Navigator
 {
@@ -24,7 +25,7 @@ class Navigator
 
 	/**
 	 * @return Node
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	public function navigate():Node
 	{
@@ -32,7 +33,7 @@ class Navigator
 	}
 
 	/**
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
     private function traverse(Node $node, ?Path $path):Node
     {

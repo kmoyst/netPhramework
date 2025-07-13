@@ -3,7 +3,7 @@
 namespace netPhramework\resources;
 
 use netPhramework\common\Utils;
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 use Stringable;
 abstract class Resource implements Node, Stringable
 {
@@ -11,7 +11,7 @@ abstract class Resource implements Node, Stringable
 
 	public function getChild(string $id): never
 	{
-		throw new ResourceNotFound("Not Found: $id");
+		throw new NodeNotFound("Not Found: $id");
 	}
 
 	public function getResourceId(): string

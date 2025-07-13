@@ -2,13 +2,13 @@
 
 namespace netPhramework\exchange;
 
-class ActiveStrategy extends RequestStrategy
+class ActiveDispatcher extends Dispatcher
 {
-	public function requestApplication():Application
+	public function dispatch():Router
 	{
 		$this->location->getParameters()
 			->clear()
 			->merge($this->site->environment->postParameters);
-		return $this->application->asAnActiveResource();
+		return $this->router->withAnActiveNode();
 	}
 }

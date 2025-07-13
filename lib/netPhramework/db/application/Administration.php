@@ -2,11 +2,11 @@
 
 namespace netPhramework\db\application;
 
-use netPhramework\core\Configuration;
+use netPhramework\core\Application;
 use netPhramework\db\core\RecordMapper;
 use netPhramework\resources\Directory;
 
-readonly class Administration implements Configuration
+readonly class Administration implements Application
 {
 	public function __construct(protected RecordMapper $mapper) {}
 

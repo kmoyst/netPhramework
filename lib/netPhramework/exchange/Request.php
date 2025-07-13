@@ -4,28 +4,29 @@ namespace netPhramework\exchange;
 
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exceptions\NodeNotFound;
 use netPhramework\routing\LocationFromUri;
 
 readonly class Request
 {
-	public function __construct(protected RequestStrategy $strategy) {}
+	public function __construct(protected Dispatcher $dispatcher) {}
 
 	/**
 	 * @param Site $site
 	 * @return Response
 	 * @throws Exception
-	 * @throws ResourceNotFound
+	 * @throws NodeNotFound
 	 */
 	public function process(Site $site):Response
 	{
 		$location = new LocationFromUri($site->environment->uri);
 		$exchange = new Exchange($location, $site);
-		$this->strategy
+		$this->dispatcher
 			->setSite($site)
 			->setLocation($location)
 			->prepare()
-			->requestApplication()
+			->dispatch()
+			->route($exchange->path)
 			->handleExchange($exchange);
 		return $exchange->response;
 	}
