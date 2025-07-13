@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\exchange;
+namespace netPhramework\core;
 
 use netPhramework\exceptions\ResourceNotFound;
 use netPhramework\resources\Node;

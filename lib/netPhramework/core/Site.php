@@ -1,17 +1,16 @@
 <?php
 
-namespace netPhramework\site;
+namespace netPhramework\core;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
-use netPhramework\exchange\RequestContext;
 use netPhramework\exchange\RequestInterpreter;
 use netPhramework\exchange\Responder;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
 
-abstract readonly class Context implements RequestContext
+abstract readonly class Site
 {
 	public CallbackManager $callbackManager;
 	public Responder $responder;
@@ -40,4 +39,11 @@ abstract readonly class Context implements RequestContext
 			->extension('css')
 		;
 	}
+
+	public function getApplication(Configuration $configuration):Application
+	{
+		return new Application($configuration);
+	}
+
+	abstract public function getConfiguration():Configuration;
 }

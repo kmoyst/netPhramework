@@ -2,16 +2,22 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\bootstrap\Environment;
-use netPhramework\site\Application;
+use netPhramework\core\Application;
+use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\routing\Location;
 
 abstract class RequestStrategy
 {
-	protected Application $application;
+	protected Site $site;
 	protected Location $location;
-	protected Environment $environment;
+	protected Application $application;
+
+	public function setSite(Site $site): self
+	{
+		$this->site = $site;
+		return $this;
+	}
 
 	public function setLocation(Location $location): self
 	{
@@ -19,22 +25,16 @@ abstract class RequestStrategy
 		return $this;
 	}
 
-	public function setEnvironment(Environment $environment): self
+	public function prepare():self
 	{
-		$this->environment = $environment;
-		return $this;
-	}
-
-	public function setApplication(Application $application): self
-	{
-		$this->application = $application;
+		$configuration = $this->site->getConfiguration();
+		$this->application = $this->site->getApplication($configuration);
 		return $this;
 	}
 
 	/**
-	 * @param Site $handler
-	 * @return void
+	 * @return Application
 	 * @throws Exception
 	 */
-	abstract public function configure(Site $handler):void;
+	abstract public function requestApplication():Application;
 }

@@ -2,10 +2,12 @@
 
 namespace netPhramework\exchange;
 
+use netPhramework\core\Application;
+
 class PassiveStrategy extends RequestStrategy
 {
-	public function configure(Site $handler):void
+	public function requestApplication(): Application
 	{
-		$this->application->asAPassiveResource($handler->root);
+		return $this->application->asAPassiveResource();
 	}
 }

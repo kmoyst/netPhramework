@@ -2,13 +2,15 @@
 
 namespace netPhramework\exchange;
 
+use netPhramework\core\Application;
+
 class ActiveStrategy extends RequestStrategy
 {
-	public function configure(Site $handler):void
+	public function requestApplication():Application
 	{
 		$this->location->getParameters()
 			->clear()
-			->merge($this->environment->postParameters);
-		$this->application->asAnActiveResource($handler->root);
+			->merge($this->site->environment->postParameters);
+		return $this->application->asAnActiveResource();
 	}
 }

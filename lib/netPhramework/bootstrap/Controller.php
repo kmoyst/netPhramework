@@ -2,12 +2,12 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\site\Context;
+use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 
 readonly class Controller
 {
-	public function __construct(private Context $context) {}
+	public function __construct(private Site $site) {}
 
 	public function run():void
 	{
@@ -16,7 +16,7 @@ readonly class Controller
 
 	private function initialize():self
 	{
-		$handler = new Handler($this->context->environment->inDevelopment);
+		$handler = new Handler($this->site->environment->inDevelopment);
 		register_shutdown_function([$handler, 'shutdown']);
 		set_error_handler([$handler, 'handleError']);
 		set_exception_handler([$handler, 'handleException']);
@@ -25,7 +25,7 @@ readonly class Controller
 
 	private function configure():self
 	{
-		$this->context->configureResponder($this->context->responder);
+		$this->site->configureResponder($this->site->responder);
 		return $this;
 	}
 
@@ -33,20 +33,20 @@ readonly class Controller
 	{
 		try {
 			try {
-				$this->context->requestProcessor
-					->interpret($this->context->environment)
-					->process($this->context)
-					->deliver($this->context->responder);
+				$this->site->requestProcessor
+					->interpret($this->site->environment)
+					->process($this->site)
+					->deliver($this->site->responder);
 			} catch (Exception $exception) {
 				$exception
-					->setEnvironment($this->context->environment)
-					->deliver($this->context->responder);
+					->setEnvironment($this->site->environment)
+					->deliver($this->site->responder);
 				return;
 			}
 		}
 		catch (\Exception $exception)
 		{
-			if($this->context->environment->inDevelopment)
+			if($this->site->environment->inDevelopment)
 			{
 				echo $exception->getMessage();
 			}

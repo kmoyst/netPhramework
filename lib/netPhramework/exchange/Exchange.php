@@ -5,6 +5,7 @@ namespace netPhramework\exchange;
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
 use netPhramework\common\Variables;
+use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;
 use netPhramework\rendering\ConfigurableView;
@@ -55,14 +56,14 @@ class Exchange implements CallbackContext
 	public function __construct
 	(
 		public readonly Location $location,
-		RequestContext $context
+		Site $site
 	)
 	{
-		$this->session 			= $context->session;
-		$this->fileManager 		= $context->fileManager;
-		$this->environment 		= $context->environment;
-		$this->callbackManager 	= $context->callbackManager;
-		$this->smtpServer		= $context->smtpServer;
+		$this->session 			= $site->session;
+		$this->fileManager 		= $site->fileManager;
+		$this->environment 		= $site->environment;
+		$this->callbackManager 	= $site->callbackManager;
+		$this->smtpServer		= $site->smtpServer;
 	}
 
 	/**
