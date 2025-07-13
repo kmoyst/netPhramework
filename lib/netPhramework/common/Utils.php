@@ -1,8 +1,25 @@
 <?php
 
 namespace netPhramework\common;
+use DateInterval;
+use DateTime;
+
 class Utils
 {
+	public static function mysqlDateTime(DateTime $dateTime):string
+	{
+		return $dateTime->format('Y-m-d H:i:s');
+	}
+
+	public static function isExpired(
+		DateTime $pastTime,
+		DateInterval $difference):bool
+	{
+		return str_starts_with(
+			(clone $pastTime)
+				->add($difference)
+				->diff(new DateTime()),'+');
+	}
 	public static function kebabToSpace(string $kebab):string
 	{
 		return ucwords(str_replace('-', ' ', $kebab));

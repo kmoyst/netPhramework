@@ -2,6 +2,10 @@
 
 namespace netPhramework\db\authentication\resources;
 
+use DateInterval;
+use DateMalformedStringException;
+use DateTime;
+use netPhramework\common\Utils;
 use netPhramework\db\authentication\PasswordRecovery as Recovery;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -21,7 +25,7 @@ use netPhramework\routing\rerouters\Rerouter;
 class PasswordChange extends Resource
 {
 	private Rerouter $toSave;
-	private Redirector $onNotFound;
+	private Redirector $onFailure;
 	private UserManager $manager;
 
 	public function __construct () {}
@@ -39,7 +43,22 @@ class PasswordChange extends Resource
 		$recovery = new Recovery($this->manager, $exchange->parameters);
 		if(!$recovery->findUser()->userFound())
 		{
-			$exchange->error(new NotFound(), $this->onNotFound);
+			$exchange->error(new NotFound('User not found'), $this->onFailure);
+			return;
+		}
+		try {
+			$whenResetCodeWasSet = $recovery->resetTime;
+			$isExpired = Utils::isExpired(
+				new DateTime($whenResetCodeWasSet),
+				new DateInterval('P1H'));
+			if($isExpired)
+			{
+				$exchange->error(
+					new NotFound('Code expired'), $this->onFailure);
+				return;
+			}
+		} catch (DateMalformedStringException $e) {
+			$exchange->error(new NotFound('Code expired'), $this->onFailure);
 			return;
 		}
 		$resetField    = $recovery->getResetField();
@@ -61,9 +80,9 @@ class PasswordChange extends Resource
 		return $this;
 	}
 
-	public function setOnNotFound(Redirector $onNotFound): self
+	public function setOnFailure(Redirector $onFailure): self
 	{
-		$this->onNotFound = $onNotFound;
+		$this->onFailure = $onFailure;
 		return $this;
 	}
 

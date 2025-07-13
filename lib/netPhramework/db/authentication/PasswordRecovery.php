@@ -2,6 +2,8 @@
 
 namespace netPhramework\db\authentication;
 
+use DateTime;
+use netPhramework\common\Utils;
 use netPhramework\common\Variables;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -18,6 +20,12 @@ class PasswordRecovery
 	private(set) ?string $resetCode {
 		get{
 			return $this->user->record->getValue($this->getResetField());
+		}
+		set{}
+	}
+	private(set) ?string $resetTime {
+		get{
+			return $this->user->record->getValue($this->getResetTimeField());
 		}
 		set{}
 	}
@@ -65,6 +73,11 @@ class PasswordRecovery
 		return $this->manager->fields->resetCode;
 	}
 
+	public function getResetTimeField():string
+	{
+		return $this->manager->fields->resetTime;
+	}
+
 	public function getPasswordField():string
 	{
 		return $this->manager->fields->password;
@@ -79,9 +92,10 @@ class PasswordRecovery
 	 */
 	public function newResetCode():self
 	{
-		$field = $this->user->fields->resetCode;
 		$code = bin2hex(random_bytes(32));
-		$this->user->record->setValue($field, $code);
+		$time = Utils::mysqlDateTime(new DateTime());
+		$this->user->record->setValue($this->user->fields->resetCode, $code);
+		$this->user->record->setValue($this->user->fields->resetTime, $time);
 		return $this;
 	}
 
