@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\exceptions;
 
-use netPhramework\core\Exception;
+use netPhramework\exceptions\Exception;
 
 class MappingException extends Exception
 {

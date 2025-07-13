@@ -7,7 +7,7 @@
 	<?="$firstName $lastName <$emailAddress>"?>"><?=$emailAddress?></li>
 </ul>
 	<div>
-		<form name="edit-profile" action="edit-profile"
+		<form name="edit-profile" action="<?=$formAction?>"
 			  method="get" class="inlineButton">
 			<input type="submit" name="action" value="Edit Profile"/>
 			<?=$callbackInput?>

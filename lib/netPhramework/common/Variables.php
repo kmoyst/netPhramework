@@ -2,94 +2,83 @@
 
 namespace netPhramework\common;
 use Iterator;
-use netPhramework\core\Exception;
+use netPhramework\exceptions\VariableMissing;
 use netPhramework\rendering\Encodable;
 
+/**
+ * @phpstan-type Variable Encodable|string|iterable|null
+ */
 class Variables implements Iterator
 {
-    private array $values = [];
+	use KeyedIterator;
 
     public function __clone():void
     {
-        foreach ($this->values as $k => $v)
-            if(is_object($v)) $this->values[$k] = clone $v;
+        foreach ($this->items as $k => $v)
+            if(is_object($v)) $this->items[$k] = clone $v;
     }
 
-	public function toArray():array
+	public function merge(iterable $iterable, bool $overwrite = true):self
 	{
-		return (clone $this)->values;
+		foreach ($iterable as $k => $v)
+			if($this->has($k) && !$overwrite) continue;
+			else $this->items[$k] = is_object($v) ? clone $v : $v;
+		return $this;
 	}
 
-    public function add(string $key,
-						string|Encodable|iterable|null $value):Variables
-    {
-        $this->values[$key] = $value;
-        return $this;
-    }
+	/**
+	 * @return Variable
+	 */
+	public function current(): Encodable|string|iterable|null
+	{
+		return current($this->items);
+	}
 
 	/**
 	 * @param string $key
-	 * @return string|Encodable|iterable|null
-	 * @throws Exception
+	 * @return Variable
+	 * @throws VariableMissing
 	 */
-	public function get(string $key): string|Encodable|iterable|null
+	public function get(string $key): Encodable|string|iterable|null
 	{
-		if($this->has($key)) return $this->values[$key];
-		throw new Exception("No value in Variables with name: $key");
+		if($this->has($key)) return $this->items[$key];
+		throw new VariableMissing("No value in Variables with name: $key");
 	}
 
-	public function getOrNull(string $key): string|Encodable|iterable|null
+	/**
+	 * @param string $key
+	 * @return Variable
+	 */
+	public function getOrNull(string $key): Encodable|string|iterable|null
 	{
-		return $this->has($key) ? $this->values[$key] : null;
+		return $this->has($key) ? $this->items[$key] : null;
 	}
 
-	public function has(string $key):bool
+	/**
+	 * @param string $key
+	 * @param Variable $value
+	 * @return $this
+	 */
+	public function add(string $key, Encodable|string|iterable|null $value):self
 	{
-		return array_key_exists($key, $this->values);
+		$this->items[$key] = $value;
+		return $this;
 	}
 
 	public function remove(string $key):self
 	{
-		if($this->has($key)) unset($this->values[$key]);
+		if($this->has($key)) unset($this->items[$key]);
 		return $this;
 	}
 
-    public function merge(iterable $iterable, bool $overwrite = true):Variables
-    {
-        foreach ($iterable as $k => $v)
-            if($this->has($k) && !$overwrite) continue;
-			else $this->values[$k] = is_object($v) ? clone $v : $v;
-        return $this;
-    }
-
-	public function clear():Variables
+	public function clear():self
 	{
-		$this->values = [];
+		$this->items = [];
 		return $this;
 	}
 
-    public function current(): mixed
-    {
-        return current($this->values);
-    }
-
-    public function next(): void
-    {
-        next($this->values);
-    }
-
-    public function key(): string
-    {
-        return key($this->values);
-    }
-
-    public function valid(): bool
-    {
-        return key($this->values) !== null;
-    }
-
-    public function rewind(): void
-    {
-        reset($this->values);
-    }
+	public function toArray():array
+	{
+		return (clone $this)->items;
+	}
 }

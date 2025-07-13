@@ -2,11 +2,11 @@
 
 namespace netPhramework\db\presentation\recordTable\rowSet;
 
+use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
-use netPhramework\db\mapping\RecordSet;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
-use netPhramework\locating\MutablePath;
+use netPhramework\routing\MutablePath;
 use netPhramework\rendering\Encodable;
 
 class RowSetFactory implements RowRegistry

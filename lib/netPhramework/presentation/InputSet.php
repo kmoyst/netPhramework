@@ -53,6 +53,14 @@ class InputSet implements Iterator, InputSetBuilder
 		return $input;
 	}
 
+	public function selectInputWithLabel(
+		string $name, iterable $options): SelectInputWithLabel
+	{
+		$input = new SelectInputWithLabel($name, $options);
+		$this->inputs[$name] = $input;
+		return $input;
+	}
+
 	public function checkboxInput(string $name): CheckboxInput
 	{
 		$input = new CheckboxInput($name);

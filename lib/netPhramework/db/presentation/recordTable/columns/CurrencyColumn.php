@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\presentation\recordTable\columns;
 
-use netPhramework\db\mapping\Record;
+use netPhramework\db\core\Record;
 use netPhramework\rendering\Encodable;
 
 class CurrencyColumn extends TextColumn

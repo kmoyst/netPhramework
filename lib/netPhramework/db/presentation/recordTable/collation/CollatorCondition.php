@@ -2,9 +2,9 @@
 
 namespace netPhramework\db\presentation\recordTable\collation;
 
-use netPhramework\core\Exception;
 use netPhramework\db\mapping\Glue;
 use netPhramework\db\mapping\Operator;
+use netPhramework\exceptions\Exception;
 
 class CollatorCondition
 {

@@ -2,55 +2,52 @@
 
 namespace netPhramework\core;
 
+use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\exchange\Exchange;
+use netPhramework\resources\Directory;
 
-use netPhramework\bootstrap\Configuration;
-use netPhramework\rendering\Wrapper;
-
-class Application
+readonly class Application
 {
-	private Directory $passiveNode;
-	private Directory $activeNode;
-	private Wrapper $wrapper;
+	private Directory $root;
 
-	public function __construct()
+	public function __construct(private Configuration $configuration)
 	{
-		$this->passiveNode = new Directory('');
-		$this->activeNode  = new Directory('');
-		$this->wrapper	   = new Wrapper();
+		$this->root = new Directory('');
 	}
 
 	/**
-	 * @param Configuration $configuration
-	 * @return $this
-	 * @throws \Exception
+	 * @return self
+	 * @throws Exception
 	 */
-	public function configure(Configuration $configuration):Application
-    {
-		try
-		{
-			$configuration->configureWrapper($this->wrapper);
-			$configuration->configurePassiveNode($this->passiveNode);
-			$configuration->configureActiveNode($this->activeNode);
-			return $this;
-		}
-		catch (Exception $exception)
-		{
-			throw $exception->setWrapper($this->wrapper);
-		}
+    public function asAPassiveResource():self
+	{
+		$this->configuration->configurePassiveNode($this->root);
+		return $this;
 	}
 
-	public function openPassiveSocket(): Socket
+	/**
+	 * @return self
+	 * @throws Exception
+	 */
+	public function asAnActiveResource():self
 	{
-		return $this->openSocket($this->passiveNode);
+		$this->configuration->configureActiveNode($this->root);
+		return $this;
 	}
 
-	public function openActiveSocket(): Socket
+	/**
+	 * @param Exchange $exchange
+	 * @return void
+	 * @throws ResourceNotFound
+	 */
+	public function handleExchange(Exchange $exchange):void
 	{
-		return $this->openSocket($this->activeNode);
-	}
-
-	private function openSocket(Directory $root): Socket
-	{
-		return new Socket($root, $this->wrapper);
+		new Navigator()
+			->setRoot($this->root)
+			->setPath($exchange->path)
+			->navigate()
+			->handleExchange($exchange)
+		;
 	}
 }

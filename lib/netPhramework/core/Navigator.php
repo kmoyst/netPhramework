@@ -2,8 +2,9 @@
 
 namespace netPhramework\core;
 
-use netPhramework\locating\Path;
-use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exceptions\ResourceNotFound;
+use netPhramework\resources\Node;
+use netPhramework\routing\Path;
 
 class Navigator
 {
@@ -24,7 +25,7 @@ class Navigator
 
 	/**
 	 * @return Node
-	 * @throws NodeNotFound
+	 * @throws ResourceNotFound
 	 */
 	public function navigate():Node
 	{
@@ -32,10 +33,7 @@ class Navigator
 	}
 
 	/**
-	 * @param Node $node
-	 * @param Path|null $path
-	 * @return Node
-	 * @throws NodeNotFound
+	 * @throws ResourceNotFound
 	 */
     private function traverse(Node $node, ?Path $path):Node
     {

@@ -3,7 +3,7 @@
 namespace netPhramework\presentation;
 
 use netPhramework\common\Variables;
-use netPhramework\core\Exception;
+use netPhramework\exceptions\Exception;
 
 class CurrencyInput extends TextInput
 {

@@ -3,8 +3,8 @@
 namespace netPhramework\db\presentation\recordTable\columns;
 
 use netPhramework\authentication\UserRole;
-use netPhramework\db\authentication\EnrolledUserField;
-use netPhramework\db\mapping\Record;
+use netPhramework\db\core\Record;
+use netPhramework\db\authentication\UserField;
 use netPhramework\db\presentation\recordTable\columnSet\Column;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnHeader;
 use netPhramework\rendering\Encodable;
@@ -30,7 +30,7 @@ class UserRoleColumn implements Column
 	{
 		return UserRole::tryFrom(
 			$record->getValue(
-				EnrolledUserField::ROLE->value))->name;
+				UserField::ROLE->value))->friendlyName();
 	}
 
 	public function getEncodableValue(Record $record): Encodable|string

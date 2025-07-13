@@ -1,32 +1,31 @@
 <?php
 
 namespace netPhramework\db\authentication;
-use netPhramework\authentication\User;
-use netPhramework\core\Exception;
+use netPhramework\authentication\User as BaseUser;
+use netPhramework\db\authentication\User as DbUser;
 use netPhramework\db\exceptions\FieldAbsent;
-use netPhramework\db\mapping\RecordSet;
+use netPhramework\exceptions\Exception;
 
 class Authenticator implements \netPhramework\authentication\Authenticator
 {
-	private User $userLoggingIn;
-	private EnrolledUser $enrolledUser;
+	private BaseUser $userLoggingIn;
+	private DbUser $dbUser;
 
-	/**
-	 * A database backed authentication strategy
-	 */
-	public function __construct(
-		private readonly RecordSet $recordSet,
-		?EnrolledUser $enrolledUser = null) {}
+	public function __construct
+	(
+	private readonly UserManager $manager
+	)
+	{}
 
-	public function setUserLoggingIn(User $user): Authenticator
+	public function setUserLoggingIn(BaseUser $user): Authenticator
 	{
 		$this->userLoggingIn = $user;
 		return $this;
 	}
 
-	public function getHashedUser():User
+	public function getHashedUser():BaseUser
 	{
-		return $this->enrolledUser;
+		return $this->dbUser;
 	}
 
 	/**
@@ -36,18 +35,17 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	 */
 	public function checkUsername(): bool
 	{
-		foreach($this->recordSet as $record)
+		$username = $this->userLoggingIn->getUsername();
+		$user	  = $this->manager->findByUsername($username);
+		if($user instanceof DbUser)
 		{
-			$enrolledUser = $this->enrolledUser ?? new EnrolledUser();
-			$enrolledUser->setRecord($record);
-			if($enrolledUser->getUsername()
-				=== $this->userLoggingIn->getUsername())
-			{
-				$this->enrolledUser = $enrolledUser;
-				return true;
-			}
+			$this->dbUser = $user;
+			return true;
 		}
-		return false;
+		else
+		{
+			return false;
+		}
 	}
 
 	/**
@@ -59,8 +57,7 @@ class Authenticator implements \netPhramework\authentication\Authenticator
 	{
 		return
 			isset($this->userLoggingIn) &&
-			isset($this->enrolledUser) &&
-			$this->enrolledUser->checkPassword(
-				$this->userLoggingIn->getPassword());
+			isset($this->dbUser) &&
+			$this->dbUser->checkPassword($this->userLoggingIn->getPassword());
 	}
 }

@@ -2,7 +2,9 @@
 
 namespace netPhramework\db\mapping;
 
-abstract class File implements \netPhramework\core\File
+use netPhramework\db\core\Record;
+
+abstract class File implements \netPhramework\transferring\File
 {
 	protected Record $record;
 

@@ -2,6 +2,7 @@
 
 namespace netPhramework\db\mapping;
 use Iterator;
+
 class SortArray implements Iterator
 {
 	private array $vectors = [];

@@ -2,12 +2,12 @@
 
 namespace netPhramework\db\mysql;
 
+use netPhramework\common\DateValidator;
+use netPhramework\common\NotNullValidator;
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Field;
 use netPhramework\db\mapping\FieldSet;
 use netPhramework\db\mapping\FieldType;
-use netPhramework\db\validators\DateValidator;
-use netPhramework\db\validators\NotNullValidator;
 
 class FieldMapper
 {

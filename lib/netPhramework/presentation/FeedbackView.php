@@ -2,7 +2,7 @@
 
 namespace netPhramework\presentation;
 
-use netPhramework\core\Session;
+use netPhramework\authentication\Session;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
@@ -16,11 +16,11 @@ readonly class FeedbackView implements Encodable
 	public function encode(Encoder $encoder): Stringable|string
 	{
 		try {
-			$message = $this->session->getErrorMessageAndClear();
+			$message = $this->session->getFeedbackAndClear();
 			if($message === null) return '';
 			$view = new ImmutableView('error-message', ['message' => $message]);
 			return $encoder->encodeViewable($view);
-		} catch (InvalidSession $e) {
+		} catch (InvalidSession) {
 			return '';
 		}
 	}

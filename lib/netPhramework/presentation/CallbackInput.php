@@ -4,8 +4,8 @@ namespace netPhramework\presentation;
 
 
 use netPhramework\common\Variables;
-use netPhramework\core\CallbackContext;
 use netPhramework\rendering\Viewable;
+use netPhramework\routing\CallbackContext;
 
 class CallbackInput extends Viewable
 {
@@ -32,7 +32,7 @@ class CallbackInput extends Viewable
 	public function getVariables(): iterable
 	{
 		return new Variables()
-			->add('name', $this->context->getCallbackKey())
+			->add('name', $this->context->callbackKey)
 			->add('value', $this->context->callbackLink($this->chain))
 			;
 	}
