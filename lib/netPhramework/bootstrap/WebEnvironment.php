@@ -4,31 +4,32 @@ namespace netPhramework\bootstrap;
 
 class WebEnvironment implements Environment
 {
-	protected(set) bool $inDevelopment {
+	private(set) bool $inDevelopment {
 		get { return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT'; }
+		set {}
 	}
 
-	protected(set) string $uri {
+	private(set) string $uri {
 		get { return filter_input(INPUT_SERVER, 'REQUEST_URI'); }
 		set {}
 	}
 
-	protected(set) ?array $postParameters {
+	private(set) ?array $postParameters {
 		get { return filter_input_array(INPUT_POST); }
 		set {}
 	}
 
-	protected(set) string $siteAddress {
+	private(set) string $siteAddress {
 		get { return "$this->scheme://$this->authority"; }
 		set {}
 	}
 
-	protected(set) string $smtpServerName {
+	private(set) string $smtpServerName {
 		get { return $this->getVariable('SMTP_SERVER_NAME'); }
 		set {}
 	}
 
-	protected(set) string $smtpServerAddress {
+	private(set) string $smtpServerAddress {
 		get { return $this->getVariable('SMTP_SERVER_ADDRESS'); }
 		set {}
 	}

@@ -34,7 +34,7 @@ readonly class Controller
 	{
 		try {
 			try {
-				$this->site->requestProcessor
+				$this->site->requestInterpreter
 					->interpret($this->site->environment)
 					->process($this->site)
 					->deliver($this->site->responder);

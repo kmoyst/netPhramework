@@ -1,8 +1,10 @@
 <?php
 
-namespace netPhramework\stubs;
+namespace stubs;
 
-class TestEnvironment implements \netPhramework\bootstrap\Environment
+use netPhramework\bootstrap\Environment;
+
+class TestEnvironment implements Environment
 {
 	protected(set) bool $inDevelopment {
 		get { return true; }

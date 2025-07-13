@@ -5,6 +5,7 @@ namespace netPhramework\exchange;
 use netPhramework\common\FileFinder;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
+use netPhramework\rendering\HtmlEncoder;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 use netPhramework\transferring\File;
@@ -13,7 +14,7 @@ readonly class Responder
 {
 	public function __construct
 	(
-		public Encoder $encoder = new Encoder(),
+		public Encoder $encoder = new HtmlEncoder(),
 		public Wrapper $wrapper = new Wrapper(),
 		public FileFinder $templateFinder = new FileFinder()
 	)

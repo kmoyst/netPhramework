@@ -10,7 +10,7 @@ use netPhramework\routing\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
 use Stringable;
 
-class Encoder
+abstract class Encoder
 {
 	private FileFinder $templateFinder;
 
@@ -22,7 +22,7 @@ class Encoder
 
 	public function encodeText(string $text):string
 	{
-		return htmlspecialchars($text);
+		return $text;
 	}
 
 	public function encodeViewable(Viewable $viewable):Stringable|string
