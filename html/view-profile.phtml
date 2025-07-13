@@ -1,3 +1,4 @@
+<?=$feedbackView?>
 <div class="userProfileView">
 	<h2><?=$firstName?> <?=$lastName?></h2>
 <ul>
@@ -7,9 +8,14 @@
 	<?="$firstName $lastName <$emailAddress>"?>"><?=$emailAddress?></li>
 </ul>
 	<div>
-		<form name="edit-profile" action="<?=$formAction?>"
+		<form name="edit-profile" action="<?=$editProfile?>"
 			  method="get" class="inlineButton">
 			<input type="submit" name="action" value="Edit Profile"/>
+			<?=$callbackInput?>
+		</form>
+		<form name="edit-password" action="<?=$editPassword?>"
+			  method="get" class="inlineButton">
+			<input type="submit" name="action" value="Change Password"/>
 			<?=$callbackInput?>
 		</form>
 	</div>

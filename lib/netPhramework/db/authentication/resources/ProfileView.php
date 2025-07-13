@@ -22,6 +22,7 @@ use netPhramework\routing\rerouters\Rerouter;
 class ProfileView extends Resource
 {
 	private Rerouter $toEditProfile;
+	private Rerouter $toEditPassword;
 	private UserManager $manager;
 
 	public function __construct() {}
@@ -38,16 +39,19 @@ class ProfileView extends Resource
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$session 	 = $exchange->session;
-		$user   	 = $this->findUser($session->user);
-		$profile	 = $user->profile;
-		$formAction  = new ReroutedPath($exchange->path, $this->toEditProfile);
+		$session 	  = $exchange->session;
+		$user   	  = $this->findUser($session->user);
+		$profile	  = $user->profile;
+		$editProfile  = new ReroutedPath($exchange->path, $this->toEditProfile);
+		$editPassword = new ReroutedPath($exchange->path, $this->toEditPassword)
+		;
 		$viewManager = new ProfileViewManager($user)
 			->mandatoryAdd('username',    $user->fields->username)
 			->optionalAdd('firstName',    $profile->fields->firstName)
 			->optionalAdd('lastName',     $profile->fields->lastName)
 			->optionalAdd('emailAddress', $profile->fields->email)
-			->addCustom('formAction',     $formAction)
+			->addCustom('editProfile', $editProfile)
+			->addCustom('editPassword', $editPassword)
 			->addCustom('role',    		  $user->getRole()->friendlyName())
 			->addCustom('callbackInput',  new CallbackInput($exchange))
 			->addCustom('feedbackView',   new FeedbackView($session))
@@ -76,6 +80,12 @@ class ProfileView extends Resource
 	public function setToEditProfile(Rerouter $toEditProfile): self
 	{
 		$this->toEditProfile = $toEditProfile;
+		return $this;
+	}
+
+	public function setToEditPassword(Rerouter $toEditPassword): self
+	{
+		$this->toEditPassword = $toEditPassword;
 		return $this;
 	}
 

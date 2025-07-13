@@ -2,15 +2,15 @@
 
 namespace netPhramework\rendering;
 
-class Message extends Viewable implements Wrappable
+use netPhramework\common\Variables;
+
+class Message extends View implements Wrappable
 {
 	private ?string $title;
 
-	public function __construct(private readonly string $message) {}
-
-	public function getTemplateName(): string
+	public function __construct(private readonly string $message)
 	{
-		return 'message';
+		parent::__construct('message');
 	}
 
 	public function getTitle(): string
@@ -29,8 +29,9 @@ class Message extends Viewable implements Wrappable
 		return $this;
 	}
 
-	public function getVariables(): iterable
+	public function getVariables(): Variables
 	{
-		return ['message' => $this->message];
+		return new Variables()
+			->add('message', $this->message);
 	}
 }
