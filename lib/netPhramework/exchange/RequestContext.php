@@ -4,7 +4,6 @@ namespace netPhramework\exchange;
 
 use netPhramework\authentication\Session;
 use netPhramework\bootstrap\Environment;
-use netPhramework\core\Application;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;

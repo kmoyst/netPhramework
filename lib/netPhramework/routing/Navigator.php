@@ -1,10 +1,9 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\routing;
 
 use netPhramework\exceptions\ResourceNotFound;
 use netPhramework\resources\Node;
-use netPhramework\routing\Path;
 
 class Navigator
 {

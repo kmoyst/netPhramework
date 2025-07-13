@@ -2,8 +2,6 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\core\Application;
-
 class ActiveStrategy extends RequestStrategy
 {
 	public function requestApplication():Application

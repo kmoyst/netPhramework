@@ -1,11 +1,12 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\exchange;
 
+use netPhramework\core\Configuration;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\ResourceNotFound;
-use netPhramework\exchange\Exchange;
 use netPhramework\resources\Directory;
+use netPhramework\routing\Navigator;
 
 readonly class Application
 {

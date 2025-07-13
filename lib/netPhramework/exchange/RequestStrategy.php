@@ -2,7 +2,6 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\core\Application;
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\routing\Location;
@@ -28,7 +27,7 @@ abstract class RequestStrategy
 	public function prepare():self
 	{
 		$configuration = $this->site->getConfiguration();
-		$this->application = $this->site->getApplication($configuration);
+		$this->application = new Application($configuration);
 		return $this;
 	}
 
