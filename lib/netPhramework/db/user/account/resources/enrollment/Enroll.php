@@ -2,7 +2,6 @@
 
 namespace netPhramework\db\user\account\resources\enrollment;
 
-use clinic\SignUpNotification;
 use netPhramework\db\user\UserManager;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -14,15 +13,14 @@ use netPhramework\exceptions\InvalidPassword;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\redirectors\RedirectToSibling;
-use netPhramework\transferring\EmailException;
-use netPhramework\transferring\StreamSocketException;
+use netPhramework\transferring\EmailDelivery;
 
 class Enroll extends AssetProcess
 {
 	private Redirector $onSuccess;
 	private Redirector $onFailure;
 	private UserManager $manager;
-	private ?SignUpNotification $notification;
+	private ?EmailDelivery $notification;
 
 	public function __construct() {}
 
@@ -43,7 +41,7 @@ class Enroll extends AssetProcess
             $exchange->redirect($this->onSuccess);
 			try {
 				if (isset($this->notification))
-					$this->notification
+					$this->notification // this assumes all necessary props set
 						->setServer($exchange->smtpServer)
 						->send();
 			} catch (Exception $e) {
@@ -76,7 +74,7 @@ class Enroll extends AssetProcess
 		return $this;
 	}
 
-	public function setNotification(?SignUpNotification $notification): self
+	public function setNotification(?EmailDelivery $notification): self
 	{
 		$this->notification = $notification;
 		return $this;
