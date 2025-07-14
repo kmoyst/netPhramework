@@ -2,12 +2,12 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\nodes\Node;
+use netPhramework\core\Application;
 
 class PassiveRequest extends Request
 {
-	public function andGetNode(): Node
+	public function dispatch(Application $application): void
 	{
-		return $this->route->toAPassiveNode();
+		$application->configurePassiveNode($this->root);
 	}
 }

@@ -5,14 +5,19 @@ namespace netPhramework\exchange;
 use netPhramework\core\Application;
 use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
-use netPhramework\nodes\Node;
+use netPhramework\nodes\Directory;
 use netPhramework\routing\Location;
 
 abstract class Request
 {
-	protected(set) Location $location;
 	protected Environment $environment;
-	protected Route $route;
+	protected(set) Location $location;
+	protected(set) Directory $root;
+
+	public function __construct()
+	{
+		$this->root = new Directory('');
+	}
 
 	public function setLocation(Location $location): self
 	{
@@ -26,14 +31,10 @@ abstract class Request
 		return $this;
 	}
 
-	public function routeThrough(Application $application):self
-	{
-		$this->route = new Route($application);
-		return $this;
-	}
 	/**
-	 * @return Node
+	 * @param Application $application
+	 * @return void
 	 * @throws Exception
 	 */
-	abstract public function andGetNode():Node;
+	abstract public function dispatch(Application $application):void;
 }

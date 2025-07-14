@@ -2,15 +2,15 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\nodes\Node;
+use netPhramework\core\Application;
 
 class ActiveRequest extends Request
 {
-	public function andGetNode():Node
+	public function dispatch(Application $application): void
 	{
 		$this->location->getParameters()
 			->clear()
 			->merge($this->environment->postParameters);
-		return $this->route->toAnActiveNode();
+		$application->configureActiveNode($this->root);
 	}
 }

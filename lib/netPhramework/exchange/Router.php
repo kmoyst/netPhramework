@@ -3,25 +3,36 @@
 namespace netPhramework\exchange;
 
 use netPhramework\core\Application;
-use netPhramework\core\Site;
+use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Node;
 
 class Router
 {
-	public Request $request;
-	private Node $root;
+	private Request $request;
+	private Response $response;
 	private Node $handler;
+
+	public function __construct(private readonly Environment $environment) {}
+
+	public function retrieveRequest(Interpreter $interpreter):self
+	{
+		$this->request = $interpreter->interpret($this->environment);
+		return $this;
+	}
 
 	/**
 	 * @param Application $application
 	 * @return $this
 	 * @throws Exception
 	 */
-	public function routeThrough(Application $application):self
+	public function andRouteInto(Application $application):self
 	{
-		$this->root = $this->request->routeThrough($application)->andGetNode();
+		$this->request
+			->setEnvironment($this->environment)
+			->dispatch($application)
+		;
 		return $this;
 	}
 
@@ -29,19 +40,28 @@ class Router
 	 * @return $this
 	 * @throws NodeNotFound
 	 */
-	public function navigateToHandler():self
+	public function toFindHandler():self
 	{
 		$this->handler = new Navigator()
-			->setRoot($this->root)
-			->setPath($this->request->location->path)
+			->setRoot($this->request->root)
+			->setPath($this->request->location->getPath())
 			->navigate();
 		return $this;
 	}
 
-	public function andGetResponseForDeliveryTo(Site $site):Response
+	public function andProcessExchange(Services $services):self
 	{
-		$exchange = new Exchange($this->request->location, $site);
+		$exchange = new Exchange($services)
+			->setEnvironment($this->environment)
+			->setLocation($this->request->location)
+		;
 		$this->handler->handleExchange($exchange);
-		return $exchange->response;
+		$this->response = $exchange->response;
+		return $this;
+	}
+
+	public function andDeliverResponseThrough(Responder $responder):void
+	{
+		$this->response->deliver($responder);
 	}
 }

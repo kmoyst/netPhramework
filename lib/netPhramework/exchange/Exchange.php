@@ -5,7 +5,6 @@ namespace netPhramework\exchange;
 use netPhramework\authentication\Session;
 use netPhramework\common\Variables;
 use netPhramework\core\Environment;
-use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;
 use netPhramework\rendering\ConfigurableView;
@@ -47,23 +46,22 @@ class Exchange implements CallbackContext
 
 	private(set) Response $response;
 
-	public readonly Session $session;
-	public readonly FileManager $fileManager;
-	public readonly Environment $environment;
-	public readonly CallbackManager $callbackManager;
-	public readonly SmtpServer $smtpServer;
+	private(set) Session $session;
+	private(set) FileManager $fileManager;
+	private(set) CallbackManager $callbackManager;
+	private(set) SmtpServer $smtpServer;
+	private(set) Location $location;
+	private(set) Environment $environment;
 
 	public function __construct
 	(
-		public readonly Location $location,
-		Site $site
+		Services $services,
 	)
 	{
-		$this->session 			= $site->session;
-		$this->fileManager 		= $site->fileManager;
-		$this->environment 		= $site->environment;
-		$this->callbackManager 	= $site->callbackManager;
-		$this->smtpServer		= $site->smtpServer;
+		$this->session 			= $services->session;
+		$this->fileManager 		= $services->fileManager;
+		$this->callbackManager 	= $services->callbackManager;
+		$this->smtpServer 		= $services->smtpServer;
 	}
 
 	/**
@@ -144,4 +142,17 @@ class Exchange implements CallbackContext
 		if($chain) return clone $this->location;
 		return $this->callbackManager->getLink(clone $this->location);
 	}
+
+	public function setEnvironment(Environment $environment): self
+	{
+		$this->environment = $environment;
+		return $this;
+	}
+
+	public function setLocation(Location $location): self
+	{
+		$this->location = $location;
+		return $this;
+	}
+
 }

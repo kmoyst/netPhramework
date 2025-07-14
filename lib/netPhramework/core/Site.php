@@ -2,28 +2,24 @@
 
 namespace netPhramework\core;
 
-use netPhramework\authentication\Session;
+use netPhramework\exchange\HttpResponder;
+use netPhramework\exchange\HttpServices;
 use netPhramework\exchange\HttpInterpreter;
 use netPhramework\exchange\Interpreter;
 use netPhramework\exchange\Responder;
-use netPhramework\routing\CallbackManager;
-use netPhramework\transferring\FileManager;
-use netPhramework\transferring\SmtpServer;
+use netPhramework\exchange\Services;
 
 abstract class Site
 {
 	public function __construct
 	(
-	public Environment     $environment 			  = new WebEnvironment(),
-	public Interpreter     $interpreter 		  	  = new HttpInterpreter(),
-	public Responder       $responder   			  = new Responder(),
-	public Session         $session 				  = new Session(),
-	public FileManager     $fileManager 			  = new FileManager(),
-	public CallbackManager $callbackManager 	  	  = new CallbackManager(),
-	public SmtpServer      $smtpServer 				  = new SmtpServer(),
+	public Environment $environment = new WebEnvironment(),
+	public Interpreter $interpreter = new HttpInterpreter(),
+	public Responder   $responder   = new HttpResponder(),
+	public Services $services	= new HttpServices()
 	)
 	{
-		$this->smtpServer->initialize($this->environment);
+		$this->services->smtpServer->initialize($this->environment);
 	}
 	public function configureResponder(Responder $responder):void
 	{

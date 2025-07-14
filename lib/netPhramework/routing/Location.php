@@ -6,7 +6,7 @@ use netPhramework\common\Variables;
 
 class Location extends ReadableLocation
 {
-	public MutablePath $path;
+	protected(set) MutablePath $path;
 	protected Variables $parameters;
 
 	public function getPath(): MutablePath

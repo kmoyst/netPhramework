@@ -10,6 +10,18 @@ class LocationFromUri extends Location
 	public function __construct(private readonly string $uri) {}
 
 	/**
+	 * @return $this
+	 * @throws PathException
+	 */
+	public function initialize():self
+	{
+		// to allow access to a pre-initialized public property
+		$this->getPath();
+		$this->getParameters();
+		return $this;
+	}
+
+	/**
 	 * @return MutablePath
 	 * @throws PathException
 	 */

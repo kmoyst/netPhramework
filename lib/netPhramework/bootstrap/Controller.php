@@ -6,8 +6,6 @@ use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exchange\Router;
-use netPhramework\exchange\Exchange;
-use netPhramework\exchange\Request;
 
 readonly class Controller
 {
@@ -37,14 +35,12 @@ readonly class Controller
 	{
 		try {
 			try {
-				$router = new Router();
-				$router->request = $this->site->interpreter
-					->interpret($this->site->environment);
-				$router
-					->routeThrough($this->site->getApplication())
-					->navigateToHandler()
-					->andGetResponseForDeliveryTo($this->site)
-					->deliver($this->site->responder);
+				new Router($this->site->environment)
+					->retrieveRequest($this->site->interpreter)
+					->andRouteInto($this->site->getApplication())
+					->toFindHandler()
+					->andProcessExchange($this->site->services)
+					->andDeliverResponseThrough($this->site->responder);
 			} catch (NodeNotFound $exception) {
 				$exception
 					->setEnvironment($this->site->environment)
