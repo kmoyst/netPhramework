@@ -20,7 +20,7 @@ class WebEnvironment implements Environment
 	}
 
 	private(set) string $siteAddress {
-		get { return "$this->scheme://$this->authority"; }
+		get { return "$this->siteScheme://$this->siteHost"; }
 		set {}
 	}
 
@@ -34,12 +34,12 @@ class WebEnvironment implements Environment
 		set {}
 	}
 
-	private string $scheme {
+	public string $siteScheme {
 		get { return $this->getVariable('HTTPS') === 'on' ? 'https' : 'http'; }
 		set {}
 	}
 
-	private string $authority {
+	public string $siteHost {
 		get { return $this->getVariable('HTTP_HOST'); }
 		set {}
 	}

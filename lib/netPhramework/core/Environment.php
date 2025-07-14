@@ -10,5 +10,7 @@ interface Environment
 	public string $siteAddress {get;}
 	public string $smtpServerName {get;}
 	public string $smtpServerAddress {get;}
+	public string $siteHost {get;}
+	public string $siteScheme {get;}
 	public function getVariable(string $varName):?string;
 }

@@ -38,6 +38,11 @@ class Exchange implements CallbackContext
 		set {}
 	}
 
+	private(set) string $siteHost {
+		get{ return $this->environment->siteHost; }
+		set{}
+	}
+
 	private(set) string $callbackKey {
 		get { return $this->callbackManager->callbackKey; }
 		set {}
