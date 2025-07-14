@@ -15,7 +15,7 @@ abstract class Site
 
 	public function __construct
 	(
-	public Environment $environment = new WebEnvironment(),
+	public Environment $environment = new HttpEnvironment(),
 	public Interpreter $interpreter = new HttpInterpreter(),
 	public Responder   $responder   = new HttpResponder(),
 	public Services    $services	= new HttpServices()

@@ -2,7 +2,7 @@
 
 namespace netPhramework\core;
 
-class WebEnvironment implements Environment
+class HttpEnvironment implements Environment
 {
 	private(set) bool $inDevelopment {
 		get { return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT'; }
