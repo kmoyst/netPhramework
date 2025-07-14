@@ -10,7 +10,7 @@ use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class Asset extends Composite
+class Asset extends Composite implements AssetResourceDepot
 {
 	public function __construct
 	(

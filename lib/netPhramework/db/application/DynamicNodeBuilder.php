@@ -3,16 +3,14 @@
 namespace netPhramework\db\application;
 
 use netPhramework\db\nodes\Asset;
+use netPhramework\db\nodes\AssetResource;
 use netPhramework\db\nodes\Branch;
-use netPhramework\db\nodes\RecordChild;
-use netPhramework\db\nodes\RecordSetChild;
 use netPhramework\db\core\RecordMapper;
 use netPhramework\nodes\Directory;
-use netPhramework\nodes\Node;
 
 class DynamicNodeBuilder
 {
-	protected ?Asset $resource;
+	protected ?Asset $asset;
 
 	public function __construct
 	(
@@ -24,22 +22,19 @@ class DynamicNodeBuilder
 
 	private function reset():void
 	{
-		$this->resource = null;
+		$this->asset = null;
 	}
 
 	public function new(string $name):self
 	{
 		$recordSet = $this->mapper->recordsFor($name);
-		$this->resource = new Asset($name, $recordSet);
+		$this->asset = new Asset($name, $recordSet);
 		return $this;
 	}
 
-	public function add(Node $node):self
+	public function add(AssetResource $child):self
 	{
-		if($node instanceof RecordChild)
-			$this->resource->recordChildSet->add($node);
-		elseif($node instanceof RecordSetChild)
-			$this->resource->recordSetChildSet->add($node);
+		$child->enlist($this->asset);
 		return $this;
 	}
 
@@ -47,11 +42,11 @@ class DynamicNodeBuilder
 		RecordResourceStrategy $strategy, string $linkField):self
 	{
 		$node = new Branch($strategy->create($this->mapper), $linkField);
-		$this->add($node);
+		$this->asset->recordChildSet->add($node);
 		return $this;
 	}
 
-	public function strategy(RecordAssetStrategy $strategy):self
+	public function strategy(AssetResourceStrategy $strategy):self
 	{
 		$this->add($strategy->create($this->mapper));
 		return $this;
@@ -59,7 +54,7 @@ class DynamicNodeBuilder
 
 	public function get():Asset
 	{
-		$resource = $this->resource;
+		$resource = $this->asset;
 		$this->reset();
 		return $resource;
 	}

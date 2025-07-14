@@ -2,9 +2,12 @@
 
 namespace netPhramework\db\nodes;
 
-use netPhramework\nodes\Resource;
-
-abstract class RecordSetProcess extends Resource implements RecordSetChild
+abstract class RecordSetProcess extends AssetResource implements RecordSetChild
 {
 	use HasRecordSet;
+
+	public function enlist(AssetResourceDepot $depot):void
+	{
+		$depot->recordSetChildSet->add($this);
+	}
 }

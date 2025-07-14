@@ -48,7 +48,7 @@ class ActiveNodeBuilder extends DynamicNodeBuilder
 			->includeDefaults()
 			->get()
 		;
-		$this->add(new Branch($asset, $linkField));
+		$this->asset->recordChildSet->add(new Branch($asset, $linkField));
 		return $this;
 	}
 

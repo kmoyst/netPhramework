@@ -49,7 +49,7 @@ class PassiveNodeBuilder extends DynamicNodeBuilder
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
 			->get();
-		$this->add(new Branch($asset, $linkField));
+		$this->asset->recordChildSet->add(new Branch($asset, $linkField));
 		return $this;
 	}
 
