@@ -40,7 +40,7 @@ class SavePassword extends Resource
 			$exchange->session->addFeedbackMessage('Password saved');
 			$exchange->session->setFeedbackCode(ResponseCode::OK);
 			$exchange->redirect($this->onSuccess);
-		} catch (NotFound $e) {
+		} catch (NotFound) {
 			throw new Exception("Logged in user not found in database");
 		} catch (InvalidPassword $e) {
 			$exchange->error($e, $this->onFailure);

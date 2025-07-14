@@ -58,7 +58,7 @@ class ChangePassword extends Resource
 					new NotFound('Code expired'), $this->onFailure);
 				return;
 			}
-		} catch (DateMalformedStringException $e) {
+		} catch (DateMalformedStringException) {
 			$recovery->clearResetCode()->save();
 			$exchange->error(new NotFound('Code expired'), $this->onFailure);
 			return;
