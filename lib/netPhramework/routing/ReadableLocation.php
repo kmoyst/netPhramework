@@ -19,7 +19,7 @@ abstract class ReadableLocation implements Encodable
 	}
 
 	/**
-	 * Returns a readable MutablePath.
+	 * Returns a readable Path.
 	 *
 	 * @return Path
 	 */
