@@ -2,6 +2,8 @@
 
 namespace netPhramework\db\authentication\resources;
 
+use netPhramework\db\authentication\Notification;
+use netPhramework\db\authentication\NotificationInfo;
 use netPhramework\db\authentication\UserManager;
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\FieldAbsent;
@@ -19,6 +21,7 @@ class UserRegister extends RecordSetProcess
 	private Redirector $onSuccess;
 	private Redirector $onFailure;
 	private UserManager $manager;
+	private ?NotificationInfo $notificationInfo;
 
 	public function __construct() {}
 
@@ -36,8 +39,15 @@ class UserRegister extends RecordSetProcess
             $user->parseRegistration($exchange->parameters);
             $user->save();
 			$exchange->session->login($user);
-            $exchange->redirect($this->onSuccess);
-        } catch (DuplicateEntryException) {
+			$exchange->redirect($this->onSuccess);
+			if(isset($this->notificationInfo))
+				try {
+					new Notification($this->notificationInfo)
+						->notify($exchange);
+				} catch (Exception $e) {
+					error_log($e->getMessage());
+				}
+		} catch (DuplicateEntryException) {
             $message = "User already exists: " . $user->getUsername();
             $exchange->error(new Exception($message),
                 new RedirectToSibling('sign-up'));
@@ -61,6 +71,13 @@ class UserRegister extends RecordSetProcess
 	public function setUserManager(UserManager $manager): self
 	{
 		$this->manager = $manager;
+		return $this;
+	}
+
+	public function setNotificationInfo(
+		?NotificationInfo $notificationInfo): self
+	{
+		$this->notificationInfo = $notificationInfo;
 		return $this;
 	}
 }
