@@ -67,7 +67,7 @@ class Enroll extends AssetProcess
 	 */
 	private function notify(Exchange $exchange, EmailInfo $info):void
 	{
-		$defaultMsg = "A new user has enrolled at $exchange->siteAddress.";
+		$defaultMsg = "A new user has enrolled at $exchange->siteHost.";
 		new EmailDelivery()
 			->setServer($exchange->smtpServer)
 			->setSender($info->sender ?? 'webmaster@moyst.ca')
