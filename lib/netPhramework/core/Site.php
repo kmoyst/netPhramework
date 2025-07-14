@@ -11,6 +11,8 @@ use netPhramework\exchange\Services;
 
 abstract class Site
 {
+	abstract public Application $application {get;}
+
 	public function __construct
 	(
 	public Environment $environment = new WebEnvironment(),
@@ -33,6 +35,4 @@ abstract class Site
 			->extension('css')
 		;
 	}
-
-	abstract public function getApplication():Application;
 }

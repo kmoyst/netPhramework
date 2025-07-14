@@ -37,7 +37,7 @@ readonly class Controller
 			try {
 				new Router($this->site->environment)
 					->retrieveRequest($this->site->interpreter)
-					->andRouteInto($this->site->getApplication())
+					->andRouteInto($this->site->application)
 					->toFindHandler()
 					->andProcessExchange($this->site->services)
 					->andDeliverResponseThrough($this->site->responder);
