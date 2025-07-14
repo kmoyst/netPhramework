@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\mysql\sql;
+namespace netPhramework\db\mysql\queries;
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mysql\MysqlOperator;

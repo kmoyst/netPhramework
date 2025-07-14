@@ -11,7 +11,6 @@ use netPhramework\db\mapping\DataSet;
 use netPhramework\db\mysql\Adapter;
 use netPhramework\db\mysql\ExceptionRefiner;
 use netPhramework\db\mysql\Query;
-use netPhramework\db\mysql\sql\FromCriteria;
 
 class Update implements \netPhramework\db\abstraction\Update, Query, DataSet
 {

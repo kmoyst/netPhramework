@@ -8,7 +8,6 @@ use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\DataSet;
 use netPhramework\db\mysql\Adapter;
 use netPhramework\db\mysql\Query;
-use netPhramework\db\mysql\sql\FromCriteria;
 
 class Delete implements \netPhramework\db\abstraction\Delete, Query
 {
