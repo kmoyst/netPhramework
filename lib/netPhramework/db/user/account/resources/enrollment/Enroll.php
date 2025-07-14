@@ -14,13 +14,16 @@ use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\redirectors\RedirectToSibling;
 use netPhramework\transferring\EmailDelivery;
+use netPhramework\transferring\EmailException;
+use netPhramework\transferring\EmailInfo;
+use netPhramework\transferring\StreamSocketException;
 
 class Enroll extends AssetProcess
 {
 	private Redirector $onSuccess;
 	private Redirector $onFailure;
 	private UserManager $manager;
-	private ?EmailDelivery $notification;
+	private EmailInfo $notificationInfo;
 
 	public function __construct() {}
 
@@ -39,14 +42,12 @@ class Enroll extends AssetProcess
             $user->save();
 			$exchange->session->login($user);
             $exchange->redirect($this->onSuccess);
-			try {
-				if (isset($this->notification))
-					$this->notification // this assumes all necessary props set
-						->setServer($exchange->smtpServer)
-						->send();
-			} catch (Exception $e) {
-				error_log($e->getMessage());
-			}
+			if(isset($this->notificationInfo))
+				try {
+					$this->notify($exchange, $this->notificationInfo);
+				} catch (Exception $e) {
+					error_log($e->getMessage());
+				}
 		} catch (DuplicateEntryException) {
             $message = "User already exists: " . $user->getUsername();
             $exchange->error(new Exception($message),
@@ -54,6 +55,29 @@ class Enroll extends AssetProcess
         } catch (InvalidValue|InvalidPassword $e) {
             $exchange->error($e, new RedirectToSibling('sign-up'));
         }
+	}
+
+	/**
+	 * @param Exchange $exchange
+	 * @param EmailInfo $info
+	 * @return void
+	 * @throws Exception
+	 * @throws EmailException
+	 * @throws StreamSocketException
+	 */
+	private function notify(Exchange $exchange, EmailInfo $info):void
+	{
+		$defaultMsg = "A new user has enrolled at $exchange->siteAddress.";
+		new EmailDelivery()
+			->setServer($exchange->smtpServer)
+			->setSender($info->sender ?? 'webmaster@moyst.ca')
+			->setSenderName($info->senderName ?? 'Moyst.Ca Webmaster')
+			->setRecipient($info->recipient ?? 'webmaster@moyst.ca')
+			->setRecipientName($info->recipientName ?? 'Moyst.Ca Webmaster')
+			->setSubject($info->subject ?? 'New User Enrolled')
+			->setMessage($info->message ?? $defaultMsg)
+			->send()
+		;
 	}
 
 	public function setOnSuccess(Redirector $onSuccess): self
@@ -74,9 +98,9 @@ class Enroll extends AssetProcess
 		return $this;
 	}
 
-	public function setNotification(?EmailDelivery $notification): self
+	public function enableNotification(EmailInfo $info): self
 	{
-		$this->notification = $notification;
+		$this->notificationInfo = $info;
 		return $this;
 	}
 }
