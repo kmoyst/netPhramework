@@ -3,6 +3,7 @@
 namespace netPhramework\nodes;
 
 use netPhramework\exceptions\NodeNotFound;
+use netPhramework\resources\Index;
 
 class Directory extends Composite
 {

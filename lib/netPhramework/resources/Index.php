@@ -1,9 +1,10 @@
 <?php
 
-namespace netPhramework\nodes;
+namespace netPhramework\resources;
 
 use netPhramework\common\Utils;
 use netPhramework\exchange\Exchange;
+use netPhramework\nodes\ResourceSet;
 
 class Index extends Page
 {

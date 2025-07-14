@@ -1,8 +1,9 @@
 <?php
 
-namespace netPhramework\nodes;
+namespace netPhramework\resources;
 
 use netPhramework\exchange\Exchange;
+use netPhramework\nodes\Resource;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
