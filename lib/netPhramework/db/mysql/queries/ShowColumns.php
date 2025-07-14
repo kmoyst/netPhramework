@@ -4,13 +4,13 @@ namespace netPhramework\db\mysql\queries;
 
 
 use netPhramework\db\exceptions\MysqlException;
-use netPhramework\db\mysql\Adapter;
+use netPhramework\db\mysql\Connection;
 use netPhramework\db\mysql\Query;
 
-readonly class FieldQuery implements Query
+readonly class ShowColumns implements Query
 {
 	public function __construct(
-		private string $tableName, private Adapter $adapter) {}
+		private string $tableName, private Connection $adapter) {}
 
 	/**
 	 * @return array

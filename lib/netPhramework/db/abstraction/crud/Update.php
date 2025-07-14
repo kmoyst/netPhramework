@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\abstraction;
+namespace netPhramework\db\abstraction\crud;
 
 use netPhramework\db\exceptions\DuplicateEntryException;
 use netPhramework\db\exceptions\MappingException;

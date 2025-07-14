@@ -1,21 +1,21 @@
 <?php
 
-namespace netPhramework\db\mysql\queries;
+namespace netPhramework\db\mysql\crud;
 
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\DataSet;
-use netPhramework\db\mysql\Adapter;
+use netPhramework\db\mysql\Connection;
 use netPhramework\db\mysql\ExceptionRefiner;
 use netPhramework\db\mysql\Query;
 
-class Insert implements \netPhramework\db\abstraction\Insert, Query
+class Insert implements \netPhramework\db\abstraction\crud\Insert, Query
 {
 	private DataSet $dataSet;
 
 	public function __construct(
-		private readonly string $tableName,
-		private readonly Adapter $adapter) {}
+		private readonly string     $tableName,
+		private readonly Connection $adapter) {}
 
 
 	public function withData(DataSet $dataSet):Insert

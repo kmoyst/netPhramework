@@ -1,21 +1,22 @@
 <?php
 
-namespace netPhramework\db\mysql\queries;
+namespace netPhramework\db\mysql\crud;
 
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\DataSet;
-use netPhramework\db\mysql\Adapter;
+use netPhramework\db\mysql\Connection;
+use netPhramework\db\mysql\queries\adapters\FromCriteria;
 use netPhramework\db\mysql\Query;
 
-class Delete implements \netPhramework\db\abstraction\Delete, Query
+class Delete implements \netPhramework\db\abstraction\crud\Delete, Query
 {
 	private Criteria $criteria;
 
 	public function __construct(
-		private readonly string $tableName,
-		private readonly Adapter $adapter)
+		private readonly string     $tableName,
+		private readonly Connection $adapter)
 	{
 		$this->criteria = new Criteria();
 	}

@@ -4,7 +4,7 @@ namespace netPhramework\db\mysql;
 
 use netPhramework\db\exceptions\MysqlException;
 
-interface Adapter
+interface Connection
 {
 	/**
 	 * @param Query $query

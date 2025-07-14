@@ -5,7 +5,7 @@ namespace netPhramework\db\mysql\queries;
 use netPhramework\db\mapping\DataSet;
 use netPhramework\db\mysql\Query;
 
-class TablesQuery implements Query
+class ShowTables implements Query
 {
     public function getMySql(): string
     {

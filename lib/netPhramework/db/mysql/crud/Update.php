@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\mysql\queries;
+namespace netPhramework\db\mysql\crud;
 
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\MysqlException;
@@ -8,19 +8,20 @@ use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\DataItem;
 use netPhramework\db\mapping\DataSet;
-use netPhramework\db\mysql\Adapter;
+use netPhramework\db\mysql\Connection;
 use netPhramework\db\mysql\ExceptionRefiner;
+use netPhramework\db\mysql\queries\adapters\FromCriteria;
 use netPhramework\db\mysql\Query;
 
-class Update implements \netPhramework\db\abstraction\Update, Query, DataSet
+class Update implements \netPhramework\db\abstraction\crud\Update, Query, DataSet
 {
 	private DataSet $dataSet;
 	private Criteria $criteria;
 	private bool $iteratedData = false;
 
 	public function __construct(
-		private readonly string $tableName,
-		private readonly Adapter $adapter)
+		private readonly string     $tableName,
+		private readonly Connection $adapter)
 	{
 		$this->criteria = new Criteria();
 	}

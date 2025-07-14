@@ -3,16 +3,16 @@
 namespace netPhramework\db\mysql;
 
 
-use netPhramework\db\mysql\queries\Delete;
-use netPhramework\db\mysql\queries\Insert;
-use netPhramework\db\mysql\queries\Select;
-use netPhramework\db\mysql\queries\Update;
+use netPhramework\db\mysql\crud\Delete;
+use netPhramework\db\mysql\crud\Insert;
+use netPhramework\db\mysql\crud\Select;
+use netPhramework\db\mysql\crud\Update;
 
 readonly class Table implements \netPhramework\db\abstraction\Table
 {
     public function __construct(
-		private string  $name,
-		private Adapter $adapter) {}
+		private string     $name,
+		private Connection $adapter) {}
 
     public function getName(): string
     {

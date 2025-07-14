@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\abstraction;
+namespace netPhramework\db\abstraction\crud;
 
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\mapping\Condition;

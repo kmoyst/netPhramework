@@ -5,7 +5,7 @@ namespace netPhramework\db\mysql;
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Field;
 use netPhramework\db\mapping\FieldSet;
-use netPhramework\db\mysql\queries\FieldQuery;
+use netPhramework\db\mysql\queries\ShowColumns;
 
 class Schema implements \netPhramework\db\abstraction\Schema
 {
@@ -13,8 +13,8 @@ class Schema implements \netPhramework\db\abstraction\Schema
 	private FieldSet $fieldSet;
 
 	public function __construct(
-		private readonly string $tableName,
-		private readonly Adapter $adapter) {}
+		private readonly string     $tableName,
+		private readonly Connection $adapter) {}
 
 	public function getPrimary(): Field
 	{
@@ -36,7 +36,7 @@ class Schema implements \netPhramework\db\abstraction\Schema
 	{
 		if(isset($this->primary)) return;
 		$mapper = new FieldMapper();
-		$mapper->map(new FieldQuery($this->tableName,$this->adapter));
+		$mapper->map(new ShowColumns($this->tableName,$this->adapter));
 		$this->primary = $mapper->getPrimary();
 		$this->fieldSet = $mapper->getFieldSet();
 	}

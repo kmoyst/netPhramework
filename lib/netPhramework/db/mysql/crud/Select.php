@@ -1,19 +1,20 @@
 <?php
 
-namespace netPhramework\db\mysql\queries;
+namespace netPhramework\db\mysql\crud;
 
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\DataSet;
-use netPhramework\db\mysql\Adapter;
+use netPhramework\db\mysql\Connection;
+use netPhramework\db\mysql\queries\adapters\FromCriteria;
 use netPhramework\db\mysql\Query;
 
-class Select implements \netPhramework\db\abstraction\Select, Query
+class Select implements \netPhramework\db\abstraction\crud\Select, Query
 {
 	private Criteria $criteria;
 
-	public function __construct(private readonly string $tableName,
-								private readonly Adapter $adapter)
+	public function __construct(private readonly string     $tableName,
+								private readonly Connection $adapter)
 	{
 		$this->criteria = new Criteria();
 	}
