@@ -2,12 +2,14 @@
 
 namespace netPhramework\transferring;
 
+use netPhramework\core\Environment;
+
 readonly class SmtpServer
 {
 	private StreamSocket $socket;
 	private string $serverName;
 
-	public function initialize(SmtpServerEnvironment $environment):void
+	public function initialize(Environment $environment):void
 	{
 		$this->socket = new StreamSocket($environment->smtpServerAddress);
 		$this->serverName = $environment->smtpServerName;

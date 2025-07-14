@@ -2,9 +2,7 @@
 
 namespace netPhramework\core;
 
-use netPhramework\transferring\SmtpServerEnvironment;
-
-interface Environment extends SmtpServerEnvironment
+interface Environment
 {
 	public bool $inDevelopment {get;}
 	public string $uri {get;}
