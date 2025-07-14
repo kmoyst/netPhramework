@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\authentication\Session;
+use netPhramework\user\Session;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;

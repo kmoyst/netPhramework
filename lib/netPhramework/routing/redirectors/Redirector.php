@@ -3,7 +3,6 @@
 namespace netPhramework\routing\redirectors;
 
 use netPhramework\common\Variables;
-use netPhramework\exceptions\PathException;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\nodes\Resource;
@@ -31,7 +30,6 @@ class Redirector extends Resource
 	/**
 	 * @param Exchange $exchange
 	 * @return void
-	 * @throws PathException
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{

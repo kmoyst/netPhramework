@@ -2,11 +2,10 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\authentication\Session;
+use netPhramework\user\Session;
 use netPhramework\common\Variables;
 use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\PathException;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Presentation;

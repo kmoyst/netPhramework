@@ -11,8 +11,7 @@ class Location extends ReadableLocation
 			if(!isset($this->path))
 				$this->path = new MutablePath();
 			return $this->path;
-		}
-		set{}}
+		}}
 	protected(set) Variables $parameters {
 		get{
 			if(!isset($this->parameters))

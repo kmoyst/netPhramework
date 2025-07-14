@@ -2,7 +2,6 @@
 
 namespace netPhramework\nodes;
 
-use netPhramework\exceptions\PathException;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\RedirectToChild;
 
@@ -16,7 +15,6 @@ abstract class Composite implements Node
 	/**
 	 * @param Exchange $exchange
 	 * @return void
-	 * @throws PathException
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
