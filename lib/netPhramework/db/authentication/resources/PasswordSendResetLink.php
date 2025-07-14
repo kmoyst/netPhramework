@@ -90,7 +90,7 @@ class PasswordSendResetLink extends Resource
 	{
 		if(!$profile->hasEmailAddress()) return false;
 		$location = new Location()->setPath($exchange->path);
-		$this->toChangePass->reroute($location->getPath());
+		$this->toChangePass->reroute($location->path);
 		$location->getParameters()->add($profile->fields->resetCode,$resetCode);
 		$uri = new UriFromLocation($location);
 		$siteAddress = $exchange->siteAddress;

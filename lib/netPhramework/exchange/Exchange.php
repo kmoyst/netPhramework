@@ -30,7 +30,7 @@ class Exchange implements CallbackContext
 	}
 
 	private(set) MutablePath $path {
-		get { return clone $this->location->getPath(); }
+		get { return clone $this->location->path; }
 		set {}
 	}
 
@@ -67,7 +67,6 @@ class Exchange implements CallbackContext
 	/**
 	 * @param Redirector $fallback
 	 * @return Variables
-	 * @throws PathException
 	 */
 	public function redirect(Redirector $fallback):Variables
 	{

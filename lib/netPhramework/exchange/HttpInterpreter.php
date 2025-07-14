@@ -3,7 +3,6 @@
 namespace netPhramework\exchange;
 
 use netPhramework\core\Environment;
-use netPhramework\exceptions\PathException;
 use netPhramework\routing\LocationFromUri;
 
 class HttpInterpreter implements Interpreter
@@ -11,7 +10,6 @@ class HttpInterpreter implements Interpreter
 	/**
 	 * @param Environment $environment
 	 * @return Request
-	 * @throws PathException
 	 */
 	public function interpret(Environment $environment):Request
 	{
@@ -20,6 +18,6 @@ class HttpInterpreter implements Interpreter
 		else
 			$request = new ActiveRequest();
 		return $request
-			->setLocation(new LocationFromUri($environment->uri)->initialize());
+			->setLocation(new LocationFromUri($environment->uri));
 	}
 }

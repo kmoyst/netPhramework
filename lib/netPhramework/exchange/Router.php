@@ -44,7 +44,7 @@ class Router
 	{
 		$this->handler = new Navigator()
 			->setRoot($this->request->root)
-			->setPath($this->request->location->getPath())
+			->setPath($this->request->location->path)
 			->navigate();
 		return $this;
 	}

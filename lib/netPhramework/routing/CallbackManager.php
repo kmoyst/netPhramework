@@ -3,7 +3,6 @@
 namespace netPhramework\routing;
 
 use netPhramework\common\Variables;
-use netPhramework\exceptions\PathException;
 use netPhramework\rendering\Encodable;
 use netPhramework\routing\redirectors\RedirectToRoot;
 
@@ -36,13 +35,12 @@ readonly class CallbackManager
 	 * Location's parameters (referenced by callbackKey). Null otherwise.
 	 *
 	 * @return RedirectToRoot|null - dispatcher to callback, null if absent
-	 * @throws PathException
 	 */
 	public function getRedirector(Variables $parameters):?RedirectToRoot
 	{
 		$callbackUri = $parameters->getOrNull($this->callbackKey);
 		if(!$callbackUri) return null;
 		$target = new LocationFromUri($callbackUri);
-		return new RedirectToRoot($target->getPath(), $target->getParameters());
+		return new RedirectToRoot($target->path, $target->getParameters());
 	}
 }
