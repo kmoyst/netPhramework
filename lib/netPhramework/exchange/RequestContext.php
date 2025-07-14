@@ -16,5 +16,5 @@ interface RequestContext
 	public FileManager $fileManager {get;}
 	public SmtpServer $smtpServer{get;}
 
-	public function getApplication():Router;
+	public function getApplication():Route;
 }

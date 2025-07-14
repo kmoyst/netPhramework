@@ -3,53 +3,45 @@
 namespace netPhramework\exchange;
 
 use netPhramework\core\Application;
+use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
-use netPhramework\nodes\Directory;
 use netPhramework\nodes\Node;
-use netPhramework\routing\Path;
 
-readonly class Router
+class Router
 {
-	private Directory $root;
-
-	public function __construct(private Application $application)
-	{
-		$this->root = new Directory('');
-	}
-
+	public Request $request;
+	private Node $root;
+	private Node $handler;
 
 	/**
-	 * @return self
+	 * @param Application $application
+	 * @return $this
 	 * @throws Exception
 	 */
-    public function withAPassiveNode():self
+	public function routeThrough(Application $application):self
 	{
-		$this->application->configurePassiveNode($this->root);
+		$this->root = $this->request->routeThrough($application)->andGetNode();
 		return $this;
 	}
 
 	/**
-	 * @return self
-	 * @throws Exception
-	 */
-	public function withAnActiveNode():self
-	{
-		$this->application->configureActiveNode($this->root);
-		return $this;
-	}
-
-	/**
-	 * @param Path $path
-	 * @return Node
+	 * @return $this
 	 * @throws NodeNotFound
 	 */
-	public function route(Path $path):Node
+	public function navigateToHandler():self
 	{
-		return new Navigator()
+		$this->handler = new Navigator()
 			->setRoot($this->root)
-			->setPath($path)
-			->navigate()
-		;
+			->setPath($this->request->location->path)
+			->navigate();
+		return $this;
+	}
+
+	public function andGetResponseForDeliveryTo(Site $site):Response
+	{
+		$exchange = new Exchange($this->request->location, $site);
+		$this->handler->handleExchange($exchange);
+		return $exchange->response;
 	}
 }

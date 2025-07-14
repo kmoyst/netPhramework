@@ -2,32 +2,38 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\core\Site;
+use netPhramework\core\Application;
+use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\NodeNotFound;
-use netPhramework\routing\LocationFromUri;
+use netPhramework\nodes\Node;
+use netPhramework\routing\Location;
 
-readonly class Request
+abstract class Request
 {
-	public function __construct(protected Dispatcher $dispatcher) {}
+	protected(set) Location $location;
+	protected Environment $environment;
+	protected Route $route;
 
-	/**
-	 * @param Site $site
-	 * @return Response
-	 * @throws Exception
-	 * @throws NodeNotFound
-	 */
-	public function process(Site $site):Response
+	public function setLocation(Location $location): self
 	{
-		$location = new LocationFromUri($site->environment->uri);
-		$exchange = new Exchange($location, $site);
-		$this->dispatcher
-			->setSite($site)
-			->setLocation($location)
-			->prepare()
-			->dispatch()
-			->route($exchange->path)
-			->handleExchange($exchange);
-		return $exchange->response;
+		$this->location = $location;
+		return $this;
 	}
+
+	public function setEnvironment(Environment $environment): self
+	{
+		$this->environment = $environment;
+		return $this;
+	}
+
+	public function routeThrough(Application $application):self
+	{
+		$this->route = new Route($application);
+		return $this;
+	}
+	/**
+	 * @return Node
+	 * @throws Exception
+	 */
+	abstract public function andGetNode():Node;
 }
