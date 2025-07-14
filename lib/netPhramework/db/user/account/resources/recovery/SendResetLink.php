@@ -94,7 +94,8 @@ class SendResetLink extends Resource
 		$location->getParameters()->add($profile->fields->resetCode,$resetCode);
 		$uri = new UriFromLocation($location);
 		$siteAddress = $exchange->siteAddress;
-		new EmailDelivery($exchange->smtpServer)
+		new EmailDelivery()
+			->setServer($exchange->smtpServer)
 			->setRecipient($profile->getEmailAddress())
 			->setRecipientName($profile->getFullName())
 			->setSender($this->sender)
