@@ -3,64 +3,62 @@
 namespace netPhramework\db\user\account\resources\enrollment;
 
 use netPhramework\db\user\UserManager;
-use netPhramework\db\exceptions\DuplicateEntryException;
-use netPhramework\db\exceptions\FieldAbsent;
-use netPhramework\db\exceptions\InvalidValue;
-use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\nodes\RecordSetProcess;
-use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\InvalidPassword;
+use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
-use netPhramework\routing\redirectors\Redirector;
-use netPhramework\routing\redirectors\RedirectToSibling;
+use netPhramework\presentation\FeedbackView;
+use netPhramework\presentation\PasswordInput;
+use netPhramework\presentation\TextInput;
+use netPhramework\rendering\View;
+use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\rerouters\Rerouter;
 
 class Register extends RecordSetProcess
 {
-	private Redirector $onSuccess;
-	private Redirector $onFailure;
-	private UserManager $manager;
+	private Rerouter $formAction;
+	private UserManager $userManager;
 
 	public function __construct() {}
 
+	public function getName(): string
+	{
+		return 'sign-up';
+	}
+
 	/**
-	 * @param Exchange $exchange
-	 * @return void
-	 * @throws FieldAbsent
-	 * @throws Exception
-	 * @throws MappingException
-	 */
+     * @param Exchange $exchange
+     * @return void
+     * @throws InvalidSession
+     */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$user = $this->manager->getUser($this->recordSet->newRecord());
-		try {
-            $user->parseRegistration($exchange->parameters);
-            $user->save();
-			$exchange->session->login($user);
-            $exchange->redirect($this->onSuccess);
-        } catch (DuplicateEntryException) {
-            $message = "User already exists: " . $user->getUsername();
-            $exchange->error(new Exception($message),
-                new RedirectToSibling('sign-up'));
-        } catch (InvalidValue|InvalidPassword $e) {
-            $exchange->error($e, new RedirectToSibling('sign-up'));
-        }
+		$user = $this->userManager->getUser($this->recordSet->newRecord())
+		;
+		$feedbackView  = new FeedbackView($exchange->session);
+		$formAction    = new ReroutedPath($exchange->path, $this->formAction);
+		$usernameInput = new TextInput($user->fields->username);
+		$passwordInput = new PasswordInput($user->fields->password)
+		;
+		$view = new View('sign-up')
+			->add('feedbackView',  $feedbackView)
+			->add('formAction',    $formAction)
+			->add('usernameInput', $usernameInput)
+			->add('passwordInput', $passwordInput)
+		;
+		$responseCode = $exchange->session->resolveResponseCode()
+		;
+		$exchange->display($view, $responseCode);
 	}
 
-	public function setOnSuccess(Redirector $onSuccess): self
+	public function setRegisterFormAction(Rerouter $registerFormAction): self
 	{
-		$this->onSuccess = $onSuccess;
+		$this->formAction = $registerFormAction;
 		return $this;
 	}
 
-	public function setOnFailure(Redirector $onFailure): self
+	public function setUserManager(UserManager $userManager): self
 	{
-		$this->onFailure = $onFailure;
-		return $this;
-	}
-
-	public function setUserManager(UserManager $manager): self
-	{
-		$this->manager = $manager;
+		$this->userManager = $userManager;
 		return $this;
 	}
 }

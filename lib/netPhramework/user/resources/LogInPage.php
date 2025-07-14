@@ -15,7 +15,6 @@ class LogInPage extends Resource
 {
 	private Rerouter $toAuthenticate;
 	private Rerouter $toForgotPassword;
-	private Rerouter $toSignUp;
 
 	public function getName(): string { return 'log-in'; }
 
@@ -50,12 +49,6 @@ class LogInPage extends Resource
 	public function setToForgotPassword(Rerouter $toForgotPassword): self
 	{
 		$this->toForgotPassword = $toForgotPassword;
-		return $this;
-	}
-
-	public function setToSignUp(Rerouter $toSignUp): self
-	{
-		$this->toSignUp = $toSignUp;
 		return $this;
 	}
 }
