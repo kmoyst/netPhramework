@@ -16,7 +16,7 @@ abstract class Site
 	public Environment $environment = new WebEnvironment(),
 	public Interpreter $interpreter = new HttpInterpreter(),
 	public Responder   $responder   = new HttpResponder(),
-	public Services $services	= new HttpServices()
+	public Services    $services	= new HttpServices()
 	)
 	{
 		$this->services->smtpServer->initialize($this->environment);
