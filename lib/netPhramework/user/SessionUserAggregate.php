@@ -21,7 +21,7 @@ class SessionUserAggregate implements SessionUser, SessionUserProvider
 		private readonly string $passwordKey = 'password',
 		private readonly string $roleKey = 'role') {}
 
-	public function fromUser(User $user):?SessionUser
+	public function fromUser(User $user):?self
 	{
 		$this->setUsername($user->getUsername());
 		$this->setPassword($user->getPassword());
@@ -34,7 +34,7 @@ class SessionUserAggregate implements SessionUser, SessionUserProvider
 	 * @return SessionUser|null
 	 * @throws InvalidSession
 	 */
-	public function fromArray(array $vars): ?SessionUser
+	public function fromArray(array $vars): ?self
 	{
 		if(!array_key_exists($this->usernameKey, $vars) ||
 			!array_key_exists($this->passwordKey, $vars) ||
