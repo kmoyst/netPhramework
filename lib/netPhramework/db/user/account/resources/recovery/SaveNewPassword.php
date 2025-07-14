@@ -15,7 +15,7 @@ use netPhramework\exchange\ResponseCode;
 use netPhramework\nodes\Resource;
 use netPhramework\routing\redirectors\Redirector;
 
-class SavePassword extends Resource
+class SaveNewPassword extends Resource
 {
 	private Redirector $onSuccess;
 	private Redirector $onFailure;
