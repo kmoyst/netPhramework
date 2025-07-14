@@ -3,6 +3,7 @@
 namespace netPhramework\db\mysql;
 
 use netPhramework\db\exceptions\MysqlException;
+use netPhramework\db\mysql\queries\TablesQuery;
 
 class Database implements \netPhramework\db\abstraction\Database
 {

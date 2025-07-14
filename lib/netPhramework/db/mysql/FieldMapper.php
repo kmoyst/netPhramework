@@ -8,6 +8,7 @@ use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Field;
 use netPhramework\db\mapping\FieldSet;
 use netPhramework\db\mapping\FieldType;
+use netPhramework\db\mysql\queries\FieldQuery;
 
 class FieldMapper
 {

@@ -1,8 +1,9 @@
 <?php
 
-namespace netPhramework\db\mysql;
+namespace netPhramework\db\mysql\sql;
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Criteria;
+use netPhramework\db\mysql\MysqlOperator;
 use Stringable;
 
 readonly class FromCriteria implements Stringable

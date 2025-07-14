@@ -1,10 +1,13 @@
 <?php
 
-namespace netPhramework\db\mysql;
+namespace netPhramework\db\mysql\queries;
 
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\DataSet;
+use netPhramework\db\mysql\Adapter;
+use netPhramework\db\mysql\ExceptionRefiner;
+use netPhramework\db\mysql\Query;
 
 class Insert implements \netPhramework\db\abstraction\Insert, Query
 {

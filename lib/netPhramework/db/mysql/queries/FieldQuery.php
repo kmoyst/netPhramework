@@ -1,9 +1,11 @@
 <?php
 
-namespace netPhramework\db\mysql;
+namespace netPhramework\db\mysql\queries;
 
 
 use netPhramework\db\exceptions\MysqlException;
+use netPhramework\db\mysql\Adapter;
+use netPhramework\db\mysql\Query;
 
 readonly class FieldQuery implements Query
 {

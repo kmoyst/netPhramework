@@ -1,10 +1,13 @@
 <?php
 
-namespace netPhramework\db\mysql;
+namespace netPhramework\db\mysql\queries;
 
 use netPhramework\db\mapping\Condition;
 use netPhramework\db\mapping\Criteria;
 use netPhramework\db\mapping\DataSet;
+use netPhramework\db\mysql\Adapter;
+use netPhramework\db\mysql\Query;
+use netPhramework\db\mysql\sql\FromCriteria;
 
 class Select implements \netPhramework\db\abstraction\Select, Query
 {

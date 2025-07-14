@@ -3,6 +3,11 @@
 namespace netPhramework\db\mysql;
 
 
+use netPhramework\db\mysql\queries\Delete;
+use netPhramework\db\mysql\queries\Insert;
+use netPhramework\db\mysql\queries\Select;
+use netPhramework\db\mysql\queries\Update;
+
 readonly class Table implements \netPhramework\db\abstraction\Table
 {
     public function __construct(

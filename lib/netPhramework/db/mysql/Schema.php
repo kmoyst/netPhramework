@@ -5,6 +5,7 @@ namespace netPhramework\db\mysql;
 use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Field;
 use netPhramework\db\mapping\FieldSet;
+use netPhramework\db\mysql\queries\FieldQuery;
 
 class Schema implements \netPhramework\db\abstraction\Schema
 {
