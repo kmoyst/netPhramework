@@ -1,11 +1,13 @@
 <?php
 
-namespace netPhramework\db\application;
+namespace netPhramework\db\configuration\builders;
 
+use netPhramework\db\configuration\strategies\AssetResourceStrategy;
+use netPhramework\db\configuration\strategies\AssetStrategy;
+use netPhramework\db\core\RecordMapper;
 use netPhramework\db\nodes\Asset;
 use netPhramework\db\nodes\AssetResource;
 use netPhramework\db\nodes\Branch;
-use netPhramework\db\core\RecordMapper;
 use netPhramework\nodes\Directory;
 
 class DynamicNodeBuilder
@@ -32,14 +34,14 @@ class DynamicNodeBuilder
 		return $this;
 	}
 
-	public function add(AssetResource $child):self
+	public function add(AssetResource $resource):self
 	{
-		$child->enlist($this->asset);
+		$resource->enlist($this->asset);
 		return $this;
 	}
 
 	public function branch(
-		RecordResourceStrategy $strategy, string $linkField):self
+		AssetStrategy $strategy, string $linkField):self
 	{
 		$node = new Branch($strategy->create($this->mapper), $linkField);
 		$this->asset->recordChildSet->add($node);

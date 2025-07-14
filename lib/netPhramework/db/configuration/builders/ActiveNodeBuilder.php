@@ -1,14 +1,14 @@
 <?php
 
-namespace netPhramework\db\application;
+namespace netPhramework\db\configuration\builders;
 
+use netPhramework\db\nodes\Branch;
+use netPhramework\db\nodes\RecordProcess;
 use netPhramework\db\resources\Delete;
 use netPhramework\db\resources\Insert;
 use netPhramework\db\resources\Update;
-use netPhramework\db\nodes\Branch;
-use netPhramework\db\nodes\RecordProcess;
-use netPhramework\routing\redirectors\Redirector;
 use netPhramework\nodes\Directory;
+use netPhramework\routing\redirectors\Redirector;
 
 class ActiveNodeBuilder extends DynamicNodeBuilder
 {

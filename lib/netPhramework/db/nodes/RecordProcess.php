@@ -6,8 +6,8 @@ abstract class RecordProcess extends AssetResource implements RecordChild
 {
 	use HasRecord;
 
-	public function enlist(AssetResourceDepot $depot):void
+	public function enlist(AssetResourceSet $resourceSet):void
 	{
-		$depot->recordChildSet->add($this);
+		$resourceSet->recordChildSet->add($this);
 	}
 }

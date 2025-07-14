@@ -2,8 +2,8 @@
 
 namespace netPhramework\db\nodes;
 
-interface AssetResourceDepot
+interface AssetResourceSet
 {
 	public RecordChildSet $recordChildSet {get;}
-	public RecordSetChildSet $recordSetChildSet {get;}
+	public AssetChildSet $assetChildSet {get;}
 }

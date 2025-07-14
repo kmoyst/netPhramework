@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\db\application;
+namespace netPhramework\db\configuration\strategies;
 
 use netPhramework\db\core\RecordMapper;
 use netPhramework\db\nodes\AssetResource;

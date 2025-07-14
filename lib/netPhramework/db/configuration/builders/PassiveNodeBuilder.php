@@ -1,7 +1,8 @@
 <?php
 
-namespace netPhramework\db\application;
+namespace netPhramework\db\configuration\builders;
 
+use netPhramework\db\nodes\Branch;
 use netPhramework\db\presentation\recordForm\ChildRecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
@@ -9,7 +10,6 @@ use netPhramework\db\presentation\recordTable\ViewStrategy;
 use netPhramework\db\resources\Add;
 use netPhramework\db\resources\Browse;
 use netPhramework\db\resources\Edit;
-use netPhramework\db\nodes\Branch;
 use netPhramework\nodes\Directory;
 
 class PassiveNodeBuilder extends DynamicNodeBuilder

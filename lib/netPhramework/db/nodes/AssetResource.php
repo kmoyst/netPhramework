@@ -6,5 +6,5 @@ use netPhramework\nodes\Resource;
 
 abstract class AssetResource extends Resource
 {
-	abstract public function enlist(AssetResourceDepot $depot):void;
+	abstract public function enlist(AssetResourceSet $resourceSet):void;
 }
