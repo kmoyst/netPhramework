@@ -40,7 +40,7 @@ class Router
 	 * @return $this
 	 * @throws NodeNotFound
 	 */
-	public function toFindHandler():self
+	public function andFindHandler():self
 	{
 		$this->handler = new Navigator()
 			->setRoot($this->request->root)
@@ -49,7 +49,7 @@ class Router
 		return $this;
 	}
 
-	public function andProcessExchange(Services $services):self
+	public function toProcessExchange(Services $services):self
 	{
 		$exchange = new Exchange($services)
 			->setEnvironment($this->environment)
