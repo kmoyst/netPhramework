@@ -20,16 +20,5 @@ abstract class Site
 	{
 		$this->services->smtpServer->initialize($this->environment);
 	}
-	public function configureResponder(Responder $responder):void
-	{
-		$responder->wrapper->addStyleSheet('framework-stylesheet');
-		$responder->templateFinder
-			->directory('../templates')
-			->directory('../html')
-			->directory(__DIR__ . '/../../../templates')
-			->extension('tpl')
-			->extension('phtml')
-			->extension('css')
-		;
-	}
+	abstract public function configureResponder(Responder $responder):void;
 }
