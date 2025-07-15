@@ -126,7 +126,7 @@ class Session
 	 * @return void
 	 * @throws InvalidSession
 	 */
-	private function start(): void
+	public function start(): void
 	{
 		if (session_status() == PHP_SESSION_NONE)
 		{

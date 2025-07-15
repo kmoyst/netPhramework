@@ -10,7 +10,7 @@ use netPhramework\routing\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
 use Stringable;
 
-abstract class Encoder
+class Encoder
 {
 	private FileFinder $templateFinder;
 

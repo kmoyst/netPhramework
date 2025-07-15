@@ -2,15 +2,28 @@
 
 namespace netPhramework\core;
 
-interface Environment
+abstract class Environment
 {
-	public bool $inDevelopment {get;}
-	public string $uri {get;}
-	public ?array $postParameters {get;}
-	public string $siteAddress {get;}
-	public string $smtpServerName {get;}
-	public string $smtpServerAddress {get;}
-	public string $siteHost {get;}
-	public string $siteScheme {get;}
-	public function getVariable(string $varName):?string;
+	private(set) bool $inDevelopment {
+		get { return $this->getVariable('ERROR_LEVEL') === 'DEVELOPMENT'; }
+		set {}
+	}
+
+	private(set) string $smtpServerName {
+		get { return $this->getVariable('SMTP_SERVER_NAME'); }
+		set {}
+	}
+
+	private(set) string $smtpServerAddress {
+		get { return $this->getVariable('SMTP_SERVER_ADDRESS'); }
+		set {}
+	}
+
+	abstract public string $siteAddress {get;}
+
+	abstract public string $siteScheme {get;}
+
+	abstract public string $siteHost {get;}
+
+	abstract public function getVariable(string $varName):?string;
 }

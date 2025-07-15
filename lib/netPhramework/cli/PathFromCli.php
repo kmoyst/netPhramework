@@ -7,23 +7,20 @@ use netPhramework\routing\Path;
 class PathFromCli extends Path
 {
 	private string $name;
-	private bool $askForMore;
+	private bool $hasMore;
 
 	public function getName(): string
 	{
 		if(!isset($this->name))
 		{
-			$answer = readline("Requesting Asset? [Y/n default n]: ");
-			if($answer === 'Y')
+			if(($answer = $this->getAssetName()) !== null)
 			{
-				$this->name = $this->getAssetName();
-				$this->askForMore = true;
+				$this->name = $answer;
+				$this->hasMore = true;
 				echo "\nRequesting asset '$this->name'...\n\n";
-			}
-			else
-			{
+			} else {
 				$this->name = readline("Resource name? (blank for default): ");
-				$this->askForMore = false;
+				$this->hasMore = false;
 				if($this->name !== '')
 					echo "\nRequesting resource '$this->name'...\n\n";
 				else
@@ -33,17 +30,21 @@ class PathFromCli extends Path
 		return $this->name;
 	}
 
-	public function getNext(): ?Path
-	{
-		if(!$this->askForMore) return null;
-		else return new self;
-	}
-
 	private function getAssetName():?string
 	{
-		$name = readline("Asset name? ");
-		if($name !== '') return $name;
-		else echo "Asset name can't be empty\r\n";
-		return $this->getAssetName();
+		$name = readline("Enter Asset Name or . to specify resource: ");
+		if($name === '')
+		{
+			echo "Asset name can't be empty\r\n";
+			return $this->getAssetName();
+		}
+		elseif($name === '.') return null;
+		else return $name;
+	}
+
+	public function getNext(): ?Path
+	{
+		if(!$this->hasMore) return null;
+		else return new self;
 	}
 }

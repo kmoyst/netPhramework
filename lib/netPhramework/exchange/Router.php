@@ -3,49 +3,60 @@
 namespace netPhramework\exchange;
 
 use netPhramework\core\Application;
-use netPhramework\core\Context;
 use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Directory;
 use netPhramework\nodes\Node;
+use netPhramework\routing\Location;
 
 class Router
 {
-	private Response $response;
-	private Node $handler;
+	private(set) Response $response;
+	private(set) Node $handler;
 	private Directory $root;
+	private Location $location;
 
-	public function __construct(protected readonly Context $context)
+	public function __construct(private readonly Application $application)
 	{
-
+		$this->root = new Directory('');
 	}
 
 	/**
-	 * @param Application $application
+	 * @param Request $request
 	 * @return $this
 	 * @throws Exception
 	 */
-	public function andFindHandler(Application $application):self
+	public function openRequest(Request $request):self
 	{
-		if(!$this->context->request->isModificationRequest())
-			$application->configurePassiveNode($this->root);
+		if(!$request->isModificationRequest())
+			$this->application->configurePassiveNode($this->root);
 		else
-			$application->configureActiveNode($this->root)
+			$this->application->configureActiveNode($this->root)
 		;
+		$this->location = $request;
+		return $this;
+	}
+
+	/**
+	 * @return self
+	 * @throws NodeNotFound
+	 */
+	public function andFindHandler():self
+	{
 		$this->handler = new Navigator()
 			->setRoot($this->root)
-			->setPath($this->context->request->path)
-			->navigate();
+			->setPath($this->location->path)
+			->navigate()
 		;
 		return $this;
 	}
 
-	public function toProcessExchange(Services $services):self
+	public function toProcessExchange(Environment $env, Services $services):self
 	{
 		$exchange = new Exchange($services)
-			->setEnvironment($this->environment)
-			->setLocation($this->request->location)
+			->setEnvironment($env)
+			->setLocation($this->location)
 		;
 		$this->handler->handleExchange($exchange);
 		$this->response = $exchange->response;

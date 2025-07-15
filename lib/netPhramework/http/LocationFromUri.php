@@ -26,7 +26,6 @@ class LocationFromUri extends Location
 					new VariablesFromUri($this->environment->uri)->get();
 			return $this->parameters;
 		}
-		set{}
 	}
 
 	public function __construct(protected readonly Environment $environment) {}
