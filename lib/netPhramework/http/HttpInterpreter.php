@@ -1,8 +1,12 @@
 <?php
 
-namespace netPhramework\exchange;
+namespace netPhramework\http;
 
 use netPhramework\core\Environment;
+use netPhramework\exchange\ActiveRequest;
+use netPhramework\exchange\Interpreter;
+use netPhramework\exchange\PassiveRequest;
+use netPhramework\exchange\Request;
 use netPhramework\routing\LocationFromUri;
 
 class HttpInterpreter implements Interpreter

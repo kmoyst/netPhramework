@@ -1,6 +1,8 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\http;
+
+use netPhramework\core\Environment;
 
 class HttpEnvironment implements Environment
 {

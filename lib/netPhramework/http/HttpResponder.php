@@ -1,8 +1,10 @@
 <?php
 
-namespace netPhramework\exchange;
+namespace netPhramework\http;
 
 use netPhramework\common\FileFinder;
+use netPhramework\exchange\Responder;
+use netPhramework\exchange\ResponseCode;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\HtmlEncoder;

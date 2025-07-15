@@ -1,11 +1,12 @@
 <?php
 
-namespace netPhramework\exchange;
+namespace netPhramework\http;
 
-use netPhramework\user\Session;
+use netPhramework\exchange\Services;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
+use netPhramework\user\Session;
 
 class HttpServices implements Services
 {
