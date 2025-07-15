@@ -27,25 +27,17 @@ class Router
 	 * @return $this
 	 * @throws Exception
 	 */
-	public function andRouteInto(Application $application):self
+	public function andFindHandler(Application $application):self
 	{
 		$this->request
 			->setEnvironment($this->environment)
 			->dispatch($application)
 		;
-		return $this;
-	}
-
-	/**
-	 * @return $this
-	 * @throws NodeNotFound
-	 */
-	public function andFindHandler():self
-	{
 		$this->handler = new Navigator()
 			->setRoot($this->request->root)
 			->setPath($this->request->location->path)
 			->navigate();
+		;
 		return $this;
 	}
 

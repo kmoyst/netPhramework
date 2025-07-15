@@ -37,8 +37,7 @@ readonly class Controller
 			try {
 				new Router($this->site->environment)
 					->retrieveRequest($this->site->interpreter)
-					->andRouteInto($this->site->application)
-					->andFindHandler()
+					->andFindHandler($this->site->application)
 					->toProcessExchange($this->site->services)
 					->andDeliverResponseThrough($this->site->responder);
 			} catch (NodeNotFound $exception) {
