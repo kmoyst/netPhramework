@@ -6,19 +6,17 @@ use netPhramework\common\Variables;
 
 class Location extends ReadableLocation
 {
-	protected(set) MutablePath $path {
-		get{
-			if(!isset($this->path))
-				$this->path = new MutablePath();
-			return $this->path;
-		}}
-	protected(set) Variables $parameters {
-		get{
-			if(!isset($this->parameters))
-				$this->parameters = new Variables();
-			return $this->parameters;
-		}
-		set{}}
+	protected(set) MutablePath $path {get{
+		if(!isset($this->path))
+			$this->path = new MutablePath();
+		return $this->path;
+	}set{}}
+
+	protected(set) Variables $parameters {get{
+		if(!isset($this->parameters))
+			$this->parameters = new Variables();
+		return $this->parameters;
+	}set{}}
 
 	public function getPath(): MutablePath
 	{

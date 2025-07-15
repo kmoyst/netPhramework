@@ -3,23 +3,22 @@
 namespace netPhramework\exchange;
 
 use netPhramework\core\Application;
+use netPhramework\core\Context;
 use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
+use netPhramework\nodes\Directory;
 use netPhramework\nodes\Node;
 
 class Router
 {
-	private Request $request;
 	private Response $response;
 	private Node $handler;
+	private Directory $root;
 
-	public function __construct(private readonly Environment $environment) {}
-
-	public function retrieveRequest(Interpreter $interpreter):self
+	public function __construct(protected readonly Context $context)
 	{
-		$this->request = $interpreter->interpret($this->environment);
-		return $this;
+
 	}
 
 	/**
@@ -29,13 +28,14 @@ class Router
 	 */
 	public function andFindHandler(Application $application):self
 	{
-		$this->request
-			->setEnvironment($this->environment)
-			->dispatch($application)
+		if(!$this->context->request->isModificationRequest())
+			$application->configurePassiveNode($this->root);
+		else
+			$application->configureActiveNode($this->root)
 		;
 		$this->handler = new Navigator()
-			->setRoot($this->request->root)
-			->setPath($this->request->location->path)
+			->setRoot($this->root)
+			->setPath($this->context->request->path)
 			->navigate();
 		;
 		return $this;

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\routing;
+namespace netPhramework\http;
 
 use netPhramework\common\Variables;
 
