@@ -7,8 +7,8 @@ use netPhramework\exchange\ResponseCode;
 
 class Session
 {
-    private string $errorMessageKey = 'errorMessage';
-    private string $errorCodeKey = 'errorCode';
+    private string $feedbackMessageKey = 'feedbackMessage';
+    private string $feedbackCodeKey    = 'feedbackCode';
 
 	private SessionUserProvider $userProvider;
 	private array $sessionVars;
@@ -29,7 +29,7 @@ class Session
     public function addFeedbackMessage(string $message):Session
     {
         $this->start();
-        $this->sessionVars[$this->errorMessageKey] = $message;
+        $this->sessionVars[$this->feedbackMessageKey] = $message;
         return $this;
     }
 
@@ -40,10 +40,10 @@ class Session
     public function getFeedbackAndClear():?string
     {
         $this->start();
-        if(isset($this->sessionVars[$this->errorMessageKey]))
+        if(isset($this->sessionVars[$this->feedbackMessageKey]))
         {
-            $message = $this->sessionVars[$this->errorMessageKey];
-            unset($this->sessionVars[$this->errorMessageKey]);
+            $message = $this->sessionVars[$this->feedbackMessageKey];
+            unset($this->sessionVars[$this->feedbackMessageKey]);
             return $message;
         }
         else return null;
@@ -57,7 +57,7 @@ class Session
     public function setFeedbackCode(ResponseCode $code):self
     {
         $this->start();
-        $this->sessionVars[$this->errorCodeKey] = $code->value;
+        $this->sessionVars[$this->feedbackCodeKey] = $code->value;
         return $this;
     }
 
@@ -68,11 +68,11 @@ class Session
     public function resolveResponseCode():ResponseCode
     {
         $this->start();
-        if(isset($this->sessionVars[$this->errorCodeKey]))
+        if(isset($this->sessionVars[$this->feedbackCodeKey]))
         {
             $code = ResponseCode::tryFrom(
-                $this->sessionVars[$this->errorCodeKey]) ?? ResponseCode::OK;
-            unset($this->sessionVars[$this->errorCodeKey]);
+                $this->sessionVars[$this->feedbackCodeKey]) ?? ResponseCode::OK;
+            unset($this->sessionVars[$this->feedbackCodeKey]);
             return $code;
         }
         else return ResponseCode::OK;
