@@ -54,18 +54,13 @@ class Exchange implements CallbackContext
 	private(set) FileManager $fileManager;
 	private(set) CallbackManager $callbackManager;
 	private(set) SmtpServer $smtpServer;
-	private(set) Location $location;
 	private(set) Environment $environment;
 
 	public function __construct
 	(
-		Services $services,
+		private(set) Location $location,
 	)
 	{
-		$this->session 			= $services->session;
-		$this->fileManager 		= $services->fileManager;
-		$this->callbackManager 	= $services->callbackManager;
-		$this->smtpServer 		= $services->smtpServer;
 	}
 
 	/**
@@ -157,5 +152,30 @@ class Exchange implements CallbackContext
 		$this->location = $location;
 		return $this;
 	}
+
+	public function setCallbackManager(CallbackManager $callbackManager): self
+	{
+		$this->callbackManager = $callbackManager;
+		return $this;
+	}
+
+	public function setFileManager(FileManager $fileManager): self
+	{
+		$this->fileManager = $fileManager;
+		return $this;
+	}
+
+	public function setSmtpServer(SmtpServer $smtpServer): self
+	{
+		$this->smtpServer = $smtpServer;
+		return $this;
+	}
+
+	public function setSession(Session $session): self
+	{
+		$this->session = $session;
+		return $this;
+	}
+
 
 }

@@ -14,8 +14,10 @@ class Router
 {
 	private(set) Response $response;
 	private(set) Node $handler;
+	private(set) Exchange $exchange;
+
 	private Directory $root;
-	private Location $location;
+
 
 	public function __construct(private readonly Application $application)
 	{
@@ -34,32 +36,37 @@ class Router
 		else
 			$this->application->configureActiveNode($this->root)
 		;
-		$this->location = $request;
 		return $this;
 	}
 
 	/**
+	 * @param Location $location
 	 * @return self
 	 * @throws NodeNotFound
 	 */
-	public function andFindHandler():self
+	public function andFindHandler(Location $location):self
 	{
 		$this->handler = new Navigator()
 			->setRoot($this->root)
-			->setPath($this->location->path)
+			->setPath($location->path)
 			->navigate()
 		;
+		$this->exchange = new Exchange($location);
 		return $this;
 	}
 
-	public function toProcessExchange(Environment $env, Services $services):self
+	public function toProcessExchange(
+		Environment $environment, Services $services):self
 	{
-		$exchange = new Exchange($services)
-			->setEnvironment($env)
-			->setLocation($this->location)
+		$this->exchange
+			->setEnvironment($environment)
+			->setCallbackManager($services->callbackManager)
+			->setFileManager($services->fileManager)
+			->setSession($services->session)
+			->setSmtpServer($services->smtpServer)
 		;
-		$this->handler->handleExchange($exchange);
-		$this->response = $exchange->response;
+		$this->handler->handleExchange($this->exchange);
+		$this->response = $this->exchange->response;
 		return $this;
 	}
 

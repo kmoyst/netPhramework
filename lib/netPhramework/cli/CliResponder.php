@@ -56,9 +56,12 @@ class CliResponder implements Responder
 		$this->application->configurePassiveNode($root);
 		$handler = new Navigator()->setRoot($root)
 			->setPath($location->path)->navigate();
-		$exchange = new Exchange($this->services)
+		$exchange = new Exchange($location)
 			->setEnvironment($this->environment)
-			->setLocation($location)
+			->setSession($this->services->session)
+			->setSmtpServer($this->services->smtpServer)
+			->setFileManager($this->services->fileManager)
+			->setCallbackManager($this->services->callbackManager)
 		;
 		$handler->handleExchange($exchange);
 		$exchange->response->deliver($this);
