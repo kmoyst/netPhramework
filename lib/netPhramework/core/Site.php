@@ -8,25 +8,39 @@ use netPhramework\exchange\Services;
 
 abstract class Site
 {
-	protected(set) Request	 $request;
-	protected(set) Responder $responder;
-	protected(set) Services  $services;
-	protected(set) Environment $environment;
+	private(set) Request   $request {get{
+		if(!isset($this->request))
+			$this->request = $this->context->request;
+		return $this->request;
+	}set{}}
+
+	private(set) Responder $responder{get{
+		if(!isset($this->responder))
+			$this->responder = $this->context->responder;
+		return $this->responder;
+	}set{}}
+
+	private(set) Services  $services{get{
+		if(!isset($this->services))
+			$this->services = $this->context->services;
+		return $this->services;
+	}set{}}
+
+	private(set) Environment $environment{get{
+		if(!isset($this->environment))
+			$this->environment = $this->context->environment;
+		return $this->environment;
+	}set{}}
+
 	abstract public Application $application {get;}
 
-	public function __construct(Context $context)
-	{
-		$this->request	   = $context->request;
-		$this->responder   = $context->responder;
-		$this->services	   = $context->services;
-		$this->environment = $context->environment;
-	}
+	public function __construct(protected readonly Context $context) {}
 
 	public function configure():void
 	{
-		$this->responder->wrapper->addStyleSheet('framework-stylesheet');
-		$this->responder->application = $this->application;
-		$this->responder->services = $this->services;
-		$this->responder->environment = $this->environment;
+		$this->responder->application 	= $this->application;
+		$this->responder->services 		= $this->services;
+		$this->responder->environment 	= $this->environment;
+		$this->context->configureResponder($this->responder);
 	}
 }

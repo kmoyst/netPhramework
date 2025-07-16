@@ -11,5 +11,5 @@ interface Context
 	public Services $services {get;}
 	public Environment $environment {get;}
 
-	public function configure():void;
+	public function configureResponder(Responder $responder):void;
 }

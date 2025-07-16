@@ -2,7 +2,6 @@
 
 namespace netPhramework\cli;
 
-use netPhramework\core\Configurator;
 use netPhramework\core\Context;
 use netPhramework\core\Environment;
 use netPhramework\exchange\Request;
@@ -13,42 +12,32 @@ use netPhramework\http\HttpServices;
 class CliContext implements Context
 {
 	protected(set) Environment $environment {get{
-		if(!isset($this->environment)){
-			$this->environment = new CliEnvironment();
-			$dotenv = fopen('dotenv', 'r');
-			while($line = fgets($dotenv))
-			{
-				preg_match('|^([A-Z_]+)=(.+)$|', $line, $m);
-				$this->environment->add($m[1], $m[2]);
-			}
-			fclose($dotenv);
+		$environment = new CliEnvironment();
+		$dotenv = fopen('dotenv', 'r');
+		while($line = fgets($dotenv))
+		{
+			preg_match('|^([A-Z_]+)=(.+)$|', $line, $m);
+			$this->environment->add($m[1], $m[2]);
 		}
-		return $this->environment;
-	}set{}}
+		fclose($dotenv);
+		return $environment;
+	} set{}}
 
 	protected(set) Request $request {get{
-		if(!isset($this->request))
-		{
-			$this->request = new CliRequest($this->environment);
-		}
-		return $this->request;
-	}set{}}
+		return new CliRequest($this->environment);
+	} set{}}
 
 	protected(set) Responder $responder{get{
-		if(!isset($this->responder))
-			$this->responder = new CliResponder();
-		return $this->responder;
-	}set{}}
+		return new CliResponder();
+	} set{}}
 
 	protected(set) Services $services{get{
-		if(!isset($this->services))
-			$this->services = new HttpServices();
-		return $this->services;
-	}set{}}
+		return new HttpServices();
+	} set{}}
 
-	public function configure():void
+	public function configureResponder(Responder $responder):void
 	{
-		$this->responder->templateFinder
+		$responder->templateFinder
 			->directory('../templates/plain')
 			->directory(__DIR__ . '/../../../templates/plain')
 			->directory('../templates')

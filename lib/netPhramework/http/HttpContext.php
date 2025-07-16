@@ -11,41 +11,30 @@ use netPhramework\exchange\Services;
 class HttpContext implements Context
 {
 	protected(set) Request $request {get{
-		if(!isset($this->request))
-			$this->request = new HttpRequest();
-		return $this->request;
+		return new HttpRequest();
 	}set{}}
 
 	protected(set) Responder $responder{get{
-		if(!isset($this->responder))
-			$this->responder = new HttpResponder();
-		return $this->responder;
+		return new HttpResponder();
 	}set{}}
 
 	protected(set) Services $services{get{
-		if(!isset($this->services))
-			$this->services = new HttpServices();
-		return $this->services;
+		return new HttpServices();
 	}set{}}
 
 	protected(set) Environment $environment {get{
-		if(!isset($this->environment))
-			$this->environment = new HttpEnvironment();
-		return $this->environment;
+		return new HttpEnvironment();
 	}set{}}
 
-	public function configure(): void
+	public function configureResponder(Responder $responder): void
 	{
-		$this->responder->templateFinder
+		$responder->wrapper->addStyleSheet('framework-stylesheet');
+		$responder->templateFinder
 			->directory('../templates')
 			->directory('../html')
 			->directory(__DIR__ . '/../../../templates')
 			->extension('tpl')
 			->extension('phtml')
-			->extension('css')
-		;
-
+			->extension('css');
 	}
-
-
 }
