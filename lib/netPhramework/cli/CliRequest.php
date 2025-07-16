@@ -2,33 +2,22 @@
 
 namespace netPhramework\cli;
 
-use netPhramework\common\Variables;
+use netPhramework\core\Environment;
 use netPhramework\exchange\Request;
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Location;
 
-class CliRequest extends Request
+class CliRequest implements Request
 {
-	protected(set) MutablePath $path {get{
-		if(!isset($this->path))
-		{
-			$this->path = new MutablePath();
-			$this->path->append(new PathFromCli());
-		}
-		return $this->path;
-	}}
+	public function __construct(private Environment $environment) {}
 
+	private(set) Location $location {get{
+		if(!isset($this->location))
+			$this->location = new LocationFromCli();
+		return $this->location;
+	}set{}}
 
-	protected(set) Variables $parameters {get{
-		if(!isset($this->parameters))
-		{
-			$this->parameters = new Variables();
-		}
-		return $this->parameters;
-	}}
-
-	public function isModificationRequest(): bool
-	{
+	private(set) bool $isModificationRequest {get{
 		$question = "Is this a modification request? [Y/n: default n] ";
 		return readline($question) === 'Y';
-	}
+	}set{}}
 }

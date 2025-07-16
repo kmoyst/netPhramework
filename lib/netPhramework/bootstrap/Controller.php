@@ -4,34 +4,30 @@ namespace netPhramework\bootstrap;
 
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NodeNotFound;
-use netPhramework\exchange\Router;
+use netPhramework\exchange\Gateway;
 
 readonly class Controller
 {
 	public function __construct(private Site $site) {}
 
-	/**
-	 * @return void
-	 * @throws InvalidSession
-	 */
 	public function run():void
 	{
-		$this->initialize()->exchange();
+		$this->initialize()->configure()->exchange();
 	}
 
-	/**
-	 * @return self
-	 * @throws InvalidSession
-	 */
 	private function initialize():self
 	{
-		$handler = new Handler($this->site->env->inDevelopment);
+		$handler = new Handler($this->site->environment->inDevelopment);
 		register_shutdown_function([$handler, 'shutdown']);
 		set_error_handler([$handler, 'handleError']);
 		set_exception_handler([$handler, 'handleException']);
-		$this->site->initialize();
+		return $this;
+	}
+
+	private function configure():self
+	{
+		$this->site->configure();
 		return $this;
 	}
 
@@ -39,25 +35,27 @@ readonly class Controller
 	{
 		try {
 			try {
-				new Router($this->site->application)
-					->openRequest($this->site->request)
-					->andFindHandler($this->site->request)
-					->toProcessExchange($this->site->env, $this->site->services)
-					->andDeliverResponseThrough($this->site->responder);
+				$this->site->services->session->start();
+				new Gateway($this->site->application)
+					->mapToRouter($this->site->request->isModificationRequest)
+					->route($this->site->request->location)
+					->openExchange($this->site->services)
+					->dispatch($this->site->environment)
+					->deliver($this->site->responder);
 			} catch (NodeNotFound $exception) {
 				$exception
-					->setEnvironment($this->site->env)
+					->setEnvironment($this->site->environment)
 					->deliver($this->site->responder);
 			} catch (Exception $exception) {
 				$exception
-					->setEnvironment($this->site->env)
+					->setEnvironment($this->site->environment)
 					->deliver($this->site->responder);
 				$this->logException($exception);
 			}
 		}
 		catch (\Exception $exception)
 		{
-			if($this->site->env->inDevelopment)
+			if($this->site->environment->inDevelopment)
 			{
 				echo $exception->getMessage();
 			}

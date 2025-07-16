@@ -3,8 +3,6 @@
 namespace netPhramework\http;
 
 use netPhramework\common\Variables;
-use netPhramework\core\Environment;
-use netPhramework\exchange\Input;
 use netPhramework\routing\Location;
 use netPhramework\routing\MutablePath;
 
@@ -14,7 +12,7 @@ class LocationFromUri extends Location
 		if(!isset($this->path))
 		{
 			$this->path = new MutablePath();
-			$this->path->append(new PathFromUri($this->environment->uri));
+			$this->path->append(new PathFromUri($this->uri));
 		}
 		return $this->path;
 	}}
@@ -23,12 +21,12 @@ class LocationFromUri extends Location
 		get{
 			if(!isset($this->parameters))
 				$this->parameters =
-					new VariablesFromUri($this->environment->uri)->get();
+					new VariablesFromUri($this->uri)->get();
 			return $this->parameters;
 		}
 	}
 
-	public function __construct(protected readonly Environment $environment) {}
+	public function __construct(private string $uri) {}
 
 	public function __clone():void
 	{

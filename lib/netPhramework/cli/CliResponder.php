@@ -7,12 +7,10 @@ use netPhramework\core\Application;
 use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
-use netPhramework\exchange\Exchange;
-use netPhramework\exchange\Navigator;
+use netPhramework\exchange\Gateway;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\exchange\Services;
-use netPhramework\nodes\Directory;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
@@ -40,7 +38,9 @@ class CliResponder implements Responder
 
 	public function present(Wrappable $content, ResponseCode $code): void
 	{
-		echo $this->wrapper->wrap($content)->encode($this->configure()->encoder);
+		echo $this->wrapper
+			->wrap($content)
+			->encode($this->configure()->encoder);
 	}
 
 	/**
@@ -52,19 +52,12 @@ class CliResponder implements Responder
 	 */
 	public function redirect(Location $location, ResponseCode $code): void
 	{
-		$root = new Directory('');
-		$this->application->configurePassiveNode($root);
-		$handler = new Navigator()->setRoot($root)
-			->setPath($location->path)->navigate();
-		$exchange = new Exchange($location)
-			->setEnvironment($this->environment)
-			->setSession($this->services->session)
-			->setSmtpServer($this->services->smtpServer)
-			->setFileManager($this->services->fileManager)
-			->setCallbackManager($this->services->callbackManager)
-		;
-		$handler->handleExchange($exchange);
-		$exchange->response->deliver($this);
+		new Gateway($this->application)
+			->mapToRouter(false)
+			->route($location)
+			->openExchange($this->services)
+			->dispatch($this->environment)
+			->deliver($this);
 	}
 
 	public function transfer(File $file, ResponseCode $code): void

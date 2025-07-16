@@ -12,23 +12,25 @@ use netPhramework\http\HttpServices;
 
 class CliContext implements Context
 {
-	protected(set) Environment $env {get{
-		if(!isset($this->env)){
-			$this->env = new CliEnvironment();
+	protected(set) Environment $environment {get{
+		if(!isset($this->environment)){
+			$this->environment = new CliEnvironment();
 			$dotenv = fopen('dotenv', 'r');
 			while($line = fgets($dotenv))
 			{
 				preg_match('|^([A-Z_]+)=(.+)$|', $line, $m);
-				$this->env->add($m[1], $m[2]);
+				$this->environment->add($m[1], $m[2]);
 			}
 			fclose($dotenv);
 		}
-		return $this->env;
+		return $this->environment;
 	}set{}}
 
 	protected(set) Request $request {get{
 		if(!isset($this->request))
-			$this->request = new CliRequest();
+		{
+			$this->request = new CliRequest($this->environment);
+		}
 		return $this->request;
 	}set{}}
 
@@ -44,9 +46,17 @@ class CliContext implements Context
 		return $this->services;
 	}set{}}
 
-	protected(set) Configurator $config{get{
-		if(!isset($this->config))
-			$this->config = new CliConfigurator();
-		return $this->config;
-	}set{}}
+	public function configure():void
+	{
+		$this->responder->templateFinder
+			->directory('../templates/plain')
+			->directory(__DIR__ . '/../../../templates/plain')
+			->directory('../templates')
+			->directory('../html')
+			->directory(__DIR__ . '/../../../templates')
+			->extension('tpl')
+			->extension('phtml')
+			->extension('css')
+		;
+	}
 }

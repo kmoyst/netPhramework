@@ -3,17 +3,24 @@
 namespace netPhramework\http;
 
 use netPhramework\common\FileFinder;
+use netPhramework\core\Application;
+use netPhramework\core\Environment;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
-use netPhramework\rendering\Encodable;
+use netPhramework\exchange\Services;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\HtmlEncoder;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
+use netPhramework\routing\Location;
 use netPhramework\transferring\File;
 
 class HttpResponder implements Responder
 {
+	public Environment $environment;
+	public Application $application;
+	public Services $services;
+
 	public function __construct
 	(
 		public Encoder $encoder = new HtmlEncoder(),
@@ -34,10 +41,10 @@ class HttpResponder implements Responder
 		echo $this->wrapper->wrap($content)->encode($this->prepare()->encoder);
 	}
 
-	public function redirect(Encodable $content, ResponseCode $code): void
+	public function redirect(Location $location, ResponseCode $code): void
 	{
 		http_response_code($code->value);
-		header("Location: " . $content->encode($this->encoder));
+		header("Location: " . $location->encode($this->encoder));
 	}
 
 	public function transfer(File $file, ResponseCode $code): void

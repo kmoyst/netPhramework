@@ -4,7 +4,8 @@ namespace netPhramework\exchange;
 
 use netPhramework\routing\Location;
 
-abstract class Request extends Location
+interface Request
 {
-	abstract public function isModificationRequest():bool;
+	public Location $location {get;}
+	public bool $isModificationRequest {get;}
 }

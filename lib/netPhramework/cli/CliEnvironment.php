@@ -7,12 +7,11 @@ use netPhramework\core\Environment;
 
 class CliEnvironment extends Environment
 {
-	public function __construct(
-		public readonly Variables $variables = new Variables()
+	public function __construct
+	(
+	public readonly Variables $variables = new Variables()
 	)
-	{
-
-	}
+	{}
 
 	public function add(string $key, string $value):self
 	{
@@ -21,7 +20,7 @@ class CliEnvironment extends Environment
 	}
 
 	public string $siteAddress {
-		get { return $this->getVariable('SITE_ADDRESS'); }
+		get { return "$this->siteScheme://$this->siteHost"; }
 		set {}
 	}
 

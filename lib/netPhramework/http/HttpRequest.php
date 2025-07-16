@@ -2,37 +2,24 @@
 
 namespace netPhramework\http;
 
-use netPhramework\common\Variables;
 use netPhramework\exchange\Request;
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Location;
 
-class HttpRequest extends Request
+class HttpRequest implements Request
 {
-	protected(set) MutablePath $path {get{
-		if(!isset($this->path))
-		{
-			$this->path = new MutablePath();
-			$this->path->append(new PathFromUri($this->input->uri));
-		}
-		return $this->path;
-	}}
+	private(set) Location $location {get{
+		if(!isset($this->location))
+			$this->location = new LocationFromHttpInput($this->input);
+		return $this->location;
+	}set{}}
 
-	protected(set) Variables $parameters {get{
-		if(!isset($this->parameters))
-		{
-			$this->parameters = new Variables();
-			if(!$this->input->hasPostParameters())
-				$this->parameters->merge($this->input->getParameters ?? []);
-			else
-				$this->parameters->merge($this->input->postParameters);
-		}
-		return $this->parameters;
-	}}
-
-	public function __construct(protected HttpInput $input = new HttpInput()) {}
-
-	public function isModificationRequest(): bool
-	{
+	private(set) bool $isModificationRequest {get{
 		return $this->input->hasPostParameters();
-	}
+	}set{}}
+
+	public function __construct
+	(
+	private HttpInput $input = new HttpInput()
+	)
+	{}
 }

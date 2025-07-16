@@ -9,6 +9,7 @@ interface Context
 	public Request $request {get;}
 	public Responder $responder {get;}
 	public Services $services {get;}
-	public Environment $env {get;}
-	public Configurator $config {get;}
+	public Environment $environment {get;}
+
+	public function configure():void;
 }
