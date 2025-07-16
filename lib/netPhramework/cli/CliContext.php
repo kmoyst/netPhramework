@@ -17,7 +17,7 @@ class CliContext implements Context
 		while($line = fgets($dotenv))
 		{
 			preg_match('|^([A-Z_]+)=(.+)$|', $line, $m);
-			$this->environment->add($m[1], $m[2]);
+			$environment->add($m[1], $m[2]);
 		}
 		fclose($dotenv);
 		return $environment;

@@ -8,7 +8,7 @@ use netPhramework\routing\Location;
 
 class CliRequest implements Request
 {
-	public function __construct(private Environment $environment) {}
+	public function __construct(private readonly Environment $environment) {}
 
 	private(set) Location $location {get{
 		if(!isset($this->location))
@@ -17,7 +17,7 @@ class CliRequest implements Request
 	}set{}}
 
 	private(set) bool $isModificationRequest {get{
-		$question = "Is this a modification request? [Y/n: default n] ";
+		$question = "\n\nIs this a modification request? [Y/n: default n] ";
 		return readline($question) === 'Y';
 	}set{}}
 }
