@@ -6,15 +6,15 @@ use netPhramework\exceptions\PathException;
 
 class Path extends Route implements Reroutable
 {
-	protected ?string $name = null;
-	protected ?Path $next = null;
+	private ?string $name = null;
+	private ?Path $next = null;
 
 	public function getName(): ?string
 	{
 		return $this->name;
 	}
 
-	public function getNext(): ?self
+	public function getNext(): ?Path
 	{
 		return $this->next;
 	}
@@ -22,12 +22,9 @@ class Path extends Route implements Reroutable
 	/**
 	 * @param string|null $name
 	 * @return $this
-	 * @throws PathException
 	 */
-	public function setName(?string $name):self
+	public function setName(?string $name):Path
 	{
-		//if($name === null && $this->next !== null)
-		//	throw new PathException("Can only set HEAD to null");
 		$this->name = $name;
 		return $this;
 	}
@@ -35,12 +32,9 @@ class Path extends Route implements Reroutable
 	/**
 	 * @param Path|null $next
 	 * @return $this
-	 * @throws PathException
 	 */
-	public function setNext(?Path $next): self
+	public function setNext(?Path $next): Path
 	{
-		//if($this->name === null && $next !== null)
-		//	throw new PathException("Can't set next Path to a Path w/o a name");
 		$this->next = $next;
 		return $this;
 	}
@@ -50,7 +44,7 @@ class Path extends Route implements Reroutable
 	 * @return $this
 	 * @throws PathException
 	 */
-	public function pop():self
+	public function pop():Path
 	{
 		if($this->name === null)
 			return $this;
@@ -63,7 +57,7 @@ class Path extends Route implements Reroutable
 		return $this;
 	}
 
-	public function clear():self
+	public function clear():Path
 	{
 		$this->next = null;
 		$this->name = null;
@@ -75,17 +69,9 @@ class Path extends Route implements Reroutable
 	 * @return $this
 	 * @throws PathException
 	 */
-	public function appendPath(self $tail):self
+	public function appendPath(Path $tail):Path
 	{
-//		if(!isset($tail->name))
-//			throw new PathException("Can't append a path with no name");
-//		elseif($this->name === null)
-		if($this->name === null)
-		{
-			$this->name = $tail->getName();
-			$this->next = $tail->getNext();
-		}
-		elseif($this->next === null)
+		if($this->next === null)
 			$this->next = $tail;
 		else
 			$this->next->appendPath($tail);
@@ -97,7 +83,7 @@ class Path extends Route implements Reroutable
 	 * @return $this
 	 * @throws PathException
 	 */
-	public function appendName(string $name):self
+	public function appendName(string $name):Path
 	{
 		return $this->appendPath(new self()->setName($name));
 	}
@@ -107,7 +93,7 @@ class Path extends Route implements Reroutable
 	 * @return $this
 	 * @throws PathException
 	 */
-	public function appendRoute(Route $route):self
+	public function appendRoute(Route $route):Path
 	{
 		$path = new self()->setName($route->getName());
 		$this->traverse($path, $route->getNext());

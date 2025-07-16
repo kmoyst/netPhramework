@@ -9,7 +9,14 @@ use netPhramework\routing\Route;
 class Navigator
 {
 	private Node $root;
-	private Route $path;
+	private Route $route;
+	private bool $debugMode = false;
+
+	public function debugOn(): Navigator
+	{
+		$this->debugMode = true;
+		return $this;
+	}
 
 	public function setRoot(Node $root): Navigator
 	{
@@ -17,9 +24,9 @@ class Navigator
 		return $this;
 	}
 
-	public function setPath(Route $path): Navigator
+	public function setRoute(Route $route): self
 	{
-		$this->path = $path;
+		$this->route = $route;
 		return $this;
 	}
 
@@ -29,18 +36,19 @@ class Navigator
 	 */
 	public function navigate():Node
 	{
-		if($this->path->getName() === null)
-			throw new NodeNotFound('Node Not Found: Empty Path');
-		return $this->traverse($this->root, $this->path);
+		return $this->traverse($this->root, $this->route);
 	}
 
 	/**
 	 * @throws NodeNotFound
 	 */
-    private function traverse(Node $node, ?Route $path):Node
+    private function traverse(Node $node, ?Route $route):Node
     {
-        if($path === null) return $node;
-        $child = $node->getChild($path->getName());
-        return $this->traverse($child, $path->getNext());
+        if($route === null) return $node;
+		$name  = $route->getName();
+		if($this->debugMode) echo PHP_EOL."Search for $name...".PHP_EOL;
+        $child = $node->getChild($name);
+		$next  = $route->getNext();
+        return $this->traverse($child, $next);
     }
 }

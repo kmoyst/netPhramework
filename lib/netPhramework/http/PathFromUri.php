@@ -3,15 +3,13 @@
 namespace netPhramework\http;
 
 use netPhramework\exceptions\InvalidUri;
+use netPhramework\exceptions\PathException;
 use netPhramework\routing\Path;
 use netPhramework\routing\PathFromArray;
 
 class PathFromUri extends Path
 {
-	protected ?string $name = null;
-	protected ?Path $next = null;
-
-	private ?Path $delegate = null;
+	private bool $parsed = false;
 
 	public function __construct(private readonly string $uri) {}
 
@@ -22,7 +20,7 @@ class PathFromUri extends Path
 	public function getName(): ?string
 	{
 		$this->parse();
-		return $this->delegate->getName();
+		return parent::getName();
 	}
 
 	/**
@@ -32,40 +30,34 @@ class PathFromUri extends Path
 	public function getNext(): ?Path
 	{
 		$this->parse();
-		return $this->delegate->getNext();
+		return parent::getNext();
 	}
 
-	public function setName(?string $name): Path
-	{
-		$this->parse();
-		$this->delegate->setName($name);
-		return $this;
-	}
-
-	public function setNext(?Path $next): Path
-	{
-		$this->parse();
-		$this->delegate->setNext($next);
-		return $this;
-	}
-
+	/**
+	 * @param Path $tail
+	 * @return Path
+	 * @throws InvalidUri
+	 * @throws PathException
+	 */
 	public function appendPath(Path $tail): Path
 	{
 		$this->parse();
-		$this->delegate->appendPath($tail);
-		return $this;
+		return parent::appendPath($tail);
 	}
 
-
 	/**
+	 * @return void
 	 * @throws InvalidUri
 	 */
 	private function parse():void
 	{
-		if(isset($this->delegate)) return;
+		if($this->parsed) return;
 		if(!preg_match('|^/([^?]*)|', $this->uri, $matches))
 			throw new InvalidUri("Invalid Uri: $this->uri");
 		$names = explode('/', $matches[1]);
-		$this->delegate = new PathFromArray($names);
+		$this->setName(array_shift($names));
+		if(count($names) >= 1)
+		$this->setNext(new PathFromArray($names));
+		$this->parsed = true;
 	}
 }

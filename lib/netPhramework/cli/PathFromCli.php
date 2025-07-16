@@ -14,30 +14,29 @@ class PathFromCli extends Path
 	 */
 	public function getName():?string
 	{
-		if (!isset($this->name)) {
+		if (parent::getName() === null) {
 			if (($node = $this->getNodeNameFromUser()) !== null) {
 				$node = ltrim($node, '/ ');
 				$names = explode('/', $node);
-				$this->name = array_shift($names);
+				$this->setName(array_shift($names));
 				if (!empty($names)) {
-					$path = new Path();
-					$path->appendPath(new PathFromArray($names));
-					$path->appendPath(new PathFromCli());
-					$this->next = $path;
+					$next = new PathFromArray($names);
+					$next->appendPath(new PathFromCli());
+					$this->setNext($next);
 				} else {
-					$this->next = new PathFromCli();
+					$this->setNext(new PathFromCli());
 				}
 				echo "\nRequesting node '$node'...\n\n";
 			} else {
-				$this->name = readline("Resource name? (blank for default): ");
-				if ($this->name !== '')
-					echo "\nRequesting resource '$this->name'...\n\n";
+				$this->setName(readline("Resource name? (blank for default): "));
+				if (parent::getName() !== '')
+					echo "\nRequesting resource '".parent::getName()."'...\n\n";
 				else
 					echo "\nRequesting default resource...\n\n";
-				$this->next = null;
+				$this->setNext(null);
 			}
 		}
-		return $this->name;
+		return parent::getName();
 	}
 
 	private function getNodeNameFromUser():?string

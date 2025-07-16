@@ -8,14 +8,14 @@ class PathFromArray extends Path
 
 	public function getName(): ?string
 	{
-		return $this->names[0] ?? null;
+		return $this->names[0] ?? parent::getName();
 	}
 
-	public function getNext(): ?self
+	public function getNext(): ?Path
 	{
 		if(count($this->names) > 1)
 			return new PathFromArray(array_slice($this->names, 1));
 		else
-			return null;
+			return parent::getNext();
 	}
 }
