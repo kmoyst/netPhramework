@@ -6,16 +6,8 @@ use netPhramework\exceptions\PathException;
 
 class Path extends Route implements Reroutable
 {
-	public ?Path $next = null {get{return $this->next;}set(?Path $next){
-		if($this->name === null && $next !== null)
-			throw new PathException("Can't set next Path to a Path w/o a name");
-		$this->next = $next;
-	}}
-	public ?string $name = null {get{return $this->name;} set(?string $name){
-		if($name === null && $this->next !== null)
-			throw new PathException("Can only set HEAD to null");
-		$this->name = $name;
-	}}
+	protected ?string $name = null;
+	protected ?Path $next = null;
 
 	public function getName(): ?string
 	{
@@ -27,14 +19,28 @@ class Path extends Route implements Reroutable
 		return $this->next;
 	}
 
+	/**
+	 * @param string|null $name
+	 * @return $this
+	 * @throws PathException
+	 */
 	public function setName(?string $name):self
 	{
+		//if($name === null && $this->next !== null)
+		//	throw new PathException("Can only set HEAD to null");
 		$this->name = $name;
 		return $this;
 	}
 
+	/**
+	 * @param Path|null $next
+	 * @return $this
+	 * @throws PathException
+	 */
 	public function setNext(?Path $next): self
 	{
+		//if($this->name === null && $next !== null)
+		//	throw new PathException("Can't set next Path to a Path w/o a name");
 		$this->next = $next;
 		return $this;
 	}
@@ -71,12 +77,13 @@ class Path extends Route implements Reroutable
 	 */
 	public function appendPath(self $tail):self
 	{
-		if(!isset($tail->name))
-			throw new PathException("Can't append a path with no name");
-		elseif($this->name === null)
+//		if(!isset($tail->name))
+//			throw new PathException("Can't append a path with no name");
+//		elseif($this->name === null)
+		if($this->name === null)
 		{
-			$this->name = $tail->name;
-			$this->next = $tail->next;
+			$this->name = $tail->getName();
+			$this->next = $tail->getNext();
 		}
 		elseif($this->next === null)
 			$this->next = $tail;
@@ -107,10 +114,16 @@ class Path extends Route implements Reroutable
 		return $this->appendPath($path);
 	}
 
+	/**
+	 * @param Path $path
+	 * @param Route|null $route
+	 * @return void
+	 * @throws PathException
+	 */
 	private function traverse(Path $path, ?Route $route):void
 	{
 		if($route === null) return;
-		$path->next = new self()->setName($route->getName());
+		$path->setNext(new self()->setName($route->getName()));
 		$this->traverse($path->next, $route->getNext());
 	}
 
