@@ -48,7 +48,7 @@ class Exception extends \Exception implements Wrappable, Response
     {
 		if($this->environment->inDevelopment)
 		{
-			$message = $this->message . $this->getTraceAsString();
+			$message = $this->message;
 		}
 		else
 		{

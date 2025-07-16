@@ -36,11 +36,19 @@ class CliResponder implements Responder
 		return $this;
 	}
 
+	/**
+	 * @param Wrappable $content
+	 * @param ResponseCode $code
+	 * @return void
+	 * @throws Exception
+	 * @throws NodeNotFound
+	 */
 	public function present(Wrappable $content, ResponseCode $code): void
 	{
 		echo $this->wrapper
 			->wrap($content)
 			->encode($this->configure()->encoder);
+		$this->newQuery();
 	}
 
 	/**
@@ -55,6 +63,24 @@ class CliResponder implements Responder
 		new Gateway($this->application)
 			->mapToRouter(false)
 			->route($location)
+			->openExchange($this->services)
+			->dispatch($this->environment)
+			->deliver($this)
+		;
+		$this->newQuery();
+	}
+
+	/**
+	 * @return void
+	 * @throws Exception
+	 * @throws NodeNotFound
+	 */
+	private function newQuery():void
+	{
+		$request = new CliRequest($this->environment);
+		new Gateway($this->application)
+			->mapToRouter($request->isModificationRequest)
+			->route($request->location)
 			->openExchange($this->services)
 			->dispatch($this->environment)
 			->deliver($this);
