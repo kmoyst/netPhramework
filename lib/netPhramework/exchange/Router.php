@@ -21,7 +21,7 @@ readonly class Router
 	{
 		$handler = new Navigator()
 			->setRoot($this->root)
-			->setPath($location->path)
+			->setRoute($location->path)
 			->navigate();
 		return new Dispatcher($handler, $location);
 	}
