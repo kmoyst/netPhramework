@@ -2,11 +2,9 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\Encodable;
 use netPhramework\db\presentation\recordTable\{PaginationFormDirector as formDirector,
 	collation\Calculator};
-use netPhramework\presentation\Input;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 

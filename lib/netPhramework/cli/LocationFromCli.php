@@ -4,15 +4,15 @@ namespace netPhramework\cli;
 
 use netPhramework\common\Variables;
 use netPhramework\routing\Location;
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Path;
 
 class LocationFromCli extends Location
 {
-	protected(set) MutablePath $path {get{
+	protected(set) Path $path {get{
 		if(!isset($this->path))
 		{
-			$this->path = new MutablePath();
-			$this->path->append(new PathFromCli());
+			$this->path = new Path();
+			$this->path->appendPath(new PathFromCli());
 		}
 		return $this->path;
 	}}

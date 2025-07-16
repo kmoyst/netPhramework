@@ -6,7 +6,7 @@ use Stringable;
 
 readonly class UriFromPath implements Stringable
 {
-	public function __construct(private Path $path) {}
+	public function __construct(private Route $path) {}
 
 	public function get():string
 	{
@@ -16,7 +16,7 @@ readonly class UriFromPath implements Stringable
 		return $s.implode($s, $names);
 	}
 
-	private function traversePath(array &$names, ?Path $path):void
+	private function traversePath(array &$names, ?Route $path):void
 	{
 		if($path === null) return;
 		$names[] = $path->getName();

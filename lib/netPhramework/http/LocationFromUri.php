@@ -4,15 +4,15 @@ namespace netPhramework\http;
 
 use netPhramework\common\Variables;
 use netPhramework\routing\Location;
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Path;
 
 class LocationFromUri extends Location
 {
-	protected(set) MutablePath $path {get{
+	protected(set) Path $path {get{
 		if(!isset($this->path))
 		{
-			$this->path = new MutablePath();
-			$this->path->append(new PathFromUri($this->uri));
+			$this->path = new Path();
+			$this->path->appendPath(new PathFromUri($this->uri));
 		}
 		return $this->path;
 	}}
@@ -26,7 +26,7 @@ class LocationFromUri extends Location
 		}
 	}
 
-	public function __construct(private string $uri) {}
+	public function __construct(private readonly string $uri) {}
 
 	public function __clone():void
 	{

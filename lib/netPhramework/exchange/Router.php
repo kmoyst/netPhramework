@@ -6,7 +6,7 @@ use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Directory;
 use netPhramework\routing\Location;
 
-class Router
+readonly class Router
 {
 	public function __construct(private Directory $root)
 	{

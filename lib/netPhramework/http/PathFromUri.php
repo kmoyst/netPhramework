@@ -3,37 +3,31 @@
 namespace netPhramework\http;
 
 use netPhramework\exceptions\InvalidUri;
-use netPhramework\routing\MutablePath;
 use netPhramework\routing\Path;
 use netPhramework\routing\PathFromArray;
 
 class PathFromUri extends Path
 {
-	private Path $path;
+	public ?string $name = null {get{
+		$this->parse();
+		return $this->path->getName();
+	}set(?string $name){
+		$this->path->setName($name);
+	}}
+
+	public ?Path $next = null {get{
+		$this->parse();
+		return $this->path->getNext();
+	}set(?Path $next){
+		$this->path->setNext($next);
+	}}
+
+
+	private ?Path $path = null;
 
 	public function __construct(private readonly string $uri)
 	{
-		//parent::__construct();
-	}
-
-	/**
-	 * @return string|null
-	 * @throws InvalidUri
-	 */
-	public function getName(): ?string
-	{
-		$this->parse();
-		return $this->path->getName();
-	}
-
-	/**
-	 * @return Path|null
-	 * @throws InvalidUri
-	 */
-	public function getNext(): ?Path
-	{
-		$this->parse();
-		return $this->path->getNext();
+		parent::__construct();
 	}
 
 	/**

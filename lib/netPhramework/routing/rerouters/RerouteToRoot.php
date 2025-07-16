@@ -8,6 +8,6 @@ readonly class RerouteToRoot extends Rerouter
 {
     public function reroute(Reroutable $path): void
     {
-        $path->clear()->append($this->subPath);
+		$this->parseAndAppendSubPath($path->clear());
     }
 }

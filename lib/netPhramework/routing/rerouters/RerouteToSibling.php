@@ -8,6 +8,6 @@ readonly class RerouteToSibling extends Rerouter
 {
     public function reroute(Reroutable $path): void
     {
-        $path->pop()->append($this->subPath);
+		$this->parseAndAppendSubPath($path->pop());
     }
 }

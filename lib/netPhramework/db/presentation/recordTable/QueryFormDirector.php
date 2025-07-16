@@ -2,7 +2,6 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
-use netPhramework\presentation\Input;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 

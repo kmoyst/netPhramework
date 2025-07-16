@@ -2,6 +2,7 @@
 
 namespace netPhramework\exchange;
 
+use netPhramework\exceptions\PathException;
 use netPhramework\user\Session;
 use netPhramework\common\Variables;
 use netPhramework\core\Environment;
@@ -13,7 +14,7 @@ use netPhramework\rendering\View;
 use netPhramework\routing\CallbackContext;
 use netPhramework\routing\CallbackManager;
 use netPhramework\routing\Location;
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Path;
 use netPhramework\routing\Redirection;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\transferring\File;
@@ -28,7 +29,7 @@ class Exchange implements CallbackContext
 		set {}
 	}
 
-	private(set) MutablePath $path {
+	private(set) Path $path {
 		get { return clone $this->location->path; }
 		set {}
 	}
@@ -66,6 +67,7 @@ class Exchange implements CallbackContext
 	/**
 	 * @param Redirector $fallback
 	 * @return Variables
+	 * @throws PathException
 	 */
 	public function redirect(Redirector $fallback):Variables
 	{

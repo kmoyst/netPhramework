@@ -2,28 +2,24 @@
 
 namespace netPhramework\cli;
 
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Path;
 use netPhramework\routing\PathFromArray;
 
-class PathFromCli extends MutablePath
+class PathFromCli extends Path
 {
-	private string $name;
-	private ?MutablePath $next;
-
-	public function getName(): string
-	{
+	public ?string $name {get{
 		if(!isset($this->name))
 		{
-			if(($node = $this->getNode()) !== null)
+			if(($node = $this->getNodeNameFromUser()) !== null)
 			{
 				$node = ltrim($node, '/ ');
 				$names = explode('/', $node);
 				$this->name = array_shift($names);
 				if(!empty($names))
 				{
-					$path = new MutablePath();
-					$path->appendMutablePath(new PathFromArray($names));
-					$path->appendMutablePath(new PathFromCli());
+					$path = new Path();
+					$path->appendPath(new PathFromArray($names));
+					$path->appendPath(new PathFromCli());
 					$this->next = $path;
 				}
 				else
@@ -41,20 +37,15 @@ class PathFromCli extends MutablePath
 			}
 		}
 		return $this->name;
-	}
+	}}
 
-	public function getNext(): ?MutablePath
-	{
-		return $this->next;
-	}
-
-	private function getNode():?string
+	private function getNodeNameFromUser():?string
 	{
 		$name = readline("Enter node or '.' to specify resource: ");
 		if($name === '')
 		{
 			echo "Node cannot be empty\r\n";
-			return $this->getNode();
+			return $this->getNodeNameFromUser();
 		}
 		elseif($name === '.') return null;
 		else return $name;

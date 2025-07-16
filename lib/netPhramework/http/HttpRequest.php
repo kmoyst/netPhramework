@@ -19,7 +19,7 @@ class HttpRequest implements Request
 
 	public function __construct
 	(
-	private HttpInput $input = new HttpInput()
+	private readonly HttpInput $input = new HttpInput()
 	)
 	{}
 }

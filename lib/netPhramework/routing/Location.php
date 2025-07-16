@@ -6,9 +6,9 @@ use netPhramework\common\Variables;
 
 class Location extends ReadableLocation
 {
-	protected(set) MutablePath $path {get{
+	protected(set) Path $path {get{
 		if(!isset($this->path))
-			$this->path = new MutablePath();
+			$this->path = new Path();
 		return $this->path;
 	}}
 
@@ -18,12 +18,12 @@ class Location extends ReadableLocation
 		return $this->parameters;
 	}}
 
-	public function getPath(): MutablePath
+	public function getPath(): Path
 	{
 		return $this->path;
 	}
 
-	public function setPath(MutablePath $path): self
+	public function setPath(Path $path): self
 	{
 		$this->path = $path;
 		return $this;

@@ -12,8 +12,8 @@ class Dispatcher
 
 	public function __construct
 	(
-		private Node $handler,
-		private Location $location
+		private readonly Node $handler,
+		private readonly Location $location
 	) {}
 
 	public function openExchange(Services $services):self

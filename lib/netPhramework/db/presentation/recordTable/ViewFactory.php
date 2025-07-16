@@ -5,8 +5,8 @@ namespace netPhramework\db\presentation\recordTable;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\rowSet\RowSet;
-use netPhramework\routing\MutablePath;
-use netPhramework\presentation\Input;
+use netPhramework\exceptions\PathException;
+use netPhramework\routing\Path;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
@@ -38,12 +38,13 @@ readonly class ViewFactory
 	}
 
 	/**
-	 * @param MutablePath $compositePath
+	 * @param Path $compositePath
 	 * @param Encodable $callbackInput
 	 * @return View
+	 * @throws PathException
 	 */
 	public function getAddButton(
-		MutablePath $compositePath, Encodable $callbackInput):View
+		Path $compositePath, Encodable $callbackInput):View
 	{
 		return new View('add-button-form')
 			->add('callbackInput', $callbackInput)
