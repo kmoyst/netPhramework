@@ -2,25 +2,38 @@
 
 namespace netPhramework\cli;
 
-use netPhramework\routing\Path;
+use netPhramework\routing\MutablePath;
+use netPhramework\routing\PathFromArray;
 
-class PathFromCli extends Path
+class PathFromCli extends MutablePath
 {
 	private string $name;
-	private bool $hasMore;
+	private ?MutablePath $next;
 
 	public function getName(): string
 	{
 		if(!isset($this->name))
 		{
-			if(($answer = $this->getAssetName()) !== null)
+			if(($node = $this->getNode()) !== null)
 			{
-				$this->name = $answer;
-				$this->hasMore = true;
-				echo "\nRequesting asset '$this->name'...\n\n";
+				$node = ltrim($node, '/ ');
+				$names = explode('/', $node);
+				$this->name = array_shift($names);
+				if(!empty($names))
+				{
+					$path = new MutablePath();
+					$path->appendMutablePath(new PathFromArray($names));
+					$path->appendMutablePath(new PathFromCli());
+					$this->next = $path;
+				}
+				else
+				{
+					$this->next = new PathFromCli();
+				}
+				echo "\nRequesting node '$node'...\n\n";
 			} else {
+				$this->next = null;
 				$this->name = readline("Resource name? (blank for default): ");
-				$this->hasMore = false;
 				if($this->name !== '')
 					echo "\nRequesting resource '$this->name'...\n\n";
 				else
@@ -30,21 +43,20 @@ class PathFromCli extends Path
 		return $this->name;
 	}
 
-	private function getAssetName():?string
+	public function getNext(): ?MutablePath
 	{
-		$name = readline("Enter Asset Name or . to specify resource: ");
+		return $this->next;
+	}
+
+	private function getNode():?string
+	{
+		$name = readline("Enter node or '.' to specify resource: ");
 		if($name === '')
 		{
-			echo "Asset name can't be empty\r\n";
-			return $this->getAssetName();
+			echo "Node cannot be empty\r\n";
+			return $this->getNode();
 		}
 		elseif($name === '.') return null;
 		else return $name;
-	}
-
-	public function getNext(): ?Path
-	{
-		if(!$this->hasMore) return null;
-		else return new self;
 	}
 }

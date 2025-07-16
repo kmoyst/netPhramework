@@ -2,6 +2,8 @@
 
 namespace netPhramework\db\presentation\recordTable;
 
+use netPhramework\presentation\CallbackInput;
+use netPhramework\rendering\Encodable;
 use netPhramework\db\presentation\recordTable\{PaginationFormDirector as formDirector,
 	collation\Calculator};
 use netPhramework\presentation\Input;
@@ -28,7 +30,7 @@ class PaginationDirector
 	}
 
 	public function configure(FormContext $baseContext,
-							  ?Input      $callbackInput):self
+							  ?Encodable $callbackInput):self
 	{
 		$this->context->setBaseContext($baseContext);
 		$this->calculator

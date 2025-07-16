@@ -3,13 +3,14 @@
 namespace netPhramework\db\presentation\recordTable;
 
 use netPhramework\presentation\Input;
+use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
 class QueryFormDirector
 {
 	private QueryFormInputFactory $factory;
 	private View $form;
-	private ?Input $callbackInput;
+	private ?Encodable $callbackInput;
 
 	public function __construct()
 	{
@@ -22,7 +23,7 @@ class QueryFormDirector
 		return $this;
 	}
 
-	public function setCallbackInput(?Input $callbackInput): self
+	public function setCallbackInput(?Encodable $callbackInput): self
 	{
 		$this->callbackInput = $callbackInput;
 		return $this;

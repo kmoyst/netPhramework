@@ -14,7 +14,7 @@ readonly class ViewFactory
 {
 	public function __construct(private Query $query) { }
 
-	public function getSelectForm(array $columnNames, ?Input $callbackInput):?View
+	public function getSelectForm(array $columnNames, ?Encodable $callbackInput):?View
 	{
 		return new QueryFormDirector()
 			->setCallbackInput($callbackInput)
@@ -24,7 +24,7 @@ readonly class ViewFactory
 		;
 	}
 
-	public function getPaginator(?Input $callbackInput):?View
+	public function getPaginator(?Encodable $callbackInput):?View
 	{
 		if($this->query->hasLimit())
 		{

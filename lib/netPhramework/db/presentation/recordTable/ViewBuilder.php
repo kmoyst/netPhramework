@@ -10,6 +10,7 @@ use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\{collation\CollationMap,
 	collation\Collator,
 	collation\Query,
+	columns\TextColumn,
 	columnSet\ColumnMapper,
 	columnSet\ColumnSet,
 	columnSet\ColumnSetStrategy,
@@ -41,7 +42,8 @@ class ViewBuilder
 	public function buildColumnSet(?ColumnSetStrategy $strategy):self
 	{
 		$columnMapper    = new ColumnMapper();
-		$this->columnSet = new ColumnSet();
+		$this->columnSet = new ColumnSet()
+		;
 		foreach($this->recordSet->getFieldSet() as $field)
 			$this->columnSet->add($columnMapper->mapColumn($field));
 		$strategy?->configureColumnSet($this->columnSet);

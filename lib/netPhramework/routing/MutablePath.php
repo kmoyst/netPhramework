@@ -64,6 +64,22 @@ class MutablePath extends Path implements Reroutable
 		return $this;
 	}
 
+	public function appendMutablePath(MutablePath $tail):self
+	{
+		if($this->name === null)
+		{
+			$this->name = $tail->getName();
+			$this->next = $tail->getNext();
+		}
+		elseif($this->next === null)
+		{
+			$this->next = $tail;
+		}
+		else
+			$this->next->appendMutablePath($tail);
+		return $this;
+	}
+
 	/**
 	 * "Safer" method to append a name to the linked list
 	 *
