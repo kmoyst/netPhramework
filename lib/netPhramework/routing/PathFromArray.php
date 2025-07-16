@@ -17,6 +17,5 @@ class PathFromArray extends Path
 
 	public function __construct(private readonly array $names)
 	{
-		parent::__construct();
 	}
 }

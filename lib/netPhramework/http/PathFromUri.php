@@ -27,7 +27,6 @@ class PathFromUri extends Path
 
 	public function __construct(private readonly string $uri)
 	{
-		parent::__construct();
 	}
 
 	/**

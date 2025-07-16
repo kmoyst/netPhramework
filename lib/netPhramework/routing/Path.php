@@ -11,16 +11,11 @@ class Path extends Route implements Reroutable
 			throw new PathException("Can't set next Path to a Path w/o a name");
 		$this->next = $next;
 	}}
-
-	public function __construct
-	(
-		public ?string $name = null {get{return $this->name;}set(?string $name){
-			if($name === null && $this->next !== null)
-				throw new PathException("Can only set HEAD to null");
-			$this->name = $name;
-		}}
-	)
-	{}
+	public ?string $name = null {get{return $this->name;} set(?string $name){
+		if($name === null && $this->next !== null)
+			throw new PathException("Can only set HEAD to null");
+		$this->name = $name;
+	}}
 
 	public function getName(): ?string
 	{
@@ -97,7 +92,7 @@ class Path extends Route implements Reroutable
 	 */
 	public function appendName(string $name):self
 	{
-		return $this->appendPath(new self($name));
+		return $this->appendPath(new self()->setName($name));
 	}
 
 	/**
@@ -107,7 +102,7 @@ class Path extends Route implements Reroutable
 	 */
 	public function appendRoute(Route $route):self
 	{
-		$path = new self($route->getName());
+		$path = new self()->setName($route->getName());
 		$this->traverse($path, $route->getNext());
 		return $this->appendPath($path);
 	}
@@ -115,7 +110,7 @@ class Path extends Route implements Reroutable
 	private function traverse(Path $path, ?Route $route):void
 	{
 		if($route === null) return;
-		$path->next = new self($route->getName());
+		$path->next = new self()->setName($route->getName());
 		$this->traverse($path->next, $route->getNext());
 	}
 
