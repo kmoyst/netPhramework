@@ -29,7 +29,9 @@ class Navigator
 	 */
 	public function navigate():Node
 	{
-        return $this->traverse($this->root, $this->path);
+		if($this->path->getName() === null)
+			throw new NodeNotFound('Node Not Found: Empty Path');
+		return $this->traverse($this->root, $this->path);
 	}
 
 	/**
