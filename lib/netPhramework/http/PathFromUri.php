@@ -7,13 +7,13 @@ use netPhramework\routing\MutablePath;
 use netPhramework\routing\Path;
 use netPhramework\routing\PathFromArray;
 
-class PathFromUri extends MutablePath
+class PathFromUri extends Path
 {
 	private Path $path;
 
 	public function __construct(private readonly string $uri)
 	{
-		parent::__construct();
+		//parent::__construct();
 	}
 
 	/**
@@ -30,7 +30,7 @@ class PathFromUri extends MutablePath
 	 * @return Path|null
 	 * @throws InvalidUri
 	 */
-	public function getNext(): ?MutablePath
+	public function getNext(): ?Path
 	{
 		$this->parse();
 		return $this->path->getNext();
