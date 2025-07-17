@@ -8,6 +8,6 @@ readonly class RerouteToChild extends Rerouter
 {
 	public function reroute(Reroutable $path): void
 	{
-		$this->parseAndAppendSubPath($path->pop());
+		$this->parseAndAppendSubPath($path);
 	}
 }
