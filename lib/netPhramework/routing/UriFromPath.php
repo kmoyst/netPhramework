@@ -10,10 +10,9 @@ readonly class UriFromPath implements Stringable
 
 	public function get():string
 	{
-		$s = '/';
 		$names = [];
 		$this->traversePath($names, $this->path);
-		return $s.implode($s, $names);
+		return implode('/', $names);
 	}
 
 	private function traversePath(array &$names, ?Route $path):void

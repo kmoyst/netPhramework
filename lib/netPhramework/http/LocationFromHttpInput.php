@@ -11,8 +11,7 @@ class LocationFromHttpInput extends Location
 	protected(set) Path $path {get{
 		if(!isset($this->path))
 		{
-			$this->path = new Path();
-			$this->path->appendPath(new PathFromUri($this->input->uri));
+			$this->path = new PathFromUri($this->input->uri);
 		}
 		return $this->path;
 	}}
