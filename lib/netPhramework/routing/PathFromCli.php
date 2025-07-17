@@ -26,10 +26,10 @@ class PathFromCli extends Path
 				}
 				echo "\nRequesting node '$node'...\n\n";
 			} else {
-				$name = readline("Resource name? (blank for default): ");
+				$name = readline("Target node name? (blank for default): ");
 				$this->setName($name);
 				if ($name !== '')
-					echo "\nRequesting resource $name...\n\n";
+					echo "\nRequesting node $name...\n\n";
 				else
 					echo "\nRequesting default resource...\n\n";
 			}
@@ -39,7 +39,7 @@ class PathFromCli extends Path
 
 	private function getNodeNameFromUser():?string
 	{
-		$name = readline("Enter node or '.' to specify resource: ");
+		$name = readline("Enter parent node or '.' to specify target node: ");
 		if($name === '')
 		{
 			echo "Node cannot be empty\r\n";

@@ -19,7 +19,7 @@ class PathTest
 	)
 	{
 		$this->navigator = new Navigator()
-		//	->debugOn()
+//			->debugOn()
 		;
 	}
 
@@ -28,11 +28,12 @@ class PathTest
 		try {
 			$this->testNode = new TestNodeOne();
 			//$this->runAutoTests();
-			$this->fromCliTest();
+			//$this->fromCliTest();
 			//$this->fromCliAndUri();
 			//$this->fromUriAndCli();
-			//$this->fromCliAndArray();
+			$this->fromCliAndArray();
 			//$this->fromArrayAndCli();
+			//$this->fromCliAndCli();
 		} catch (PathException $e) {
 			echo $e->getMessage().PHP_EOL;
 		}
@@ -167,9 +168,22 @@ class PathTest
 	 */
 	private function fromCliAndArray():void
 	{
-		echo "\n\n Running fromCliAndArray test...\n";
+		echo "\n\n Running fromCliAndArray test...\n\n";
+		$route = $this->testNode->fromCli();
+		$route->debugOn = true;
+		$route->appendPath($this->testNode->fromArrayTail());
+		$this->subTest($route);
+	}
+
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function fromCliAndCli():void
+	{
+		echo "\n\n Running fromCliAndClitest...\n";
 		$route = $this->testNode->fromCli()
-			->appendPath($this->testNode->fromArrayTail());
+			->appendPath($this->testNode->fromCli());
 		$this->subTest($route);
 	}
 	/**
