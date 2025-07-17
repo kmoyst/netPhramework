@@ -21,19 +21,20 @@ class TestNodeOne implements TestNode
 		if(!isset($this->nodeOne))
 		{
 			$index	   = new Page('index')->asIndex();
-			$editPage  = new Page('edit');
-			$addPage   = new Page('add');
 			$browse	   = new Page('browse')->asIndex();
+			$editPage  = new Page('edit');
+			$editPageI = new Page('edit')->asIndex();
+			$addPage   = new Page('add');
 			$taxClaims = new Directory('tax-claims');
 			$ninety    = new Directory('90');
 			$fifty	   = new Directory('50');
 			$files     = new Directory('tax-claim-files');
 			$root	   = new Directory('');
 			$root->add($taxClaims)->add($index);
-			$taxClaims->add($browse)->add($ninety)->add($addPage);
-			$ninety->add($files)->add($editPage);
+			$taxClaims->add($ninety)->add($browse)->add($addPage);
+			$ninety->add($files)->add($editPage)->add($editPageI);
 			$files->add($fifty)->add($browse)->add($addPage);
-			$fifty->add($editPage)->add($editPage->asIndex());
+			$fifty->add($editPage)->add($editPageI);
 			$this->root = $root;
 		}
 		return $this->root;

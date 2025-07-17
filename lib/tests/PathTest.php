@@ -18,59 +18,160 @@ class PathTest
 	(
 	)
 	{
-		$this->navigator = new Navigator();
+		$this->navigator = new Navigator()
+		//	->debugOn()
+		;
 	}
 
 	public function run():void
 	{
 		try {
 			$this->testNode = new TestNodeOne();
-			echo "\n\n Running basic test...\n";
-			$route = $this->testNode->basePath();
-			$this->subTest($route);
-			echo "\n\n Running fromArray test...\n";
-			$route = $this->testNode->fromArray();
-			$this->subTest($route);
-			echo "\n\n Running fromUri test...\n";
-			$route = $this->testNode->fromUri();
-			$this->subTest($route);
-			echo "\n\n Running fromArrayAndArray test...\n";
-			$route = $this->testNode->fromArrayHead()
-				->appendPath($this->testNode->fromArrayTail());
-			$this->subTest($route);
-			echo "\n\n Running fromArrayAndUri test...\n";
-			$route = $this->testNode->fromArrayHead()
-				->appendPath($this->testNode->fromUriTail());
-			$this->subTest($route);
-			echo "\n\n Running fromUriAndUri test...\n";
-			$route = $this->testNode->fromUriHead()
-				->appendPath($this->testNode->fromUriTail());
-			$this->subTest($route);
-			echo "\n\n Running fromUriAndArray test...\n";
-			$route = $this->testNode->fromUriHead()
-				->appendPath($this->testNode->fromArrayTail());
-			$this->subTest($route);
-			echo "\n\n Running fromUriAndArray test...\n";
-			$route = $this->testNode->fromUriHead()
-				->appendPath($this->testNode->fromArrayTail());
-			$this->subTest($route);
-			echo "\n\n Running fromCli test...\n";
-			$route = $this->testNode->fromCli();
-			$this->subTest($route);
-			echo "\n\n Running fromUriAndCli test...\n";
-			$route = $this->testNode->fromUriHead()
-				->appendPath($this->testNode->fromCli());
-			$this->subTest($route);
-			echo "\n\n Running fromCliAndUri test...\n";
-			$route = $this->testNode->fromCli()
-				->appendPath($this->testNode->fromUriTail());
-			$this->subTest($route);
+			//$this->runAutoTests();
+			$this->fromCliTest();
+			//$this->fromCliAndUri();
+			//$this->fromUriAndCli();
+			//$this->fromCliAndArray();
+			//$this->fromArrayAndCli();
 		} catch (PathException $e) {
 			echo $e->getMessage().PHP_EOL;
 		}
-
 	}
 
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function runAutoTests():void
+	{
+		$this->basicTest();
+		$this->fromArray();
+		$this->fromUri();
+		$this->fromArrayAndArray();
+		$this->fromArrayAndUri();
+		$this->fromUriAndUri();
+		$this->fromUriAndArray();
+	}
+
+	private function basicTest():void
+	{
+		echo "\n\n Running basic test...\n";
+		$route = $this->testNode->basePath();
+		$this->subTest($route);
+	}
+
+	private function fromArray():void
+	{
+		echo "\n\n Running fromArray test...\n";
+		$route = $this->testNode->fromArray();
+		$this->subTest($route);
+	}
+
+	private function fromUri():void
+	{
+		echo "\n\n Running fromUri test...\n";
+		$route = $this->testNode->fromUri();
+		$this->subTest($route);
+	}
+
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function fromArrayAndArray():void
+	{
+		echo "\n\n Running fromArrayAndArray test...\n";
+		$route = $this->testNode->fromArrayHead()
+			->appendPath($this->testNode->fromArrayTail());
+		$this->subTest($route);
+	}
+
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function fromArrayAndUri():void
+	{
+		echo "\n\n Running fromArrayAndUri test...\n";
+		$route = $this->testNode->fromArrayHead()
+			->appendPath($this->testNode->fromUriTail());
+		$this->subTest($route);
+	}
+
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function fromUriAndUri():void
+	{
+		echo "\n\n Running fromUriAndUri test...\n";
+		$route = $this->testNode->fromUriHead()
+			->appendPath($this->testNode->fromUriTail());
+		$this->subTest($route);
+	}
+
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function fromUriAndArray():void
+	{
+		echo "\n\n Running fromUriAndArray test...\n";
+		$route = $this->testNode->fromUriHead()
+			->appendPath($this->testNode->fromArrayTail());
+		$this->subTest($route);
+	}
+
+	private function fromCliTest():void
+	{
+		 echo "\n\n Running fromCli test...\n";
+		 $route = $this->testNode->fromCli();
+		 $this->subTest($route);
+	}
+
+	private function fromUriAndCli():void
+	{
+		echo "\n\n Running fromUriAndCli test...\n";
+		$route = $this->testNode->fromUriHead()
+			->appendPath($this->testNode->fromCli());
+		$this->subTest($route);
+	}
+
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function fromCliAndUri():void
+	{
+		echo "\n\n Running fromCliAndUri test...\n";
+		$route = $this->testNode->fromCli()
+			->appendPath($this->testNode->fromUriTail());
+		$this->subTest($route);
+	}
+
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function fromArrayAndCli():void
+	{
+		echo "\n\n Running fromArrayAndCli test...\n";
+		$route = $this->testNode->fromArrayHead()
+			->appendPath($this->testNode->fromCli());
+		$this->subTest($route);
+	}
+
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	private function fromCliAndArray():void
+	{
+		echo "\n\n Running fromCliAndArray test...\n";
+		$route = $this->testNode->fromCli()
+			->appendPath($this->testNode->fromArrayTail());
+		$this->subTest($route);
+	}
 	/**
 	 * @param Route $route
 	 * @return void
