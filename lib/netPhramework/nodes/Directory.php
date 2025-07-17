@@ -2,17 +2,28 @@
 
 namespace netPhramework\nodes;
 
+use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\resources\Index;
 
 class Directory extends Composite
 {
 	protected string|Index $autoIndexer;
+	public readonly string $name;
 
+
+	/**
+	 * @throws Exception
+	 */
 	public function __construct(
-		public readonly string $name,
+		string $name,
 		protected ResourceSet $children = new ResourceSet()
-	) {}
+	)
+	{
+		if($name === '')
+			throw new Exception('Directory names cannot be null');
+		$this->name = $name;
+	}
 
 	public function add(Node $node):self
 	{
@@ -20,6 +31,9 @@ class Directory extends Composite
 		return $this;
 	}
 
+	/**
+	 * @return string
+	 */
 	public function getName(): string
 	{
 		return $this->name;

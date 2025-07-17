@@ -15,7 +15,7 @@ class Gateway
 		private readonly Application $application
 	)
 	{
-		$this->root = new Directory('');
+		$this->root = new Directory('root');
 	}
 
 	/**
