@@ -32,7 +32,6 @@ class PathFromCli extends Path
 					echo "\nRequesting resource $name...\n\n";
 				else
 					echo "\nRequesting default resource...\n\n";
-				//$this->setNext(null);
 			}
 		}
 		return parent::getName();
