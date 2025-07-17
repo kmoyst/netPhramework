@@ -25,6 +25,7 @@ class PathFromCli extends Path
 					$this->setNext($next);
 				} else {
 					$this->setNext(new PathFromCli());
+					//$this->appendPath(new PathFromCli());
 				}
 				echo "\nRequesting node '$node'...\n\n";
 			} else {

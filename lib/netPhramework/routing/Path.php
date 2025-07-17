@@ -71,7 +71,12 @@ class Path extends Route implements Reroutable
 	 */
 	public function appendPath(Path $tail):Path
 	{
-		if($this->next === null)
+		if($this->name === null)
+		{
+			$this->name = $tail->getName();
+			$this->next = $tail->getNext();
+		}
+		elseif($this->next === null)
 			$this->next = $tail;
 		else
 			$this->next->appendPath($tail);
