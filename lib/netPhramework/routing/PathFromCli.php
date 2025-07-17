@@ -26,6 +26,7 @@ class PathFromCli extends Path
 				 * cannot have an empty string as a name
 				 */
 				$this->setName($node);
+				$this->setNext(null);
 				return parent::getName();
 			}
 			else
@@ -41,8 +42,14 @@ class PathFromCli extends Path
 				$this->setName(array_shift($names));
 				if (!empty($names)) {
 					$next = new PathFromArray($names);
-					$next->appendPath(new PathFromCli());
 					$this->setNext($next);
+					/**
+					 * Very important
+					 * Don't append a CLI query if
+					 * there is a uri form entry with a trailing slash
+					 */
+					if($names[count($names)-1] !== '')
+						$next->appendPath(new PathFromCli());
 				} else {
 					$this->setNext(new PathFromCli());
 				}
