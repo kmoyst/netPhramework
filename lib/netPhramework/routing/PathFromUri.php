@@ -7,7 +7,6 @@ use netPhramework\exceptions\PathException;
 
 class PathFromUri extends Path
 {
-	//private ?Path $next;
 	private bool $isParsed = false;
 
 	public function __construct(private readonly string $uri) {}
@@ -30,8 +29,6 @@ class PathFromUri extends Path
 	{
 		$this->parse();
 		return parent::getNext();
-		//$next = $this->next->getNext();
-		//return $next ?: parent::getNext();
 	}
 
 	/**
