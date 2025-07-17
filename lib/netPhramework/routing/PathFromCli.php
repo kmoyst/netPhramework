@@ -23,16 +23,16 @@ class PathFromCli extends Path
 					$this->setNext($next);
 				} else {
 					$this->setNext(new PathFromCli());
-					//$this->appendPath(new PathFromCli());
 				}
 				echo "\nRequesting node '$node'...\n\n";
 			} else {
-				$this->setName(readline("Resource name? (blank for default): "));
-				if (parent::getName() !== '')
-					echo "\nRequesting resource '".parent::getName()."'...\n\n";
+				$name = readline("Resource name? (blank for default): ");
+				$this->setName($name);
+				if ($name !== '')
+					echo "\nRequesting resource $name...\n\n";
 				else
 					echo "\nRequesting default resource...\n\n";
-				$this->setNext(null);
+				//$this->setNext(null);
 			}
 		}
 		return parent::getName();

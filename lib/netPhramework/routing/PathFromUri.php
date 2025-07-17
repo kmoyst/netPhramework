@@ -7,7 +7,8 @@ use netPhramework\exceptions\PathException;
 
 class PathFromUri extends Path
 {
-	private bool $parsed = false;
+	//private ?Path $next;
+	private bool $isParsed = false;
 
 	public function __construct(private readonly string $uri) {}
 
@@ -29,6 +30,8 @@ class PathFromUri extends Path
 	{
 		$this->parse();
 		return parent::getNext();
+		//$next = $this->next->getNext();
+		//return $next ?: parent::getNext();
 	}
 
 	/**
@@ -40,7 +43,8 @@ class PathFromUri extends Path
 	public function appendPath(Path $tail): Path
 	{
 		$this->parse();
-		return parent::appendPath($tail);
+		parent::appendPath($tail);
+		return $this;
 	}
 
 	/**
@@ -49,13 +53,12 @@ class PathFromUri extends Path
 	 */
 	private function parse():void
 	{
-		if($this->parsed) return;
+		if($this->isParsed) return;
 		if(!preg_match('|^/([^?]*)|', $this->uri, $matches))
 			throw new InvalidUri("Invalid Uri: $this->uri");
 		$names = explode('/', $matches[1]);
 		$this->setName(array_shift($names));
-		if(count($names) >= 1)
-		$this->setNext(new PathFromArray($names));
-		$this->parsed = true;
+		$this->setNext(count($names) === 0 ? null : new PathFromArray($names));
+		$this->isParsed = true;
 	}
 }

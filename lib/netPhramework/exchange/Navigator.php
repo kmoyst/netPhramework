@@ -47,8 +47,9 @@ class Navigator
         if($route === null) return $node;
 		$name  = $route->getName();
 		if($this->debugMode) {
-			echo PHP_EOL."Search for $name...".PHP_EOL;
-			print_r($route);
+			echo "\n\nSearch for $name.......\n\n";
+			var_dump($route);
+			echo PHP_EOL.PHP_EOL;
 		}
         $child = $node->getChild($name);
 		$next  = $route->getNext();
