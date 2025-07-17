@@ -1,10 +1,8 @@
 <?php
 
-namespace netPhramework\http;
+namespace netPhramework\routing;
 
 use netPhramework\common\Variables;
-use netPhramework\routing\Location;
-use netPhramework\routing\Path;
 
 class LocationFromUri extends Location
 {

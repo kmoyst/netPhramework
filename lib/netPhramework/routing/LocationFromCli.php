@@ -1,10 +1,8 @@
 <?php
 
-namespace netPhramework\cli;
+namespace netPhramework\routing;
 
 use netPhramework\common\Variables;
-use netPhramework\routing\Location;
-use netPhramework\routing\Path;
 
 class LocationFromCli extends Location
 {
@@ -14,7 +12,7 @@ class LocationFromCli extends Location
 			$this->path = new PathFromCli();
 		}
 		return $this->path;
-	}set{}}
+	}}
 
 
 	protected(set) Variables $parameters {get{
@@ -23,5 +21,5 @@ class LocationFromCli extends Location
 			$this->parameters = new Variables();
 		}
 		return $this->parameters;
-	}set{}}
+	}}
 }

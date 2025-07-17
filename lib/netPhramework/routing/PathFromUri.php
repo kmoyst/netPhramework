@@ -1,11 +1,9 @@
 <?php
 
-namespace netPhramework\http;
+namespace netPhramework\routing;
 
 use netPhramework\exceptions\InvalidUri;
 use netPhramework\exceptions\PathException;
-use netPhramework\routing\Path;
-use netPhramework\routing\PathFromArray;
 
 class PathFromUri extends Path
 {

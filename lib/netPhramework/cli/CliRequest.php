@@ -5,6 +5,7 @@ namespace netPhramework\cli;
 use netPhramework\core\Environment;
 use netPhramework\exchange\Request;
 use netPhramework\routing\Location;
+use netPhramework\routing\LocationFromCli;
 
 class CliRequest implements Request
 {

@@ -4,6 +4,7 @@ namespace netPhramework\http;
 
 use netPhramework\exchange\Request;
 use netPhramework\routing\Location;
+use netPhramework\routing\LocationFromHttpInput;
 
 class HttpRequest implements Request
 {

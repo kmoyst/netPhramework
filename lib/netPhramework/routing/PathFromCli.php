@@ -1,10 +1,8 @@
 <?php
 
-namespace netPhramework\cli;
+namespace netPhramework\routing;
 
 use netPhramework\exceptions\PathException;
-use netPhramework\routing\Path;
-use netPhramework\routing\PathFromArray;
 
 class PathFromCli extends Path
 {

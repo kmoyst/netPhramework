@@ -10,13 +10,13 @@ class Location extends ReadableLocation
 		if(!isset($this->path))
 			$this->path = new Path();
 		return $this->path;
-	}set{}}
+	}}
 
 	protected(set) Variables $parameters {get{
 		if(!isset($this->parameters))
 			$this->parameters = new Variables();
 		return $this->parameters;
-	}set{}}
+	}}
 
 	public function getPath(): Path
 	{

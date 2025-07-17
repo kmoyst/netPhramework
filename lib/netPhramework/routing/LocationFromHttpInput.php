@@ -1,10 +1,9 @@
 <?php
 
-namespace netPhramework\http;
+namespace netPhramework\routing;
 
 use netPhramework\common\Variables;
-use netPhramework\routing\Location;
-use netPhramework\routing\Path;
+use netPhramework\http\HttpInput;
 
 class LocationFromHttpInput extends Location
 {
