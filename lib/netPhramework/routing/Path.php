@@ -57,12 +57,12 @@ class Path extends Route implements Reroutable
 	 */
 	public function pop():Path
 	{
-		if($this->name === null)
+		if($this->getName() === null)
 			return $this;
-		elseif($this->next === null)
-			$this->name = null;
-		elseif($this->next->next === null)
-			$this->next = null;
+		elseif($this->getNext() === null)
+			$this->setName(null);
+		elseif($this->getNext()->getNext() === null)
+			$this->setNext(null);
 		else
 			$this->next->pop();
 		return $this;
@@ -70,8 +70,8 @@ class Path extends Route implements Reroutable
 
 	public function clear():Path
 	{
-		$this->next = null;
-		$this->name = null;
+		$this->setName(null);
+		$this->setNext(null);
 		return $this;
 	}
 
@@ -90,13 +90,13 @@ class Path extends Route implements Reroutable
 		}
 		if($this->getName() === null)
 		{
-			$this->name = $tail->getName();
-			$this->next = $tail->getNext();
+			$this->setName($tail->getName());
+			$this->setNext($tail->getNext());
 		}
 		elseif($this->getNext() === null)
-			$this->next = $tail;
+			$this->setNext($tail);
 		else
-			$this->next->appendPath($tail);
+			$this->getNext()->appendPath($tail);
 		if($this->debugOn)
 		{
 			echo "\n\n***FINISHED APPENDING*** \n\n";
