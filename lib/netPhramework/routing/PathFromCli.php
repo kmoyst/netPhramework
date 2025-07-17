@@ -13,8 +13,30 @@ class PathFromCli extends Path
 	public function getName():?string
 	{
 		if (parent::getName() === null) {
-			if (($node = $this->getNodeNameFromUser()) !== null) {
-				$node = ltrim($node, '/ ');
+			$node = $this->getNodeNameFromUser();
+			if($node === null)
+			{
+				// this will bypass the current CLI and hands over to the base
+				return parent::getName();
+			}
+			elseif($node === '')
+			{
+				/**
+				 * This is interpreted as a resource (leaf) as nodes(composites)
+				 * cannot have an empty string as a name
+				 */
+				$this->setName($node);
+				return parent::getName();
+			}
+			else
+			{
+				/**
+				 * This will loop and build the request
+				 * until an empty string representing resource (leaf)
+				 * or a '.' signaling don't append anything
+				 */
+				echo "\nRequesting node '$node'...\n\n";
+				$node = ltrim($node, '/');
 				$names = explode('/', $node);
 				$this->setName(array_shift($names));
 				if (!empty($names)) {
@@ -24,14 +46,6 @@ class PathFromCli extends Path
 				} else {
 					$this->setNext(new PathFromCli());
 				}
-				echo "\nRequesting node '$node'...\n\n";
-			} else {
-				$name = readline("Target node name? (blank for default): ");
-				$this->setName($name);
-				if ($name !== '')
-					echo "\nRequesting node $name...\n\n";
-				else
-					echo "\nRequesting default resource...\n\n";
 			}
 		}
 		return parent::getName();
@@ -39,13 +53,7 @@ class PathFromCli extends Path
 
 	private function getNodeNameFromUser():?string
 	{
-		$name = readline("Enter parent node or '.' to specify target node: ");
-		if($name === '')
-		{
-			echo "Node cannot be empty\r\n";
-			return $this->getNodeNameFromUser();
-		}
-		elseif($name === '.') return null;
-		else return $name;
+		$name = readline("Enter node name or enter '.' to complete request: ");
+		return $name === '.' ? null : $name;
 	}
 }
