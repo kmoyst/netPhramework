@@ -12,7 +12,7 @@ readonly class UriFromPath implements Stringable
 	{
 		$names = [];
 		$this->traversePath($names, $this->path);
-		return implode('/', $names);
+		return '/'.implode('/', $names);
 	}
 
 	private function traversePath(array &$names, ?Route $path):void
