@@ -126,6 +126,7 @@ class Path extends Route implements Reroutable
 
 	public function __clone():void
 	{
-		if($this->next !== null) $this->next = clone $this->next;
+		if($this->next !== null)
+			$this->next = clone $this->next;
 	}
 }

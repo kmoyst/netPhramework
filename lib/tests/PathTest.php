@@ -27,11 +27,11 @@ class PathTest
 	{
 		try {
 			$this->testNode = new TestNodeOne();
-			//$this->runAutoTests();
+			$this->runAutoTests();
 			$this->fromCliTest();
 			//$this->fromCliAndUri();
 			//$this->fromUriAndCli();
-			$this->fromCliAndArray();
+			//$this->fromCliAndArray();
 			//$this->fromArrayAndCli();
 			//$this->fromCliAndCli();
 		} catch (PathException $e) {

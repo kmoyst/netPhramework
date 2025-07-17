@@ -29,7 +29,7 @@ class TestNodeOne implements TestNode
 			$ninety    = new Directory('90');
 			$fifty	   = new Directory('50');
 			$files     = new Directory('tax-claim-files');
-			$root	   = new Directory('');
+			$root	   = new Directory('root');
 			$root->add($taxClaims)->add($index);
 			$taxClaims->add($ninety)->add($browse)->add($addPage);
 			$ninety->add($files)->add($editPage)->add($editPageI);
