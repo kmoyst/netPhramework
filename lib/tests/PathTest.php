@@ -28,7 +28,7 @@ class PathTest
 		try {
 			$this->testNode = new TestNodeOne();
 			//$this->runAutoTests();
-			//$this->fromCliTest();
+			$this->fromCliTest();
 			//$this->fromCliAndUri();
 			//$this->fromUriAndCli();
 			$this->fromCliAndArray();
@@ -170,7 +170,7 @@ class PathTest
 	{
 		echo "\n\n Running fromCliAndArray test...\n\n";
 		$route = $this->testNode->fromCli();
-		$route->debugOn = true;
+		//$route->debugOn = true;
 		$route->appendPath($this->testNode->fromArrayTail());
 		$this->subTest($route);
 	}
