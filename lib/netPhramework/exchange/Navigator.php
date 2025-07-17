@@ -51,6 +51,8 @@ class Navigator
 			var_dump($route);
 			echo PHP_EOL.PHP_EOL;
 		}
+		if($name === null)
+			throw new NodeNotFound("Node name is null in navigator");
         $child = $node->getChild($name);
 		$next  = $route->getNext();
         return $this->traverse($child, $next);
