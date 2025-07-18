@@ -12,7 +12,7 @@ use netPhramework\exchange\Exchange;
 use netPhramework\nodes\Resource;
 use netPhramework\presentation\InputSet;
 use netPhramework\rendering\View;
-use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
 
 class EditProfile extends Resource
@@ -34,7 +34,7 @@ class EditProfile extends Resource
 	{
 		$user     	= $this->manager->findByUsername($exchange->session);
 		$profile  	= $user->profile;
-		$formAction = new ReroutedPath($exchange->path, $this->toSaveProfile);
+		$formAction = new PathReroute($exchange->path, $this->toSaveProfile);
 		$inputs   	= new InputSet();
 		$inputs
 			->textInput($profile->fields->firstName)

@@ -5,7 +5,7 @@ namespace netPhramework\user\resources;
 use netPhramework\user\LogInManager;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
-use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
@@ -26,8 +26,8 @@ class LogInPage extends Resource
     public function handleExchange(Exchange $exchange): void
     {
         $manager = new LogInManager();
-		$formAction = new ReroutedPath($exchange->path, $this->toAuthenticate);
-		$toForgot = new ReroutedPath($exchange->path, $this->toForgotPassword);
+		$formAction = new PathReroute($exchange->path, $this->toAuthenticate);
+		$toForgot = new PathReroute($exchange->path, $this->toForgotPassword);
         $feedbackView = new FeedbackView($exchange->session);
         $responseCode = $exchange->session->resolveResponseCode()
 		;

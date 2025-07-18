@@ -19,7 +19,7 @@ use netPhramework\presentation\HiddenInput;
 use netPhramework\presentation\PasswordInput;
 use netPhramework\rendering\View;
 use netPhramework\routing\redirectors\Redirector;
-use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
 
 class ChangePassword extends Resource
@@ -67,7 +67,7 @@ class ChangePassword extends Resource
 		$resetCode     = $recovery->resetCode;
 		$resetInput	   = new HiddenInput($resetField, $resetCode);
 		$passwordInput = new PasswordInput($recovery->getPasswordField());
-		$formAction	   = new ReroutedPath($exchange->path, $this->toSave);
+		$formAction	   = new PathReroute($exchange->path, $this->toSave);
 		$view = new View('change-password')
 			->add('resetCodeInput', $resetInput)
 			->add('passwordInput', $passwordInput)

@@ -5,7 +5,7 @@ namespace netPhramework\routing;
 use netPhramework\exceptions\PathException;
 use netPhramework\routing\rerouters\Rerouter;
 
-class ReroutedPath extends Path
+class PathReroute extends Path
 {
 	private bool $rerouted = false;
 

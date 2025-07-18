@@ -6,7 +6,7 @@ use netPhramework\exchange\Exchange;
 use netPhramework\nodes\Resource;
 use netPhramework\presentation\InputSet;
 use netPhramework\rendering\View;
-use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
 
 class EditPassword extends Resource
@@ -15,7 +15,7 @@ class EditPassword extends Resource
 
 	public function handleExchange(Exchange $exchange): void
 	{
-		$formAction = new ReroutedPath($exchange->path, $this->onSave);
+		$formAction = new PathReroute($exchange->path, $this->onSave);
 		$inputSet   = new InputSet();
 		$inputSet->passwordInput('current-password');
 		$inputSet->passwordInput('new-password');

@@ -10,7 +10,7 @@ use netPhramework\presentation\FeedbackView;
 use netPhramework\presentation\PasswordInput;
 use netPhramework\presentation\TextInput;
 use netPhramework\rendering\View;
-use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
 
 class Register extends AssetProcess
@@ -35,7 +35,7 @@ class Register extends AssetProcess
 		$user = $this->userManager->getUser($this->recordSet->newRecord())
 		;
 		$feedbackView  = new FeedbackView($exchange->session);
-		$formAction    = new ReroutedPath($exchange->path, $this->formAction);
+		$formAction    = new PathReroute($exchange->path, $this->formAction);
 		$usernameInput = new TextInput($user->fields->username);
 		$passwordInput = new PasswordInput($user->fields->password)
 		;

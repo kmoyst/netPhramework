@@ -17,7 +17,7 @@ use netPhramework\nodes\Resource;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
-use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
 
 class ViewProfile extends Resource
@@ -43,8 +43,8 @@ class ViewProfile extends Resource
 		$session 	  = $exchange->session;
 		$user   	  = $this->findUser($session->user);
 		$profile	  = $user->profile;
-		$editProfile  = new ReroutedPath($exchange->path, $this->toEditProfile);
-		$editPassword = new ReroutedPath($exchange->path, $this->toEditPassword)
+		$editProfile  = new PathReroute($exchange->path, $this->toEditProfile);
+		$editPassword = new PathReroute($exchange->path, $this->toEditPassword)
 		;
 		$manager = new ViewManager(new View('view-profile'), $user,);
 		$manager

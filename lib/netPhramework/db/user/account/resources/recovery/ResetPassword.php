@@ -8,7 +8,7 @@ use netPhramework\exchange\Exchange;
 use netPhramework\nodes\Resource;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
-use netPhramework\routing\ReroutedPath;
+use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
 
 class ResetPassword extends Resource
@@ -25,7 +25,7 @@ class ResetPassword extends Resource
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$formAction = new ReroutedPath($exchange->path, $this->toSendLink);
+		$formAction = new PathReroute($exchange->path, $this->toSendLink);
 		$feedback 	= new FeedbackView($exchange->session)
 		;
 		$inputName  = $this->manager->fields->username
