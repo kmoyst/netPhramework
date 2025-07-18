@@ -10,19 +10,14 @@ class Navigator
 {
 	private Node $root;
 	private Route $route;
-	private bool $debugMode = false;
-
-	public function debugOn(): Navigator
-	{
-		$this->debugMode = true;
-		return $this;
-	}
 
 	public function setRoot(Node $root): Navigator
 	{
 		$this->root = $root;
 		return $this;
 	}
+
+
 
 	public function setRoute(Route $route): self
 	{
@@ -46,13 +41,7 @@ class Navigator
     {
         if($route === null) return $node;
 		$name  = $route->getName();
-		if($this->debugMode) {
-			echo "\n\nSearch for $name.......\n\n";
-			var_dump($route);
-			echo PHP_EOL.PHP_EOL;
-		}
-		if($name === null)
-			throw new NodeNotFound("Node name is null in navigator");
+		if($name === null) return $node; // THIS IS WHAT NEEDED TO BE DONE
         $child = $node->getChild($name);
 		$next  = $route->getNext();
         return $this->traverse($child, $next);

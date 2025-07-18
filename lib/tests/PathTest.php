@@ -2,11 +2,9 @@
 
 namespace tests;
 
-use netPhramework\exceptions\InvalidUri;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exceptions\PathException;
 use netPhramework\exchange\Navigator;
-use netPhramework\nodes\Node;
 use netPhramework\routing\Route;
 
 class PathTest
@@ -29,11 +27,11 @@ class PathTest
 			$this->testNode = new TestNodeOne();
 			$this->runAutoTests();
 			$this->fromCliTest();
-			//$this->fromCliAndUri();
-			//$this->fromUriAndCli();
-			//$this->fromCliAndArray();
-			//$this->fromArrayAndCli();
-			//$this->fromCliAndCli();
+			$this->fromCliAndUri();
+			$this->fromUriAndCli();
+			$this->fromCliAndArray();
+			$this->fromArrayAndCli();
+			$this->fromCliAndCli();
 		} catch (PathException $e) {
 			echo $e->getMessage().PHP_EOL;
 		}
@@ -130,6 +128,10 @@ class PathTest
 		 $this->subTest($route);
 	}
 
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
 	private function fromUriAndCli():void
 	{
 		echo "\n\n Running fromUriAndCli test...\n";
