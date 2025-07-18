@@ -30,7 +30,7 @@ class Dispatcher
 	public function dispatch(Environment $environment):Response
 	{
 		$this->handler->handleExchange(
-			$this->exchange->setEnvironment($environment));
+			$this->exchange->setEnvironment($environment)->ignite());
 		return $this->exchange->response;
 	}
 }

@@ -9,10 +9,11 @@ readonly class SmtpServer
 	private StreamSocket $socket;
 	private string $serverName;
 
-	public function initialize(Environment $environment):void
+	public function initialize(Environment $environment):self
 	{
 		$this->socket = new StreamSocket($environment->smtpServerAddress);
 		$this->serverName = $environment->smtpServerName;
+		return $this;
 	}
 
 	/**

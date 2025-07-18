@@ -61,7 +61,12 @@ class Exchange implements CallbackContext
 	(
 		private(set) Location $location,
 	)
+	{}
+
+	public function ignite():self
 	{
+		$this->smtpServer->initialize($this->environment);
+		return $this;
 	}
 
 	/**
