@@ -77,7 +77,6 @@ class CliResponder implements Responder
 	 */
 	private function newQuery():void
 	{
-		echo "\n\n!!! NEW QUERY !!!\n\n";
 		$request = new CliRequest($this->environment);
 		new Gateway($this->application)
 			->mapToRouter($request->isModificationRequest)
