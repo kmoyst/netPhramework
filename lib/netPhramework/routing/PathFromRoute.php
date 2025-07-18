@@ -2,28 +2,21 @@
 
 namespace netPhramework\routing;
 
-class PathFromRoute extends Path
+use netPhramework\exceptions\PathException;
+
+class PathFromRoute extends PathTemplate
 {
 	public function __construct(private readonly Route $route) {}
 
-	public function getName(): ?string
+	/**
+	 * @return void
+	 * @throws PathException
+	 */
+	protected function parse():void
 	{
-		if(parent::getName() === null)
-			$this->setName($this->route->getName());
-		return parent::getName();
-	}
-
-	public function getNext(): ?Path
-	{
-		if(parent::getNext() === null)
-		{
-			$nextRoute = $this->route->getNext();
-			if($nextRoute !== null) {
-				$nextPath  = new Path()->setName($nextRoute->getName());
-				$nextPath->setNext($nextRoute->getNext());
-				$this->setNext($nextPath);
-			}
+		$this->setName($this->route->getName());
+		if(($nextRoute = $this->route->getNext()) !== null) {
+			$this->appendRoute($nextRoute);
 		}
-		return parent::getNext();
 	}
 }

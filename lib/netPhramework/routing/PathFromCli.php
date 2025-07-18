@@ -4,61 +4,32 @@ namespace netPhramework\routing;
 
 use netPhramework\exceptions\PathException;
 
-class PathFromCli extends Path
+class PathFromCli extends PathTemplate
 {
-	private bool $allInputReceived = false;
-
 	/**
-	 * @return string|null
+	 * @throws PathException
 	 */
-	public function getName():?string
+	protected function parse():void
 	{
-		$this->receiveInput();
-		return parent::getName();
-	}
-
-	public function getNext(): ?Path
-	{
-		$this->receiveInput();
-		return parent::getNext();
-	}
-
-	public function pop(): Path
-	{
-		$this->receiveInput();
-		return parent::pop();
-	}
-
-	public function appendPath(Path $tail): Path
-	{
-		$this->receiveInput();
-		return parent::appendPath($tail);
-	}
-
-
-	private function receiveInput():void
-	{
-		$name = $this->query();
-		if($name === '')
+		if(($name = $this->query()) === '')
 		{
 			/**
 			 * This is interpreted as a resource (leaf) as nodes(composites)
 			 * cannot have an empty string as a name
 			 */
-			$this->setName($node);
+			$this->setName($name);
 			$this->setNext(null);
-			return parent::getName();
 		}
-		elseif($node !== null)
+		elseif($name !== null)
 		{
 			/**
 			 * This will loop and build the request
 			 * until an empty string representing resource (leaf)
 			 * or a '.' signaling don't append anything
 			 */
-			echo "\nRequesting node '$node'...\n\n";
-			$node = ltrim($node, '/');
-			$names = explode('/', $node);
+			echo "\nRequesting node '$name'...\n\n";
+			$trimmed = ltrim($name, '/');
+			$names = explode('/', $trimmed);
 			$this->setName(array_shift($names));
 			if (!empty($names)) {
 				$next = new PathFromArray($names);
@@ -67,13 +38,15 @@ class PathFromCli extends Path
 				 * Very important
 				 * Don't append a CLI query if
 				 * there is a uri form entry with a trailing slash
+				 * - that indicates the user requested a resource (leaf)
 				 */
 				if($names[count($names)-1] !== '')
 					$next->appendPath(new PathFromCli());
 			} else {
 				$this->setNext(new PathFromCli());
 			}
-		} // otherwise, leave next alone
+		}
+		// if null is returned, don't do anything
 	}
 
 	private function query():?string
