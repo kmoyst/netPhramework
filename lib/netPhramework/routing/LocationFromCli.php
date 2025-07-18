@@ -9,7 +9,6 @@ class LocationFromCli extends Location
 	public Path $path {get{
 		if(!isset($this->path))
 		{
-			echo "\n\n!!! Making a new Path FROM CLI!!!\n\n";
 			$this->path = new PathFromCli();
 		}
 		return $this->path;
