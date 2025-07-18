@@ -61,7 +61,7 @@ class CliResponder implements Responder
 	public function redirect(Location $location, ResponseCode $code): void
 	{
 		$feedback = $this->services->session->getFeedbackAndClear();
-		echo $feedback ?? "ACTION WAS RUN";
+		if($feedback !== null) echo "\n\n$feedback\n\n";
 		$this->newQuery();
 	}
 
@@ -72,6 +72,9 @@ class CliResponder implements Responder
 	 */
 	private function newQuery():void
 	{
+		$question  = "\n\nWould you like to make another request?\n";
+		$question .= "(q to quit, any other key to continue): ";
+		if(readline($question) === 'q') exit(0);
 		$request = new CliRequest($this->environment);
 		new Gateway($this->application)
 			->mapToRouter($request->isModificationRequest)

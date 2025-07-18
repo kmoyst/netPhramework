@@ -18,7 +18,7 @@ class CliRequest implements Request
 	}}
 
 	public bool $isModificationRequest {get{
-		$question = "\n\nIs this a modification request? [Y/n: default n] ";
+		$question = "\n\nIs this a MODIFICATION request? [Y/n: default n] ";
 		return readline($question) === 'Y';
 	}}
 
