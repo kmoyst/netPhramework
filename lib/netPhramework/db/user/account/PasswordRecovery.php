@@ -19,18 +19,12 @@ use Random\RandomException;
 class PasswordRecovery
 {
 	private ?User $user;
-	private(set) ?string $resetCode {
-		get{
-			return $this->user->record->getValue($this->getResetField());
-		}
-		set{}
-	}
-	private(set) ?string $resetTime {
-		get{
-			return $this->user->record->getValue($this->getResetTimeField());
-		}
-		set{}
-	}
+	public ?string $resetCode {get{
+		return $this->user->record->getValue($this->getResetField());
+	}}
+	public ?string $resetTime {get{
+		return $this->user->record->getValue($this->getResetTimeField());
+	}}
 
 	public function __construct
 	(

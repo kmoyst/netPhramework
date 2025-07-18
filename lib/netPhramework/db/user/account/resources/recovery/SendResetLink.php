@@ -30,16 +30,9 @@ class SendResetLink extends Resource
 	private Redirector $afterProcess;
 	private UserManager $manager;
 
-	private string $defaultMessage {
-		get{
-			$message   = [];
-			$message[] = 'Check your email.';
-			$message[] = 'If your account exists and has an email address,';
-			$message[] = 'a reset link has been sent';
-			return implode(' ', $message);
-		}
-		set{}
-	}
+	private const string DEFAULT_MESSAGE =
+		'Check your email. If your account exists and 
+		has an email address, a reset link has been sent';
 
 	public function __construct() {}
 
@@ -63,12 +56,12 @@ class SendResetLink extends Resource
 			$recovery->setUser($user)->newResetCode()->save();
 			$this->sendEmail($user->profile, $exchange, $recovery->resetCode);
 			$exchange->session
-				->addFeedbackMessage($this->defaultMessage)
+				->addFeedbackMessage(self::DEFAULT_MESSAGE)
 				->setFeedbackCode(ResponseCode::OK);
 		} catch (RecordNotFound) {
 			usleep(random_int(10000,30000)); // to confuse attackers
 			$exchange->session
-				->addFeedbackMessage($this->defaultMessage)
+				->addFeedbackMessage(self::DEFAULT_MESSAGE)
 				->setFeedbackCode(ResponseCode::OK);
 		}
 		$exchange->redirect($this->afterProcess);

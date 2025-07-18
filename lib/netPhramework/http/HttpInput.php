@@ -4,17 +4,17 @@ namespace netPhramework\http;
 
 class HttpInput
 {
-	private(set) string $uri {get{
+	public string $uri {get{
 		return filter_input(INPUT_SERVER, 'REQUEST_URI');
-	}set{}}
+	}}
 
-	private(set) ?array $postParameters {get{
+	public ?array $postParameters {get{
 		return filter_input_array(INPUT_POST);
-	}set{}}
+	}}
 
-	private(set) ?array $getParameters {get{
+	public ?array $getParameters {get{
 		return filter_input_array(INPUT_GET);
-	}set{}}
+	}}
 
 	public function hasPostParameters():bool
 	{

@@ -12,11 +12,11 @@ class HttpRequest implements Request
 		if(!isset($this->location))
 			$this->location = new LocationFromHttpInput($this->input);
 		return $this->location;
-	}set{}}
+	}}
 
-	private(set) bool $isModificationRequest {get{
+	public bool $isModificationRequest {get{
 		return $this->input->hasPostParameters();
-	}set{}}
+	}}
 
 	public function __construct
 	(

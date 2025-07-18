@@ -27,14 +27,4 @@ class Redirection extends Location implements Redirectable, Response
 	{
 		$responder->redirect($this, $this->code);
 	}
-
-	public function getPath(): Path
-	{
-		return $this->path;
-	}
-
-	public function getParameters(): Variables
-	{
-		return $this->parameters;
-	}
 }

@@ -33,7 +33,6 @@ class User implements \netPhramework\user\User
 				$this->profile = new UserProfile($this->record, $this->fields);
 			return $this->profile;
 		}
-		set{}
 	}
 
 	public function __construct(

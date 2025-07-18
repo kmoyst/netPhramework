@@ -7,7 +7,6 @@ use netPhramework\core\Environment;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\Services;
-use netPhramework\http\HttpServices;
 
 class CliContext implements Context
 {
@@ -21,19 +20,19 @@ class CliContext implements Context
 		}
 		fclose($dotenv);
 		return $environment;
-	} set{}}
+	}}
 
 	protected(set) Request $request {get{
 		return new CliRequest($this->environment);
-	} set{}}
+	}}
 
 	protected(set) Responder $responder{get{
 		return new CliResponder();
-	} set{}}
+	}}
 
 	protected(set) Services $services{get{
 		return new CliServices();
-	} set{}}
+	}}
 
 	public function configureResponder(Responder $responder):void
 	{

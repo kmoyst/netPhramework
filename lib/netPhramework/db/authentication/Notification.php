@@ -8,10 +8,10 @@ use netPhramework\transferring\EmailDelivery;
 use netPhramework\transferring\EmailException;
 use netPhramework\transferring\StreamSocketException;
 
-class Notification
+readonly class Notification
 {
 
-	public function __construct(private readonly NotificationInfo $info) {}
+	public function __construct(private NotificationInfo $info) {}
 	/**
 	 * @param Exchange $exchange
 	 * @return void
@@ -21,7 +21,8 @@ class Notification
 	 */
 	public function notify(Exchange $exchange):void
 	{
-		new EmailDelivery($exchange->smtpServer)
+		new EmailDelivery()
+			->setServer($exchange->smtpServer)
 			->setRecipient($this->info->recipient)
 			->setRecipientName($this->info->recipientName)
 			->setSender($this->info->sender)

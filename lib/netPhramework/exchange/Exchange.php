@@ -24,38 +24,32 @@ use netPhramework\transferring\SmtpServer;
 
 class Exchange implements CallbackContext
 {
-	private(set) Variables $parameters {
-		get { return clone $this->location->getParameters(); }
-		set {}
-	}
-
-	private(set) Path $path {
-		get { return clone $this->location->path; }
-		set {}
-	}
-
-	private(set) string $siteAddress {
-		get { return $this->environment->siteAddress; }
-		set {}
-	}
-
-	private(set) string $siteHost {
-		get{ return $this->environment->siteHost; }
-		set{}
-	}
-
-	private(set) string $callbackKey {
-		get { return $this->callbackManager->callbackKey; }
-		set {}
-	}
-
 	private(set) Response $response;
-
 	private(set) Session $session;
 	private(set) FileManager $fileManager;
 	private(set) CallbackManager $callbackManager;
 	private(set) SmtpServer $smtpServer;
 	private(set) Environment $environment;
+
+	public Variables $parameters {get{
+		return clone $this->location->getParameters();
+	}}
+
+	public Path $path {get{
+		return clone $this->location->path;
+	}}
+
+	public string $siteAddress {get{
+		return $this->environment->siteAddress;
+	}}
+
+	public string $siteHost {get{
+		return $this->environment->siteHost;
+	}}
+
+	public string $callbackKey {get{
+		return $this->callbackManager->callbackKey;
+	}}
 
 	public function __construct
 	(
@@ -63,7 +57,7 @@ class Exchange implements CallbackContext
 	)
 	{}
 
-	public function ignite():self
+	public function initialize():self
 	{
 		$this->smtpServer->initialize($this->environment);
 		return $this;

@@ -15,28 +15,17 @@ class LocationFromHttpInput extends Location
 		return $this->path;
 	}}
 
-	protected(set) Variables $parameters {
-		get{
-			if(!isset($this->parameters))
-			{
-				$this->parameters = new Variables();
-				if(!$this->input->hasPostParameters())
-					$this->parameters->merge($this->input->getParameters ?? []);
-				else
-					$this->parameters->merge($this->input->postParameters);
-			}
-			return $this->parameters;
+	protected(set) Variables $parameters {get{
+		if(!isset($this->parameters))
+		{
+			$this->parameters = new Variables();
+			if(!$this->input->hasPostParameters())
+				$this->parameters->merge($this->input->getParameters ?? []);
+			else
+				$this->parameters->merge($this->input->postParameters);
 		}
-		set{}
-	}
+		return $this->parameters;
+	}}
 
 	public function __construct(private readonly HttpInput $input) {}
-
-	public function __clone():void
-	{
-		if(isset($this->path))
-			$this->path = clone $this->path;
-		if(isset($this->parameters))
-			$this->parameters = clone $this->parameters;
-	}
 }

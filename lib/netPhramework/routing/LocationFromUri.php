@@ -15,22 +15,12 @@ class LocationFromUri extends Location
 		return $this->path;
 	}}
 
-	protected(set) Variables $parameters {
-		get{
-			if(!isset($this->parameters))
-				$this->parameters =
-					new VariablesFromUri($this->uri)->get();
-			return $this->parameters;
-		}
-	}
+	protected(set) Variables $parameters {get{
+		if(!isset($this->parameters))
+			$this->parameters =
+				new VariablesFromUri($this->uri)->get();
+		return $this->parameters;
+	}}
 
 	public function __construct(private readonly string $uri) {}
-
-	public function __clone():void
-	{
-		if(isset($this->path))
-			$this->path = clone $this->path;
-		if(isset($this->parameters))
-			$this->parameters = clone $this->parameters;
-	}
 }

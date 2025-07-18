@@ -11,8 +11,11 @@ readonly class SmtpServer
 
 	public function initialize(Environment $environment):self
 	{
-		$this->socket = new StreamSocket($environment->smtpServerAddress);
-		$this->serverName = $environment->smtpServerName;
+		if(!isset($this->socket))
+		{
+			$this->socket = new StreamSocket($environment->smtpServerAddress);
+			$this->serverName = $environment->smtpServerName;
+		}
 		return $this;
 	}
 

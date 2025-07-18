@@ -12,7 +12,7 @@ class LocationFromCli extends Location
 			$this->path = new PathFromCli();
 		}
 		return $this->path;
-	}set{}}
+	}}
 
 
 	protected(set) Variables $parameters {get{
@@ -21,5 +21,5 @@ class LocationFromCli extends Location
 			$this->parameters = new Variables();
 		}
 		return $this->parameters;
-	}set{}}
+	}}
 }
