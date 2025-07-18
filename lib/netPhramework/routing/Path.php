@@ -8,25 +8,14 @@ class Path extends Route implements Reroutable
 {
 	private ?string $name = null;
 	private ?Path $next = null;
-	public bool $debugOn = false;
 
 	public function getName(): ?string
 	{
-		if($this->debugOn)
-		{
-			ob_start(); var_dump($this);
-			echo "\n\nGET NAME RUN ON...\n\n".ob_get_clean()."\n\n";
-		}
 		return $this->name;
 	}
 
 	public function getNext(): ?Path
 	{
-		if($this->debugOn)
-		{
-			ob_start(); var_dump($this);
-			echo "\n\nGET NEXT RUN ON...\n\n".ob_get_clean()."\n\n";
-		}
 		return $this->next;
 	}
 
@@ -82,12 +71,6 @@ class Path extends Route implements Reroutable
 	 */
 	public function appendPath(Path $tail):Path
 	{
-		if($this->debugOn)
-		{
-			ob_start();
-			var_dump($tail);
-			echo "\n\nAPPENDING \n\n".ob_get_clean()."\n\n";
-		}
 		if($this->getName() === null)
 		{
 			$this->setName($tail->getName());
@@ -97,10 +80,6 @@ class Path extends Route implements Reroutable
 			$this->setNext($tail);
 		else
 			$this->getNext()->appendPath($tail);
-		if($this->debugOn)
-		{
-			echo "\n\n***FINISHED APPENDING*** \n\n";
-		}
 		return $this;
 	}
 
