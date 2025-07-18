@@ -32,7 +32,7 @@ class CliContext implements Context
 	} set{}}
 
 	protected(set) Services $services{get{
-		return new HttpServices();
+		return new CliServices();
 	} set{}}
 
 	public function configureResponder(Responder $responder):void
