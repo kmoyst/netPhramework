@@ -7,10 +7,12 @@ use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
 
-interface Services
+readonly class Services
 {
-	public Session         $session 		{get;}
-	public FileManager     $fileManager 	{get;}
-	public CallbackManager $callbackManager {get;}
-	public SmtpServer      $smtpServer 		{get;}
+	public function __construct(
+		public Session         $session,
+		public FileManager     $fileManager,
+		public CallbackManager $callbackManager,
+		public SmtpServer      $smtpServer,
+	) {}
 }

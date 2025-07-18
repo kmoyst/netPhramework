@@ -57,12 +57,6 @@ class Exchange implements CallbackContext
 	)
 	{}
 
-	public function initialize():self
-	{
-		$this->smtpServer->initialize($this->environment);
-		return $this;
-	}
-
 	/**
 	 * @param Redirector $fallback
 	 * @return Variables

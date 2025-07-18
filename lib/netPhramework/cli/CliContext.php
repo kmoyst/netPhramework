@@ -7,6 +7,10 @@ use netPhramework\core\Environment;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\Services;
+use netPhramework\routing\CallbackManager;
+use netPhramework\transferring\FileManager;
+use netPhramework\transferring\SmtpServer;
+use netPhramework\user\Session;
 
 class CliContext implements Context
 {
@@ -33,7 +37,12 @@ class CliContext implements Context
 	}}
 
 	public Services $services{get{
-		return new CliServices();
+		return new Services(
+			new Session(),
+			new FileManager(),
+			new CallbackManager(),
+			new SmtpServer($this->environment)
+		);
 	}}
 
 	public function configureResponder(Responder $responder):void

@@ -30,7 +30,7 @@ class Action
 	public function execute(Environment $environment):Response
 	{
 		$this->handler->handleExchange(
-			$this->exchange->setEnvironment($environment)->initialize());
+			$this->exchange->setEnvironment($environment));
 		return $this->exchange->response;
 	}
 }
