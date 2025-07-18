@@ -64,7 +64,7 @@ class CliResponder implements Responder
 			->mapToRouter(false)
 			->route($location)
 			->openExchange($this->services)
-			->dispatch($this->environment)
+			->execute($this->environment)
 			->deliver($this)
 		;
 		$this->newQuery();
@@ -82,7 +82,7 @@ class CliResponder implements Responder
 			->mapToRouter($request->isModificationRequest)
 			->route($request->location)
 			->openExchange($this->services)
-			->dispatch($this->environment)
+			->execute($this->environment)
 			->deliver($this);
 	}
 
