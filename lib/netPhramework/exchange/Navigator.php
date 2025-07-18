@@ -17,8 +17,6 @@ class Navigator
 		return $this;
 	}
 
-
-
 	public function setRoute(Route $route): self
 	{
 		$this->route = $route;
@@ -39,6 +37,7 @@ class Navigator
 	 */
     private function traverse(Node $node, ?Route $route):Node
     {
+//		var_dump($route);
         if($route === null) return $node;
 		$name  = $route->getName();
 		if($name === null) return $node; // THIS IS WHAT NEEDED TO BE DONE

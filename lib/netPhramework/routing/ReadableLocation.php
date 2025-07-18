@@ -13,6 +13,10 @@ use Stringable;
  */
 abstract class ReadableLocation implements Encodable
 {
+	abstract public Route $path {get;}
+
+	abstract public iterable $parameters {get;}
+
 	public function encode(Encoder $encoder):string|Stringable
 	{
 		return $encoder->encodeLocation($this);

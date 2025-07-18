@@ -71,7 +71,7 @@ class Path extends Route implements Reroutable
 	 */
 	public function appendPath(Path $tail):Path
 	{
-		if($this->getName() === null)
+		if($this->name === null)
 		{
 			$this->setName($tail->getName());
 			$this->setNext($tail->getNext());
@@ -105,7 +105,7 @@ class Path extends Route implements Reroutable
 
 	public function __clone():void
 	{
-		if($this->next !== null)
+		if(isset($this->next))
 			$this->next = clone $this->next;
 	}
 }

@@ -10,7 +10,7 @@ use netPhramework\exchange\Services;
 
 class CliContext implements Context
 {
-	protected(set) Environment $environment {get{
+	public Environment $environment {get{
 		$environment = new CliEnvironment();
 		$dotenv = fopen('dotenv', 'r');
 		while($line = fgets($dotenv))
@@ -22,15 +22,17 @@ class CliContext implements Context
 		return $environment;
 	}}
 
-	protected(set) Request $request {get{
-		return new CliRequest($this->environment);
+	private(set) Request $request {get{
+		if(!isset($this->request))
+			$this->request = new CliRequest($this->environment);
+		return $this->request;
 	}}
 
-	protected(set) Responder $responder{get{
+	public Responder $responder{get{
 		return new CliResponder();
 	}}
 
-	protected(set) Services $services{get{
+	public Services $services{get{
 		return new CliServices();
 	}}
 
