@@ -2,38 +2,35 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\core\Site;
-use netPhramework\exceptions\Exception;
+use netPhramework\core\Environment;
+use netPhramework\nodes\Node;
 use netPhramework\routing\Location;
 
-abstract class Dispatcher
+class Dispatcher
 {
-	protected Site $site;
-	protected Location $location;
-	protected Router $router;
+	private Exchange $exchange;
 
-	public function setSite(Site $site): self
+	public function __construct
+	(
+		private readonly Node $handler,
+		private readonly Location $location
+	) {}
+
+	public function openExchange(Services $services):self
 	{
-		$this->site = $site;
+		$this->exchange = new Exchange($this->location)
+			->setSession($services->session)
+			->setFileManager($services->fileManager)
+			->setSmtpServer($services->smtpServer)
+			->setCallbackManager($services->callbackManager)
+			;
 		return $this;
 	}
 
-	public function setLocation(Location $location): self
+	public function dispatch(Environment $environment):Response
 	{
-		$this->location = $location;
-		return $this;
+		$this->handler->handleExchange(
+			$this->exchange->setEnvironment($environment)->ignite());
+		return $this->exchange->response;
 	}
-
-	public function prepare():self
-	{
-		$application = $this->site->getApplication();
-		$this->router = new Router($application);
-		return $this;
-	}
-
-	/**
-	 * @return Router
-	 * @throws Exception
-	 */
-	abstract public function dispatch():Router;
 }

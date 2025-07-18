@@ -8,12 +8,12 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\presentation\recordForm\RecordFormBuilder;
 use netPhramework\db\presentation\recordForm\RecordFormStrategy;
 use netPhramework\db\presentation\recordForm\RecordFormStrategyBasic;
-use netPhramework\db\nodes\RecordSetProcess;
+use netPhramework\db\nodes\AssetProcess;
 use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\View;
 
-class Add extends RecordSetProcess
+class Add extends AssetProcess
 {
 	public function __construct(
 		protected readonly ?RecordFormStrategy $formStrategy = null)

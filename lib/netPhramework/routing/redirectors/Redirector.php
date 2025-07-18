@@ -20,6 +20,7 @@ class Redirector extends Resource
 	/**
 	 * @param Redirectable $redirectable
 	 * @return void
+	 * @throws PathException
 	 */
 	public function redirect(Redirectable $redirectable):void
 	{

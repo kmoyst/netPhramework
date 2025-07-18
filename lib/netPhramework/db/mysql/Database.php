@@ -3,6 +3,7 @@
 namespace netPhramework\db\mysql;
 
 use netPhramework\db\exceptions\MysqlException;
+use netPhramework\db\mysql\queries\ShowTables;
 
 class Database implements \netPhramework\db\abstraction\Database
 {
@@ -10,7 +11,7 @@ class Database implements \netPhramework\db\abstraction\Database
 	private array $tables = [];
     private array $tableList;
 
-    public function __construct(private readonly Adapter $adapter) {}
+    public function __construct(private readonly Connection $adapter) {}
 
 	public function getSchema(string $name):Schema
 	{
@@ -35,7 +36,7 @@ class Database implements \netPhramework\db\abstraction\Database
         if(!isset($this->tableNames))
         {
             $names = [];
-            foreach($this->adapter->runQuery(new TablesQuery())->fetchAll()
+            foreach($this->adapter->runQuery(new ShowTables())->fetchAll()
                     as $t) $names[] = array_pop($t);
             $this->tableList = $names;
         }

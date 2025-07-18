@@ -8,7 +8,8 @@ use netPhramework\db\exceptions\FieldAbsent;
 use netPhramework\db\exceptions\ValueInaccessible;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\exceptions\Exception;
-use netPhramework\routing\MutablePath;
+use netPhramework\exceptions\PathException;
+use netPhramework\routing\Path;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Viewable;
 
@@ -18,7 +19,7 @@ class Row extends Viewable
 		private readonly ColumnSet $columnSet,
 		private readonly Record $record,
 		private readonly Encodable $callbackInput,
-		private readonly MutablePath $assetPath
+		private readonly Path $assetPath
 	) {}
 
 	public function getTemplateName(): string
@@ -59,6 +60,7 @@ class Row extends Viewable
 
 	/**
 	 * @return iterable
+	 * @throws PathException
 	 */
 	public function getVariables(): iterable
 	{

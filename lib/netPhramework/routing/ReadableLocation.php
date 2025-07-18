@@ -19,11 +19,11 @@ abstract class ReadableLocation implements Encodable
 	}
 
 	/**
-	 * Returns a readable MutablePath.
+	 * Returns a readable Path.
 	 *
-	 * @return Path
+	 * @return Route
 	 */
-    abstract public function getPath():Path;
+    abstract public function getPath():Route;
 
 	/**
 	 * Returns parameters for iteration.

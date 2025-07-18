@@ -2,7 +2,7 @@
 
 namespace netPhramework\presentation;
 
-use netPhramework\authentication\Session;
+use netPhramework\user\Session;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;

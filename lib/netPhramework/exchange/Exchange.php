@@ -2,12 +2,11 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\authentication\Session;
-use netPhramework\bootstrap\Environment;
-use netPhramework\common\Variables;
-use netPhramework\core\Site;
-use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;
+use netPhramework\user\Session;
+use netPhramework\common\Variables;
+use netPhramework\core\Environment;
+use netPhramework\exceptions\Exception;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Presentation;
@@ -15,7 +14,7 @@ use netPhramework\rendering\View;
 use netPhramework\routing\CallbackContext;
 use netPhramework\routing\CallbackManager;
 use netPhramework\routing\Location;
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Path;
 use netPhramework\routing\Redirection;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\transferring\File;
@@ -30,14 +29,19 @@ class Exchange implements CallbackContext
 		set {}
 	}
 
-	private(set) MutablePath $path {
-		get { return clone $this->location->getPath(); }
+	private(set) Path $path {
+		get { return clone $this->location->path; }
 		set {}
 	}
 
 	private(set) string $siteAddress {
 		get { return $this->environment->siteAddress; }
 		set {}
+	}
+
+	private(set) string $siteHost {
+		get{ return $this->environment->siteHost; }
+		set{}
 	}
 
 	private(set) string $callbackKey {
@@ -47,23 +51,22 @@ class Exchange implements CallbackContext
 
 	private(set) Response $response;
 
-	public readonly Session $session;
-	public readonly FileManager $fileManager;
-	public readonly Environment $environment;
-	public readonly CallbackManager $callbackManager;
-	public readonly SmtpServer $smtpServer;
+	private(set) Session $session;
+	private(set) FileManager $fileManager;
+	private(set) CallbackManager $callbackManager;
+	private(set) SmtpServer $smtpServer;
+	private(set) Environment $environment;
 
 	public function __construct
 	(
-		public readonly Location $location,
-		Site $site
+		private(set) Location $location,
 	)
+	{}
+
+	public function ignite():self
 	{
-		$this->session 			= $site->session;
-		$this->fileManager 		= $site->fileManager;
-		$this->environment 		= $site->environment;
-		$this->callbackManager 	= $site->callbackManager;
-		$this->smtpServer		= $site->smtpServer;
+		$this->smtpServer->initialize($this->environment);
+		return $this;
 	}
 
 	/**
@@ -144,4 +147,42 @@ class Exchange implements CallbackContext
 		if($chain) return clone $this->location;
 		return $this->callbackManager->getLink(clone $this->location);
 	}
+
+	public function setEnvironment(Environment $environment): self
+	{
+		$this->environment = $environment;
+		return $this;
+	}
+
+	public function setLocation(Location $location): self
+	{
+		$this->location = $location;
+		return $this;
+	}
+
+	public function setCallbackManager(CallbackManager $callbackManager): self
+	{
+		$this->callbackManager = $callbackManager;
+		return $this;
+	}
+
+	public function setFileManager(FileManager $fileManager): self
+	{
+		$this->fileManager = $fileManager;
+		return $this;
+	}
+
+	public function setSmtpServer(SmtpServer $smtpServer): self
+	{
+		$this->smtpServer = $smtpServer;
+		return $this;
+	}
+
+	public function setSession(Session $session): self
+	{
+		$this->session = $session;
+		return $this;
+	}
+
+
 }

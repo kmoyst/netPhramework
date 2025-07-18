@@ -8,6 +8,7 @@ use netPhramework\db\exceptions\MysqlException;
 use netPhramework\db\mapping\Field;
 use netPhramework\db\mapping\FieldSet;
 use netPhramework\db\mapping\FieldType;
+use netPhramework\db\mysql\queries\ShowColumns;
 
 class FieldMapper
 {
@@ -15,11 +16,11 @@ class FieldMapper
 	private Field $primary;
 
 	/**
-	 * @param FieldQuery $query
+	 * @param ShowColumns $query
 	 * @return void
 	 * @throws MysqlException
 	 */
-	public function map(FieldQuery $query):void
+	public function map(ShowColumns $query):void
 	{
 		$fieldSet = new FieldSet();
 		foreach($query->provideSqlColumns() as $sqlColumn)

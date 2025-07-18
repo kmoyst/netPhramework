@@ -10,14 +10,14 @@ use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewBuilder;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
-use netPhramework\db\nodes\RecordSetProcess;
+use netPhramework\db\nodes\AssetProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
 
-class Browse extends RecordSetProcess
+class Browse extends AssetProcess
 {
 	public function __construct
 	(

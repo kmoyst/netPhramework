@@ -5,6 +5,7 @@ namespace netPhramework\bootstrap;
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exchange\Gateway;
 
 readonly class Controller
 {
@@ -26,7 +27,7 @@ readonly class Controller
 
 	private function configure():self
 	{
-		$this->site->configureResponder($this->site->responder);
+		$this->site->configure();
 		return $this;
 	}
 
@@ -34,9 +35,12 @@ readonly class Controller
 	{
 		try {
 			try {
-				$this->site->requestInterpreter
-					->interpret($this->site->environment)
-					->process($this->site)
+				$this->site->services->session->start();
+				new Gateway($this->site->application)
+					->mapToRouter($this->site->request->isModificationRequest)
+					->route($this->site->request->location)
+					->openExchange($this->site->services)
+					->dispatch($this->site->environment)
 					->deliver($this->site->responder);
 			} catch (NodeNotFound $exception) {
 				$exception

@@ -4,13 +4,13 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\FileFinder;
 use netPhramework\routing\ReadableLocation;
-use netPhramework\routing\Path;
+use netPhramework\routing\Route;
 use netPhramework\routing\UriFromLocation;
 use netPhramework\routing\UriFromPath;
 use netPhramework\exceptions\FileNotFound;
 use Stringable;
 
-abstract class Encoder
+class Encoder
 {
 	private FileFinder $templateFinder;
 
@@ -54,10 +54,10 @@ abstract class Encoder
 	}
 
 	/**
-	 * @param Path $path
+	 * @param Route $path
 	 * @return string|Stringable
 	 */
-	public function encodePath(Path $path):Stringable|string
+	public function encodePath(Route $path):Stringable|string
 	{
 		return new UriFromPath($path);
 	}

@@ -6,7 +6,7 @@ use netPhramework\db\core\RecordSet;
 use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\exceptions\RecordNotFound;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSet;
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Path;
 use netPhramework\rendering\Encodable;
 
 class RowSetFactory implements RowRegistry
@@ -15,7 +15,7 @@ class RowSetFactory implements RowRegistry
 	private RecordSet $recordSet;
 	private ColumnSet $columnSet;
 	private Encodable $callbackInput;
-	private MutablePath $assetPath;
+	private Path $assetPath;
 
 	public function setRecordSet(RecordSet $recordSet): self
 	{
@@ -35,7 +35,7 @@ class RowSetFactory implements RowRegistry
 		return $this;
 	}
 
-	public function setCompositePath(MutablePath $assetPath): self
+	public function setCompositePath(Path $assetPath): self
 	{
 		$this->assetPath = $assetPath;
 		return $this;

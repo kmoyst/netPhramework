@@ -16,14 +16,15 @@ use netPhramework\db\presentation\recordTable\{collation\CollationMap,
 	rowSet\RowSet,
 	rowSet\RowSetFactory};
 use netPhramework\exceptions\Exception;
-use netPhramework\routing\MutablePath;
+use netPhramework\exceptions\PathException;
+use netPhramework\routing\Path;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
 
 class ViewBuilder
 {
 	private RecordSet $recordSet;
-	private MutablePath $compositePath;
+	private Path $compositePath;
 	private Encodable $callbackInputForRows;
 	private Query $query;
 
@@ -41,7 +42,8 @@ class ViewBuilder
 	public function buildColumnSet(?ColumnSetStrategy $strategy):self
 	{
 		$columnMapper    = new ColumnMapper();
-		$this->columnSet = new ColumnSet();
+		$this->columnSet = new ColumnSet()
+		;
 		foreach($this->recordSet->getFieldSet() as $field)
 			$this->columnSet->add($columnMapper->mapColumn($field));
 		$strategy?->configureColumnSet($this->columnSet);
@@ -86,6 +88,7 @@ class ViewBuilder
 	 * @param ViewStrategy|null $strategy
 	 * @param bool $includeQueryForm
 	 * @return View
+	 * @throws PathException
 	 */
 	public function generateView(?ViewStrategy $strategy,
 								 bool $includeQueryForm = true):View
@@ -133,7 +136,7 @@ class ViewBuilder
 		return $this;
 	}
 
-	public function setCompositePath(MutablePath $compositePath): self
+	public function setCompositePath(Path $compositePath): self
 	{
 		$this->compositePath = $compositePath;
 		return $this;

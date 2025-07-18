@@ -2,11 +2,11 @@
 
 namespace netPhramework\exceptions;
 
-use netPhramework\bootstrap\Environment;
-use netPhramework\rendering\Wrappable;
+use netPhramework\core\Environment;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\Response;
 use netPhramework\exchange\ResponseCode;
+use netPhramework\rendering\Wrappable;
 
 class Exception extends \Exception implements Wrappable, Response
 {
@@ -48,7 +48,7 @@ class Exception extends \Exception implements Wrappable, Response
     {
 		if($this->environment->inDevelopment)
 		{
-			$message = $this->message . $this->getTraceAsString();
+			$message = $this->message;
 		}
 		else
 		{

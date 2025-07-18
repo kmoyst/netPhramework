@@ -2,6 +2,11 @@
 
 namespace netPhramework\db\abstraction;
 
+use netPhramework\db\abstraction\crud\Delete;
+use netPhramework\db\abstraction\crud\Insert;
+use netPhramework\db\abstraction\crud\Select;
+use netPhramework\db\abstraction\crud\Update;
+
 interface Table
 {
     public function select():Select;

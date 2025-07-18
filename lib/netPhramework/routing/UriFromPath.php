@@ -6,17 +6,16 @@ use Stringable;
 
 readonly class UriFromPath implements Stringable
 {
-	public function __construct(private Path $path) {}
+	public function __construct(private Route $path) {}
 
 	public function get():string
 	{
-		$s = '/';
 		$names = [];
 		$this->traversePath($names, $this->path);
-		return $s.implode($s, $names);
+		return '/'.implode('/', $names);
 	}
 
-	private function traversePath(array &$names, ?Path $path):void
+	private function traversePath(array &$names, ?Route $path):void
 	{
 		if($path === null) return;
 		$names[] = $path->getName();

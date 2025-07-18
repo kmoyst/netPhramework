@@ -4,12 +4,12 @@ namespace netPhramework\exchange;
 
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Node;
-use netPhramework\routing\Path;
+use netPhramework\routing\Route;
 
 class Navigator
 {
 	private Node $root;
-	private Path $path;
+	private Route $route;
 
 	public function setRoot(Node $root): Navigator
 	{
@@ -17,9 +17,11 @@ class Navigator
 		return $this;
 	}
 
-	public function setPath(Path $path): Navigator
+
+
+	public function setRoute(Route $route): self
 	{
-		$this->path = $path;
+		$this->route = $route;
 		return $this;
 	}
 
@@ -29,16 +31,19 @@ class Navigator
 	 */
 	public function navigate():Node
 	{
-        return $this->traverse($this->root, $this->path);
+		return $this->traverse($this->root, $this->route);
 	}
 
 	/**
 	 * @throws NodeNotFound
 	 */
-    private function traverse(Node $node, ?Path $path):Node
+    private function traverse(Node $node, ?Route $route):Node
     {
-        if($path === null) return $node;
-        $child = $node->getChild($path->getName());
-        return $this->traverse($child, $path->getNext());
+        if($route === null) return $node;
+		$name  = $route->getName();
+		if($name === null) return $node; // THIS IS WHAT NEEDED TO BE DONE
+        $child = $node->getChild($name);
+		$next  = $route->getNext();
+        return $this->traverse($child, $next);
     }
 }

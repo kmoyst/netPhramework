@@ -3,10 +3,11 @@
 namespace netPhramework\routing;
 
 use netPhramework\exceptions\InvalidUri;
+use netPhramework\exceptions\PathException;
 
 class PathFromUri extends Path
 {
-	private Path $path;
+	private bool $isParsed = false;
 
 	public function __construct(private readonly string $uri) {}
 
@@ -17,7 +18,7 @@ class PathFromUri extends Path
 	public function getName(): ?string
 	{
 		$this->parse();
-		return $this->path->getName();
+		return parent::getName();
 	}
 
 	/**
@@ -27,18 +28,34 @@ class PathFromUri extends Path
 	public function getNext(): ?Path
 	{
 		$this->parse();
-		return $this->path->getNext();
+		return parent::getNext();
 	}
 
 	/**
+	 * @param Path $tail
+	 * @return Path
+	 * @throws InvalidUri
+	 * @throws PathException
+	 */
+	public function appendPath(Path $tail): Path
+	{
+		$this->parse();
+		parent::appendPath($tail);
+		return $this;
+	}
+
+	/**
+	 * @return void
 	 * @throws InvalidUri
 	 */
 	private function parse():void
 	{
-		if(isset($this->path)) return;
+		if($this->isParsed) return;
 		if(!preg_match('|^/([^?]*)|', $this->uri, $matches))
 			throw new InvalidUri("Invalid Uri: $this->uri");
 		$names = explode('/', $matches[1]);
-		$this->path = new PathFromArray($names);
+		$this->setName(array_shift($names));
+		$this->setNext(count($names) === 0 ? null : new PathFromArray($names));
+		$this->isParsed = true;
 	}
 }

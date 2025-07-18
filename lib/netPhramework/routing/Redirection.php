@@ -11,7 +11,7 @@ class Redirection extends Location implements Redirectable, Response
 {
 	private ResponseCode $code;
 
-	public function __construct(MutablePath $path)
+	public function __construct(Path $path)
 	{
 		$this->path = $path;
 		$this->parameters = new Variables();
@@ -28,7 +28,7 @@ class Redirection extends Location implements Redirectable, Response
 		$responder->redirect($this, $this->code);
 	}
 
-	public function getPath(): MutablePath
+	public function getPath(): Path
 	{
 		return $this->path;
 	}

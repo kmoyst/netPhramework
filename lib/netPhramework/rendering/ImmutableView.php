@@ -5,8 +5,8 @@ namespace netPhramework\rendering;
 class ImmutableView extends Viewable
 {
 	public function __construct(
-		private readonly string $templateName,
-		private readonly iterable $variables) {}
+		private(set) readonly string $templateName,
+		private(set) readonly iterable $variables) {}
 
 	public function getTemplateName(): string
 	{

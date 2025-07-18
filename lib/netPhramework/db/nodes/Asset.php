@@ -3,22 +3,21 @@
 namespace netPhramework\db\nodes;
 
 use netPhramework\common\IsNumeric;
-use netPhramework\common\StringPredicate as Predicate;
-use netPhramework\db\nodes\RecordSetChildSet as setChildSet;
+use netPhramework\common\StringPredicate;
 use netPhramework\db\core\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class Asset extends Composite
+class Asset extends Composite implements AssetResourceSet
 {
 	public function __construct
 	(
-	public readonly string $name,
-	public readonly RecordSet $recordSet,
-	public readonly Predicate $recordIdPredicate   = new IsNumeric(),
-	public readonly RecordChildSet $recordChildSet = new RecordChildSet(),
-	public readonly setChildSet $recordSetChildSet = new setChildSet()
+	public readonly string          $name,
+	public readonly RecordSet       $recordSet,
+	public readonly StringPredicate $recordIdPredicate   = new IsNumeric(),
+	public readonly AssetChildSet   $assetChildSet = new AssetChildSet(),
+	public readonly RecordChildSet  $recordChildSet = new RecordChildSet(),
 	) {}
 
 	public function getName(): string
@@ -33,14 +32,14 @@ class Asset extends Composite
 
 	/**
 	 * @param string $id
-	 * @return RecordSetChild
+	 * @return AssetChild
 	 * @throws NodeNotFound
 	 */
-	private function resolveChild(string $id): RecordSetChild
+	private function resolveChild(string $id): AssetChild
 	{
 		if($this->recordIdPredicate->test($id))
 			return new RecordComposite($this->recordChildSet, $id);
 		else
-			return $this->recordSetChildSet->get($id);
+			return $this->assetChildSet->get($id);
 	}
 }

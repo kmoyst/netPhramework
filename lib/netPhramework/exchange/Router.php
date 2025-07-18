@@ -2,54 +2,27 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\core\Application;
-use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Directory;
-use netPhramework\nodes\Node;
-use netPhramework\routing\Path;
+use netPhramework\routing\Location;
 
 readonly class Router
 {
-	private Directory $root;
-
-	public function __construct(private Application $application)
+	public function __construct(private Directory $root)
 	{
-		$this->root = new Directory('');
-	}
-
-
-	/**
-	 * @return self
-	 * @throws Exception
-	 */
-    public function withAPassiveNode():self
-	{
-		$this->application->configurePassiveNode($this->root);
-		return $this;
 	}
 
 	/**
-	 * @return self
-	 * @throws Exception
-	 */
-	public function withAnActiveNode():self
-	{
-		$this->application->configureActiveNode($this->root);
-		return $this;
-	}
-
-	/**
-	 * @param Path $path
-	 * @return Node
+	 * @param Location $location
+	 * @return Dispatcher
 	 * @throws NodeNotFound
 	 */
-	public function route(Path $path):Node
+	public function route(Location $location):Dispatcher
 	{
-		return new Navigator()
+		$handler = new Navigator()
 			->setRoot($this->root)
-			->setPath($path)
-			->navigate()
-		;
+			->setRoute($location->path)
+			->navigate();
+		return new Dispatcher($handler, $location);
 	}
 }

@@ -7,7 +7,7 @@ use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class RecordComposite extends Composite implements RecordSetChild
+class RecordComposite extends Composite implements AssetChild
 {
 	use HasRecordSet;
 

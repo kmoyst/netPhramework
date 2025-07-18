@@ -6,20 +6,22 @@ use netPhramework\exceptions\Exception;
 
 class EmailDelivery
 {
-	private readonly string $charset;
-	private readonly string $boundary;
+	protected readonly string $boundary;
 
-	private string $recipient;
-	private ?string $recipientName;
-	private string $sender;
-	private ?string $senderName;
-	private string $subject;
-	private string $message;
+	protected SmtpServer $server;
+	protected string $charset;
 
-	public function __construct(private readonly SmtpServer $server)
+	protected string $recipient;
+	protected ?string $recipientName;
+	protected string $sender;
+	protected ?string $senderName;
+	protected string $subject;
+	protected string $message;
+
+	public function __construct(string $charset = 'UTF-8')
 	{
 		$this->boundary = md5(uniqid());
-		$this->charset = 'UTF-8';
+		$this->charset = $charset;
 	}
 
 	/**
@@ -121,6 +123,12 @@ class EmailDelivery
 	public function setSenderName(?string $senderName): self
 	{
 		$this->senderName = $senderName;
+		return $this;
+	}
+
+	public function setServer(SmtpServer $server): self
+	{
+		$this->server = $server;
 		return $this;
 	}
 }

@@ -2,42 +2,45 @@
 
 namespace netPhramework\core;
 
-use netPhramework\authentication\Session;
-use netPhramework\bootstrap\Environment;
-use netPhramework\bootstrap\WebEnvironment;
-use netPhramework\exchange\RequestInterpreter;
+use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
-use netPhramework\routing\CallbackManager;
-use netPhramework\transferring\FileManager;
-use netPhramework\transferring\SmtpServer;
+use netPhramework\exchange\Services;
 
 abstract class Site
 {
-	public function __construct
-	(
-	public Environment $environment 			  = new WebEnvironment(),
-	public RequestInterpreter $requestInterpreter = new RequestInterpreter(),
-	public Responder   $responder   			  = new Responder(),
-	public Session     $session 				  = new Session(),
-	public FileManager $fileManager 			  = new FileManager(),
-	public CallbackManager $callbackManager 	  = new CallbackManager(),
-	public SmtpServer $smtpServer 				  = new SmtpServer(),
-	)
-	{
-		$this->smtpServer->initialize($this->environment);
-	}
-	public function configureResponder(Responder $responder):void
-	{
-		$responder->wrapper->addStyleSheet('framework-stylesheet');
-		$responder->templateFinder
-			->directory('../templates')
-			->directory('../html')
-			->directory(__DIR__ . '/../../../templates')
-			->extension('tpl')
-			->extension('phtml')
-			->extension('css')
-		;
-	}
+	private(set) Request   $request {get{
+		if(!isset($this->request))
+			$this->request = $this->context->request;
+		return $this->request;
+	}set{}}
 
-	abstract public function getApplication():Application;
+	private(set) Responder $responder{get{
+		if(!isset($this->responder))
+			$this->responder = $this->context->responder;
+		return $this->responder;
+	}set{}}
+
+	private(set) Services  $services{get{
+		if(!isset($this->services))
+			$this->services = $this->context->services;
+		return $this->services;
+	}set{}}
+
+	private(set) Environment $environment{get{
+		if(!isset($this->environment))
+			$this->environment = $this->context->environment;
+		return $this->environment;
+	}set{}}
+
+	abstract public Application $application {get;}
+
+	public function __construct(protected readonly Context $context) {}
+
+	public function configure():void
+	{
+		$this->responder->application 	= $this->application;
+		$this->responder->services 		= $this->services;
+		$this->responder->environment 	= $this->environment;
+		$this->context->configureResponder($this->responder);
+	}
 }

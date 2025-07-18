@@ -2,14 +2,14 @@
 
 namespace netPhramework\routing\rerouters;
 
-use netPhramework\routing\MutablePath;
+use netPhramework\routing\Path;
 use netPhramework\routing\Reroutable;
 
 readonly class RerouteToNephew extends Rerouter
 {
 	public function __construct(
 		protected string $siblingName,
-		string|MutablePath $subPath = ''
+		string|Path $subPath = ''
 	)
 	{
 		parent::__construct($subPath);
@@ -17,6 +17,7 @@ readonly class RerouteToNephew extends Rerouter
 
 	public function reroute(Reroutable $path): void
 	{
-		$path->pop()->append($this->siblingName)->append($this->subPath);
+		$path->pop()->appendName($this->siblingName);
+		$this->parseAndAppendSubPath($path);
 	}
 }
