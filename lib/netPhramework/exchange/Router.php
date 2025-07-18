@@ -14,15 +14,15 @@ readonly class Router
 
 	/**
 	 * @param Location $location
-	 * @return Dispatcher
+	 * @return Action
 	 * @throws NodeNotFound
 	 */
-	public function route(Location $location):Dispatcher
+	public function route(Location $location):Action
 	{
 		$handler = new Navigator()
 			->setRoot($this->root)
 			->setRoute($location->path)
 			->navigate();
-		return new Dispatcher($handler, $location);
+		return new Action($handler, $location);
 	}
 }

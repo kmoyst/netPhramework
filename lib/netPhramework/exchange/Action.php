@@ -6,7 +6,7 @@ use netPhramework\core\Environment;
 use netPhramework\nodes\Node;
 use netPhramework\routing\Location;
 
-class Dispatcher
+class Action
 {
 	private Exchange $exchange;
 
@@ -27,7 +27,7 @@ class Dispatcher
 		return $this;
 	}
 
-	public function dispatch(Environment $environment):Response
+	public function execute(Environment $environment):Response
 	{
 		$this->handler->handleExchange(
 			$this->exchange->setEnvironment($environment)->initialize());

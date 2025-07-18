@@ -40,7 +40,7 @@ readonly class Controller
 					->mapToRouter($this->site->request->isModificationRequest)
 					->route($this->site->request->location)
 					->openExchange($this->site->services)
-					->dispatch($this->site->environment)
+					->execute($this->site->environment)
 					->deliver($this->site->responder);
 			} catch (NodeNotFound $exception) {
 				$exception
