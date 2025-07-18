@@ -60,13 +60,8 @@ class CliResponder implements Responder
 	 */
 	public function redirect(Location $location, ResponseCode $code): void
 	{
-		new Gateway($this->application)
-			->mapToRouter(false)
-			->route($location)
-			->openExchange($this->services)
-			->execute($this->environment)
-			->deliver($this)
-		;
+		$feedback = $this->services->session->getFeedbackAndClear();
+		echo $feedback ?? "ACTION WAS RUN";
 		$this->newQuery();
 	}
 

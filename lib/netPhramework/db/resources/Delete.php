@@ -6,6 +6,7 @@ use netPhramework\db\exceptions\MappingException;
 use netPhramework\db\nodes\RecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
+use netPhramework\exchange\ResponseCode;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\redirectors\RedirectToParent;
 
@@ -28,7 +29,19 @@ class Delete extends RecordProcess
      */
 	public function handleExchange(Exchange $exchange): void
 	{
-		$this->record->drop();
+		$result = $this->record->drop();
+		if($result)
+		{
+			$exchange->session->setFeedbackCode(ResponseCode::OK);
+			$exchange->session->addFeedbackMessage("Record deleted");
+		}
+		else
+		{
+			$exchange->session
+				->setFeedbackCode(ResponseCode::FAILED_DEPENDENCY)
+				->addFeedbackMessage("Unable to delete record")
+			;
+		}
 		$exchange->redirect($this->dispatcher);
 	}
 }
