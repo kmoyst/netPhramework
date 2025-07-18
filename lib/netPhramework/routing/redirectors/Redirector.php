@@ -25,7 +25,7 @@ class Redirector extends Resource
 	public function redirect(Redirectable $redirectable):void
 	{
 		$path = $redirectable->getPath();
-		$this->rerouter->reroute($redirectable->getPath());
+		$this->rerouter->reroute($path);
 		$redirectable->getParameters()->merge($this->parameters ?? []);
 		$redirectable->setResponseCode($this->code);
 	}
