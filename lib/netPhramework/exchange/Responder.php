@@ -8,9 +8,12 @@ use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 use netPhramework\routing\Location;
 use netPhramework\transferring\File;
+use netPhramework\core\Application;
 
 interface Responder
 {
+	public Application $application {get;set;}
+	public Services $services{get;set;}
 	public Encoder $encoder {get;}
 	public Wrapper $wrapper {get;}
 	public FileFinder $templateFinder {get;}

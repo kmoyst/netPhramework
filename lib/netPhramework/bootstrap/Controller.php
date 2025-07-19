@@ -40,6 +40,9 @@ readonly class Controller
 		$this->request = $this->site->runtime->request;
 		$this->services = $this->site->services;
 		$this->responder = $this->site->runtime->responder;
+		$this->responder->application = $this->application;
+		$this->responder->services = $this->services;
+		$this->responder->siteAddress = $this->site->address;
 		$this->site->runtime->configureResponder($this->responder);
 		return $this;
 	}
@@ -50,19 +53,19 @@ readonly class Controller
 			try {
 				$this->site->runtime->session->start();
 				new Gateway($this->application)
-					->mapToRouter($this->site->runtime->request->isToModify)
-					->route($this->site->runtime->request->location)
-					->openExchange($this->site->services)
+					->mapToRouter($this->request->isToModify)
+					->route($this->request->location)
+					->openExchange($this->services)
 					->execute($this->site->address)
-					->deliver($this->site->runtime->responder);
+					->deliver($this->responder);
 			} catch (NodeNotFound $exception) {
 				$exception
-					->setHostMode($this->site->runtime->mode)
-					->deliver($this->site->runtime->responder);
+					->setRuntimeMode($this->site->runtime->mode)
+					->deliver($this->responder);
 			} catch (Exception $exception) {
 				$exception
-					->setHostMode($this->site->runtime->mode)
-					->deliver($this->site->runtime->responder);
+					->setRuntimeMode($this->site->runtime->mode)
+					->deliver($this->responder);
 				$this->logException($exception);
 			}
 		}

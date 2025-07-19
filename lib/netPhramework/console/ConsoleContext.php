@@ -9,9 +9,8 @@ class ConsoleContext implements RuntimeContext
 {
 	private Variables $variables;
 
-	public function initializeVariables():void
+	public function initialize():self
 	{
-		if(isset($this->variables)) return;
 		$this->variables = new Variables();
 		$dotenv = fopen('dotenv', 'r');
 		while($line = fgets($dotenv))
@@ -20,11 +19,11 @@ class ConsoleContext implements RuntimeContext
 			$this->variables->add($m[1], $m[2]);
 		}
 		fclose($dotenv);
+		return $this;
 	}
 
 	public function get(string $key): ?string
 	{
-		$this->initializeVariables();
 		return $this->variables->getOrNull($key);
 	}
 }

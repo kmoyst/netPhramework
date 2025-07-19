@@ -4,6 +4,7 @@ namespace netPhramework\console;
 
 use netPhramework\common\FileFinder;
 use netPhramework\core\Runtime;
+use netPhramework\core\RuntimeKey;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
 use netPhramework\rendering\Encoder;
@@ -15,28 +16,27 @@ class ConsoleRuntime extends Runtime
 		return new ConsoleRequest();
 	}}
 
-	public readonly Responder $responder;
-
-	public readonly ConsoleContext $context;
-
-	protected readonly string $domain;
-
-	protected readonly string $protocol;
-
-	public function __construct()
-	{
-		$this->protocol = 'cli';
-		$this->domain = '';
-		parent::__construct();
-		$this->context = new ConsoleContext();
-		$this->responder = new ConsoleResponder()
+	public Responder $responder{get{
+		return new ConsoleResponder()
 			->setEncoder(new Encoder())
 			->setTemplateFinder(new FileFinder())
 			->setWrapper(new Wrapper())
 			->setSiteAddress($this->siteAddress)
 			->setSession($this->session)
 		;
-	}
+	}}
+
+	public ConsoleContext $context{get{
+		if(!isset($this->context))
+			$this->context = new ConsoleContext()->initialize();
+		return $this->context;
+	}set{}}
+
+	protected string $domain {get{
+		return $this->context->get(RuntimeKey::DOMAIN->value);
+	}}
+
+	protected string $protocol = 'cli';
 
 	public function configureResponder(Responder $responder): void
 	{

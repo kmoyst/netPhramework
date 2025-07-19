@@ -16,9 +16,15 @@ abstract class Runtime
 	abstract public Responder $responder {get;}
 	abstract protected string $protocol {get;}
 
-	public readonly Session $session;
-	public readonly FileManager $fileManager;
-	public readonly CallbackManager $callbackManager;
+	public Session $session {get{
+		return new Session();
+	}}
+	public FileManager $fileManager {get{
+		return new FileManager();
+	}}
+	public CallbackManager $callbackManager{get{
+		return new CallbackManager();
+	}}
 
 	public RuntimeMode $mode {get{
 		$mode = $this->context->get(RuntimeKey::HOST_MODE->value);
@@ -31,24 +37,13 @@ abstract class Runtime
 		return "$this->protocol://$this->domain";
 	}}
 
-	private(set) SmtpServer $smtpServer {get{
-		if(!isset($this->smtpServer))
-		{
-			$address = $this->context
-				->get(RuntimeKey::SMTP_SERVER_ADDRESS->value);
-			$name = $this->context
-				->get(RuntimeKey::SMTP_SERVER_NAME->value);
-			$this->smtpServer = new SmtpServer($address, $name);
-		}
-		return $this->smtpServer;
+	public SmtpServer $smtpServer {get{
+		$address = $this->context
+			->get(RuntimeKey::SMTP_SERVER_ADDRESS->value);
+		$name = $this->context
+			->get(RuntimeKey::SMTP_SERVER_NAME->value);
+		return new SmtpServer($address, $name);
 	}}
-
-	public function __construct()
-	{
-		$this->session = new Session();
-		$this->fileManager = new FileManager();
-		$this->callbackManager = new CallbackManager();
-	}
 
 	abstract public function configureResponder(Responder $responder):void;
 }

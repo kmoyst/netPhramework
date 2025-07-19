@@ -13,7 +13,7 @@ class Exception extends \Exception implements Wrappable, Response
 	protected string $friendlyMessage = "SERVER ERROR";
 	protected readonly ResponseCode $responseCode;
 
-	public RuntimeMode $hostMode;
+	public RuntimeMode $runtimeMode;
 
     public function __construct(
 		string $message = "", ?ResponseCode $responseCode = null)
@@ -27,9 +27,9 @@ class Exception extends \Exception implements Wrappable, Response
         return $this->responseCode;
     }
 
-	public function setHostMode(RuntimeMode $hostMode): self
+	public function setRuntimeMode(RuntimeMode $runtimeMode): self
 	{
-		$this->hostMode = $hostMode;
+		$this->runtimeMode = $runtimeMode;
 		return $this;
 	}
 
@@ -46,7 +46,7 @@ class Exception extends \Exception implements Wrappable, Response
 	 */
     public function getContent(): string
     {
-		if($this->hostMode->isDevelopment())
+		if($this->runtimeMode->isDevelopment())
 		{
 			$message = $this->message;
 		}

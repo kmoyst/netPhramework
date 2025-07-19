@@ -11,9 +11,17 @@ use netPhramework\rendering\Wrapper;
 
 class WebRuntime extends Runtime
 {
-	public readonly Responder $responder;
+	public Responder $responder{get{
+		return new WebResponder()
+			->setEncoder(new HtmlEncoder())
+			->setTemplateFinder(new FileFinder())
+			->setWrapper(new Wrapper())
+		;
+	}}
 
-	public readonly Request $request;
+	public Request $request{get{
+		return new WebRequest($this->context->requestInput);
+	}}
 
 	protected string $protocol {get{
 		return $this->context->get('HTTPS') === 'on' ? 'https' : 'http';
@@ -23,19 +31,9 @@ class WebRuntime extends Runtime
 		return $this->context->get('HTTP_HOST');
 	}}
 
-	public readonly WebContext $context;
-
-	public function __construct()
+	public function __construct(
+		public readonly WebContext $context = new WebContext())
 	{
-		parent::__construct();
-		$this->context = new WebContext();
-		$this->request = new WebRequest($this->context->requestInput);
-		$this->responder = new WebResponder()
-			->setEncoder(new HtmlEncoder())
-			->setTemplateFinder(new FileFinder())
-			->setWrapper(new Wrapper())
-			->setSiteAddress($this->siteAddress)
-		;
 	}
 
 	public function configureResponder(Responder $responder):void

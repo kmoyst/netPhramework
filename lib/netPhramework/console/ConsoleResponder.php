@@ -3,9 +3,11 @@
 namespace netPhramework\console;
 
 use netPhramework\common\FileFinder;
+use netPhramework\core\Application;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
+use netPhramework\exchange\Services;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
@@ -15,6 +17,8 @@ use netPhramework\user\Session;
 
 class ConsoleResponder implements Responder
 {
+	public Application $application;
+	public Services $services;
 	public Session $session;
 	public Encoder $encoder;
 	public Wrapper $wrapper;
