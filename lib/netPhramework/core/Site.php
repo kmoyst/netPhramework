@@ -2,6 +2,7 @@
 
 namespace netPhramework\core;
 
+use netPhramework\exchange\Responder;
 use netPhramework\exchange\Services;
 
 abstract class Site
@@ -26,10 +27,5 @@ abstract class Site
 			->setCallbackManager($this->runtime->callbackManager)
 			->setFileManager($this->runtime->fileManager)
 		;
-	}
-
-	public function configure():void
-	{
-		$this->runtime->configureResponder($this->runtime->responder);
 	}
 }
