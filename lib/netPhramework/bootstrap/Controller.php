@@ -2,18 +2,27 @@
 
 namespace netPhramework\bootstrap;
 
+use netPhramework\core\Application;
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exchange\Gateway;
+use netPhramework\exchange\Request;
+use netPhramework\exchange\Responder;
+use netPhramework\exchange\Services;
 
 readonly class Controller
 {
+	private Application $application;
+	private Request $request;
+	private Services $services;
+	private Responder $responder;
+
 	public function __construct(private Site $site) {}
 
 	public function run():void
 	{
-		$this->initialize()->configure()->exchange();
+		$this->initialize()->prepare()->exchange();
 	}
 
 	private function initialize():self
@@ -25,9 +34,13 @@ readonly class Controller
 		return $this;
 	}
 
-	private function configure():self
+	private function prepare():self
 	{
-		$this->site->configure();
+		$this->application = $this->site->application;
+		$this->request = $this->site->runtime->request;
+		$this->services = $this->site->services;
+		$this->responder = $this->site->runtime->responder;
+		$this->site->runtime->configureResponder($this->responder);
 		return $this;
 	}
 
@@ -36,7 +49,7 @@ readonly class Controller
 		try {
 			try {
 				$this->site->runtime->session->start();
-				new Gateway($this->site->application)
+				new Gateway($this->application)
 					->mapToRouter($this->site->runtime->request->isToModify)
 					->route($this->site->runtime->request->location)
 					->openExchange($this->site->services)

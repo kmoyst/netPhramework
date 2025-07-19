@@ -25,15 +25,17 @@ class ConsoleRuntime extends Runtime
 
 	public function __construct()
 	{
+		$this->protocol = 'cli';
+		$this->domain = '';
+		parent::__construct();
 		$this->context = new ConsoleContext();
 		$this->responder = new ConsoleResponder()
 			->setEncoder(new Encoder())
 			->setTemplateFinder(new FileFinder())
 			->setWrapper(new Wrapper())
 			->setSiteAddress($this->siteAddress)
+			->setSession($this->session)
 		;
-		$this->protocol = 'cli';
-		$this->domain = '';
 	}
 
 	public function configureResponder(Responder $responder): void

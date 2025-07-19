@@ -43,5 +43,12 @@ abstract class Runtime
 		return $this->smtpServer;
 	}}
 
+	public function __construct()
+	{
+		$this->session = new Session();
+		$this->fileManager = new FileManager();
+		$this->callbackManager = new CallbackManager();
+	}
+
 	abstract public function configureResponder(Responder $responder):void;
 }

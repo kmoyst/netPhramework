@@ -27,6 +27,7 @@ class WebRuntime extends Runtime
 
 	public function __construct()
 	{
+		parent::__construct();
 		$this->context = new WebContext();
 		$this->request = new WebRequest($this->context->requestInput);
 		$this->responder = new WebResponder()
