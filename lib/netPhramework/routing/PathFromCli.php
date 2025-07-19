@@ -22,7 +22,15 @@ class PathFromCli extends PathTemplate
 		}
 		else
 		{
-			echo "\nRequesting node $name ...\n\n";
+			echo "\nRequesting node $name ";
+			for($i=1; $i<=3; $i++)
+			{
+				echo '.';
+				usleep(300000);
+			}
+			system('clear');
+			usleep(100000);
+			echo "\nNode: $name\n";
 			$names = explode('/', ltrim($name, '/'));
 			$this->setName(array_shift($names));
 			if (!empty($names)) {

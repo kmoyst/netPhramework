@@ -18,8 +18,11 @@ class ConsoleRequest implements Request
 	}}
 
 	public bool $isToModify {get{
+		system('clear');
 		$question = "\n\nIs this a MODIFICATION request? [Y/n: default n] ";
-		return readline($question) === 'Y';
+		$answer = readline($question);
+		system('clear');
+		return $answer === 'Y';
 	}}
 
 	public function __construct() {}

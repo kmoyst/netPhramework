@@ -101,6 +101,7 @@ class ConsoleResponder implements Responder
 		$question  = "\n\nWould you like to make another request?\n";
 		$question .= "(q to quit, any other key to continue): ";
 		if(readline($question) === 'q') exit(0);
+		system('clear');
 		$request = new ConsoleRequest();
 		new Gateway($this->application)
 			->mapToRouter($request->isToModify)
