@@ -36,13 +36,13 @@ readonly class Controller
 
 	private function prepare():self
 	{
-		$this->application = $this->site->application;
-		$this->request = $this->site->runtime->request;
-		$this->services = $this->site->services;
-		$this->responder = $this->site->runtime->responder;
-		$this->responder->application = $this->application;
-		$this->responder->services = $this->services;
-		$this->responder->siteAddress = $this->site->address;
+		$this->request 					= $this->site->runtime->request;
+		$this->services 				= $this->site->services;
+		$this->responder 			  	= $this->site->runtime->responder;
+		$this->application				= $this->site->application;
+		$this->responder->application 	= $this->application;
+		$this->responder->siteAddress 	= $this->site->address;
+		$this->responder->services 		= $this->services;
 		$this->site->runtime->configureResponder($this->responder);
 		return $this;
 	}

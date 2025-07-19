@@ -5,6 +5,8 @@ namespace netPhramework\console;
 use netPhramework\common\FileFinder;
 use netPhramework\core\Application;
 use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exchange\Gateway;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\exchange\Services;
@@ -65,13 +67,15 @@ class ConsoleResponder implements Responder
 	 * @param Wrappable $content
 	 * @param ResponseCode $code
 	 * @return void
+	 * @throws Exception
+	 * @throws NodeNotFound
 	 */
 	public function present(Wrappable $content, ResponseCode $code): void
 	{
 		echo $this->wrapper
 			->wrap($content)
 			->encode($this->configure()->encoder);
-		//$this->newQuery();
+		$this->newQuery();
 	}
 
 	/**
@@ -84,8 +88,6 @@ class ConsoleResponder implements Responder
 	{
 		$feedback = $this->session->getFeedbackAndClear();
 		if($feedback !== null) echo "\n\n$feedback\n\n";
-		echo "\n\nRedirection not implemented\n\n";
-		/**
 		try { // some redirects will work
 			new Gateway($this->application)
 				->mapToRouter(false)
@@ -93,12 +95,15 @@ class ConsoleResponder implements Responder
 				->openExchange($this->services)
 				->execute($this->siteAddress)
 				->deliver($this);
-		} catch (NotFound) {} // others won't
+		} catch (NodeNotFound) {} // others won't
 		$this->newQuery();
-		 **/
 	}
 
 	/**
+	 * @return void
+	 * @throws Exception
+	 * @throws NodeNotFound
+	 */
 	private function newQuery():void
 	{
 		$question  = "\n\nWould you like to make another request?\n";
@@ -112,7 +117,6 @@ class ConsoleResponder implements Responder
 			->execute($this->siteAddress)
 			->deliver($this);
 	}
-	 **/
 
 	public function transfer(File $file, ResponseCode $code): void
 	{
