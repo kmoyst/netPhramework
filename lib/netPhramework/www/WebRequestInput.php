@@ -1,8 +1,8 @@
 <?php
 
-namespace netPhramework\exchange\http;
+namespace netPhramework\www;
 
-class HttpInput
+class WebRequestInput
 {
 	public string $uri {get{
 		return filter_input(INPUT_SERVER, 'REQUEST_URI');

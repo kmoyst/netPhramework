@@ -5,7 +5,6 @@ namespace netPhramework\exchange;
 use netPhramework\common\Variables;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;
-use netPhramework\exchange\host\HostContext;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Presentation;
@@ -29,7 +28,6 @@ class Exchange implements CallbackContext
 	private(set) FileManager $fileManager;
 	private(set) CallbackManager $callbackManager;
 	private(set) SmtpServer $smtpServer;
-	private(set) HostContext $host;
 
 	public Variables $parameters {get{
 		return clone $this->location->getParameters();
@@ -39,13 +37,7 @@ class Exchange implements CallbackContext
 		return clone $this->location->path;
 	}}
 
-	public string $siteAddress {get{
-		return $this->host->siteAddress;
-	}}
-
-	public string $siteDomain {get{
-		return $this->host->hostDomain;
-	}}
+	public string $siteAddress;
 
 	public string $callbackKey {get{
 		return $this->callbackManager->callbackKey;
@@ -134,12 +126,6 @@ class Exchange implements CallbackContext
 	{
 		if($chain) return clone $this->location;
 		return $this->callbackManager->getLink(clone $this->location);
-	}
-
-	public function setHost(HostContext $host): self
-	{
-		$this->host = $host;
-		return $this;
 	}
 
 	public function setLocation(Location $location): self

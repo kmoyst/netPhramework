@@ -1,33 +1,50 @@
 <?php
 
-namespace netPhramework\exchange\http;
+namespace netPhramework\www;
 
 use netPhramework\common\FileFinder;
-use netPhramework\configuration\Application;
-use netPhramework\exchange\host\HostContext;
+use netPhramework\core\Application;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\exchange\Services;
 use netPhramework\rendering\Encoder;
-use netPhramework\rendering\HtmlEncoder;
 use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 use netPhramework\routing\Location;
 use netPhramework\transferring\File;
 
-class HttpResponder implements Responder
+class WebResponder implements Responder
 {
-	public HostContext $environment;
+	public string $siteAddress;
 	public Application $application;
 	public Services $services;
+	public Encoder $encoder;
+	public Wrapper $wrapper;
+	public FileFinder $templateFinder;
 
-	public function __construct
-	(
-		public Encoder $encoder = new HtmlEncoder(),
-		public Wrapper $wrapper = new Wrapper(),
-		public FileFinder $templateFinder = new FileFinder()
-	)
-	{}
+	public function setEncoder(Encoder $encoder): self
+	{
+		$this->encoder = $encoder;
+		return $this;
+	}
+
+	public function setWrapper(Wrapper $wrapper): self
+	{
+		$this->wrapper = $wrapper;
+		return $this;
+	}
+
+	public function setTemplateFinder(FileFinder $templateFinder): self
+	{
+		$this->templateFinder = $templateFinder;
+		return $this;
+	}
+
+	public function setSiteAddress(string $siteAddress): self
+	{
+		$this->siteAddress = $siteAddress;
+		return $this;
+	}
 
 	private function prepare():self
 	{

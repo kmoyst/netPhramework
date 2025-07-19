@@ -2,7 +2,7 @@
 
 namespace netPhramework\db\configuration\applications;
 
-use netPhramework\configuration\Application;
+use netPhramework\core\Application;
 use netPhramework\db\configuration\builders\ActiveNodeBuilder;
 use netPhramework\db\configuration\builders\PassiveNodeBuilder;
 use netPhramework\db\core\RecordMapper;

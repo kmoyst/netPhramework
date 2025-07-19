@@ -2,13 +2,13 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\exchange\host\HostMode;
+use netPhramework\core\RuntimeMode;
 
 class Handler
 {
 	private bool $fatalErrorHandled = false;
 
-	public function __construct(private HostMode $mode) {}
+	public function __construct(private readonly RuntimeMode $mode) {}
 
 	public function shutdown():never
 	{

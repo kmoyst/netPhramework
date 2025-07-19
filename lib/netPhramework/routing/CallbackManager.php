@@ -40,7 +40,10 @@ readonly class CallbackManager
 	{
 		$callbackUri = $parameters->getOrNull($this->callbackKey);
 		if(!$callbackUri) return null;
-		$target = new LocationFromUri($callbackUri);
+		$target = new Location()
+			->setPath(new PathFromUri($callbackUri))
+			->setParameters(new VariablesFromUri($callbackUri)->get())
+		;
 		return new RedirectToRoot($target->path, $target->getParameters());
 	}
 }

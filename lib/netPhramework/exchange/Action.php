@@ -2,7 +2,6 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\exchange\host\HostContext;
 use netPhramework\nodes\Node;
 use netPhramework\routing\Location;
 
@@ -27,10 +26,10 @@ class Action
 		return $this;
 	}
 
-	public function execute(HostContext $environment):Response
+	public function execute(string $siteAddress):Response
 	{
-		$this->handler->handleExchange(
-			$this->exchange->setEnvironment($environment));
+		$this->exchange->siteAddress = $siteAddress;
+		$this->handler->handleExchange($this->exchange);
 		return $this->exchange->response;
 	}
 }

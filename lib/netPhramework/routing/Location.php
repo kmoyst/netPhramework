@@ -34,6 +34,12 @@ class Location extends ReadableLocation
 		return $this->parameters;
 	}
 
+	public function setParameters(Variables $parameters):self
+	{
+		$this->parameters = $parameters;
+		return $this;
+	}
+
 	public function __clone():void
 	{
 		$this->path = clone $this->path;

@@ -1,12 +1,10 @@
 <?php
 
-namespace netPhramework\exchange\host;
+namespace netPhramework\core;
 
-enum HostKey:string
+enum RuntimeKey:string
 {
 	case HOST_MODE   		 = 'MODE';
-	case HOST_PROTOCOL  	 = 'PROTOCOL';
-	case HOST_DOMAIN 		 = 'DOMAIN';
 	case SMTP_SERVER_ADDRESS = 'SMTP_SERVER_ADDRESS';
 	case SMTP_SERVER_NAME 	 = 'SMTP_SERVER_NAME';
 }

@@ -1,14 +1,13 @@
 <?php
 
-namespace netPhramework\exchange\cli;
+namespace netPhramework\console;
 
 use netPhramework\common\FileFinder;
-use netPhramework\configuration\Application;
+use netPhramework\core\Application;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exceptions\NotFound;
 use netPhramework\exchange\Gateway;
-use netPhramework\exchange\host\HostContext;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\exchange\Services;
@@ -18,18 +17,38 @@ use netPhramework\rendering\Wrapper;
 use netPhramework\routing\Location;
 use netPhramework\transferring\File;
 
-class CliResponder implements Responder
+class ConsoleResponder implements Responder
 {
-	public HostContext $environment;
 	public Application $application;
 	public Services $services;
+	public Encoder $encoder;
+	public Wrapper $wrapper;
+	public FileFinder $templateFinder;
+	public string $siteAddress;
 
-	public function __construct
-	(
-	public Encoder $encoder = new Encoder(),
-	public Wrapper $wrapper = new Wrapper(),
-	public FileFinder $templateFinder = new FileFinder(),
-	) {}
+	public function setEncoder(Encoder $encoder): self
+	{
+		$this->encoder = $encoder;
+		return $this;
+	}
+
+	public function setWrapper(Wrapper $wrapper): self
+	{
+		$this->wrapper = $wrapper;
+		return $this;
+	}
+
+	public function setTemplateFinder(FileFinder $templateFinder): self
+	{
+		$this->templateFinder = $templateFinder;
+		return $this;
+	}
+
+	public function setSiteAddress(string $siteAddress): self
+	{
+		$this->siteAddress = $siteAddress;
+		return $this;
+	}
 
 	private function configure():self
 	{
@@ -68,7 +87,7 @@ class CliResponder implements Responder
 				->mapToRouter(false)
 				->route($location)
 				->openExchange($this->services)
-				->execute($this->environment)
+				->execute($this->siteAddress)
 				->deliver($this);
 		} catch (NotFound) {} // others won't
 		$this->newQuery();
@@ -84,12 +103,12 @@ class CliResponder implements Responder
 		$question  = "\n\nWould you like to make another request?\n";
 		$question .= "(q to quit, any other key to continue): ";
 		if(readline($question) === 'q') exit(0);
-		$request = new CliRequest($this->environment);
+		$request = new ConsoleRequest();
 		new Gateway($this->application)
-			->mapToRouter($request->isModificationRequest)
+			->mapToRouter($request->isToModify)
 			->route($request->location)
 			->openExchange($this->services)
-			->execute($this->environment)
+			->execute($this->siteAddress)
 			->deliver($this);
 	}
 
