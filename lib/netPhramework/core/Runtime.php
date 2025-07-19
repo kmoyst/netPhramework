@@ -15,6 +15,16 @@ abstract class Runtime
 	abstract public Request $request {get;}
 	abstract public Responder $responder {get;}
 	abstract protected string $protocol {get;}
+	abstract protected string $domain {get;}
+
+	public string $siteAddress {get{
+		return "$this->protocol://$this->domain";
+	}}
+
+	public RuntimeMode $mode {get{
+		$mode = $this->context->get(RuntimeKey::HOST_MODE->value);
+		return RuntimeMode::tryFrom($mode) ?? RuntimeMode::PRODUCTION;
+	}}
 
 	public Session $session {get{
 		return new Session();
@@ -24,17 +34,6 @@ abstract class Runtime
 	}}
 	public CallbackManager $callbackManager{get{
 		return new CallbackManager();
-	}}
-
-	public RuntimeMode $mode {get{
-		$mode = $this->context->get(RuntimeKey::HOST_MODE->value);
-		return RuntimeMode::tryFrom($mode) ?? RuntimeMode::PRODUCTION;
-	}}
-
-	abstract protected string $domain {get;}
-
-	public string $siteAddress {get{
-		return "$this->protocol://$this->domain";
 	}}
 
 	public SmtpServer $smtpServer {get{

@@ -15,23 +15,15 @@ use netPhramework\rendering\Wrappable;
 use netPhramework\rendering\Wrapper;
 use netPhramework\routing\Location;
 use netPhramework\transferring\File;
-use netPhramework\user\Session;
 
 class ConsoleResponder implements Responder
 {
 	public Application $application;
 	public Services $services;
-	public Session $session;
 	public Encoder $encoder;
 	public Wrapper $wrapper;
 	public FileFinder $templateFinder;
 	public string $siteAddress;
-
-	public function setSession(Session $session): self
-	{
-		$this->session = $session;
-		return $this;
-	}
 
 	public function setEncoder(Encoder $encoder): self
 	{
@@ -86,7 +78,7 @@ class ConsoleResponder implements Responder
 	 */
 	public function redirect(Location $location, ResponseCode $code): void
 	{
-		$feedback = $this->session->getFeedbackAndClear();
+		$feedback = $this->services->session->getFeedbackAndClear();
 		if($feedback !== null) echo "\n\n$feedback\n\n";
 		try { // some redirects will work
 			new Gateway($this->application)

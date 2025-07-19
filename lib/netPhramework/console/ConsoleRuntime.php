@@ -21,15 +21,11 @@ class ConsoleRuntime extends Runtime
 			->setEncoder(new Encoder())
 			->setTemplateFinder(new FileFinder())
 			->setWrapper(new Wrapper())
-			->setSiteAddress($this->siteAddress)
-			->setSession($this->session)
 		;
 	}}
 
 	public ConsoleRuntimeContext $context{get{
-		if(!isset($this->context))
-			$this->context = new ConsoleRuntimeContext()->initialize();
-		return $this->context;
+		return new ConsoleRuntimeContext()->initialize();
 	}set{}}
 
 	protected string $domain {get{

@@ -3,6 +3,9 @@
 namespace netPhramework\bootstrap;
 
 use netPhramework\core\Application;
+use netPhramework\core\Runtime;
+use netPhramework\core\RuntimeContext;
+use netPhramework\core\RuntimeMode;
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
@@ -17,61 +20,102 @@ readonly class Controller
 	private Request $request;
 	private Services $services;
 	private Responder $responder;
+	private RuntimeContext $runtimeContext;
 
-	public function __construct(private Site $site) {}
+	private string $siteAddress;
+	private RuntimeMode $runtimeMode;
+
+	public function __construct(private Site $site, private Runtime $runtime) {}
 
 	public function run():void
 	{
-		$this->initialize()->prepare()->exchange();
+		$this
+			->initializeHandlers()
+			->assembleServices()
+			->prepareController()
+			->prepareSite()
+			->prepareApplication()
+			->prepareResponder()
+			->processExchange();
 	}
 
-	private function initialize():self
+	private function initializeHandlers():self
 	{
-		$handler = new Handler($this->site->runtime->mode);
+		$handler = new Handler($this->runtime->mode);
 		register_shutdown_function([$handler, 'shutdown']);
 		set_error_handler([$handler, 'handleError']);
 		set_exception_handler([$handler, 'handleException']);
 		return $this;
 	}
 
-	private function prepare():self
+	private function assembleServices():self
 	{
-		$this->request 					= $this->site->runtime->request;
-		$this->services 				= $this->site->services;
-		$this->responder 			  	= $this->site->runtime->responder;
-		$this->application				= $this->site->application;
-		$this->responder->application 	= $this->application;
-		$this->responder->siteAddress 	= $this->site->address;
-		$this->responder->services 		= $this->services;
-		$this->site->runtime->configureResponder($this->responder);
+		$this->services = new Services()
+			->setSession($this->runtime->session)
+			->setSmtpServer($this->runtime->smtpServer)
+			->setCallbackManager($this->runtime->callbackManager)
+			->setFileManager($this->runtime->fileManager)
+		;
 		return $this;
 	}
 
-	private function exchange():void
+	private function prepareController():self
+	{
+		$this->request 	   		= $this->runtime->request;
+		$this->responder   		= $this->runtime->responder;
+		$this->siteAddress 		= $this->runtime->siteAddress;
+		$this->runtimeContext	= $this->runtime->context;
+		$this->runtimeMode		= $this->runtime->mode;
+		return $this;
+	}
+
+	private function prepareSite():self
+	{
+		$this->site->runtimeContext = $this->runtimeContext;
+		$this->site->session	    = $this->services->session;
+		return $this;
+	}
+
+	private function prepareApplication():self
+	{
+		$this->application = $this->site->application;
+		return $this;
+	}
+
+	private function prepareResponder():self
+	{
+		$this->responder->application 	= $this->application;
+		$this->responder->siteAddress 	= $this->siteAddress;
+		$this->responder->services 		= $this->services;
+		$this->runtime->configureResponder($this->responder);
+		return $this;
+	}
+
+	private function processExchange():void
 	{
 		try {
 			try {
-				$this->site->runtime->session->start();
+				$this->services->session->start();
 				new Gateway($this->application)
 					->mapToRouter($this->request->isToModify)
 					->route($this->request->location)
 					->openExchange($this->services)
-					->execute($this->site->address)
+					->execute($this->siteAddress)
 					->deliver($this->responder);
 			} catch (NodeNotFound $exception) {
 				$exception
-					->setRuntimeMode($this->site->runtime->mode)
+					->setRuntimeMode($this->runtimeMode)
 					->deliver($this->responder);
 			} catch (Exception $exception) {
 				$exception
-					->setRuntimeMode($this->site->runtime->mode)
+					->setRuntimeMode($this->runtimeMode)
 					->deliver($this->responder);
 				$this->logException($exception);
 			}
 		}
 		catch (\Exception $exception)
 		{
-			if($this->site->inDevelopment)
+			if($this->runtimeMode->isDevelopment())
 			{
 				echo $exception->getMessage();
 			}

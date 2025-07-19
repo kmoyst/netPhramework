@@ -2,30 +2,12 @@
 
 namespace netPhramework\core;
 
-use netPhramework\exchange\Responder;
-use netPhramework\exchange\Services;
+use netPhramework\user\Session;
 
 abstract class Site
 {
-	public bool $inDevelopment {get{
-		return $this->runtime->mode === RuntimeMode::DEVELOPMENT;
-	}}
-
-	public string $address {get{
-		return $this->runtime->siteAddress;
-	}}
-
-	public readonly Services $services;
+	public RuntimeContext $runtimeContext;
+	public Session $session;
 
 	abstract public Application $application {get;}
-
-	public function __construct(public readonly Runtime $runtime)
-	{
-		$this->services = new Services()
-			->setSession($this->runtime->session)
-			->setSmtpServer($this->runtime->smtpServer)
-			->setCallbackManager($this->runtime->callbackManager)
-			->setFileManager($this->runtime->fileManager)
-		;
-	}
 }
