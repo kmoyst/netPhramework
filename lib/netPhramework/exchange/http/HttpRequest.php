@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\http;
+namespace netPhramework\exchange\http;
 
 use netPhramework\exchange\Request;
 use netPhramework\routing\Location;
@@ -14,13 +14,13 @@ class HttpRequest implements Request
 		return $this->location;
 	}}
 
-	public bool $isModificationRequest {get{
+	public bool $isForModification {get{
 		return $this->input->hasPostParameters();
 	}}
 
 	public function __construct
 	(
-	private readonly HttpInput $input = new HttpInput()
+	private readonly HttpInput $input
 	)
 	{}
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\http;
+namespace netPhramework\exchange\http;
 
 class HttpInput
 {

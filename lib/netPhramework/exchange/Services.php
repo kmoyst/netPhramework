@@ -7,12 +7,34 @@ use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
 
-readonly class Services
+class Services
 {
-	public function __construct(
-		public Session         $session,
-		public FileManager     $fileManager,
-		public CallbackManager $callbackManager,
-		public SmtpServer      $smtpServer,
-	) {}
+	public Session         $session;
+	public FileManager     $fileManager;
+	public CallbackManager $callbackManager;
+	public SmtpServer      $smtpServer;
+
+	public function setSession(Session $session): self
+	{
+		$this->session = $session;
+		return $this;
+	}
+
+	public function setFileManager(FileManager $fileManager): self
+	{
+		$this->fileManager = $fileManager;
+		return $this;
+	}
+
+	public function setCallbackManager(CallbackManager $callbackManager): self
+	{
+		$this->callbackManager = $callbackManager;
+		return $this;
+	}
+
+	public function setSmtpServer(SmtpServer $smtpServer): self
+	{
+		$this->smtpServer = $smtpServer;
+		return $this;
+	}
 }

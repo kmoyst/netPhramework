@@ -2,11 +2,13 @@
 
 namespace netPhramework\bootstrap;
 
+use netPhramework\exchange\host\HostMode;
+
 class Handler
 {
 	private bool $fatalErrorHandled = false;
 
-	public function __construct(private readonly bool $inDevelopment) {}
+	public function __construct(private HostMode $mode) {}
 
 	public function shutdown():never
 	{
@@ -25,7 +27,7 @@ class Handler
 		int $errno, string $errstr, ?string $errfile = null,
 		?int $errline = null):bool
 	{
-		if($this->inDevelopment)
+		if($this->mode->isDevelopment())
 		{
 			printf(
 				"<pre>PHP Error [%d]: %s\nFileMapper: %s\nLine: %s\n</pre>",
@@ -50,7 +52,7 @@ class Handler
 
 	public function handleException(\Throwable $exception):never
 	{
-		if($this->inDevelopment)
+		if($this->mode->isDevelopment())
 		{
 			echo "<pre>";
 			print_r($exception);

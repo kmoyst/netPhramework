@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\core\Application;
+use netPhramework\configuration\Application;
 use netPhramework\exceptions\Exception;
 use netPhramework\nodes\Directory;
 

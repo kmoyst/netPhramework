@@ -3,7 +3,7 @@
 namespace netPhramework\routing;
 
 use netPhramework\common\Variables;
-use netPhramework\http\HttpInput;
+use netPhramework\exchange\http\HttpInput;
 
 class LocationFromHttpInput extends Location
 {

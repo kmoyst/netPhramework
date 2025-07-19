@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\http;
+namespace netPhramework\exchange\http;
 
 use netPhramework\common\FileFinder;
-use netPhramework\core\Application;
-use netPhramework\core\Environment;
+use netPhramework\configuration\Application;
+use netPhramework\exchange\host\HostContext;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\exchange\Services;
@@ -17,7 +17,7 @@ use netPhramework\transferring\File;
 
 class HttpResponder implements Responder
 {
-	public Environment $environment;
+	public HostContext $environment;
 	public Application $application;
 	public Services $services;
 

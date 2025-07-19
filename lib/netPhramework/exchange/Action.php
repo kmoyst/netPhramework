@@ -2,7 +2,7 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\core\Environment;
+use netPhramework\exchange\host\HostContext;
 use netPhramework\nodes\Node;
 use netPhramework\routing\Location;
 
@@ -27,7 +27,7 @@ class Action
 		return $this;
 	}
 
-	public function execute(Environment $environment):Response
+	public function execute(HostContext $environment):Response
 	{
 		$this->handler->handleExchange(
 			$this->exchange->setEnvironment($environment));

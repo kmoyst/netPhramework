@@ -3,7 +3,6 @@
 namespace netPhramework\routing;
 
 use netPhramework\exceptions\InvalidUri;
-use netPhramework\exceptions\PathException;
 
 class PathFromUri extends PathTemplate
 {

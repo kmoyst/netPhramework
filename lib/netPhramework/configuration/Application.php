@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\configuration;
 
 use netPhramework\exceptions\Exception;
 use netPhramework\nodes\Directory;

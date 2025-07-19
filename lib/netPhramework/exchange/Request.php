@@ -7,5 +7,5 @@ use netPhramework\routing\Location;
 interface Request
 {
 	public Location $location {get;}
-	public bool $isModificationRequest {get;}
+	public bool $isForModification {get;}
 }

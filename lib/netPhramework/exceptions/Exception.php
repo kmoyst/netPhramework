@@ -2,7 +2,7 @@
 
 namespace netPhramework\exceptions;
 
-use netPhramework\core\Environment;
+use netPhramework\exchange\host\HostMode;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\Response;
 use netPhramework\exchange\ResponseCode;
@@ -13,7 +13,7 @@ class Exception extends \Exception implements Wrappable, Response
 	protected string $friendlyMessage = "SERVER ERROR";
 	protected readonly ResponseCode $responseCode;
 
-	private Environment $environment;
+	public HostMode $hostMode;
 
     public function __construct(
 		string $message = "", ?ResponseCode $responseCode = null)
@@ -27,9 +27,9 @@ class Exception extends \Exception implements Wrappable, Response
         return $this->responseCode;
     }
 
-	public function setEnvironment(Environment $environment): Exception
+	public function setHostMode(HostMode $hostMode): self
 	{
-		$this->environment = $environment;
+		$this->hostMode = $hostMode;
 		return $this;
 	}
 
@@ -46,7 +46,7 @@ class Exception extends \Exception implements Wrappable, Response
 	 */
     public function getContent(): string
     {
-		if($this->environment->inDevelopment)
+		if($this->hostMode->isDevelopment())
 		{
 			$message = $this->message;
 		}

@@ -2,11 +2,10 @@
 
 namespace netPhramework\exchange;
 
-use netPhramework\exceptions\PathException;
-use netPhramework\user\Session;
 use netPhramework\common\Variables;
-use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
+use netPhramework\exceptions\PathException;
+use netPhramework\exchange\host\HostContext;
 use netPhramework\rendering\ConfigurableView;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Presentation;
@@ -21,6 +20,7 @@ use netPhramework\transferring\File;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\FileTransfer;
 use netPhramework\transferring\SmtpServer;
+use netPhramework\user\Session;
 
 class Exchange implements CallbackContext
 {
@@ -29,7 +29,7 @@ class Exchange implements CallbackContext
 	private(set) FileManager $fileManager;
 	private(set) CallbackManager $callbackManager;
 	private(set) SmtpServer $smtpServer;
-	private(set) Environment $environment;
+	private(set) HostContext $host;
 
 	public Variables $parameters {get{
 		return clone $this->location->getParameters();
@@ -40,11 +40,11 @@ class Exchange implements CallbackContext
 	}}
 
 	public string $siteAddress {get{
-		return $this->environment->siteAddress;
+		return $this->host->siteAddress;
 	}}
 
-	public string $siteHost {get{
-		return $this->environment->siteHost;
+	public string $siteDomain {get{
+		return $this->host->hostDomain;
 	}}
 
 	public string $callbackKey {get{
@@ -136,9 +136,9 @@ class Exchange implements CallbackContext
 		return $this->callbackManager->getLink(clone $this->location);
 	}
 
-	public function setEnvironment(Environment $environment): self
+	public function setHost(HostContext $host): self
 	{
-		$this->environment = $environment;
+		$this->host = $host;
 		return $this;
 	}
 

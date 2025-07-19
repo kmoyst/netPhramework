@@ -2,7 +2,7 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\core\Site;
+use netPhramework\configuration\Site;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exchange\Gateway;
@@ -18,7 +18,7 @@ readonly class Controller
 
 	private function initialize():self
 	{
-		$handler = new Handler($this->site->environment->inDevelopment);
+		$handler = new Handler($this->site->hostMode);
 		register_shutdown_function([$handler, 'shutdown']);
 		set_error_handler([$handler, 'handleError']);
 		set_exception_handler([$handler, 'handleException']);
@@ -37,25 +37,25 @@ readonly class Controller
 			try {
 				$this->site->services->session->start();
 				new Gateway($this->site->application)
-					->mapToRouter($this->site->request->isModificationRequest)
+					->mapToRouter($this->site->request->isForModification)
 					->route($this->site->request->location)
 					->openExchange($this->site->services)
-					->execute($this->site->environment)
+					->execute($this->site->host)
 					->deliver($this->site->responder);
 			} catch (NodeNotFound $exception) {
 				$exception
-					->setEnvironment($this->site->environment)
+					->setHostMode($this->site->hostMode)
 					->deliver($this->site->responder);
 			} catch (Exception $exception) {
 				$exception
-					->setEnvironment($this->site->environment)
+					->setHostMode($this->site->hostMode)
 					->deliver($this->site->responder);
 				$this->logException($exception);
 			}
 		}
 		catch (\Exception $exception)
 		{
-			if($this->site->environment->inDevelopment)
+			if($this->site->inDevelopment)
 			{
 				echo $exception->getMessage();
 			}

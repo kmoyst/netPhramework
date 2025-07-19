@@ -2,17 +2,15 @@
 
 namespace netPhramework\transferring;
 
-use netPhramework\core\Environment;
-
 readonly class SmtpServer
 {
 	private StreamSocket $socket;
-	private string $serverName;
 
-	public function __construct(Environment $environment)
+	public function __construct(
+		string $serverAddress,
+		private string $serverName)
 	{
-		$this->socket = new StreamSocket($environment->smtpServerAddress);
-		$this->serverName = $environment->smtpServerName;
+		$this->socket = new StreamSocket($serverAddress);
 	}
 
 	/**

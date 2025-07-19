@@ -1,14 +1,14 @@
 <?php
 
-namespace netPhramework\cli;
+namespace netPhramework\exchange\cli;
 
 use netPhramework\common\FileFinder;
-use netPhramework\core\Application;
-use netPhramework\core\Environment;
+use netPhramework\configuration\Application;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exceptions\NotFound;
 use netPhramework\exchange\Gateway;
+use netPhramework\exchange\host\HostContext;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\exchange\Services;
@@ -20,7 +20,7 @@ use netPhramework\transferring\File;
 
 class CliResponder implements Responder
 {
-	public Environment $environment;
+	public HostContext $environment;
 	public Application $application;
 	public Services $services;
 

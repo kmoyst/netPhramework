@@ -1,8 +1,7 @@
 <?php
 
-namespace netPhramework\cli;
+namespace netPhramework\exchange\cli;
 
-use netPhramework\core\Environment;
 use netPhramework\exchange\Request;
 use netPhramework\routing\Location;
 use netPhramework\routing\LocationFromCli;
@@ -17,10 +16,10 @@ class CliRequest implements Request
 		return $this->location;
 	}}
 
-	public bool $isModificationRequest {get{
+	public bool $isForModification {get{
 		$question = "\n\nIs this a MODIFICATION request? [Y/n: default n] ";
 		return readline($question) === 'Y';
 	}}
 
-	public function __construct(private readonly Environment $environment) {}
+	public function __construct() {}
 }
