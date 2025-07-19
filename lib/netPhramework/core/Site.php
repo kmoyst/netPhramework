@@ -4,10 +4,8 @@ namespace netPhramework\core;
 
 use netPhramework\user\Session;
 
-abstract class Site
+interface Site
 {
-	public RuntimeContext $runtimeContext;
-	public Session $session;
-
-	abstract public Application $application {get;}
+	public function getApplication(
+		Session $session, RuntimeContext $context):Application;
 }

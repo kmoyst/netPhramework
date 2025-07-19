@@ -33,8 +33,6 @@ readonly class Controller
 			->initializeHandlers()
 			->assembleServices()
 			->prepareController()
-			->prepareSite()
-			->prepareApplication()
 			->prepareResponder()
 			->processExchange();
 	}
@@ -66,19 +64,8 @@ readonly class Controller
 		$this->siteAddress 		= $this->runtime->siteAddress;
 		$this->runtimeContext	= $this->runtime->context;
 		$this->runtimeMode		= $this->runtime->mode;
-		return $this;
-	}
-
-	private function prepareSite():self
-	{
-		$this->site->runtimeContext = $this->runtimeContext;
-		$this->site->session	    = $this->services->session;
-		return $this;
-	}
-
-	private function prepareApplication():self
-	{
-		$this->application = $this->site->application;
+		$this->application	    = $this->site->getApplication(
+			$this->services->session, $this->runtimeContext);
 		return $this;
 	}
 
