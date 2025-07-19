@@ -7,6 +7,7 @@ use netPhramework\core\Application;
 use netPhramework\core\Environment;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
+use netPhramework\exceptions\NotFound;
 use netPhramework\exchange\Gateway;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\ResponseCode;
@@ -62,6 +63,14 @@ class CliResponder implements Responder
 	{
 		$feedback = $this->services->session->getFeedbackAndClear();
 		if($feedback !== null) echo "\n\n$feedback\n\n";
+		try { // some redirects will work
+			new Gateway($this->application)
+				->mapToRouter(false)
+				->route($location)
+				->openExchange($this->services)
+				->execute($this->environment)
+				->deliver($this);
+		} catch (NotFound) {} // others won't
 		$this->newQuery();
 	}
 
