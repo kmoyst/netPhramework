@@ -26,9 +26,9 @@ class ConsoleRuntime extends Runtime
 		;
 	}}
 
-	public ConsoleContext $context{get{
+	public ConsoleRuntimeContext $context{get{
 		if(!isset($this->context))
-			$this->context = new ConsoleContext()->initialize();
+			$this->context = new ConsoleRuntimeContext()->initialize();
 		return $this->context;
 	}set{}}
 

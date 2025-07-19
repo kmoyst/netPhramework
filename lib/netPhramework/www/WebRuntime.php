@@ -32,7 +32,7 @@ class WebRuntime extends Runtime
 	}}
 
 	public function __construct(
-		public readonly WebContext $context = new WebContext())
+		public readonly WebRuntimeContext $context = new WebRuntimeContext())
 	{
 	}
 

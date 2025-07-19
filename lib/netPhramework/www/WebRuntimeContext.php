@@ -4,7 +4,7 @@ namespace netPhramework\www;
 
 use netPhramework\core\RuntimeContext;
 
-class WebContext implements RuntimeContext
+class WebRuntimeContext implements RuntimeContext
 {
 	public WebRequestInput $requestInput {get{
 		return new WebRequestInput();
