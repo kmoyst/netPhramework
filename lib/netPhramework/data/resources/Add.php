@@ -2,13 +2,13 @@
 
 namespace netPhramework\data\resources;
 
-use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\nodes\AssetProcess;
 use netPhramework\data\presentation\recordForm\RecordFormBuilder;
 use netPhramework\data\presentation\recordForm\RecordFormStrategy;
 use netPhramework\data\presentation\recordForm\RecordFormStrategyBasic;
+use netPhramework\data\record\Record;
 use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\View;

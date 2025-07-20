@@ -2,10 +2,10 @@
 
 namespace netPhramework\data\presentation\recordForm;
 
-use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\mapping\Cell;
 use netPhramework\data\mapping\FieldType;
+use netPhramework\data\record\Record;
 use netPhramework\presentation\InputSet;
 use netPhramework\presentation\InputSetBuilder;
 

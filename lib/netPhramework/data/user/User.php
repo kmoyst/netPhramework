@@ -2,11 +2,11 @@
 
 namespace netPhramework\data\user;
 use netPhramework\common\Variables;
-use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\DuplicateEntryException;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\InvalidValue;
 use netPhramework\data\exceptions\MappingException;
+use netPhramework\data\record\Record;
 use netPhramework\exceptions\AuthenticationException;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;

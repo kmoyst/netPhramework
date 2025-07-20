@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\core;
+namespace netPhramework\data\record;
 
 interface RecordDescriber
 {

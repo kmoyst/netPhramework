@@ -4,9 +4,9 @@ namespace netPhramework\data\nodes;
 
 use netPhramework\common\IsNumeric;
 use netPhramework\common\StringPredicate;
-use netPhramework\data\core\RecordSet;
 use netPhramework\data\nodes\AssetChildSet as ChildSet;
 use netPhramework\data\nodes\AssetRecordChildSet as RecordChildSet;
+use netPhramework\data\record\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;

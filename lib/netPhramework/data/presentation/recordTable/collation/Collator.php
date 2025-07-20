@@ -1,7 +1,6 @@
 <?php
 
 namespace netPhramework\data\presentation\recordTable\collation;
-use netPhramework\data\core\RecordSet;
 use netPhramework\data\exceptions\ColumnAbsent;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\InvalidComparator;
@@ -11,6 +10,7 @@ use netPhramework\data\exceptions\ValueInaccessible;
 use netPhramework\data\mapping\Glue;
 use netPhramework\data\mapping\SortDirection;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnSet;
+use netPhramework\data\record\RecordSet;
 use netPhramework\exceptions\Exception;
 
 class Collator

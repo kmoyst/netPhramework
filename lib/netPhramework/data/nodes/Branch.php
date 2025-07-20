@@ -2,10 +2,10 @@
 
 namespace netPhramework\data\nodes;
 
-use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\mapping\Condition;
+use netPhramework\data\record\Record;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 

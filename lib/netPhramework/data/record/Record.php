@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\core;
+namespace netPhramework\data\record;
 
 use netPhramework\data\abstraction\Schema;
 use netPhramework\data\abstraction\Table;

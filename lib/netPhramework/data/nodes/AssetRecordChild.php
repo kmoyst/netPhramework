@@ -2,7 +2,7 @@
 
 namespace netPhramework\data\nodes;
 
-use netPhramework\data\core\Record;
+use netPhramework\data\record\Record;
 use netPhramework\nodes\Node;
 
 interface AssetRecordChild extends Node

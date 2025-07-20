@@ -4,10 +4,10 @@ namespace netPhramework\data\configuration\builders;
 
 use netPhramework\data\configuration\strategies\AssetResourceStrategy;
 use netPhramework\data\configuration\strategies\AssetStrategy;
-use netPhramework\data\core\RecordMapper;
 use netPhramework\data\nodes\Asset;
 use netPhramework\data\nodes\AssetResource;
 use netPhramework\data\nodes\Branch;
+use netPhramework\data\record\RecordMapper;
 use netPhramework\nodes\Directory;
 
 class DataNodeBuilder

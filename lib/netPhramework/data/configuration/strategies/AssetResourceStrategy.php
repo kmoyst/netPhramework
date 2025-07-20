@@ -2,8 +2,8 @@
 
 namespace netPhramework\data\configuration\strategies;
 
-use netPhramework\data\core\RecordMapper;
 use netPhramework\data\nodes\AssetResource;
+use netPhramework\data\record\RecordMapper;
 
 interface AssetResourceStrategy
 {

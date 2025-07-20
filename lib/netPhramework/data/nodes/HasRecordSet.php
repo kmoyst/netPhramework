@@ -2,7 +2,7 @@
 
 namespace netPhramework\data\nodes;
 
-use netPhramework\data\core\RecordSet;
+use netPhramework\data\record\RecordSet;
 
 trait HasRecordSet
 {

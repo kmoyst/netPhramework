@@ -3,9 +3,9 @@
 namespace netPhramework\data\presentation\recordTable\columns;
 
 use netPhramework\common\Utils;
-use netPhramework\data\core\Record;
 use netPhramework\data\presentation\recordTable\columnSet\Column;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnHeader;
+use netPhramework\data\record\Record;
 use netPhramework\rendering\Encodable;
 
 class TextColumn implements Column
