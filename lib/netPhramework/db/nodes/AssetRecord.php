@@ -7,13 +7,13 @@ use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class RecordComposite extends Composite implements AssetChild
+class AssetRecord extends Composite implements AssetChild
 {
 	use HasRecordSet;
 
 	public function __construct(
-		private readonly RecordChildSet $childSet,
-		private readonly string $recordId
+		private readonly AssetRecordChildSet $childSet,
+		private readonly string              $recordId
 	) {}
 
 	/**

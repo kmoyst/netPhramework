@@ -14,7 +14,7 @@ use netPhramework\db\presentation\recordTable\collation\Query;
 use netPhramework\db\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\db\presentation\recordTable\ViewBuilder;
 use netPhramework\db\presentation\recordTable\ViewStrategy;
-use netPhramework\db\nodes\RecordProcess;
+use netPhramework\db\nodes\AssetRecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
@@ -23,7 +23,7 @@ use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 use netPhramework\rendering\Viewable;
 
-class EditParent extends RecordProcess
+class EditParent extends AssetRecordProcess
 {
 	public function __construct
 	(

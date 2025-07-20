@@ -8,15 +8,17 @@ use netPhramework\db\core\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
+use netPhramework\db\nodes\AssetRecordChildSet as RecordChildSet;
+use netPhramework\db\nodes\AssetChildSet as ChildSet;
 
-class Asset extends Composite implements AssetResourceSet
+class Asset extends Composite implements AssetResourceRegistry
 {
 	public function __construct
 	(
 	public readonly string          $name,
 	public readonly RecordSet       $recordSet,
-	public readonly StringPredicate $recordIdPredicate   = new IsNumeric(),
-	public readonly AssetChildSet   $assetChildSet = new AssetChildSet(),
+	public readonly StringPredicate $predicate 		= new IsNumeric(),
+	public readonly ChildSet        $assetChildSet 	= new ChildSet(),
 	public readonly RecordChildSet  $recordChildSet = new RecordChildSet(),
 	) {}
 
@@ -37,8 +39,8 @@ class Asset extends Composite implements AssetResourceSet
 	 */
 	private function resolveChild(string $id): AssetChild
 	{
-		if($this->recordIdPredicate->test($id))
-			return new RecordComposite($this->recordChildSet, $id);
+		if($this->predicate->test($id))
+			return new AssetRecord($this->recordChildSet, $id);
 		else
 			return $this->assetChildSet->get($id);
 	}

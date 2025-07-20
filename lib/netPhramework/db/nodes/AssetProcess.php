@@ -6,8 +6,8 @@ abstract class AssetProcess extends AssetResource implements AssetChild
 {
 	use HasRecordSet;
 
-	public function enlist(AssetResourceSet $resourceSet):void
+	public function enlist(AssetResourceRegistry $registry):void
 	{
-		$resourceSet->assetChildSet->add($this);
+		$registry->assetChildSet->add($this);
 	}
 }

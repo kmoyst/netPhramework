@@ -9,24 +9,24 @@ use netPhramework\db\mapping\Condition;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class Branch extends Composite implements RecordChild
+class Branch extends Composite implements AssetRecordChild
 {
 	public function __construct
 	(
-	private readonly Asset  $recordSetComposite,
+	private readonly Asset  $asset,
 	private readonly string $linkField
 	)
 	{}
 
 	/**
 	 * @param Record $record
-	 * @return RecordChild
+	 * @return AssetRecordChild
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 */
-	public function setRecord(Record $record): RecordChild
+	public function setRecord(Record $record): AssetRecordChild
 	{
-		$childRecords = $this->recordSetComposite->recordSet;
+		$childRecords = $this->asset->recordSet;
 		$field = $childRecords->getField($this->linkField);
 		$condition = new Condition()
 			->setField($field)
@@ -38,11 +38,11 @@ class Branch extends Composite implements RecordChild
 
 	public function getChild(string $id): Node
 	{
-		return $this->recordSetComposite->getChild($id);
+		return $this->asset->getChild($id);
 	}
 
 	public function getName(): string
 	{
-		return $this->recordSetComposite->getName();
+		return $this->asset->getName();
 	}
 }

@@ -3,7 +3,7 @@
 namespace netPhramework\db\configuration\builders;
 
 use netPhramework\db\nodes\Branch;
-use netPhramework\db\nodes\RecordProcess;
+use netPhramework\db\nodes\AssetRecordProcess;
 use netPhramework\db\resources\Delete;
 use netPhramework\db\resources\Insert;
 use netPhramework\db\resources\Update;
@@ -31,8 +31,8 @@ class ActiveNodeBuilder extends DynamicNodeBuilder
     }
 
 	public function includeDefaults(
-		?RecordProcess $saveProcess = null,
-		?Redirector    $onSuccessfulSave = null): self
+		?AssetRecordProcess $saveProcess = null,
+		?Redirector         $onSuccessfulSave = null): self
 	{
 		return $this
 			->includeInsert($saveProcess, $onSuccessfulSave)
@@ -53,24 +53,24 @@ class ActiveNodeBuilder extends DynamicNodeBuilder
 	}
 
 	public function includeInsert(
-		?RecordProcess $saveProcess = null,
-		?Redirector    $onSuccess = null): self
+		?AssetRecordProcess $saveProcess = null,
+		?Redirector         $onSuccess = null): self
 	{
 		$this->add(new Insert($saveProcess, $onSuccess));
 		return $this;
 	}
 
 	public function includeUpdate(
-		?RecordProcess $saveProcess = null,
-		?Redirector    $onSuccess = null): self
+		?AssetRecordProcess $saveProcess = null,
+		?Redirector         $onSuccess = null): self
 	{
 		$this->add(new Update($saveProcess, $onSuccess));
 		return $this;
 	}
 
 	public function includeInsertAndUpdate(
-		?RecordProcess $saveProcess = null,
-		?Redirector $onSuccess = null): self
+		?AssetRecordProcess $saveProcess = null,
+		?Redirector         $onSuccess = null): self
 	{
 		$this->includeInsert($saveProcess, $onSuccess);
 		$this->includeUpdate($saveProcess, $onSuccess);
