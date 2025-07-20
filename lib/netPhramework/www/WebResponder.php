@@ -46,6 +46,18 @@ class WebResponder implements Responder
 		return $this;
 	}
 
+	public function setApplication(Application $application): self
+	{
+		$this->application = $application;
+		return $this;
+	}
+
+	public function setServices(Services $services): self
+	{
+		$this->services = $services;
+		return $this;
+	}
+
 	private function prepare():self
 	{
 		$this->encoder->setTemplateFinder($this->templateFinder);

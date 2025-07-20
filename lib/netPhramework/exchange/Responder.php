@@ -21,4 +21,7 @@ interface Responder
 	public function present(Wrappable $content, ResponseCode $code): void;
 	public function redirect(Location $location, ResponseCode $code): void;
 	public function transfer(File $file, ResponseCode $code): void;
+
+	public function setApplication(Application $application):self;
+	public function setServices(Services $services):self;
 }

@@ -28,6 +28,7 @@ class Exchange implements CallbackContext
 	private(set) FileManager $fileManager;
 	private(set) CallbackManager $callbackManager;
 	private(set) SmtpServer $smtpServer;
+	private(set) string $siteAddress;
 
 	public Variables $parameters {get{
 		return clone $this->location->getParameters();
@@ -36,8 +37,6 @@ class Exchange implements CallbackContext
 	public Path $path {get{
 		return clone $this->location->path;
 	}}
-
-	public string $siteAddress;
 
 	public string $callbackKey {get{
 		return $this->callbackManager->callbackKey;
@@ -158,5 +157,9 @@ class Exchange implements CallbackContext
 		return $this;
 	}
 
-
+	public function setSiteAddress(string $siteAddress): self
+	{
+		$this->siteAddress = $siteAddress;
+		return $this;
+	}
 }

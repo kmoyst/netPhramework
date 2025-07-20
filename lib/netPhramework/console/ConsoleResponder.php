@@ -49,6 +49,18 @@ class ConsoleResponder implements Responder
 		return $this;
 	}
 
+	public function setApplication(Application $application): self
+	{
+		$this->application = $application;
+		return $this;
+	}
+
+	public function setServices(Services $services): self
+	{
+		$this->services = $services;
+		return $this;
+	}
+
 	private function configure():self
 	{
 		$this->encoder->setTemplateFinder($this->templateFinder);
@@ -83,7 +95,7 @@ class ConsoleResponder implements Responder
 			->mapToRouter(false)
 			->route($location)
 			->openExchange($this->services)
-			->execute($this->siteAddress)
+			->execute()
 			->deliver($this);
 		$this->newQuery();
 	}
@@ -108,7 +120,7 @@ class ConsoleResponder implements Responder
 			->mapToRouter($request->isToModify)
 			->route($request->location)
 			->openExchange($this->services)
-			->execute($this->siteAddress)
+			->execute()
 			->deliver($this);
 	}
 

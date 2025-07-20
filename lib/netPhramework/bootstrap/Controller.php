@@ -7,24 +7,30 @@ use netPhramework\core\Site;
 
 readonly class Controller
 {
-	private Processor $processor;
-
-	public function __construct(private Site $site, private Runtime $runtime)
-	{
-		$this->processor = new Processor($this->runtime, $this->site);
-	}
+	public function __construct
+	(
+		private Site $site,
+		private Runtime $runtime,
+	)
+	{}
 
 	public function run():void
 	{
+		$handler = new Handler($this->runtime->mode);
+		register_shutdown_function([$handler, 'shutdown']);
+		set_error_handler([$handler, 'handleError']);
+		set_exception_handler([$handler, 'handleException'])
+		;
+		$builder = new Builder()
+		;
 		try
 		{
-			$this->processor
-				->initializeHandlers()
-				->assembleServices()
-				->prepareForRequest()
-				->processRequest()
-				->prepareResponder()
-				->deliverResponse();
+			$builder
+				->assembleServices($this->runtime)
+				->buildApplication($this->site, $this->runtime)
+				->submitRequest($this->runtime, $handler)
+				->deliverResponse($this->runtime, $this->runtime->responder)
+				;
 		}
 		catch (\Exception $exception)
 		{
@@ -34,7 +40,7 @@ readonly class Controller
 			}
 			else
 			{
-				$this->processor->logException($exception);
+				$handler->logException($exception);
 				echo 'SERVER ERROR';
 			}
 		}

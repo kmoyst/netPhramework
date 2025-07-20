@@ -8,7 +8,7 @@ use netPhramework\data\builders\PassiveNodeBuilder;
 use netPhramework\data\core\RecordMapper;
 use netPhramework\nodes\Directory;
 
-readonly class Administration implements Application
+class Administration extends Application
 {
 	public function __construct(protected RecordMapper $mapper) {}
 

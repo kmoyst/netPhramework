@@ -65,6 +65,15 @@ class Handler
 		exit(1);
 	}
 
+	public function logException(\Exception $exception):void
+	{
+		ob_start();
+		echo $exception->getCode();
+		echo ": ";
+		echo $exception->getMessage();
+		error_log('Error:'. ob_get_clean());
+	}
+
 	private function errorIsFatal(int $errno):bool
 	{
 		return in_array($errno, [E_ERROR, E_CORE_ERROR, E_COMPILE_ERROR,

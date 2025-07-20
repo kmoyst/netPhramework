@@ -1,9 +1,8 @@
 <?php
 
 namespace netPhramework\rendering;
-use Stringable;
 
-class Buffer implements Stringable
+class Buffer
 {
     private string $templatePath;
     private iterable $variables;

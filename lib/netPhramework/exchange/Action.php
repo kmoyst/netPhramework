@@ -18,6 +18,7 @@ class Action
 	public function openExchange(Services $services):self
 	{
 		$this->exchange = new Exchange($this->location)
+			->setSiteAddress($services->siteAddress)
 			->setSession($services->session)
 			->setFileManager($services->fileManager)
 			->setSmtpServer($services->smtpServer)
@@ -26,9 +27,8 @@ class Action
 		return $this;
 	}
 
-	public function execute(string $siteAddress):Response
+	public function execute():Response
 	{
-		$this->exchange->siteAddress = $siteAddress;
 		$this->handler->handleExchange($this->exchange);
 		return $this->exchange->response;
 	}

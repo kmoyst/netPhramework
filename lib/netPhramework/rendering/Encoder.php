@@ -25,23 +25,21 @@ class Encoder
 		return $text;
 	}
 
-	public function encodeViewable(Viewable $viewable):Buffer
+	public function encodeViewable(Viewable $viewable):Buffer|string
     {
 		return $this->encodeTemplate(
 			$viewable->getTemplateName(), $viewable->getVariables());
 	}
 
 	public function encodeTemplate(
-		string $templateName, ?iterable $variables = []):Buffer
+		string $templateName, ?iterable $variables = []):Buffer|string
 	{
 		try {
 			$path = $this->findTemplatePath($templateName);
 			$variables = $this->encodeIterable($variables);
 			return new Buffer($path, $variables);
 		} catch (FileNotFound) {
-			// @TODO probably log the error here
-			return new Buffer('message',
-				['message' => "template missing: $templateName"]);
+			return '';
 		}
 	}
 

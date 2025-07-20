@@ -9,10 +9,17 @@ use netPhramework\transferring\SmtpServer;
 
 class Services
 {
-	public Session         $session;
-	public FileManager     $fileManager;
-	public CallbackManager $callbackManager;
-	public SmtpServer      $smtpServer;
+	private(set) string			 $siteAddress;
+	private(set) Session         $session;
+	private(set) FileManager     $fileManager;
+	private(set) CallbackManager $callbackManager;
+	private(set) SmtpServer      $smtpServer;
+
+	public function setSiteAddress(string $siteAddress): self
+	{
+		$this->siteAddress = $siteAddress;
+		return $this;
+	}
 
 	public function setSession(Session $session): self
 	{
