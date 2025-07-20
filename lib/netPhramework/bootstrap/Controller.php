@@ -22,8 +22,8 @@ readonly class Controller
 				->initializeHandlers()
 				->assembleServices()
 				->prepareForRequest()
+				->processRequest()
 				->prepareResponder()
-				->processExchange()
 				->deliverResponse();
 		}
 		catch (\Exception $exception)

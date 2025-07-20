@@ -76,7 +76,7 @@ class Processor
 		return $this;
 	}
 
-	public function processExchange():self
+	public function processRequest():self
 	{
 		try {
 			$this->services->session->start();
