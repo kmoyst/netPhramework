@@ -16,7 +16,8 @@ readonly class Controller
 
 	public function run():void
 	{
-		try {
+		try
+		{
 			$this->processor
 				->initializeHandlers()
 				->assembleServices()
@@ -24,7 +25,9 @@ readonly class Controller
 				->prepareResponder()
 				->processExchange()
 				->deliverResponse();
-		} catch (\Exception $exception) {
+		}
+		catch (\Exception $exception)
+		{
 			if($this->runtime->mode->isDevelopment())
 			{
 				echo $exception->getMessage();
