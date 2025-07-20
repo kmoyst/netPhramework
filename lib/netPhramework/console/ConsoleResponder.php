@@ -79,14 +79,12 @@ class ConsoleResponder implements Responder
 	{
 		$feedback = $this->services->session->getFeedbackAndClear();
 		if($feedback !== null) echo "\n\n$feedback\n\n";
-		try { // some redirects will work
-			new Gateway($this->application)
-				->mapToRouter(false)
-				->route($location)
-				->openExchange($this->services)
-				->execute($this->siteAddress)
-				->deliver($this);
-		} catch (NodeNotFound) {} // others won't
+		new Gateway($this->application)
+			->mapToRouter(false)
+			->route($location)
+			->openExchange($this->services)
+			->execute($this->siteAddress)
+			->deliver($this);
 		$this->newQuery();
 	}
 

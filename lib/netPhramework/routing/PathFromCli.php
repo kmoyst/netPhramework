@@ -31,14 +31,15 @@ class PathFromCli extends PathTemplate
 			system('clear');
 			usleep(100000);
 			echo "\nNode: $name\n";
-			$names = explode('/', ltrim($name, '/'));
+			$names = explode('/', ltrim(rtrim($name,'.'), '/'));
 			$this->setName(array_shift($names));
 			if (!empty($names)) {
 				$next = new PathFromArray($names);
 				$this->setNext($next);
-				if($names[count($names)-1] !== '')
+				$last = $names[count($names)-1];
+				if($last !== '' && !preg_match('|\.$|',$name))
 					$next->appendPath(new PathFromCli());
-			} else {
+			} elseif(!preg_match('|\.$|',$name)) {
 				$this->setNext(new PathFromCli());
 			}
 		}
@@ -46,7 +47,7 @@ class PathFromCli extends PathTemplate
 
 	private function query():?string
 	{
-		$name = readline("\nEnter node name or enter '.' to complete request: ");
+		$name = readline("\nEnter node name (end with '.' to submit): ");
 		return $name === '.' ? null : $name;
 	}
 }
