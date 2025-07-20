@@ -18,9 +18,10 @@ readonly class ColumnSetStrategy implements StrategyInterface
 		$columnSet
 			->remove('password')
 			->remove('reset-code')
-			->add(new TextColumn($this->usernameField))
+			->remove('reset-code-time')
+			->add(new TextColumn($this->usernameField,100))
 			->add(new UserRoleColumn())
-			->add(new EmailColumn('email-address'))
+			->add(new EmailColumn('email-address',150))
 			;
 	}
 }
