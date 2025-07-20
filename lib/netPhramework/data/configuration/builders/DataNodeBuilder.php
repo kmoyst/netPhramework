@@ -2,8 +2,8 @@
 
 namespace netPhramework\data\configuration\builders;
 
-use netPhramework\data\configuration\strategies\AssetResourceStrategy;
-use netPhramework\data\configuration\strategies\AssetStrategy;
+use netPhramework\data\configuration\strategies\RecordResourceStrategy;
+use netPhramework\data\configuration\strategies\RecordSetCompositeStrategy;
 use netPhramework\data\core\RecordMapper;
 use netPhramework\data\nodes\RecordBranch;
 use netPhramework\data\nodes\RecordResource;
@@ -41,14 +41,14 @@ class DataNodeBuilder
 	}
 
 	public function branch(
-		AssetStrategy $strategy, string $linkField):self
+		RecordSetCompositeStrategy $strategy, string $linkField):self
 	{
 		$node = new RecordBranch($strategy->create($this->mapper), $linkField);
 		$this->asset->recordNodeSet->add($node);
 		return $this;
 	}
 
-	public function strategy(AssetResourceStrategy $strategy):self
+	public function strategy(RecordResourceStrategy $strategy):self
 	{
 		$this->add($strategy->create($this->mapper));
 		return $this;

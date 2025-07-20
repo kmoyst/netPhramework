@@ -5,7 +5,7 @@ namespace netPhramework\data\configuration\strategies;
 use netPhramework\data\core\RecordMapper;
 use netPhramework\data\nodes\RecordSetComposite;
 
-interface AssetStrategy
+interface RecordSetCompositeStrategy
 {
 	public function create(RecordMapper $mapper):RecordSetComposite;
 }
