@@ -1,13 +1,13 @@
 <?php
 
-namespace netPhramework\data\configuration\builders;
+namespace netPhramework\data\builders;
 
-use netPhramework\data\configuration\strategies\RecordResourceStrategy;
-use netPhramework\data\configuration\strategies\RecordSetCompositeStrategy;
 use netPhramework\data\core\RecordMapper;
 use netPhramework\data\nodes\RecordBranch;
 use netPhramework\data\nodes\RecordResource;
 use netPhramework\data\nodes\RecordSetComposite;
+use netPhramework\data\strategies\RecordResourceStrategy;
+use netPhramework\data\strategies\RecordSetCompositeStrategy;
 use netPhramework\nodes\Directory;
 
 class DataNodeBuilder

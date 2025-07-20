@@ -1,10 +1,10 @@
 <?php
 
-namespace netPhramework\data\configuration\applications;
+namespace netPhramework\data\applications;
 
 use netPhramework\core\Application;
-use netPhramework\data\configuration\builders\ActiveNodeBuilder;
-use netPhramework\data\configuration\builders\PassiveNodeBuilder;
+use netPhramework\data\builders\ActiveNodeBuilder;
+use netPhramework\data\builders\PassiveNodeBuilder;
 use netPhramework\data\core\RecordMapper;
 use netPhramework\nodes\Directory;
 

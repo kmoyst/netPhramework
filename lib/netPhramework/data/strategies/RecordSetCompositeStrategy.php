@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\configuration\strategies;
+namespace netPhramework\data\strategies;
 
 use netPhramework\data\core\RecordMapper;
 use netPhramework\data\nodes\RecordSetComposite;

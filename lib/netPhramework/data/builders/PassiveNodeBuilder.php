@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\configuration\builders;
+namespace netPhramework\data\builders;
 
 use netPhramework\data\nodes\RecordBranch;
 use netPhramework\data\presentation\recordForm\ChildRecordFormStrategy;
