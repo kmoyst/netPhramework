@@ -42,8 +42,8 @@ class ConsoleRuntime extends Runtime
 			->directory('../templates')
 			->directory('../html')
 			->directory(__DIR__ . '/../../../templates')
-			->extension('tpl')
 			->extension('phtml')
+			->extension('tpl')
 		;
 	}
 }

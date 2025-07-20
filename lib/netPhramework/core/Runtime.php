@@ -26,9 +26,6 @@ abstract class Runtime
 		return RuntimeMode::tryFrom($mode) ?? RuntimeMode::PRODUCTION;
 	}}
 
-	public Session $session {get{
-		return new Session();
-	}}
 	public FileManager $fileManager {get{
 		return new FileManager();
 	}}
@@ -43,6 +40,12 @@ abstract class Runtime
 			->get(RuntimeKey::SMTP_SERVER_NAME->value);
 		return new SmtpServer($address, $name);
 	}}
+
+	public function __construct
+	(
+		protected(set) Session $session = new Session()
+	)
+	{}
 
 	abstract public function configureResponder(Responder $responder):void;
 }

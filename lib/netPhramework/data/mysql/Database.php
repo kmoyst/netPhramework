@@ -11,19 +11,19 @@ class Database implements \netPhramework\data\abstraction\Database
 	private array $tables = [];
     private array $tableList;
 
-    public function __construct(private readonly Connection $adapter) {}
+    public function __construct(private readonly Connection $connection) {}
 
 	public function getSchema(string $name):Schema
 	{
 		if(!isset($this->schemas[$name]))
-			$this->schemas[$name] = new Schema($name, $this->adapter);
+			$this->schemas[$name] = new Schema($name, $this->connection);
 		return $this->schemas[$name];
 	}
 
 	public function getTable(string $name):Table
 	{
 		if(!isset($this->tables[$name]))
-			$this->tables[$name] = new Table($name, $this->adapter);
+			$this->tables[$name] = new Table($name, $this->connection);
 		return $this->tables[$name];
 	}
 
@@ -36,7 +36,7 @@ class Database implements \netPhramework\data\abstraction\Database
         if(!isset($this->tableNames))
         {
             $names = [];
-            foreach($this->adapter->runQuery(new ShowTables())->fetchAll()
+            foreach($this->connection->runQuery(new ShowTables())->fetchAll()
                     as $t) $names[] = array_pop($t);
             $this->tableList = $names;
         }

@@ -34,6 +34,7 @@ class WebRuntime extends Runtime
 	public function __construct(
 		public readonly WebRuntimeContext $context = new WebRuntimeContext())
 	{
+		parent::__construct();
 	}
 
 	public function configureResponder(Responder $responder):void
@@ -43,8 +44,8 @@ class WebRuntime extends Runtime
 			->directory('../templates')
 			->directory('../html')
 			->directory(__DIR__ . '/../../../templates')
-			->extension('tpl')
 			->extension('phtml')
+			->extension('tpl')
 			->extension('css')
 		;
 	}
