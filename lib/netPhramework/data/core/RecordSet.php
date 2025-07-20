@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\record;
+namespace netPhramework\data\core;
 use Countable;
 use Iterator;
 use netPhramework\data\abstraction\Schema;

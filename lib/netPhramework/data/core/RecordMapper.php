@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\record;
+namespace netPhramework\data\core;
 
 use netPhramework\common\StringIterator;
 use netPhramework\data\abstraction\Database;

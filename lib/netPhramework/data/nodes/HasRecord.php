@@ -1,8 +1,8 @@
 <?php
 
-namespace netPhramework\data\asset;
+namespace netPhramework\data\nodes;
 
-use netPhramework\data\record\Record;
+use netPhramework\data\core\Record;
 
 trait HasRecord
 {

@@ -2,9 +2,9 @@
 
 namespace netPhramework\data\presentation\recordTable\columnSet;
 
+use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\ValueInaccessible;
-use netPhramework\data\record\Record;
 use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Encodable;
 

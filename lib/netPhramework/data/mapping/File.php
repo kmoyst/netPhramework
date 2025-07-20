@@ -2,7 +2,7 @@
 
 namespace netPhramework\data\mapping;
 
-use netPhramework\data\record\Record;
+use netPhramework\data\core\Record;
 
 abstract class File implements \netPhramework\transferring\File
 {

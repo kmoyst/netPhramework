@@ -1,19 +1,19 @@
 <?php
 
-namespace netPhramework\data\asset;
+namespace netPhramework\data\nodes;
 
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class AssetChildProcessComposite extends Composite implements AssetNode
+class RecordComposite extends Composite implements RecordSetNode
 {
 	use HasRecordSet;
 
 	public function __construct(
-		private readonly AssetChildNodeSet $childSet,
-		private readonly string            $recordId
+		private readonly RecordNodeSet $nodeSet,
+		private readonly string        $recordId
 	) {}
 
 	/**
@@ -25,7 +25,7 @@ class AssetChildProcessComposite extends Composite implements AssetNode
 	public function getChild(string $id): Node
 	{
 		$record = $this->recordSet->getRecord($this->recordId);
-		return $this->childSet->get($id)->setRecord($record);
+		return $this->nodeSet->get($id)->setRecord($record);
 	}
 
 	public function getName(): string

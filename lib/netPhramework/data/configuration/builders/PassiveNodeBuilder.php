@@ -2,7 +2,7 @@
 
 namespace netPhramework\data\configuration\builders;
 
-use netPhramework\data\asset\AssetBranch;
+use netPhramework\data\nodes\RecordBranch;
 use netPhramework\data\presentation\recordForm\ChildRecordFormStrategy;
 use netPhramework\data\presentation\recordForm\RecordFormStrategy;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnSetStrategy;
@@ -49,7 +49,7 @@ class PassiveNodeBuilder extends DataNodeBuilder
 			->includeAdd(new ChildRecordFormStrategy($linkField))
 			->includeEdit(new ChildRecordFormStrategy($linkField))
 			->get();
-		$this->asset->childNodeSet->add(new AssetBranch($asset, $linkField));
+		$this->asset->recordNodeSet->add(new RecordBranch($asset, $linkField));
 		return $this;
 	}
 

@@ -2,18 +2,18 @@
 
 namespace netPhramework\data\resources;
 
+use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\asset\AssetProcess;
+use netPhramework\data\nodes\RecordSetProcess;
 use netPhramework\data\presentation\recordForm\RecordFormBuilder;
 use netPhramework\data\presentation\recordForm\RecordFormStrategy;
 use netPhramework\data\presentation\recordForm\RecordFormStrategyBasic;
-use netPhramework\data\record\Record;
 use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\View;
 
-class Add extends AssetProcess
+class Add extends RecordSetProcess
 {
 	public function __construct(
 		protected readonly ?RecordFormStrategy $formStrategy = null)

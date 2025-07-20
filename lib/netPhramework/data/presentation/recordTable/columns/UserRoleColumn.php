@@ -2,9 +2,9 @@
 
 namespace netPhramework\data\presentation\recordTable\columns;
 
+use netPhramework\data\core\Record;
 use netPhramework\data\presentation\recordTable\columnSet\Column;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnHeader;
-use netPhramework\data\record\Record;
 use netPhramework\data\user\UserField;
 use netPhramework\rendering\Encodable;
 use netPhramework\user\UserRole;

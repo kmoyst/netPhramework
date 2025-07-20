@@ -6,7 +6,7 @@ use netPhramework\data\exceptions\DuplicateEntryException;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\InvalidValue;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\asset\AssetProcess;
+use netPhramework\data\nodes\RecordSetProcess;
 use netPhramework\data\user\UserManager;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;
@@ -18,7 +18,7 @@ use netPhramework\transferring\EmailException;
 use netPhramework\transferring\EmailInfo;
 use netPhramework\transferring\StreamSocketException;
 
-class Enroll extends AssetProcess
+class Enroll extends RecordSetProcess
 {
 	private Redirector $onSuccess;
 	private Redirector $onFailure;

@@ -3,14 +3,14 @@
 namespace netPhramework\data\resources;
 
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\asset\AssetChildProcess;
+use netPhramework\data\nodes\RecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\redirectors\RedirectToParent;
 
-class Delete extends AssetChildProcess
+class Delete extends RecordProcess
 {
     protected Redirector $dispatcher;
 

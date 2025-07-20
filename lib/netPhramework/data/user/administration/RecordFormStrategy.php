@@ -1,8 +1,8 @@
 <?php
 
 namespace netPhramework\data\user\administration;
+use netPhramework\data\core\Record;
 use netPhramework\data\presentation\recordForm\RecordFormStrategy as baseStrategy;
-use netPhramework\data\record\Record;
 use netPhramework\presentation\InputSet;
 use netPhramework\user\UserRole;
 

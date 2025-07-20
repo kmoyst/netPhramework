@@ -3,12 +3,12 @@
 namespace netPhramework\data\user;
 
 use netPhramework\common\Variables;
+use netPhramework\data\core\Record;
+use netPhramework\data\core\RecordFinder;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\exceptions\RecordNotFound;
 use netPhramework\data\exceptions\RecordRetrievalException;
-use netPhramework\data\record\Record;
-use netPhramework\data\record\RecordFinder;
 use netPhramework\exceptions\NotFound;
 use netPhramework\user\Session;
 use netPhramework\user\UserRole;

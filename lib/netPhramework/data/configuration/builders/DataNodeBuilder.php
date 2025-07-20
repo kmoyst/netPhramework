@@ -4,15 +4,15 @@ namespace netPhramework\data\configuration\builders;
 
 use netPhramework\data\configuration\strategies\AssetResourceStrategy;
 use netPhramework\data\configuration\strategies\AssetStrategy;
-use netPhramework\data\asset\Asset;
-use netPhramework\data\asset\AssetResource;
-use netPhramework\data\asset\AssetBranch;
-use netPhramework\data\record\RecordMapper;
+use netPhramework\data\core\RecordMapper;
+use netPhramework\data\nodes\RecordBranch;
+use netPhramework\data\nodes\RecordResource;
+use netPhramework\data\nodes\RecordSetComposite;
 use netPhramework\nodes\Directory;
 
 class DataNodeBuilder
 {
-	protected ?Asset $asset;
+	protected ?RecordSetComposite $asset;
 
 	public function __construct
 	(
@@ -30,11 +30,11 @@ class DataNodeBuilder
 	public function new(string $name):self
 	{
 		$recordSet = $this->mapper->recordsFor($name);
-		$this->asset = new Asset($name, $recordSet);
+		$this->asset = new RecordSetComposite($name, $recordSet);
 		return $this;
 	}
 
-	public function add(AssetResource $resource):self
+	public function add(RecordResource $resource):self
 	{
 		$resource->enlist($this->asset);
 		return $this;
@@ -43,8 +43,8 @@ class DataNodeBuilder
 	public function branch(
 		AssetStrategy $strategy, string $linkField):self
 	{
-		$node = new AssetBranch($strategy->create($this->mapper), $linkField);
-		$this->asset->childNodeSet->add($node);
+		$node = new RecordBranch($strategy->create($this->mapper), $linkField);
+		$this->asset->recordNodeSet->add($node);
 		return $this;
 	}
 
@@ -54,7 +54,7 @@ class DataNodeBuilder
 		return $this;
 	}
 
-	public function get():Asset
+	public function get():RecordSetComposite
 	{
 		$resource = $this->asset;
 		$this->reset();

@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\record;
+namespace netPhramework\data\core;
 use Iterator;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\exceptions\RecordNotFound;

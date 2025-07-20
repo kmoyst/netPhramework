@@ -1,32 +1,32 @@
 <?php
 
-namespace netPhramework\data\asset;
+namespace netPhramework\data\nodes;
 
+use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\mapping\Condition;
-use netPhramework\data\record\Record;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class AssetBranch extends Composite implements AssetChildNode
+class RecordBranch extends Composite implements RecordNode
 {
 	public function __construct
 	(
-	private readonly Asset  $asset,
-	private readonly string $linkField
+	private readonly RecordSetComposite $composite,
+	private readonly string             $linkField
 	)
 	{}
 
 	/**
 	 * @param Record $record
-	 * @return AssetChildNode
+	 * @return RecordNode
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 */
-	public function setRecord(Record $record): AssetChildNode
+	public function setRecord(Record $record): RecordNode
 	{
-		$childRecords = $this->asset->recordSet;
+		$childRecords = $this->composite->recordSet;
 		$field = $childRecords->getField($this->linkField);
 		$condition = new Condition()
 			->setField($field)
@@ -38,11 +38,11 @@ class AssetBranch extends Composite implements AssetChildNode
 
 	public function getChild(string $id): Node
 	{
-		return $this->asset->getChild($id);
+		return $this->composite->getChild($id);
 	}
 
 	public function getName(): string
 	{
-		return $this->asset->getName();
+		return $this->composite->getName();
 	}
 }

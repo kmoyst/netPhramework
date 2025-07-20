@@ -2,7 +2,7 @@
 
 namespace netPhramework\data\user\account\resources\enrollment;
 
-use netPhramework\data\asset\AssetProcess;
+use netPhramework\data\nodes\RecordSetProcess;
 use netPhramework\data\user\UserManager;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
@@ -13,7 +13,7 @@ use netPhramework\rendering\View;
 use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
 
-class Register extends AssetProcess
+class Register extends RecordSetProcess
 {
 	private Rerouter $formAction;
 	private UserManager $userManager;

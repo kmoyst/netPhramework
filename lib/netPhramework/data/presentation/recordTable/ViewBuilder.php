@@ -2,6 +2,7 @@
 
 namespace netPhramework\data\presentation\recordTable;
 
+use netPhramework\data\core\RecordSet;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\exceptions\RecordNotFound;
@@ -14,7 +15,6 @@ use netPhramework\data\presentation\recordTable\columnSet\ColumnMapper;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\data\presentation\recordTable\rowSet\RowSet;
 use netPhramework\data\presentation\recordTable\rowSet\RowSetFactory;
-use netPhramework\data\record\RecordSet;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;
 use netPhramework\rendering\Encodable;

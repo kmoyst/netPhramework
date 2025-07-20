@@ -2,11 +2,11 @@
 
 namespace netPhramework\data\presentation\recordTable\rowSet;
 
+use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\ColumnAbsent;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\ValueInaccessible;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnSet;
-use netPhramework\data\record\Record;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;
 use netPhramework\rendering\Encodable;

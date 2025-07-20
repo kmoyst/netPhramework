@@ -5,14 +5,14 @@ namespace netPhramework\data\resources;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\InvalidValue;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\asset\AssetChildProcess;
+use netPhramework\data\nodes\RecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\redirectors\RedirectToParent;
 use netPhramework\routing\redirectors\RedirectToSibling;
 
-class Save extends AssetChildProcess
+class Save extends RecordProcess
 {
     protected Redirector $onSuccess;
 	protected Redirector $onFailure;

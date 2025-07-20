@@ -2,11 +2,11 @@
 
 namespace netPhramework\data\mapping;
 
+use netPhramework\data\core\Record;
+use netPhramework\data\core\RecordSet;
+use netPhramework\data\core\RecordSetFactory;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\record\Record;
-use netPhramework\data\record\RecordSet;
-use netPhramework\data\record\RecordSetFactory;
 
 class ChildSelector
 {

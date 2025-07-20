@@ -1,18 +1,18 @@
 <?php
 
-namespace netPhramework\data\asset;
+namespace netPhramework\data\nodes;
 
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\ResourceIterator;
 
-class AssetChildNodeSet extends ResourceIterator
+class RecordNodeSet extends ResourceIterator
 {
-	public function current(): AssetChildNode
+	public function current(): RecordNode
 	{
 		return current($this->items);
 	}
 
-	public function add(AssetChildNode $child):self
+	public function add(RecordNode $child):self
 	{
 		$this->storeResource($child);
 		return $this;
@@ -20,10 +20,10 @@ class AssetChildNodeSet extends ResourceIterator
 
 	/**
 	 * @param string $resourceId
-	 * @return AssetChildNode
+	 * @return RecordNode
 	 * @throws NodeNotFound
 	 */
-	public function get(string $resourceId):AssetChildNode
+	public function get(string $resourceId):RecordNode
 	{
 		$this->confirmResource($resourceId);
 		return $this->items[$resourceId];

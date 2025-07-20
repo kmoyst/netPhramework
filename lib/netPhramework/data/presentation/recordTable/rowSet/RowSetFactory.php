@@ -2,10 +2,10 @@
 
 namespace netPhramework\data\presentation\recordTable\rowSet;
 
+use netPhramework\data\core\RecordSet;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\exceptions\RecordNotFound;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnSet;
-use netPhramework\data\record\RecordSet;
 use netPhramework\rendering\Encodable;
 use netPhramework\routing\Path;
 

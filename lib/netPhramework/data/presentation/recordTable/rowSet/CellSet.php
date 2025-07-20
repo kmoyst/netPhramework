@@ -3,10 +3,10 @@
 namespace netPhramework\data\presentation\recordTable\rowSet;
 
 use Iterator;
+use netPhramework\data\core\Record;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\ValueInaccessible;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnSet;
-use netPhramework\data\record\Record;
 use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Encodable;
 

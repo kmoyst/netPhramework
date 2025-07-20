@@ -2,10 +2,10 @@
 
 namespace netPhramework\data\configuration\strategies;
 
-use netPhramework\data\asset\Asset;
-use netPhramework\data\record\RecordMapper;
+use netPhramework\data\core\RecordMapper;
+use netPhramework\data\nodes\RecordSetComposite;
 
 interface AssetStrategy
 {
-	public function create(RecordMapper $mapper):Asset;
+	public function create(RecordMapper $mapper):RecordSetComposite;
 }

@@ -5,7 +5,7 @@ namespace netPhramework\data\configuration\applications;
 use netPhramework\core\Application;
 use netPhramework\data\configuration\builders\ActiveNodeBuilder;
 use netPhramework\data\configuration\builders\PassiveNodeBuilder;
-use netPhramework\data\record\RecordMapper;
+use netPhramework\data\core\RecordMapper;
 use netPhramework\nodes\Directory;
 
 readonly class Administration implements Application
