@@ -2,8 +2,8 @@
 
 namespace netPhramework\data\configuration\builders;
 
-use netPhramework\data\nodes\AssetRecordProcess;
-use netPhramework\data\nodes\Branch;
+use netPhramework\data\asset\AssetRecordProcess;
+use netPhramework\data\asset\AssetBranch;
 use netPhramework\data\resources\Delete;
 use netPhramework\data\resources\Insert;
 use netPhramework\data\resources\Update;
@@ -48,7 +48,7 @@ class ActiveNodeBuilder extends DataNodeBuilder
 			->includeDefaults()
 			->get()
 		;
-		$this->asset->recordChildSet->add(new Branch($asset, $linkField));
+		$this->asset->recordChildSet->add(new AssetBranch($asset, $linkField));
 		return $this;
 	}
 

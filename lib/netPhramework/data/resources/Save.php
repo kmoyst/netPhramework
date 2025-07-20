@@ -5,7 +5,7 @@ namespace netPhramework\data\resources;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\InvalidValue;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\nodes\AssetRecordProcess;
+use netPhramework\data\asset\AssetRecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;

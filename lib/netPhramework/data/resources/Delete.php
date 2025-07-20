@@ -3,7 +3,7 @@
 namespace netPhramework\data\resources;
 
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\nodes\AssetRecordProcess;
+use netPhramework\data\asset\AssetRecordProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\exchange\ResponseCode;

@@ -1,11 +1,11 @@
 <?php
 
-namespace netPhramework\data\nodes;
+namespace netPhramework\data\asset;
 
 use netPhramework\common\IsNumeric;
 use netPhramework\common\StringPredicate;
-use netPhramework\data\nodes\AssetChildSet as ChildSet;
-use netPhramework\data\nodes\AssetRecordChildSet as RecordChildSet;
+use netPhramework\data\asset\AssetChildSet as ChildSet;
+use netPhramework\data\asset\AssetRecordChildSet as RecordChildSet;
 use netPhramework\data\record\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;

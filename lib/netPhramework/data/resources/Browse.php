@@ -6,7 +6,7 @@ use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\exceptions\RecordNotFound;
 use netPhramework\data\exceptions\ValueInaccessible;
-use netPhramework\data\nodes\AssetProcess;
+use netPhramework\data\asset\AssetProcess;
 use netPhramework\data\presentation\recordTable\collation\Query;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnSetStrategy;
 use netPhramework\data\presentation\recordTable\ViewBuilder;

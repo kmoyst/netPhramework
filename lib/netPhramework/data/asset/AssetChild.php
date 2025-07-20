@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\nodes;
+namespace netPhramework\data\asset;
 
 use netPhramework\data\record\RecordSet;
 use netPhramework\nodes\Node;

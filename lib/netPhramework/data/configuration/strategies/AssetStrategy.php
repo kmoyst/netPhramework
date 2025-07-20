@@ -2,7 +2,7 @@
 
 namespace netPhramework\data\configuration\strategies;
 
-use netPhramework\data\nodes\Asset;
+use netPhramework\data\asset\Asset;
 use netPhramework\data\record\RecordMapper;
 
 interface AssetStrategy

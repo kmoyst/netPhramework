@@ -6,7 +6,7 @@ use netPhramework\data\exceptions\DuplicateEntryException;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\InvalidValue;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\nodes\AssetProcess;
+use netPhramework\data\asset\AssetProcess;
 use netPhramework\data\user\UserManager;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\InvalidPassword;

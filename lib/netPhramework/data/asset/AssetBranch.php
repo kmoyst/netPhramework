@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\nodes;
+namespace netPhramework\data\asset;
 
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
@@ -9,7 +9,7 @@ use netPhramework\data\record\Record;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class Branch extends Composite implements AssetRecordChild
+class AssetBranch extends Composite implements AssetRecordChild
 {
 	public function __construct
 	(

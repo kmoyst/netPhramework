@@ -4,7 +4,7 @@ namespace netPhramework\data\resources;
 
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\nodes\AssetProcess;
+use netPhramework\data\asset\AssetProcess;
 use netPhramework\data\presentation\recordForm\RecordFormBuilder;
 use netPhramework\data\presentation\recordForm\RecordFormStrategy;
 use netPhramework\data\presentation\recordForm\RecordFormStrategyBasic;

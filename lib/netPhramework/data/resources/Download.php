@@ -3,7 +3,7 @@
 namespace netPhramework\data\resources;
 
 use netPhramework\data\mapping\File;
-use netPhramework\data\nodes\AssetRecordProcess;
+use netPhramework\data\asset\AssetRecordProcess;
 use netPhramework\exchange\Exchange;
 
 class Download extends AssetRecordProcess

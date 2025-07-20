@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\data\nodes;
+namespace netPhramework\data\asset;
 
 abstract class AssetProcess extends AssetResource implements AssetChild
 {

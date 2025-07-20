@@ -2,7 +2,7 @@
 
 namespace netPhramework\data\user\account\resources\enrollment;
 
-use netPhramework\data\nodes\AssetProcess;
+use netPhramework\data\asset\AssetProcess;
 use netPhramework\data\user\UserManager;
 use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;

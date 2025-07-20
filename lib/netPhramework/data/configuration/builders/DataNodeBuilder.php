@@ -4,9 +4,9 @@ namespace netPhramework\data\configuration\builders;
 
 use netPhramework\data\configuration\strategies\AssetResourceStrategy;
 use netPhramework\data\configuration\strategies\AssetStrategy;
-use netPhramework\data\nodes\Asset;
-use netPhramework\data\nodes\AssetResource;
-use netPhramework\data\nodes\Branch;
+use netPhramework\data\asset\Asset;
+use netPhramework\data\asset\AssetResource;
+use netPhramework\data\asset\AssetBranch;
 use netPhramework\data\record\RecordMapper;
 use netPhramework\nodes\Directory;
 
@@ -43,7 +43,7 @@ class DataNodeBuilder
 	public function branch(
 		AssetStrategy $strategy, string $linkField):self
 	{
-		$node = new Branch($strategy->create($this->mapper), $linkField);
+		$node = new AssetBranch($strategy->create($this->mapper), $linkField);
 		$this->asset->recordChildSet->add($node);
 		return $this;
 	}
