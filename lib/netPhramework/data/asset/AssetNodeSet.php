@@ -5,14 +5,14 @@ namespace netPhramework\data\asset;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\ResourceIterator;
 
-class AssetChildSet extends ResourceIterator
+class AssetNodeSet extends ResourceIterator
 {
-	public function current(): AssetChild
+	public function current(): AssetNode
 	{
 		return current($this->items);
 	}
 
-	public function add(AssetChild $child):self
+	public function add(AssetNode $child):self
 	{
 		$this->storeResource($child);
 		return $this;
@@ -20,10 +20,10 @@ class AssetChildSet extends ResourceIterator
 
 	/**
 	 * @param string $resourceId
-	 * @return AssetChild
+	 * @return AssetNode
 	 * @throws NodeNotFound
 	 */
-	public function get(string $resourceId):AssetChild
+	public function get(string $resourceId):AssetNode
 	{
 		$this->confirmResource($resourceId);
 		return $this->items[$resourceId];

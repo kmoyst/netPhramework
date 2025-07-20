@@ -4,7 +4,7 @@ namespace netPhramework\data\resources;
 
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\asset\AssetRecordProcess;
+use netPhramework\data\asset\AssetChildProcess;
 use netPhramework\data\presentation\recordForm\RecordFormBuilder;
 use netPhramework\data\presentation\recordForm\RecordFormStrategy;
 use netPhramework\data\presentation\recordForm\RecordFormStrategyBasic;
@@ -12,7 +12,7 @@ use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\rendering\View;
 
-class Edit extends AssetRecordProcess
+class Edit extends AssetChildProcess
 {
 	public function __construct(
 		private readonly ?RecordFormStrategy $formStrategy = null

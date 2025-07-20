@@ -3,10 +3,10 @@
 namespace netPhramework\data\resources;
 
 use netPhramework\data\mapping\File;
-use netPhramework\data\asset\AssetRecordProcess;
+use netPhramework\data\asset\AssetChildProcess;
 use netPhramework\exchange\Exchange;
 
-class Download extends AssetRecordProcess
+class Download extends AssetChildProcess
 {
 	public function __construct	(
 		private readonly File $file,

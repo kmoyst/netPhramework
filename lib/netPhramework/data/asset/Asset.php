@@ -4,8 +4,8 @@ namespace netPhramework\data\asset;
 
 use netPhramework\common\IsNumeric;
 use netPhramework\common\StringPredicate;
-use netPhramework\data\asset\AssetChildSet as ChildSet;
-use netPhramework\data\asset\AssetRecordChildSet as RecordChildSet;
+use netPhramework\data\asset\AssetNodeSet as NodeSet;
+use netPhramework\data\asset\AssetChildNodeSet as ChildNodeSet;
 use netPhramework\data\record\RecordSet;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\nodes\Composite;
@@ -17,9 +17,9 @@ class Asset extends Composite implements AssetResourceRegistry
 	(
 	public readonly string          $name,
 	public readonly RecordSet       $recordSet,
-	public readonly StringPredicate $predicate 		= new IsNumeric(),
-	public readonly ChildSet        $assetChildSet 	= new ChildSet(),
-	public readonly RecordChildSet  $recordChildSet = new RecordChildSet(),
+	public readonly StringPredicate $predicate    = new IsNumeric(),
+	public readonly NodeSet         $nodeSet 	  = new NodeSet(),
+	public readonly ChildNodeSet    $childNodeSet = new ChildNodeSet(),
 	) {}
 
 	public function getName(): string
@@ -34,14 +34,14 @@ class Asset extends Composite implements AssetResourceRegistry
 
 	/**
 	 * @param string $id
-	 * @return AssetChild
+	 * @return AssetNode
 	 * @throws NodeNotFound
 	 */
-	private function resolveChild(string $id): AssetChild
+	private function resolveChild(string $id): AssetNode
 	{
 		if($this->predicate->test($id))
-			return new AssetRecord($this->recordChildSet, $id);
+			return new AssetChildProcessComposite($this->childNodeSet, $id);
 		else
-			return $this->assetChildSet->get($id);
+			return $this->nodeSet->get($id);
 	}
 }

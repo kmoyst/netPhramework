@@ -44,7 +44,7 @@ class DataNodeBuilder
 		AssetStrategy $strategy, string $linkField):self
 	{
 		$node = new AssetBranch($strategy->create($this->mapper), $linkField);
-		$this->asset->recordChildSet->add($node);
+		$this->asset->childNodeSet->add($node);
 		return $this;
 	}
 

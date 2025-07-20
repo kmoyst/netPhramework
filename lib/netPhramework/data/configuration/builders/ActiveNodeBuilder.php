@@ -2,7 +2,7 @@
 
 namespace netPhramework\data\configuration\builders;
 
-use netPhramework\data\asset\AssetRecordProcess;
+use netPhramework\data\asset\AssetChildProcess;
 use netPhramework\data\asset\AssetBranch;
 use netPhramework\data\resources\Delete;
 use netPhramework\data\resources\Insert;
@@ -31,8 +31,8 @@ class ActiveNodeBuilder extends DataNodeBuilder
     }
 
 	public function includeDefaults(
-		?AssetRecordProcess $saveProcess = null,
-		?Redirector         $onSuccessfulSave = null): self
+		?AssetChildProcess $saveProcess = null,
+		?Redirector        $onSuccessfulSave = null): self
 	{
 		return $this
 			->includeInsert($saveProcess, $onSuccessfulSave)
@@ -48,29 +48,29 @@ class ActiveNodeBuilder extends DataNodeBuilder
 			->includeDefaults()
 			->get()
 		;
-		$this->asset->recordChildSet->add(new AssetBranch($asset, $linkField));
+		$this->asset->childNodeSet->add(new AssetBranch($asset, $linkField));
 		return $this;
 	}
 
 	public function includeInsert(
-		?AssetRecordProcess $saveProcess = null,
-		?Redirector         $onSuccess = null): self
+		?AssetChildProcess $saveProcess = null,
+		?Redirector        $onSuccess = null): self
 	{
 		$this->add(new Insert($saveProcess, $onSuccess));
 		return $this;
 	}
 
 	public function includeUpdate(
-		?AssetRecordProcess $saveProcess = null,
-		?Redirector         $onSuccess = null): self
+		?AssetChildProcess $saveProcess = null,
+		?Redirector        $onSuccess = null): self
 	{
 		$this->add(new Update($saveProcess, $onSuccess));
 		return $this;
 	}
 
 	public function includeInsertAndUpdate(
-		?AssetRecordProcess $saveProcess = null,
-		?Redirector         $onSuccess = null): self
+		?AssetChildProcess $saveProcess = null,
+		?Redirector        $onSuccess = null): self
 	{
 		$this->includeInsert($saveProcess, $onSuccess);
 		$this->includeUpdate($saveProcess, $onSuccess);

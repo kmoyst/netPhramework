@@ -9,7 +9,7 @@ use netPhramework\data\record\Record;
 use netPhramework\nodes\Composite;
 use netPhramework\nodes\Node;
 
-class AssetBranch extends Composite implements AssetRecordChild
+class AssetBranch extends Composite implements AssetChildNode
 {
 	public function __construct
 	(
@@ -20,11 +20,11 @@ class AssetBranch extends Composite implements AssetRecordChild
 
 	/**
 	 * @param Record $record
-	 * @return AssetRecordChild
+	 * @return AssetChildNode
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 */
-	public function setRecord(Record $record): AssetRecordChild
+	public function setRecord(Record $record): AssetChildNode
 	{
 		$childRecords = $this->asset->recordSet;
 		$field = $childRecords->getField($this->linkField);

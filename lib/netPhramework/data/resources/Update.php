@@ -4,17 +4,17 @@ namespace netPhramework\data\resources;
 
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\MappingException;
-use netPhramework\data\asset\AssetRecordProcess;
+use netPhramework\data\asset\AssetChildProcess;
 use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\redirectors\RedirectToParent;
 
-class Update extends AssetRecordProcess
+class Update extends AssetChildProcess
 {
 	public function __construct(
-		private readonly ?AssetRecordProcess $saveProcess = null,
-		private readonly ?Redirector         $dispatcher = null,
+		private readonly ?AssetChildProcess $saveProcess = null,
+		private readonly ?Redirector        $dispatcher = null,
 		)
 	{
 	}

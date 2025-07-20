@@ -2,12 +2,12 @@
 
 namespace netPhramework\data\asset;
 
-abstract class AssetProcess extends AssetResource implements AssetChild
+abstract class AssetProcess extends AssetResource implements AssetNode
 {
 	use HasRecordSet;
 
 	public function enlist(AssetResourceRegistry $registry):void
 	{
-		$registry->assetChildSet->add($this);
+		$registry->nodeSet->add($this);
 	}
 }
