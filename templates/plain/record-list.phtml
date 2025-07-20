@@ -1,3 +1,5 @@
 <?
-	echo 'id | '.implode("\t\t\t\t | ", $headers) . "\n\n";
-	echo implode("\n", $rows) . "\n\n";
+	echo "\nid  ";
+	foreach($headers as $header)
+		echo $header;
+	echo "\n\n".implode("\n", $rows) . "\n\n";

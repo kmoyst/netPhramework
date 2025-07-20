@@ -8,9 +8,9 @@ use netPhramework\rendering\Viewable;
 class ColumnHeader extends Viewable
 {
 	public function __construct(
-		private readonly string $name,
-		private readonly string $text,
-		private readonly int $width) {}
+		private(set) readonly string $name,
+		private(set) readonly string $text,
+		private(set) readonly int $width) {}
 
 	public function getTemplateName(): string
 	{

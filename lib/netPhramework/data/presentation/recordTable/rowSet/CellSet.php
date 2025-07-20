@@ -4,8 +4,10 @@ namespace netPhramework\data\presentation\recordTable\rowSet;
 
 use Iterator;
 use netPhramework\data\core\Record;
+use netPhramework\data\exceptions\ColumnAbsent;
 use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\ValueInaccessible;
+use netPhramework\data\presentation\recordTable\columnSet\Column;
 use netPhramework\data\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\exceptions\Exception;
 use netPhramework\rendering\Encodable;
@@ -14,6 +16,7 @@ class CellSet implements Iterator
 {
 	private ColumnSet $columnSet;
 	private Record $record;
+	private array $cells = [];
 
 	/**
 	 * @param ColumnSet $columnSet
@@ -33,7 +36,18 @@ class CellSet implements Iterator
 	 */
 	public function current(): string|Encodable
 	{
-		return $this->columnSet->current()->getEncodableValue($this->record);
+		$column = $this->columnSet->current();
+		$this->ensureCell($column);
+		return $this->cells[$column->getName()];
+	}
+
+	/**
+	 * @throws ColumnAbsent
+	 */
+	private function ensureCell(Column $column):void
+	{
+		if(isset($this->cells[$column->getName()])) return;
+		$this->cells[$column->getName()] = new Cell($column, $this->record);
 	}
 
 	public function next(): void

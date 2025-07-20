@@ -39,12 +39,10 @@ class Builder
 	public function submitRequest(Runtime $runtime, Handler $handler):self
 	{
 		try {
+			$dispatcher = new Dispatcher($this->application, $this->services);
 			$this->services->session->start();
-			$this->response = new Dispatcher()
-				->setApplication($this->application)
-				->setServices($this->services)
-				->dispatchRequest($runtime->request)
-			;
+			$this->response = $dispatcher->dispatchRequest($runtime->request);
+			return $this;
 		} catch (NodeNotFound $exception) {
 			$this->response = $exception->setRuntimeMode($runtime->mode);
 		} catch (Exception $exception) {

@@ -10,23 +10,14 @@ use netPhramework\exchange\Request;
 use netPhramework\exchange\Response;
 use netPhramework\exchange\Services;
 
-class Dispatcher
+readonly class Dispatcher
 {
-	private Application $application;
-	private Services $services;
-
-	public function setApplication(Application $application): self
-	{
-		$this->application = $application;
-		return $this;
-	}
-
-	public function setServices(Services $services): self
-	{
-		$this->services = $services;
-		return $this;
-	}
-
+	public function __construct
+	(
+		private Application $application,
+		private Services $services,
+	)
+	{}
 	/**
 	 * @param Request $request
 	 * @return Response

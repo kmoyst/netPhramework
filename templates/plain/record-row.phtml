@@ -1,1 +1,6 @@
-<?=$id?> | <? echo implode("\t\t\t\t | ", $cellSet);
+<?
+	echo $id.str_repeat(' ',4-strlen($id));
+	foreach($cellSet as $cell)
+	{
+		echo $cell;
+	}

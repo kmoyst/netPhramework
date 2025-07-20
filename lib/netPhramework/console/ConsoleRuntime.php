@@ -37,7 +37,7 @@ class ConsoleRuntime extends Runtime
 	public function configureResponder(Responder $responder): void
 	{
 		$responder->templateFinder
-			->directory('../template/plain')
+			->directory('../templates/plain')
 			->directory(__DIR__ . '/../../../templates/plain')
 			->directory('../templates')
 			->directory('../html')

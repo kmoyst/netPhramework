@@ -1,0 +1,4 @@
+<?
+$length = strlen($value);
+$spaces = abs(ceil($width/6) - $length);
+echo $value . str_repeat(' ', $spaces);
