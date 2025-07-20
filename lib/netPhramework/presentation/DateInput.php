@@ -4,7 +4,7 @@ namespace netPhramework\presentation;
 
 use DateMalformedStringException;
 use DateTime;
-use netPhramework\db\exceptions\InvalidValue;
+use netPhramework\data\exceptions\InvalidValue;
 use netPhramework\rendering\Encodable;
 
 class DateInput extends TextInput
