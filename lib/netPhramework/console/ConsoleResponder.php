@@ -64,9 +64,8 @@ class ConsoleResponder implements Responder
 	 */
 	public function present(Wrappable $content, ResponseCode $code): void
 	{
-		echo $this->wrapper
-			->wrap($content)
-			->encode($this->configure()->encoder);
+		echo $this->configure()->encoder
+			->encodeViewable($this->wrapper->wrap($content));
 		$this->newQuery();
 	}
 
@@ -100,7 +99,11 @@ class ConsoleResponder implements Responder
 	{
 		$question  = "\n\nWould you like to make another request?\n";
 		$question .= "(q to quit, any other key to continue): ";
-		if(readline($question) === 'q') exit(0);
+		if(readline($question) === 'q')
+		{
+			system('clear');
+			exit(0);
+		}
 		system('clear');
 		$request = new ConsoleRequest();
 		new Gateway($this->application)

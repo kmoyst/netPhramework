@@ -14,14 +14,29 @@ class Buffer implements Stringable
         $this->variables = $variables;
     }
 
+	public function start():self
+	{
+		foreach($this->variables as $k => $v) ${$k} = $v;
+		unset($k);
+		unset($v);
+		ob_start();
+		include $this->templatePath;
+		return $this;
+	}
+
+	public function getLength():int
+	{
+		return ob_get_length();
+	}
+
+	public function getContentsAndClean():string
+	{
+		return ob_get_clean();
+	}
+
     public function get():string
     {
-        foreach($this->variables as $k => $v) ${$k} = $v;
-        unset($k);
-        unset($v);
-        ob_start();
-        include $this->templatePath;
-        return ob_get_clean();
+		return $this->start()->getContentsAndClean();
     }
 
     public function __toString(): string

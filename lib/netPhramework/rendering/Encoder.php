@@ -25,14 +25,14 @@ class Encoder
 		return $text;
 	}
 
-	public function encodeViewable(Viewable $viewable):Stringable|string
+	public function encodeViewable(Viewable $viewable):Buffer
     {
 		return $this->encodeTemplate(
 			$viewable->getTemplateName(), $viewable->getVariables());
 	}
 
 	public function encodeTemplate(
-		string $templateName, ?iterable $variables = []):Stringable|string
+		string $templateName, ?iterable $variables = []):Buffer
 	{
 		try {
 			$path = $this->findTemplatePath($templateName);
@@ -40,7 +40,8 @@ class Encoder
 			return new Buffer($path, $variables);
 		} catch (FileNotFound) {
 			// @TODO probably log the error here
-			return "template missing: $templateName";
+			return new Buffer('message',
+				['message' => "template missing: $templateName"]);
 		}
 	}
 
