@@ -10,7 +10,7 @@ use netPhramework\data\resources\Update;
 use netPhramework\nodes\Directory;
 use netPhramework\routing\redirectors\Redirector;
 
-class ActiveNodeBuilder extends DynamicNodeBuilder
+class ActiveNodeBuilder extends DataNodeBuilder
 {
 	/**
 	 * This is a potent method, only meant to be used during initial

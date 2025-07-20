@@ -10,7 +10,7 @@ use netPhramework\data\nodes\AssetResource;
 use netPhramework\data\nodes\Branch;
 use netPhramework\nodes\Directory;
 
-class DynamicNodeBuilder
+class DataNodeBuilder
 {
 	protected ?Asset $asset;
 

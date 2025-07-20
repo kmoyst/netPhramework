@@ -12,7 +12,7 @@ use netPhramework\data\resources\Browse;
 use netPhramework\data\resources\Edit;
 use netPhramework\nodes\Directory;
 
-class PassiveNodeBuilder extends DynamicNodeBuilder
+class PassiveNodeBuilder extends DataNodeBuilder
 {
 	/**
 	 * This is a potent method, only meant to be used during initial
