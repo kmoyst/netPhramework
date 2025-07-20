@@ -1,6 +1,6 @@
 <?php
 namespace netPhramework\bootstrap;
-class Loader
+readonly class Loader
 {
 	protected string $extension;
 	protected array $sourceRoots;

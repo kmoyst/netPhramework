@@ -8,7 +8,6 @@ use netPhramework\core\RuntimeContext;
 use netPhramework\core\RuntimeMode;
 use netPhramework\core\Site;
 use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\exchange\Gateway;
 use netPhramework\exchange\Request;
