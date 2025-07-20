@@ -21,14 +21,14 @@ readonly class Controller
 		set_error_handler([$handler, 'handleError']);
 		set_exception_handler([$handler, 'handleException'])
 		;
-		$builder = new Builder()
+		$builder = new Dispatcher()
 		;
 		try
 		{
 			$builder
 				->assembleServices($this->runtime)
 				->buildApplication($this->site, $this->runtime)
-				->submitRequest($this->runtime, $handler)
+				->dispatchRequest($this->runtime, $handler)
 				->deliverResponse($this->runtime, $this->runtime->responder)
 				;
 		}
