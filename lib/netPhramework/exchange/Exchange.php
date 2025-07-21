@@ -24,11 +24,11 @@ use netPhramework\user\Session;
 class Exchange implements CallbackContext
 {
 	private(set) Response $response;
-	private(set) Session $session;
-	private(set) FileManager $fileManager;
-	private(set) CallbackManager $callbackManager;
-	private(set) SmtpServer $smtpServer;
-	private(set) string $siteAddress;
+	public Session $session;
+	public FileManager $fileManager;
+	public CallbackManager $callbackManager;
+	public SmtpServer $smtpServer;
+	public string $siteAddress;
 
 	public Variables $parameters {get{
 		return clone $this->location->getParameters();
@@ -125,41 +125,5 @@ class Exchange implements CallbackContext
 	{
 		if($chain) return clone $this->location;
 		return $this->callbackManager->getLink(clone $this->location);
-	}
-
-	public function setLocation(Location $location): self
-	{
-		$this->location = $location;
-		return $this;
-	}
-
-	public function setCallbackManager(CallbackManager $callbackManager): self
-	{
-		$this->callbackManager = $callbackManager;
-		return $this;
-	}
-
-	public function setFileManager(FileManager $fileManager): self
-	{
-		$this->fileManager = $fileManager;
-		return $this;
-	}
-
-	public function setSmtpServer(SmtpServer $smtpServer): self
-	{
-		$this->smtpServer = $smtpServer;
-		return $this;
-	}
-
-	public function setSession(Session $session): self
-	{
-		$this->session = $session;
-		return $this;
-	}
-
-	public function setSiteAddress(string $siteAddress): self
-	{
-		$this->siteAddress = $siteAddress;
-		return $this;
 	}
 }

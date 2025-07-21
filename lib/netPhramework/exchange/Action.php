@@ -17,13 +17,12 @@ class Action
 
 	public function openExchange(Services $services):self
 	{
-		$this->exchange = new Exchange($this->location)
-			->setSiteAddress($services->siteAddress)
-			->setSession($services->session)
-			->setFileManager($services->fileManager)
-			->setSmtpServer($services->smtpServer)
-			->setCallbackManager($services->callbackManager)
-			;
+		$this->exchange = new Exchange($this->location);
+		$this->exchange->siteAddress = $services->siteAddress;
+		$this->exchange->session = $services->session;
+		$this->exchange->fileManager = $services->fileManager;
+		$this->exchange->callbackManager = $services->callbackManager;
+		$this->exchange->smtpServer = $services->smtpServer;
 		return $this;
 	}
 
