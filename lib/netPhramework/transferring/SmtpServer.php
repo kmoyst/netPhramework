@@ -14,6 +14,8 @@ readonly class SmtpServer
 	}
 
 	/**
+	 * Connects to server
+	 *
 	 * @return $this
 	 * @throws SmtpException
 	 * @throws StreamSocketException
@@ -27,6 +29,8 @@ readonly class SmtpServer
 	}
 
 	/**
+	 * Sends HELO command to server
+	 *
 	 * @return $this
 	 * @throws SmtpException
 	 */
@@ -39,6 +43,8 @@ readonly class SmtpServer
 	}
 
 	/**
+	 * Tells server who the email is from
+	 *
 	 * @param string $sender
 	 * @return $this
 	 * @throws SmtpException
@@ -52,6 +58,8 @@ readonly class SmtpServer
 	}
 
 	/**
+	 * Tells server the addressee
+	 *
 	 * @param string $recipient
 	 * @return $this
 	 * @throws SmtpException
@@ -65,6 +73,8 @@ readonly class SmtpServer
 	}
 
 	/**
+	 * Sends signal to start composing email
+	 *
 	 * @return $this
 	 * @throws SmtpException
 	 */
@@ -78,6 +88,8 @@ readonly class SmtpServer
 	}
 
 	/**
+	 * Ends composition, email to be sent
+	 *
 	 * @return $this
 	 * @throws SmtpException
 	 */
@@ -90,6 +102,8 @@ readonly class SmtpServer
 	}
 
 	/**
+	 * Sends QUIT command to server
+	 *
 	 * @return $this
 	 * @throws SmtpException
 	 */
@@ -101,12 +115,23 @@ readonly class SmtpServer
 		return $this;
 	}
 
+	/**
+	 * Closes socket to server
+	 *
+	 * @return $this
+	 */
 	public function disconnect():self
 	{
 		$this->socket->close();
 		return $this;
 	}
 
+	/**
+	 * Composes the email on the server based on Email provided
+	 *
+	 * @param Email $email
+	 * @return $this
+	 */
 	public function compose(Email $email):self
 	{
 		$this->socket
@@ -122,12 +147,19 @@ readonly class SmtpServer
 		return $this;
 	}
 
+	/**
+	 * Returns last message received from server.
+	 *
+	 * @return string
+	 */
 	public function getLastMessage():string
 	{
 		return $this->socket->getLastMessage();
 	}
 
 	/**
+	 * Verifies expected response code was received.
+	 *
 	 * @param SmtpResponseCode $code
 	 * @param int|null $responseCode
 	 * @throws SmtpException
