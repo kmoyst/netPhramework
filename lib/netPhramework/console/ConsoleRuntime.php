@@ -44,9 +44,9 @@ class ConsoleRuntime extends Runtime
 		parent::__construct($session, new FileManager(), new CallbackManager());
 	}
 
-	public function configureResponder(Responder $responder): void
+	public function configureTemplateFinder(FileFinder $finder): void
 	{
-		$responder->templateFinder
+		$finder
 			->directory('../templates/plain')
 			->directory('../html/plain')
 			->directory(__DIR__ . '/../../../templates/plain')

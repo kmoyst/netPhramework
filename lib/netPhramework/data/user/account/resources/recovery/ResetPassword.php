@@ -3,7 +3,6 @@
 namespace netPhramework\data\user\account\resources\recovery;
 
 use netPhramework\data\user\UserManager;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\nodes\Resource;
 use netPhramework\presentation\FeedbackView;
@@ -21,7 +20,6 @@ class ResetPassword extends Resource
 	/**
 	 * @param Exchange $exchange
 	 * @return void
-	 * @throws InvalidSession
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{

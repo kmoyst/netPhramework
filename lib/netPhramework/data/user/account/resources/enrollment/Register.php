@@ -4,7 +4,6 @@ namespace netPhramework\data\user\account\resources\enrollment;
 
 use netPhramework\data\nodes\RecordSetProcess;
 use netPhramework\data\user\UserManager;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\presentation\PasswordInput;
@@ -28,7 +27,6 @@ class Register extends RecordSetProcess
 	/**
      * @param Exchange $exchange
      * @return void
-     * @throws InvalidSession
      */
 	public function handleExchange(Exchange $exchange): void
 	{

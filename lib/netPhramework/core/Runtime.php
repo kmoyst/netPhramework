@@ -6,7 +6,6 @@ use netPhramework\common\FileFinder;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
 use netPhramework\rendering\Wrapper;
-use netPhramework\resources\Page;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
@@ -49,6 +48,6 @@ abstract class Runtime
 	{
 	}
 
-	abstract public function configureWrapper(Wrapper $wrapper):void;
+	public function configureWrapper(Wrapper $wrapper):void {}
 	abstract public function configureTemplateFinder(FileFinder $finder):void;
 }

@@ -44,7 +44,7 @@ class Exchange implements CallbackContext
 
 	public function __construct
 	(
-		private(set) Location $location,
+		private(set) readonly Location $location,
 	)
 	{}
 

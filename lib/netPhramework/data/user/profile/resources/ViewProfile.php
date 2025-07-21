@@ -9,7 +9,6 @@ use netPhramework\data\user\profile\ViewManager;
 use netPhramework\data\user\User;
 use netPhramework\data\user\UserManager;
 use netPhramework\exceptions\AuthenticationException;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exceptions\NotFound;
 use netPhramework\exchange\Exchange;
 use netPhramework\nodes\Resource;
@@ -33,7 +32,6 @@ class ViewProfile extends Resource
 	 * @return void
 	 * @throws AuthenticationException
 	 * @throws FieldAbsent
-	 * @throws InvalidSession
 	 * @throws MappingException
 	 * @throws NotFound
 	 * @throws RecordRetrievalException

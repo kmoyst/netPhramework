@@ -13,8 +13,8 @@ class Cell extends Viewable
 {
 	public function __construct
 	(
-		private Column $column,
-		private Record $record
+		private readonly Column $column,
+		private readonly Record $record
 	)
 	{}
 

@@ -3,7 +3,6 @@
 namespace netPhramework\user\resources;
 
 use netPhramework\exceptions\Exception;
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\nodes\Resource;
@@ -17,7 +16,6 @@ class LogOut extends Resource
 	 * @param Exchange $exchange
 	 * @return void
 	 * @throws Exception
-	 * @throws InvalidSession
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{

@@ -2,7 +2,6 @@
 
 namespace netPhramework\user\resources;
 
-use netPhramework\exceptions\InvalidSession;
 use netPhramework\exchange\Exchange;
 use netPhramework\rendering\View;
 use netPhramework\nodes\Resource;
@@ -12,7 +11,6 @@ class LogInStatus extends Resource
 	/**
 	 * @param Exchange $exchange
 	 * @return void
-	 * @throws InvalidSession
 	 */
 	public function handleExchange(Exchange $exchange): void
 	{

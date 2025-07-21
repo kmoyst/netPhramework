@@ -3,7 +3,6 @@
 namespace netPhramework\user\resources;
 
 use netPhramework\user\LogInManager;
-use netPhramework\exceptions\Exception;
 use netPhramework\exchange\Exchange;
 use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
@@ -21,7 +20,6 @@ class LogInPage extends Resource
 	/**
      * @param Exchange $exchange
      * @return void
-     * @throws Exception
      */
     public function handleExchange(Exchange $exchange): void
     {

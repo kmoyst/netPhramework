@@ -3,7 +3,6 @@
 namespace netPhramework\user;
 
 use netPhramework\exceptions\InvalidRoleInSession;
-use netPhramework\exceptions\InvalidSession;
 
 interface SessionUserProvider
 {
