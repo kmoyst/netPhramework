@@ -2,8 +2,11 @@
 
 namespace netPhramework\core;
 
+use netPhramework\common\FileFinder;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
+use netPhramework\rendering\Wrapper;
+use netPhramework\resources\Page;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
@@ -26,26 +29,26 @@ abstract class Runtime
 		return RuntimeMode::tryFrom($mode) ?? RuntimeMode::PRODUCTION;
 	}}
 
-	public FileManager $fileManager {get{
-		return new FileManager();
-	}}
-	public CallbackManager $callbackManager{get{
-		return new CallbackManager();
-	}}
-
-	public SmtpServer $smtpServer {get{
-		$address = $this->context
-			->get(RuntimeKey::SMTP_SERVER_ADDRESS->value);
-		$name = $this->context
-			->get(RuntimeKey::SMTP_SERVER_NAME->value);
-		return new SmtpServer($address, $name);
+	private(set) SmtpServer $smtpServer {get{
+		if(!isset($this->smtpServer)) {
+			$address = $this->context
+				->get(RuntimeKey::SMTP_SERVER_ADDRESS->value);
+			$name = $this->context
+				->get(RuntimeKey::SMTP_SERVER_NAME->value);
+			$this->smtpServer = new SmtpServer($address, $name);
+		}
+		return $this->smtpServer;
 	}}
 
 	public function __construct
 	(
-		protected(set) Session $session = new Session()
+	private(set) readonly Session $session,
+	private(set) readonly FileManager $fileManager,
+	private(set) readonly CallbackManager $callbackManager,
 	)
-	{}
+	{
+	}
 
-	abstract public function configureResponder(Responder $responder):void;
+	abstract public function configureWrapper(Wrapper $wrapper):void;
+	abstract public function configureTemplateFinder(FileFinder $finder):void;
 }

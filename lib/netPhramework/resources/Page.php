@@ -9,7 +9,7 @@ use netPhramework\rendering\View;
 
 class Page extends Resource
 {
-    private View $view;
+    protected View $view;
 
 	public function __construct(
         string $templateName,

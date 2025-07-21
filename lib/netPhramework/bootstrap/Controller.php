@@ -144,10 +144,14 @@ class Controller
 
 	public function prepareResponder():self
 	{
-		$this->responder = $this->runtime->responder;
-		$this->responder->application = $this->application;
-		$this->responder->services 	= $this->services;
-		$this->runtime->configureResponder($this->responder);
+		$this->responder 				= $this->runtime->responder;
+		$this->responder->application 	= $this->application;
+		$this->responder->services 		= $this->services
+		;
+		$this->runtime
+			->configureWrapper($this->responder->wrapper);
+		$this->runtime
+			->configureTemplateFinder($this->responder->templateFinder);
 		return $this;
 	}
 

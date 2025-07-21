@@ -8,39 +8,51 @@ use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
 use netPhramework\rendering\HtmlEncoder;
 use netPhramework\rendering\Wrapper;
+use netPhramework\routing\CallbackManager;
+use netPhramework\transferring\FileManager;
+use netPhramework\user\Session;
 
 class WebRuntime extends Runtime
 {
-	public Responder $responder{get{
-		return new WebResponder()
-			->setEncoder(new HtmlEncoder())
-			->setTemplateFinder(new FileFinder())
-			->setWrapper(new Wrapper())
-		;
+	private(set) WebRuntimeContext $context
+	;
+	protected string $protocol {get{
+		return $this->context->get('HTTPS') === 'on' ? 'https' : 'http';
 	}}
-
+	protected string $domain {get{
+		return $this->context->get('HTTP_HOST');
+	}}
+	/**
+	 * Generates new Request instance each time
+	 *
+	 * @var Request
+	 */
 	public Request $request{get{
 		return new WebRequest($this->context->requestInput);
 	}}
 
-	protected string $protocol {get{
-		return $this->context->get('HTTPS') === 'on' ? 'https' : 'http';
-	}}
+	private(set) Responder $responder;
 
-	protected string $domain {get{
-		return $this->context->get('HTTP_HOST');
-	}}
-
-	public function __construct(
-		public readonly WebRuntimeContext $context = new WebRuntimeContext())
+	public function __construct()
 	{
-		parent::__construct();
+		$this->context 	 = new WebRuntimeContext();
+		$this->responder = new WebResponder()
+			->setEncoder(new HtmlEncoder())
+			->setTemplateFinder(new FileFinder())
+			->setWrapper(new Wrapper())
+			;
+		parent::__construct(
+			new Session(), new FileManager(), new CallbackManager());
 	}
 
-	public function configureResponder(Responder $responder):void
+	public function configureWrapper(Wrapper $wrapper):void
 	{
-		$responder->wrapper->addStyleSheet('framework-stylesheet');
-		$responder->templateFinder
+		$wrapper->addStyleSheet('framework-stylesheet');
+	}
+
+	public function configureTemplateFinder(FileFinder $finder): void
+	{
+		$finder
 			->directory('../templates')
 			->directory('../html')
 			->directory(__DIR__ . '/../../../templates')
