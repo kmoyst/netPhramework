@@ -40,7 +40,7 @@ class PassiveNodeBuilder extends DataNodeBuilder
 			->includeBrowse();
 	}
 
-	public function oneToManyWithDefaults(
+	public function branchWithDefaults(
 		string $name,
 		string $linkField):self
 	{

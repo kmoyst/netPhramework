@@ -4,10 +4,9 @@ namespace netPhramework\user;
 
 class UserLoggingIn implements User
 {
-	private string $username;
-	private string $password;
-
-	private(set) UserRole $role = UserRole::VISITOR;
+	public string $username;
+	public string $password;
+	public UserRole $role = UserRole::VISITOR;
 
 	public function getUsername(): string
 	{

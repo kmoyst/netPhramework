@@ -9,6 +9,7 @@ use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Wrapper;
+use netPhramework\user\Session;
 
 class ConsoleRuntime extends Runtime
 {
@@ -24,24 +25,31 @@ class ConsoleRuntime extends Runtime
 		;
 	}}
 
-	public ConsoleRuntimeContext $context{get{
-		return new ConsoleRuntimeContext()->initialize();
-	}set{}}
-
 	protected string $domain {get{
 		return $this->context->get(RuntimeKey::DOMAIN->value);
 	}}
 
 	protected string $protocol = 'cli';
 
+	public function __construct
+	(
+	Session $session = new Session(),
+	private(set) ConsoleRuntimeContext $context = new ConsoleRuntimeContext()
+	)
+	{
+		parent::__construct($session);
+	}
+
 	public function configureResponder(Responder $responder): void
 	{
 		$responder->templateFinder
 			->directory('../templates/plain')
+			->directory('../html/plain')
 			->directory(__DIR__ . '/../../../templates/plain')
 			->directory('../templates')
 			->directory('../html')
 			->directory(__DIR__ . '/../../../templates')
+			->directory(__DIR__ . '/../../../html')
 			->extension('phtml')
 			->extension('tpl')
 		;

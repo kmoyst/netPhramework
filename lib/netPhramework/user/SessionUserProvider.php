@@ -2,6 +2,7 @@
 
 namespace netPhramework\user;
 
+use netPhramework\exceptions\InvalidRoleInSession;
 use netPhramework\exceptions\InvalidSession;
 
 interface SessionUserProvider
@@ -19,7 +20,7 @@ interface SessionUserProvider
 	 *
 	 * @param array $vars
 	 * @return SessionUser|null
-     * @throws InvalidSession
+     * @throws InvalidRoleInSession
 	 */
 	public function fromArray(array $vars):?SessionUser;
 }
