@@ -83,7 +83,7 @@ class Controller
 	public function postAuthentication():self
 	{
 		$this
-			->retrieveApplication()
+			->resolveApplication()
 			->dispatchRequest()
 			->prepareResponder()
 			->deliverResponse()
@@ -114,9 +114,9 @@ class Controller
 		return $this;
 	}
 
-	public function retrieveApplication():self
+	public function resolveApplication():self
 	{
-		$this->application = $this->site->getApplication(
+		$this->application = $this->site->generateApplication(
 			$this->services->session, $this->runtime->context);
 		return $this;
 	}

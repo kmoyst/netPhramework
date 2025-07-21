@@ -6,6 +6,6 @@ use netPhramework\user\Session;
 
 interface Site
 {
-	public function getApplication(
+	public function generateApplication(
 		Session $session, RuntimeContext $context):Application;
 }
