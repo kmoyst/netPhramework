@@ -109,19 +109,20 @@ class ConsoleResponder implements Responder
 	{
 		$question  = "\n\nWould you like to make another request?\n";
 		$question .= "(q to quit, any other key to continue): ";
-		if(readline($question) === 'q')
+		if(readline($question) !== 'q')
+		{
+			$request = new ConsoleRequest();
+			new Gateway($this->application)
+				->mapToRouter($request->isToModify)
+				->route($request->location)
+				->openExchange($this->services)
+				->execute()
+				->deliver($this);
+		}
+		else
 		{
 			system('clear');
-			exit(0);
 		}
-		system('clear');
-		$request = new ConsoleRequest();
-		new Gateway($this->application)
-			->mapToRouter($request->isToModify)
-			->route($request->location)
-			->openExchange($this->services)
-			->execute()
-			->deliver($this);
 	}
 
 	public function transfer(File $file, ResponseCode $code): void

@@ -30,10 +30,16 @@ class Controller
 
 	public function __construct
 	(
-		private Site $site,
-		private Runtime $runtime,
+		private readonly Site $site,
+		private readonly Runtime $runtime,
 	)
 	{}
+
+	public function login(User $user):self
+	{
+		$this->session->login($user);
+		return $this;
+	}
 
 	public function run():void
 	{
@@ -74,25 +80,16 @@ class Controller
 		return $this;
 	}
 
-	public function authenticate(User $user):self
-	{
-		$this->session->login($user);
-		return $this;
-	}
-
 	public function postAuthentication():self
 	{
 		$this
-			->buildApplication()
+			->retrieveApplication()
 			->dispatchRequest()
 			->prepareResponder()
 			->deliverResponse()
 		;
 		return $this;
 	}
-
-
-
 
 	public function assembleServices():self
 	{
@@ -117,7 +114,7 @@ class Controller
 		return $this;
 	}
 
-	public function buildApplication():self
+	public function retrieveApplication():self
 	{
 		$this->application = $this->site->getApplication(
 			$this->services->session, $this->runtime->context);
