@@ -51,7 +51,7 @@ class Wrapper extends Viewable
 		return $this;
 	}
 
-	public function getVariables(): iterable
+	public function getVariables(): Variables
     {
 		return $this->variables
 			->add('content', $this->wrappable->getContent())
