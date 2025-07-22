@@ -6,7 +6,6 @@ use netPhramework\common\FileFinder;
 use netPhramework\core\Runtime;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
-use netPhramework\rendering\HtmlEncoder;
 use netPhramework\rendering\Wrapper;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
@@ -37,7 +36,7 @@ class WebRuntime extends Runtime
 	{
 		$this->context 	 = new WebRuntimeContext();
 		$this->responder = new WebResponder()
-			->setEncoder(new HtmlEncoder())
+			->setEncoder(new WebEncoder())
 			->setTemplateFinder(new FileFinder())
 			->setWrapper(new Wrapper())
 			;
