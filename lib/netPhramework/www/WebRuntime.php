@@ -31,7 +31,7 @@ class WebRuntime extends Runtime
 		return new WebRequest($this->context->requestInput);
 	}}
 
-	private(set) Responder $responder;
+	protected(set) Responder $responder;
 
 	public function __construct()
 	{
