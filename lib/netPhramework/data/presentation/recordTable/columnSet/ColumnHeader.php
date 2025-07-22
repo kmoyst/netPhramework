@@ -3,9 +3,9 @@
 namespace netPhramework\data\presentation\recordTable\columnSet;
 
 
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\EncodableViewable;
 
-class ColumnHeader extends Viewable
+class ColumnHeader extends EncodableViewable
 {
 	public function __construct(
 		private(set) readonly string $name,

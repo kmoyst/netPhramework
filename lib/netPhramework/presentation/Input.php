@@ -5,9 +5,9 @@ namespace netPhramework\presentation;
 use netPhramework\common\Variables;
 use netPhramework\rendering\ConfigurableViewable;
 use netPhramework\rendering\Encodable;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\EncodableViewable;
 
-abstract class Input extends Viewable implements ConfigurableViewable
+abstract class Input extends EncodableViewable implements ConfigurableViewable
 {
 	protected string $templateName;
 	protected Variables $variables;

@@ -21,7 +21,6 @@ use netPhramework\exchange\Exchange;
 use netPhramework\presentation\CallbackInput;
 use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
-use netPhramework\rendering\Viewable;
 
 class EditParent extends RecordProcess
 {
@@ -61,11 +60,11 @@ class EditParent extends RecordProcess
 
 	/**
 	 * @param Exchange $exchange
-	 * @return Viewable
+	 * @return View
 	 * @throws FieldAbsent
 	 * @throws MappingException
 	 */
-	private function editForm(Exchange $exchange):Viewable
+	private function editForm(Exchange $exchange):View
 	{
 		$callbackInput = new CallbackInput($exchange);
 		$inputSet 	   = new RecordFormBuilder($this->formStrategy)
@@ -84,7 +83,7 @@ class EditParent extends RecordProcess
 
 	/**
 	 * @param Exchange $exchange
-	 * @return Viewable
+	 * @return View
 	 * @throws Exception
 	 * @throws FieldAbsent
 	 * @throws InvalidSession
@@ -92,7 +91,7 @@ class EditParent extends RecordProcess
 	 * @throws RecordNotFound
 	 * @throws ValueInaccessible
 	 */
-	private function childTable(Exchange $exchange):Viewable
+	private function childTable(Exchange $exchange):View
 	{
 		$assetName	 	  = $this->childSelector->getAssetName();
 		$recordSet   	  = $this->childSelector->getChildren($this->record);

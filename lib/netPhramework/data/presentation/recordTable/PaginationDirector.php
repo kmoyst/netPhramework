@@ -6,7 +6,6 @@ use netPhramework\data\presentation\recordTable\collation\Calculator;
 use netPhramework\data\presentation\recordTable\{PaginationFormDirector as formDirector};
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\View;
-use netPhramework\rendering\Viewable;
 
 class PaginationDirector
 {
@@ -15,8 +14,8 @@ class PaginationDirector
 	private formDirector $formDirector;
 	private PaginationFormContext $context;
 	private Calculator $calculator;
-	private Viewable $prevForm;
-	private Viewable $nextForm;
+	private View $prevForm;
+	private View $nextForm;
 
 	public function __construct()
 	{

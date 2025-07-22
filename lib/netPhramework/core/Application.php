@@ -2,7 +2,6 @@
 
 namespace netPhramework\core;
 
-use netPhramework\exceptions\Exception;
 use netPhramework\nodes\Directory;
 
 abstract class Application

@@ -3,9 +3,9 @@
 namespace netPhramework\data\presentation\recordTable\form;
 
 use netPhramework\presentation\Input;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\EncodableViewable;
 
-class FormCondition extends Viewable
+class FormCondition extends EncodableViewable
 {
 	private Input $fieldInput;
 	private Input $operatorInput;

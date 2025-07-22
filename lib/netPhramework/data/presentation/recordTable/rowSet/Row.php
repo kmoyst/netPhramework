@@ -10,10 +10,10 @@ use netPhramework\data\presentation\recordTable\columnSet\ColumnSet;
 use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\PathException;
 use netPhramework\rendering\Encodable;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\EncodableViewable;
 use netPhramework\routing\Path;
 
-class Row extends Viewable
+class Row extends EncodableViewable
 {
 	public function __construct(
 		private readonly ColumnSet $columnSet,

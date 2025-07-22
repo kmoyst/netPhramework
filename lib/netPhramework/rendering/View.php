@@ -4,8 +4,10 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\Utils;
 use netPhramework\common\Variables;
+use Stringable;
 
-class View extends Viewable implements Wrappable, ConfigurableView
+class View implements
+	Wrappable, ConfigurableView, Viewable, Encodable
 {
     private readonly Variables $variables;
 
@@ -52,5 +54,10 @@ class View extends Viewable implements Wrappable, ConfigurableView
 	public function getVariables(): Variables
 	{
 		return $this->variables;
+	}
+
+	public function encode(Encoder $encoder): Stringable|string
+	{
+		return $encoder->encodeViewable($this);
 	}
 }

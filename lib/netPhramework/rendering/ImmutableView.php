@@ -2,7 +2,7 @@
 
 namespace netPhramework\rendering;
 
-class ImmutableView extends Viewable
+class ImmutableView extends EncodableViewable
 {
 	public function __construct(
 		private(set) readonly string $templateName,

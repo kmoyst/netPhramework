@@ -3,9 +3,9 @@
 namespace netPhramework\data\presentation\recordTable\form;
 
 use netPhramework\presentation\Input;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\EncodableViewable;
 
-class FormSortVector extends Viewable
+class FormSortVector extends EncodableViewable
 {
 	private Input $fieldInput;
 	private Input $directionInput;

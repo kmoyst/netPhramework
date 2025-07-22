@@ -4,7 +4,7 @@ namespace netPhramework\rendering;
 
 use netPhramework\common\Variables;
 
-class Wrapper extends Viewable
+class Wrapper extends EncodableViewable
 {
 	private Variables $variables;
 	private Wrappable $wrappable;
@@ -33,7 +33,7 @@ class Wrapper extends Viewable
 		return $this;
 	}
 
-	public function wrap(Wrappable $wrappable):Viewable
+	public function wrap(Wrappable $wrappable):self
     {
 		$this->wrappable = $wrappable;
         return $this;

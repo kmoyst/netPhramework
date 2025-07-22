@@ -4,10 +4,10 @@ namespace netPhramework\presentation;
 
 
 use netPhramework\common\Variables;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\EncodableViewable;
 use netPhramework\routing\CallbackContext;
 
-class CallbackInput extends Viewable
+class CallbackInput extends EncodableViewable
 {
 	/**
 	 * @param CallbackContext $context

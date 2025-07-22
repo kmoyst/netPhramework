@@ -3,7 +3,6 @@
 namespace netPhramework\exchange;
 
 use netPhramework\core\Application;
-use netPhramework\exceptions\Exception;
 use netPhramework\nodes\Directory;
 
 class Gateway
@@ -21,7 +20,6 @@ class Gateway
 	/**
 	 * @param bool $requestingModification
 	 * @return Router
-	 * @throws Exception
 	 */
 	public function mapToRouter(bool $requestingModification):Router
 	{

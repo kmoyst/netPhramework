@@ -7,9 +7,9 @@ use netPhramework\data\exceptions\FieldAbsent;
 use netPhramework\data\exceptions\ValueInaccessible;
 use netPhramework\data\presentation\recordTable\columnSet\Column;
 use netPhramework\exceptions\Exception;
-use netPhramework\rendering\Viewable;
+use netPhramework\rendering\EncodableViewable;
 
-class Cell extends Viewable
+class Cell extends EncodableViewable
 {
 	public function __construct
 	(
