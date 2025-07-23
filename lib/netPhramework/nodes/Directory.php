@@ -2,7 +2,6 @@
 
 namespace netPhramework\nodes;
 
-use netPhramework\exceptions\Exception;
 use netPhramework\exceptions\NodeNotFound;
 use netPhramework\resources\Index;
 
@@ -10,7 +9,6 @@ class Directory extends Composite
 {
 	protected string|Index $autoIndexer;
 	public readonly string $name;
-
 
 	public function __construct(
 		string $name,
