@@ -45,6 +45,11 @@ class Utils
 		return ucwords(str_replace('_', ' ', strtolower($SCREAMING_SNAKE)));
 	}
 
+	public static function titleToKebab(string $title):string
+	{
+		return strtolower(str_replace([" ", "'"], ["-", ""], $title));
+	}
+
 	public static function baseClassName(string|object $fullClass):string
 	{
 		$name = is_object($fullClass) ? get_class($fullClass) : $fullClass;
