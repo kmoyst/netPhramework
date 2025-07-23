@@ -47,7 +47,7 @@ class Utils
 
 	public static function titleToKebab(string $title):string
 	{
-		return strtolower(str_replace([" ", "'"], ["-", ""], $title));
+		return strtolower(str_replace([" ", "'","(",")"], ["-", "","",""], $title));
 	}
 
 	public static function baseClassName(string|object $fullClass):string
