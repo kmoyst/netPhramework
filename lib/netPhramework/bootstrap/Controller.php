@@ -148,6 +148,8 @@ class Controller
 		$this->responder->application 	= $this->application;
 		$this->responder->services 		= $this->services
 		;
+		$this->application
+			->configureWrapper($this->responder->wrapper);
 		$this->runtime
 			->configureWrapper($this->responder->wrapper);
 		$this->runtime

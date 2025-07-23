@@ -12,7 +12,7 @@ class Directory extends Composite
 
 	public function __construct(
 		string $name,
-		protected ResourceSet $children = new ResourceSet()
+		protected(set) ResourceSet $children = new ResourceSet()
 	)
 	{
 		if(empty($name))

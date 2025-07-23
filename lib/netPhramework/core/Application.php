@@ -3,6 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\nodes\Directory;
+use netPhramework\rendering\Wrapper;
 
 abstract class Application
 {
@@ -17,4 +18,6 @@ abstract class Application
 	 * @return void
 	 */
 	public function configureActiveNode(Directory $root):void {}
+
+	public function configureWrapper(Wrapper $wrapper):void {}
 }
