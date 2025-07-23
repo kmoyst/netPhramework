@@ -12,16 +12,13 @@ class Directory extends Composite
 	public readonly string $name;
 
 
-	/**
-	 * @throws Exception
-	 */
 	public function __construct(
 		string $name,
 		protected ResourceSet $children = new ResourceSet()
 	)
 	{
-		if($name === '')
-			throw new Exception('Directory names cannot be null');
+		if(empty($name))
+			user_error("Directory name cannot be null");
 		$this->name = $name;
 	}
 
