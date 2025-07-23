@@ -8,6 +8,8 @@ use netPhramework\routing\redirectors\RedirectToChild;
 
 abstract class Composite implements Node
 {
+	public string $id {get{return $this->getResourceId();}}
+
 	public function getResourceId():string
 	{
 		return $this->getName();
