@@ -103,6 +103,12 @@ class Path extends Route implements Reroutable
 		return $this->appendPath(new PathFromRoute($route));
 	}
 
+	public function prependName(string $name):Path
+	{
+		$head = new Path()->setName($name);
+		return $head->setNext($this);
+	}
+
 	public function __clone():void
 	{
 		if(isset($this->next))

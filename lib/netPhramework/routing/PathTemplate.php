@@ -37,5 +37,11 @@ abstract class PathTemplate extends Path
 		return parent::appendPath($tail);
 	}
 
+	public function prependName(string $name): Path
+	{
+		$this->parseOnce();
+		return parent::prependName($name);
+	}
+
 	abstract protected function parse():void;
 }
