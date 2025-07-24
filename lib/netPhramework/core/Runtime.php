@@ -13,7 +13,7 @@ use netPhramework\user\Session;
 
 abstract class Runtime
 {
-	abstract public RuntimeContext $context {get;}
+	public readonly RuntimeContext $context;
 	abstract public Request $request {get;}
 	abstract public Responder $responder {get;}
 	abstract protected string $protocol {get;}
@@ -41,11 +41,13 @@ abstract class Runtime
 
 	public function __construct
 	(
-	private(set) readonly Session $session,
-	private(set) readonly FileManager $fileManager,
-	private(set) readonly CallbackManager $callbackManager,
+		RuntimeVariables $input,
+		public readonly Session $session,
+		public readonly FileManager $fileManager,
+		public readonly CallbackManager $callbackManager,
 	)
 	{
+		$this->context = new RuntimeContext($input);
 	}
 
 	public function configureWrapper(Wrapper $wrapper):void {}

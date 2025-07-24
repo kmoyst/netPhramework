@@ -4,7 +4,6 @@ namespace netPhramework\console;
 
 use netPhramework\common\FileFinder;
 use netPhramework\core\Runtime;
-use netPhramework\core\RuntimeContext;
 use netPhramework\core\RuntimeKey;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
@@ -37,11 +36,12 @@ class ConsoleRuntime extends Runtime
 	public function __construct
 	(
 	Session $session = new Session(),
-	private(set) readonly RuntimeContext $context = new ConsoleRuntimeContext()
 
 	)
 	{
-		parent::__construct($session, new FileManager(), new CallbackManager());
+		parent::__construct(
+			new ConsoleVariables(), $session,
+			new FileManager(), new CallbackManager());
 	}
 
 	public function configureTemplateFinder(FileFinder $finder): void

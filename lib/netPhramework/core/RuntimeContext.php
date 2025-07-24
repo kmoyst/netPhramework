@@ -5,12 +5,23 @@ namespace netPhramework\core;
 use netPhramework\routing\Path;
 use netPhramework\routing\PathFromDiskPath;
 
-abstract class RuntimeContext
+class RuntimeContext
 {
+	public function __construct
+	(
+		private(set) RuntimeVariables $input
+	)
+	{
+
+	}
+
+	public function get(string $key):?string
+	{
+		return $this->input->get($key);
+	}
+
 	public Path $fileRoot {get{
 		return new PathFromDiskPath(
-			$this->get(RuntimeKey::FILE_ROOT->value));
+			$this->input->get(RuntimeKey::FILE_ROOT->value));
 	}}
-
-	abstract public function get(string $key):?string;
 }

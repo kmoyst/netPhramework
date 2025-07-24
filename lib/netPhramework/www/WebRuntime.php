@@ -13,8 +13,6 @@ use netPhramework\user\Session;
 
 class WebRuntime extends Runtime
 {
-	private(set) WebRuntimeContext $context
-	;
 	protected string $protocol {get{
 		return $this->context->get('HTTPS') === 'on' ? 'https' : 'http';
 	}}
@@ -27,21 +25,21 @@ class WebRuntime extends Runtime
 	 * @var Request
 	 */
 	public Request $request{get{
-		return new WebRequest($this->context->requestInput);
+		return new WebRequest(new WebRequestInput());
 	}}
 
 	protected(set) Responder $responder;
 
 	public function __construct()
 	{
-		$this->context 	 = new WebRuntimeContext();
 		$this->responder = new WebResponder()
 			->setEncoder(new WebEncoder())
 			->setTemplateFinder(new FileFinder())
 			->setWrapper(new Wrapper())
 			;
 		parent::__construct(
-			new Session(), new FileManager(), new CallbackManager());
+			new WebVariables(), new Session(),
+			new FileManager(), new CallbackManager());
 	}
 
 	public function configureWrapper(Wrapper $wrapper):void

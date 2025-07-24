@@ -3,9 +3,9 @@
 namespace netPhramework\console;
 
 use netPhramework\common\Variables;
-use netPhramework\core\RuntimeContext;
+use netPhramework\core\RuntimeVariables;
 
-class ConsoleRuntimeContext extends RuntimeContext
+class ConsoleVariables implements RuntimeVariables
 {
 	private Variables $variables;
 
