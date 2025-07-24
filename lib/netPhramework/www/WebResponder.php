@@ -85,8 +85,7 @@ class WebResponder implements Responder
 		header("Content-Type: $ft");
 		header("Content-Disposition: attachment; filename=\"$fn\"");
 		header("Content-Length: " . filesize($sp));
-		ob_end_clean();
-		flush();
+		if(ob_get_length() > 0) ob_end_clean();
 		readfile($sp);
 	}
 }
