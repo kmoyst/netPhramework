@@ -10,7 +10,7 @@ use netPhramework\data\exceptions\MappingException;
 use netPhramework\data\exceptions\RecordNotFound;
 use netPhramework\data\exceptions\RecordRetrievalException;
 use netPhramework\exceptions\NotFound;
-use netPhramework\user\Session;
+use netPhramework\runtime\Session;
 use netPhramework\user\UserRole;
 
 readonly class UserManager

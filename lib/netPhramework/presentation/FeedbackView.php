@@ -2,10 +2,10 @@
 
 namespace netPhramework\presentation;
 
-use netPhramework\user\Session;
 use netPhramework\rendering\Encodable;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\ImmutableView;
+use netPhramework\runtime\Session;
 use Stringable;
 
 readonly class FeedbackView implements Encodable

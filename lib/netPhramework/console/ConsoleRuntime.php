@@ -10,8 +10,8 @@ use netPhramework\rendering\Wrapper;
 use netPhramework\routing\CallbackManager;
 use netPhramework\runtime\Runtime;
 use netPhramework\runtime\RuntimeKey;
+use netPhramework\runtime\Session;
 use netPhramework\transferring\FileManager;
-use netPhramework\user\Session;
 
 class ConsoleRuntime extends Runtime
 {

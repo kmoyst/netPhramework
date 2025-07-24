@@ -8,8 +8,8 @@ use netPhramework\exchange\Responder;
 use netPhramework\rendering\Wrapper;
 use netPhramework\routing\CallbackManager;
 use netPhramework\runtime\Runtime;
+use netPhramework\runtime\Session;
 use netPhramework\transferring\FileManager;
-use netPhramework\user\Session;
 
 class WebRuntime extends Runtime
 {

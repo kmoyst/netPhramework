@@ -17,7 +17,7 @@ use netPhramework\presentation\FeedbackView;
 use netPhramework\rendering\View;
 use netPhramework\routing\PathReroute;
 use netPhramework\routing\rerouters\Rerouter;
-use netPhramework\user\SessionUser;
+use netPhramework\runtime\SessionUser;
 
 class ViewProfile extends Resource
 {

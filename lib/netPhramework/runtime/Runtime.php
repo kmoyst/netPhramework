@@ -9,7 +9,6 @@ use netPhramework\rendering\Wrapper;
 use netPhramework\routing\CallbackManager;
 use netPhramework\transferring\FileManager;
 use netPhramework\transferring\SmtpServer;
-use netPhramework\user\Session;
 
 abstract class Runtime
 {

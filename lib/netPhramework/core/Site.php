@@ -3,7 +3,7 @@
 namespace netPhramework\core;
 
 use netPhramework\runtime\RuntimeContext;
-use netPhramework\user\Session;
+use netPhramework\runtime\Session;
 
 interface Site
 {

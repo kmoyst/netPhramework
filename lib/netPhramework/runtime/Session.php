@@ -1,9 +1,10 @@
 <?php
 
-namespace netPhramework\user;
+namespace netPhramework\runtime;
 
 use netPhramework\exceptions\InvalidRoleInSession;
 use netPhramework\exchange\ResponseCode;
+use netPhramework\user\User;
 
 class Session
 {

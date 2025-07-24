@@ -1,6 +1,8 @@
 <?php
 
-namespace netPhramework\user;
+namespace netPhramework\runtime;
+
+use netPhramework\user\User;
 
 interface SessionUser extends User
 {

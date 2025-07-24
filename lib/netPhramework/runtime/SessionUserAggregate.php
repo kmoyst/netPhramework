@@ -1,8 +1,10 @@
 <?php
 
-namespace netPhramework\user;
+namespace netPhramework\runtime;
 
 use netPhramework\exceptions\InvalidRoleInSession;
+use netPhramework\user\User;
+use netPhramework\user\UserRole;
 
 /**
  * Among other things, this class tracks what keys are used to store the

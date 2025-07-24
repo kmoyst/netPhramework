@@ -1,8 +1,9 @@
 <?php
 
-namespace netPhramework\user;
+namespace netPhramework\runtime;
 
 use netPhramework\exceptions\InvalidRoleInSession;
+use netPhramework\user\User;
 
 interface SessionUserProvider
 {
