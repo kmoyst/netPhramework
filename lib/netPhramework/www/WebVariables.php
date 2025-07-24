@@ -2,7 +2,7 @@
 
 namespace netPhramework\www;
 
-use netPhramework\core\RuntimeVariables;
+use netPhramework\runtime\RuntimeVariables;
 
 class WebVariables implements RuntimeVariables
 {

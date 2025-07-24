@@ -2,7 +2,7 @@
 
 namespace netPhramework\bootstrap;
 
-use netPhramework\core\RuntimeMode;
+use netPhramework\runtime\RuntimeMode;
 
 class Handler
 {

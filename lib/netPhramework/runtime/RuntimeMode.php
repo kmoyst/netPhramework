@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\runtime;
 
 enum RuntimeMode:string
 {

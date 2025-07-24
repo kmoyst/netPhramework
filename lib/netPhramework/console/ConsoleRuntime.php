@@ -3,13 +3,13 @@
 namespace netPhramework\console;
 
 use netPhramework\common\FileFinder;
-use netPhramework\core\Runtime;
-use netPhramework\core\RuntimeKey;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
 use netPhramework\rendering\Encoder;
 use netPhramework\rendering\Wrapper;
 use netPhramework\routing\CallbackManager;
+use netPhramework\runtime\Runtime;
+use netPhramework\runtime\RuntimeKey;
 use netPhramework\transferring\FileManager;
 use netPhramework\user\Session;
 

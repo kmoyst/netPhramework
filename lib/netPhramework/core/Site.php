@@ -2,6 +2,7 @@
 
 namespace netPhramework\core;
 
+use netPhramework\runtime\RuntimeContext;
 use netPhramework\user\Session;
 
 interface Site

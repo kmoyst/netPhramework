@@ -3,11 +3,11 @@
 namespace netPhramework\www;
 
 use netPhramework\common\FileFinder;
-use netPhramework\core\Runtime;
 use netPhramework\exchange\Request;
 use netPhramework\exchange\Responder;
 use netPhramework\rendering\Wrapper;
 use netPhramework\routing\CallbackManager;
+use netPhramework\runtime\Runtime;
 use netPhramework\transferring\FileManager;
 use netPhramework\user\Session;
 

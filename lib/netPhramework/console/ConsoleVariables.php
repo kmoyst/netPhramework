@@ -3,7 +3,7 @@
 namespace netPhramework\console;
 
 use netPhramework\common\Variables;
-use netPhramework\core\RuntimeVariables;
+use netPhramework\runtime\RuntimeVariables;
 
 class ConsoleVariables implements RuntimeVariables
 {

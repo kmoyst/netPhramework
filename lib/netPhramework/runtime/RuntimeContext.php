@@ -1,6 +1,6 @@
 <?php
 
-namespace netPhramework\core;
+namespace netPhramework\runtime;
 
 use netPhramework\routing\Path;
 use netPhramework\routing\PathFromDiskPath;

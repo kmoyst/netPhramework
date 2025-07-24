@@ -2,11 +2,11 @@
 
 namespace netPhramework\exceptions;
 
-use netPhramework\core\RuntimeMode;
 use netPhramework\exchange\Responder;
 use netPhramework\exchange\Response;
 use netPhramework\exchange\ResponseCode;
 use netPhramework\rendering\Wrappable;
+use netPhramework\runtime\RuntimeMode;
 
 class Exception extends \Exception implements Wrappable, Response
 {
