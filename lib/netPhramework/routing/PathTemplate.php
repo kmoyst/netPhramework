@@ -43,5 +43,11 @@ abstract class PathTemplate extends Path
 		return parent::prependName($name);
 	}
 
+	public function equals(Route $route): bool
+	{
+		$this->parseOnce();
+		return parent::equals($route);
+	}
+
 	abstract protected function parse():void;
 }

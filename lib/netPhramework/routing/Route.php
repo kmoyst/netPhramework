@@ -13,20 +13,18 @@ abstract class Route implements Encodable
 		return $encoder->encodePath($this);
 	}
 
-	public function getLastName():?string
+	public function equals(Route $route):bool
 	{
-		if($this->getNext() === null)
-			return $this->getName();
+		if($this->getName() !== $route->getName())
+			return false;
+		elseif($this->getNext() === null && $route->getNext() !== null)
+			return false;
+		elseif($this->getNext() !== null && $route->getNext() === null)
+			return false;
+		elseif($this->getNext() === null && $route->getNext() === null)
+			return true;
 		else
-			return $this->getNext()->getLastName();
-	}
-
-	public function getPenultimateName():?string
-	{
-		if($this->getNext() === null || $this->getNext()->getNext() === null)
-			return $this->getName();
-		else
-			return $this->getNext()->getPenultimateName();
+			return $this->getNext()->equals($route->getNext());
 	}
 
 	abstract public function getName():?string;
