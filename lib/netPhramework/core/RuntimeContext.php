@@ -3,12 +3,12 @@
 namespace netPhramework\core;
 
 use netPhramework\routing\Path;
-use netPhramework\routing\PathFromFilePath;
+use netPhramework\routing\PathFromDiskPath;
 
 abstract class RuntimeContext
 {
 	public Path $fileRoot {get{
-		return new PathFromFilePath(
+		return new PathFromDiskPath(
 			$this->get(RuntimeKey::FILE_ROOT->value));
 	}}
 
