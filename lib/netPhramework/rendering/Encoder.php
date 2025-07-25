@@ -5,8 +5,8 @@ namespace netPhramework\rendering;
 use netPhramework\common\FileFinder;
 use netPhramework\routing\ReadableLocation;
 use netPhramework\routing\Route;
-use netPhramework\routing\UriFromLocation;
-use netPhramework\routing\UriFromPath;
+use netPhramework\routing\UriLocation;
+use netPhramework\routing\UriPath;
 use netPhramework\exceptions\FileNotFound;
 use Stringable;
 
@@ -49,7 +49,7 @@ class Encoder
 	 */
 	public function encodeLocation(ReadableLocation $location):Stringable|string
 	{
-		return new UriFromLocation($location);
+		return new UriLocation($location);
 	}
 
 	/**
@@ -58,7 +58,7 @@ class Encoder
 	 */
 	public function encodePath(Route $path):Stringable|string
 	{
-		return new UriFromPath($path);
+		return new UriPath($path);
 	}
 
 	/**

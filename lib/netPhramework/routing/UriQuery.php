@@ -2,7 +2,7 @@
 
 namespace netPhramework\routing;
 use Stringable;
-readonly class UriQueryFromIterable implements Stringable
+readonly class UriQuery implements Stringable
 {
 	public function __construct(private iterable $iterable) {}
 

@@ -4,7 +4,7 @@ namespace netPhramework\routing;
 
 use Stringable;
 
-readonly class UriFromPath implements Stringable
+readonly class UriPath implements Stringable
 {
 	public function __construct(private Route $path) {}
 

@@ -16,7 +16,7 @@ use netPhramework\nodes\Resource;
 use netPhramework\routing\Location;
 use netPhramework\routing\redirectors\Redirector;
 use netPhramework\routing\rerouters\Rerouter;
-use netPhramework\routing\UriFromLocation;
+use netPhramework\routing\UriLocation;
 use netPhramework\transferring\EmailDelivery;
 use netPhramework\transferring\EmailException;
 use netPhramework\transferring\StreamSocketException;
@@ -85,7 +85,7 @@ class SendResetLink extends Resource
 		$location = new Location()->setPath($exchange->path);
 		$this->toChangePass->reroute($location->path);
 		$location->getParameters()->add($profile->fields->resetCode,$resetCode);
-		$uri = new UriFromLocation($location);
+		$uri = new UriLocation($location);
 		$siteAddress = $exchange->siteAddress;
 		new EmailDelivery()
 			->setServer($exchange->smtpServer)

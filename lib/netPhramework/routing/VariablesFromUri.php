@@ -4,18 +4,17 @@ namespace netPhramework\routing;
 
 use netPhramework\common\Variables;
 
-readonly class VariablesFromUri
+class VariablesFromUri extends Variables
 {
 	public function __construct(private string $uri) {}
 
-	public function get():Variables
+	public function init():self
 	{
-		$variables = new Variables();
 		if(preg_match('|\?(.+)$|', $this->uri, $matches))
 		{
 			parse_str($matches[1], $arr);
-			$variables->merge($arr);
+			$this->merge($arr);
 		}
-		return $variables;
+		return $this;
 	}
 }

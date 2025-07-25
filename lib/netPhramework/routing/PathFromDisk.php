@@ -2,7 +2,7 @@
 
 namespace netPhramework\routing;
 
-class PathFromDiskPath extends PathFromUri
+class PathFromDisk extends PathFromUri
 {
 
 }

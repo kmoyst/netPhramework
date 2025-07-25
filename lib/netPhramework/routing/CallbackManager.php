@@ -42,7 +42,7 @@ readonly class CallbackManager
 		if(!$callbackUri) return null;
 		$target = new Location()
 			->setPath(new PathFromUri($callbackUri))
-			->setParameters(new VariablesFromUri($callbackUri)->get())
+			->setParameters(new VariablesFromUri($callbackUri)->init())
 		;
 		return new RedirectToRoot($target->path, $target->getParameters());
 	}
